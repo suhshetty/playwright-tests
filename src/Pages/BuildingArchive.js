@@ -28,7 +28,9 @@ class BuildingArchive extends BasePage {
   async gotoSiteRegistration() {
     await this.page.locator(this.groundRegistration).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.groundRegistration).click();
+  }
 
+  async gotoSites() {
     await this.page.locator(this.sitesBtn).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.sitesBtn).click();
   }

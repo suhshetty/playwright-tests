@@ -29,6 +29,8 @@ test.only('Playwright POM example with EMM-T270.spec.js', async ({ page, context
 
   await buildingArchive.gotoSiteRegistration();
 
+  await buildingArchive.gotoSites();
+
   await buildingArchive.registerNewSite("Test Site J16a-1");
 
 });
