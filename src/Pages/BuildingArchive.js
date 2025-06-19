@@ -87,7 +87,8 @@ async registerNewBuilding(siteName, buildingName) {
 
   await this.page.locator(this.TypeSitename_Field).fill(siteName);
   await this.page.locator(this.waitingForSiteOptions).first().waitFor({ state: 'visible', timeout: 5000 });
-
+  
+  // Uses the method from BasePage to select the site by text
   await this.selectDropdownOptionByText(this.page.locator(this.waitingForSiteOptions), siteName);
 
   await this.page.locator(this.BuildingName).waitFor({ state: 'visible', timeout: 5000 });
