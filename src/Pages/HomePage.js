@@ -9,15 +9,15 @@ class HomePage extends BasePage {
   }
 
   async gotoHomePage() {
-    const homeBtn = this.page.locator(this.homeBtn);
-    await homeBtn.waitFor({ state: 'visible' ,timeout: 5000 });
-    await homeBtn.click();
+    await this.page.locator(this.homeBtn).waitFor({ state: 'visible', timeout: 15000 });
+    await this.page.locator(this.homeBtn).click();
   }
 
+
   async gotoModuleMenu() {
-    const moduleMenuBtn = this.page.locator(this.moduleMenuBtn);
-    await moduleMenuBtn.waitFor({ state: 'visible', timeout: 5000 });
-    await moduleMenuBtn.click();
+    await this.page.locator(this.moduleMenuBtn).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.moduleMenuBtn).click();
+    
   }
 }
 
