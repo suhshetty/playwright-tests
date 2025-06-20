@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "playwright-tests",
+=======
+  "name": "playwright",
+>>>>>>> a921f7e (fix: enable headless mode for CI)
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {},
@@ -8,7 +12,12 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+<<<<<<< HEAD
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.15.21"
+=======
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^22.13.10"
+>>>>>>> a921f7e (fix: enable headless mode for CI)
   }
 }
