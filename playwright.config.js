@@ -1,34 +1,21 @@
-// @ts-check
-// Triggering git change
-const { defineConfig, devices } = require('@playwright/test');
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
 const config = {
-  testDir: './tests/src',
+  testDir: './tests', // ✅ This is the correct path
   timeout: 90 * 1000,
 
   expect: {
     timeout: 10000
   },
 
-  reporter: 'html',
+  reporter: [['html', { outputFolder: 'playwright-report', open: 'never' }]],
 
   use: {
     browserName: 'chromium',
-
-    // Run headless in CI (like GitHub Actions), headed locally
     headless: !!process.env.CI,
-
     screenshot: {
       fullPage: true
     },
-
     trace: 'retain-on-failure',
   },
 };
 
 module.exports = config;
-
-// Testing 
