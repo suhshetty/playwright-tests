@@ -2,7 +2,7 @@ const { test } = require('@playwright/test');
 const { loginAndInitialize } = require('./src/testSetup');
 
 
-test.only('Sanity test : EMM-T270.spec.js', async ({ page, context }) => {
+test('Sanity test : EMM-T270.spec.js', async ({ page, context }) => {
   // Login and initialize Page Objects
   const { homePage, buildingArchive } = await loginAndInitialize({ page, context });
 
