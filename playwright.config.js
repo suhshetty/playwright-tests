@@ -6,7 +6,7 @@ const { defineConfig, devices } = require('@playwright/test');
  * @see https://playwright.dev/docs/test-configuration
  */
 const config = {
-  testDir: './tests',
+  testDir: './tests/src',
   timeout: 90 * 1000,
 
   expect: {
