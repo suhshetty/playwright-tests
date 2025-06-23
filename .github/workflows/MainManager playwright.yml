@@ -2,8 +2,8 @@ name: Playwright Tests
 
 on:
   workflow_dispatch:     # Manual trigger via GitHub UI
-  schedule:              # Every 15 minutes (UTC)
-    - cron: '*/15 * * * *'
+  schedule:              # Every 1 hour (UTC)
+    - cron: '0 * * * *'
   push:                  # On push to any branch
     branches:
       - '**'
