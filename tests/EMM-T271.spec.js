@@ -17,7 +17,6 @@ test('Sanity test: EMM-T271.spec.js', async ({ page, context }) => {
 
   await buildingArchive.registerNewBuilding("Test Site EMM-T270A", "Test Building EMM-T270A");
 
-  //Testing
 
 
 });
