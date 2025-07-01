@@ -1,9 +1,9 @@
-name: Visual Regression Tests.
+name: Visual Regression Tests
 
 on:
   schedule:
     - cron: '0 * * * *'     # Runs every hour
-  workflow_dispatch:        # Allow manual trigger
+  workflow_dispatch:        # Manual trigger
 
 jobs:
   visual-tests:
@@ -25,7 +25,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Visual Regression Tests
+      - name: Run Visual Regression Tests Only
         run: npx playwright test tests/visual.spec.mjs || true
 
       - name: Upload Visual Report
