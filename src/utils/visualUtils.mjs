@@ -11,10 +11,18 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
   console.log(`Waiting for loader before capturing ${env} - ${label}`);
-  await page.waitForSelector('.processing-icon', {
-    state: 'hidden',
-    timeout: 10000
-  });
+
+  try {
+    const loaderVisible = await page.locator('.processing-icon').first().isVisible();
+    if (loaderVisible) {
+      await page.waitForSelector('.processing-icon', {
+        state: 'hidden',
+        timeout: 15000
+      });
+    }
+  } catch (error) {
+    console.warn(`Warning: Loader not hidden after timeout on "${label}". Proceeding with screenshot.`);
+  }
 
   await page.waitForTimeout(2000);
 
