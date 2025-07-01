@@ -1,5 +1,5 @@
 name: Playwright Tests
- 
+
 on:
   workflow_dispatch:     # Manual trigger via GitHub UI
   schedule:              # Every 1 hour (UTC)
@@ -10,36 +10,39 @@ on:
   pull_request:          # On PR to any branch
     branches:
       - '**'
- 
+
 jobs:
   test:
     runs-on: ubuntu-latest
- 
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
- 
+
       - name: Install dependencies
         run: npm install
- 
+
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
- 
-      - name: Run Playwright tests
+
+      - name: Run All Playwright Tests (includes visual test)
         run: npx playwright test
- 
-      - name: Debug – list files
-        if: always()
-        run: ls -R
- 
-      - name: Upload Playwright HTML report
+
+      - name: Upload HTML Report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
           path: playwright-report/
+
+      - name: Upload Screenshot Diffs (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-diffs
+          path: screenshots/diffs/
