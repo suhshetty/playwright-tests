@@ -1,4 +1,4 @@
-name: UI Functional Tests
+name: UI Functional Tests.
 
 on:
   push:
