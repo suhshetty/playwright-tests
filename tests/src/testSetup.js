@@ -3,7 +3,7 @@ const LoginPage = require('../../src/Pages/LoginPage');
 const HomePage = require('../../src/Pages/HomePage');
 const BuildingArchive = require('../../src/Pages/BuildingArchive');
 
-async function loginAndInitialize({ page, context }) {
+async function loginAndInitialize({ page, context, baseUrl }) {
   // Clear cookies and cache before login
   await context.clearCookies();
   await context.clearPermissions();
@@ -13,8 +13,8 @@ async function loginAndInitialize({ page, context }) {
   const homePage = new HomePage(page);
   const buildingArchive = new BuildingArchive(page);
 
-  // Perform login
-  await loginPage.gotoLoginPage();
+  // Perform login using dynamic URL
+  await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
   return { loginPage, homePage, buildingArchive };

@@ -9,13 +9,13 @@ class LoginPage extends BasePage {
     this.loginBtn = '#lgnUserLogin_Login';
   }
 
-  async gotoLoginPage() {
-    await this.page.goto('https://kommune.mainmanager.is/mmv2/MMV2Login.aspx');
+  async gotoLoginPage(baseUrl) {
+    await this.page.goto(baseUrl); 
   }
 
   async login(username, password) {
     const usernameField = this.page.locator(this.username);
-    await usernameField.waitFor({ state: 'visible' ,timeout: 5000 });
+    await usernameField.waitFor({ state: 'visible', timeout: 5000 });
     await usernameField.fill(username);
 
     const passwordField = this.page.locator(this.password);
