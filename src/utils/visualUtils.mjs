@@ -1,3 +1,4 @@
+// src/utils/visualUtils.mjs
 import fs from 'fs';
 import path from 'path';
 import pixelmatch from 'pixelmatch';
@@ -43,10 +44,16 @@ export function compareScreenshots(label, expect) {
     includeAA: false
   });
 
-  const diffDir = path.join(screenshotsDir, 'diffs');
-  if (!fs.existsSync(diffDir)) fs.mkdirSync(diffDir);
-  fs.writeFileSync(path.join(diffDir, `${label}.png`), PNG.sync.write(diff));
+  if (numDiffPixels > 0) {
+    const diffDir = path.join(screenshotsDir, 'diffs');
+    if (!fs.existsSync(diffDir)) fs.mkdirSync(diffDir, { recursive: true });
 
-  console.log(`Diff for "${label}": ${numDiffPixels} pixel(s) difference`);
+    const diffPath = path.join(diffDir, `${label}.png`);
+    fs.writeFileSync(diffPath, PNG.sync.write(diff));
+    console.log(`Diff for "${label}": ${numDiffPixels} pixel(s) difference`);
+  } else {
+    console.log(`No visual difference in "${label}"`);
+  }
+
   expect(numDiffPixels).toBe(0);
 }
