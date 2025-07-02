@@ -27,6 +27,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Clean old diffs
+        run: rm -rf screenshots/diffs/*
+
       - name: Run Visual Regression Tests
         run: npx playwright test tests/visual.spec.mjs
 
