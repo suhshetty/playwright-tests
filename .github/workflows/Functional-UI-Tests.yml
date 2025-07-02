@@ -8,6 +8,8 @@ on:
     branches:
       - '**'
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *' # Runs every hour on the hour (UTC time)
 
 jobs:
   ui-tests:
