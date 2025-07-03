@@ -31,7 +31,7 @@ jobs:
         run: rm -rf screenshots/diffs/*
 
       - name: Run Visual Regression Tests
-        run: npx playwright test tests/visual.spec.mjs
+        run: npx playwright test tests/VisualTesting
 
       - name: Upload Visual Report
         if: always()
