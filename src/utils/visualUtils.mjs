@@ -1,4 +1,3 @@
-// src/utils/visualUtils.mjs
 import fs from 'fs';
 import path from 'path';
 import pixelmatch from 'pixelmatch';
@@ -6,14 +5,24 @@ import { PNG } from 'pngjs';
 
 export const screenshotsDir = 'screenshots';
 
+// 🔄 Cleanup before each test run
+export function cleanScreenshotsFolder() {
+  if (fs.existsSync(screenshotsDir)) {
+    fs.rmSync(screenshotsDir, { recursive: true, force: true });
+    console.log('Cleared previous screenshots and diffs.');
+  }
+}
+
 export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   const dir = path.join(screenshotsDir, env);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-  console.log(`Waiting for loader before capturing ${env} - ${label}`);
+  console.log(`⏳ Waiting for loader before capturing ${env} - ${label}`);
 
   try {
-    const loaderVisible = await page.locator('.processing-icon').first().isVisible();
+    const loaderLocator = page.locator('.processing-icon').first();
+    const loaderVisible = await loaderLocator.isVisible();
+
     if (loaderVisible) {
       await page.waitForSelector('.processing-icon', {
         state: 'hidden',
@@ -21,23 +30,31 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
       });
     }
   } catch (error) {
-    console.warn(`Warning: Loader not hidden after timeout on "${label}". Proceeding with screenshot.`);
+    console.warn(`Loader not hidden after timeout on "${label}". Proceeding with screenshot.`);
   }
 
-  await page.waitForTimeout(2000);
-
-  const filePath = path.join(dir, `${label}.png`);
-  await page.screenshot({ path: filePath, fullPage: true });
-
-  const size = fs.statSync(filePath).size;
-  if (size < 10000) {
-    console.warn(`Warning: Screenshot for ${env}/${label} may be blank (size: ${size} bytes)`);
+  if (page.isClosed()) {
+    console.error(`Page closed before capturing screenshot: ${label}`);
+    return;
   }
 
-  console.log(`Screenshot saved: ${filePath}`);
+  try {
+    await page.waitForTimeout(2000);
+    const filePath = path.join(dir, `${label}.png`);
+    await page.screenshot({ path: filePath, fullPage: true });
+
+    const size = fs.statSync(filePath).size;
+    if (size < 10000) {
+      console.warn(`Screenshot for ${env}/${label} may be blank (size: ${size} bytes)`);
+    }
+
+    console.log(`Screenshot saved: ${filePath}`);
+  } catch (error) {
+    console.error(`Error capturing screenshot for ${env}/${label}:`, error.message);
+  }
 }
 
-export function compareScreenshots(label, expect) {
+export function compareScreenshots(label) {
   const img1Path = path.join(screenshotsDir, 'url1', `${label}.png`);
   const img2Path = path.join(screenshotsDir, 'url2', `${label}.png`);
 
@@ -58,10 +75,45 @@ export function compareScreenshots(label, expect) {
 
     const diffPath = path.join(diffDir, `${label}.png`);
     fs.writeFileSync(diffPath, PNG.sync.write(diff));
-    console.log(`Diff for "${label}": ${numDiffPixels} pixel(s) difference`);
+    console.log(`🟥 Diff for "${label}": ${numDiffPixels} pixel(s) difference`);
   } else {
-    console.log(`No visual difference in "${label}"`);
+    console.log(`🟩 No visual difference in "${label}"`);
   }
 
-  expect(numDiffPixels).toBe(0);
+  return numDiffPixels;
+}
+
+// Compare all screenshots and print/save summary
+export function compareAllScreenshots(labels, expect) {
+  let hasDiff = false;
+  const summary = [];
+  const summaryPath = path.join(screenshotsDir, 'diffs', 'diff-summary.txt');
+
+  if (!fs.existsSync(path.dirname(summaryPath))) {
+    fs.mkdirSync(path.dirname(summaryPath), { recursive: true });
+  }
+
+  for (const label of labels) {
+    try {
+      const diffPixels = compareScreenshots(label);
+      if (diffPixels > 0) {
+        hasDiff = true;
+        summary.push(`🟥 ${label}: ${diffPixels} pixel(s) difference`);
+      } else {
+        summary.push(`🟩 ${label}: No visual difference`);
+      }
+    } catch (error) {
+      hasDiff = true;
+      summary.push(`${label}: Error - ${error.message}`);
+      console.error(`Error comparing "${label}":`, error.message);
+    }
+  }
+
+  const finalLog = `Visual Comparison Summary (${new Date().toLocaleString()}):\n\n${summary.join('\n')}`;
+  fs.writeFileSync(summaryPath, finalLog);
+
+  console.log('\n' + finalLog);
+  console.log(`Diff summary written to: ${summaryPath}`);
+
+  expect(hasDiff).toBe(false);
 }

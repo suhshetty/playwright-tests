@@ -2,10 +2,10 @@
 const { test } = require('@playwright/test');
 const path = require('path');
 const dotenv = require('dotenv');
-const { loginAndInitialize } = require('./src/testSetup');
+const { loginAndInitialize } = require('../src/testSetup');
 
 // Load environment variables
-dotenv.config({ path: path.resolve(__dirname, './src/.env') });
+dotenv.config({ path: path.resolve(__dirname, '../src/.env') });
 
 test('Test Navigation', async ({ page, context }) => {
   const baseUrl = process.env.URL1; 
@@ -15,7 +15,6 @@ test('Test Navigation', async ({ page, context }) => {
 
   await homePage.gotoHomePage();
   await homePage.gotoModuleMenu();
-
   await buildingArchive.clickBuildingArchive();
   await buildingArchive.gotoSiteRegistration();
   await buildingArchive.gotoSites();
@@ -65,11 +64,11 @@ test('Test Navigation', async ({ page, context }) => {
   await buildingArchive.gotoAttributeMapping();
   await buildingArchive.gotoProcessingOfLocationElements();
   await buildingArchive.gotoProcessingOfSystemElements();
-  await buildingArchive.gotoProductData(); // repeated - consider cleanup
+  await buildingArchive.gotoProductData(); //
   await buildingArchive.gotoRegisterSystemStructures();
   await buildingArchive.gotoOMdocuments();
   await buildingArchive.gotoPictures();
-  await buildingArchive.gotoDrawings(); // repeated
+  await buildingArchive.gotoDrawings(); //
   await buildingArchive.gotoDocuments();
   await buildingArchive.gotoObjectDocuments();
   await buildingArchive.gotoStructureWithDocuments();
