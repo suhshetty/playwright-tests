@@ -7,38 +7,38 @@ import { PNG } from 'pngjs';
 
 export const screenshotsDir = 'screenshots';
 
-// 🧹 Cleanup before each test run
+// Cleanup before each test run
 export function cleanScreenshotsFolder() {
   if (fs.existsSync(screenshotsDir)) {
     fs.rmSync(screenshotsDir, { recursive: true, force: true });
-    console.log('🧹 Cleared previous screenshots and diffs.');
+    console.log('Cleared previous screenshots and diffs.');
   }
 }
 
-// 🌐 Load env and prepare screenshot folder
+// Load env and prepare screenshot folder
 export function initializeVisualTestEnv() {
   cleanScreenshotsFolder();
   dotenv.config({ path: path.resolve(process.cwd(), 'tests/src/.env') });
-  console.log('✅ Environment variables loaded');
+  console.log('Environment variables loaded');
   console.log('URL1:', process.env.URL1);
   console.log('URL2:', process.env.URL2);
-}
+} 
 
-// 🛡️ Safe wrapper for test steps
+// Safe wrapper for test steps
 export async function safeStep(stepName, fn) {
   try {
     await fn();
   } catch (error) {
-    console.warn(`⚠️ Step "${stepName}" failed:`, error.message);
+    console.warn(`Step "${stepName}" failed:`, error.message);
   }
 }
 
-// 📸 Capture screenshots after processing
+// Capture screenshots after processing
 export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   const dir = path.join(screenshotsDir, env);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-  console.log(`⏳ Waiting for loader before capturing ${env} - ${label}`);
+  console.log(`Waiting for loader before capturing ${env} - ${label}`);
 
   try {
     const loaderLocator = page.locator('.processing-icon').first();
@@ -51,11 +51,11 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
       });
     }
   } catch (error) {
-    console.warn(`⚠️ Loader not hidden after timeout on "${label}". Proceeding with screenshot.`);
+    console.warn(`Loader not hidden after timeout on "${label}". Proceeding with screenshot.`);
   }
 
   if (page.isClosed()) {
-    console.error(`❌ Page closed before capturing screenshot: ${label}`);
+    console.error(`Page closed before capturing screenshot: ${label}`);
     return;
   }
 
@@ -66,16 +66,16 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
 
     const size = fs.statSync(filePath).size;
     if (size < 10000) {
-      console.warn(`⚠️ Screenshot for ${env}/${label} may be blank (size: ${size} bytes)`);
+      console.warn(`Screenshot for ${env}/${label} may be blank (size: ${size} bytes)`);
     }
 
-    console.log(`✅ Screenshot saved: ${filePath}`);
+    console.log(`Screenshot saved: ${filePath}`);
   } catch (error) {
-    console.error(`❌ Error capturing screenshot for ${env}/${label}:`, error.message);
+    console.error(`Error capturing screenshot for ${env}/${label}:`, error.message);
   }
 }
 
-// 🔍 Pixel-by-pixel comparison
+// Pixel-by-pixel comparison
 export function compareScreenshots(label) {
   const img1Path = path.join(screenshotsDir, 'url1', `${label}.png`);
   const img2Path = path.join(screenshotsDir, 'url2', `${label}.png`);
@@ -105,7 +105,7 @@ export function compareScreenshots(label) {
   return numDiffPixels;
 }
 
-// 📊 Compare all screenshots and log summary
+// Compare all screenshots and log summary
 export function compareAllScreenshots(labels, expect) {
   let hasDiff = false;
   const summary = [];
@@ -127,7 +127,7 @@ export function compareAllScreenshots(labels, expect) {
     } catch (error) {
       hasDiff = true;
       summary.push(`${label}: Error - ${error.message}`);
-      console.error(`❌ Error comparing "${label}":`, error.message);
+      console.error(`Error comparing "${label}":`, error.message);
     }
   }
 
@@ -135,7 +135,7 @@ export function compareAllScreenshots(labels, expect) {
   fs.writeFileSync(summaryPath, finalLog);
 
   console.log('\n' + finalLog);
-  console.log(`📝 Diff summary written to: ${summaryPath}`);
+  console.log(`Diff summary written to: ${summaryPath}`);
 
   expect(hasDiff).toBe(false);
 }
