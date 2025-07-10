@@ -10,13 +10,17 @@ class HomePage extends BasePage {
 
   async gotoHomePage() {
     await this.page.locator(this.homeBtn).waitFor({ state: 'visible', timeout: 15000 });
+  
     await this.page.locator(this.homeBtn).click();
+
   }
 
 
   async gotoModuleMenu() {
     await this.page.locator(this.moduleMenuBtn).waitFor({ state: 'visible', timeout: 5000 });
+    
     await this.page.locator(this.moduleMenuBtn).click();
+   
     
   }
 }
