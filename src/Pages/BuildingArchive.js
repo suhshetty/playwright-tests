@@ -1,8 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
 
-
-
 class BuildingArchive extends BasePage {
   constructor(page) {
     super(page);

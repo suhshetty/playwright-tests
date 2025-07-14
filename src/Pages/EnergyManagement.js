@@ -7,12 +7,12 @@ class EnergyManagement extends BasePage {
     this.page = page;
 
     // Module locators
-    this.projectManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Energy management']";
+    this.energyManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Energy management']";
 
     // Sub module locators
     this.EnergyZonesOverview = "div[aria-label='Energy zones overview Process step']";
     this.WeatherStationsOverview = "div[aria-label='Weather stations overview Process step']";
-    this.EnergyProviders = "div[aria-label='Energy providers Process step']";
+    this.EnergyProviders1 = "div[aria-label='Energy providers Process step']";
     this.GaugesOverview = "div[aria-label='Gauges overview Process step']";
     this.EnergyProjects = "div[aria-label='Energy projects Process step']";
     this.Configuration = "div[aria-label='Configuration Process step']";
@@ -24,10 +24,11 @@ class EnergyManagement extends BasePage {
     // Sub Types locators ( Sub module : Work Stations Overview )
     this.WeatherStations = "div[aria-label='Weather stations Process step item']";
     this.GlobalWeatherStations = "div[aria-label='Global weather stations Process step item']"; 
-    this.WeatherStationsNormalPeriod = "div[aria-label='Weather stations normal period Process step item']";
+    this.WeatherStationNormalPeriod = "div[aria-label='Weather station normal periods Process step item']";
+
 
     // Sub Types locators ( Sub module : Energy Providers )
-    this.EnergyProviders = "div[aria-label='Energy providers Process step item']";
+    this.EnergyProviders2 = "div[aria-label='Energy providers Process step item']";
 
     // Sub Types locators ( Sub module : Gauges Overview )
     this.EnergyZones = "div[aria-label='Energy zones Process step item']";
@@ -64,8 +65,8 @@ class EnergyManagement extends BasePage {
    }
 
    async gotoEnergyProviders() {
-     await this.page.locator(this.EnergyProviders).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.EnergyProviders).click();
+     await this.page.locator(this.EnergyProviders1).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.EnergyProviders1).click();
    }
 
    async gotoGaugesOverview() { 
@@ -105,15 +106,15 @@ class EnergyManagement extends BasePage {
       await this.page.locator(this.GlobalWeatherStations).click();
     }
 
-    async gotoWeatherStationsNormalPeriod() {
-      await this.page.locator(this.WeatherStationsNormalPeriod).waitFor({ state: 'visible', timeout: 5000 });
-      await this.page.locator(this.WeatherStationsNormalPeriod).click();
+    async gotoWeatherStationNormalPeriod() {
+      await this.page.locator(this.WeatherStationNormalPeriod).waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.locator(this.WeatherStationNormalPeriod).click();
     }
 
     // Navigate to sub types ( Sub module : Energy Providers  )
-    async gotoEnergyProviders() {
-      await this.page.locator(this.EnergyProviders).waitFor({ state: 'visible', timeout: 5000 });
-      await this.page.locator(this.EnergyProviders).click();
+    async gotoEnergyProvidersSubType() {
+      await this.page.locator(this.EnergyProviders2).waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.locator(this.EnergyProviders2).click();
     }
 
     // Navigate to sub types ( Sub module : Gauges Overview  )

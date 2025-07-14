@@ -7,11 +7,11 @@ class CleaningManagement extends BasePage {
     this.page = page;
 
     // Module locators
-    this.projectManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Cleaning management']";
+    this.cleaningManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Cleaning management']";
 
     // Sub module locators
     this.LocationsOverview = "div[aria-label='Locations overview Process step']";
-    this.CleaningZones = "div[aria-label='Cleaning zones Process step']";
+    this.CleaningZones1 = "div[aria-label='Cleaning zones Process step']";
     this.CleaningPlanning = "div[aria-label='Cleaning planning Process step']";
     this.CleaningPlanningZones = "div[aria-label='Cleaning planning zones Process step']";
     this.Admin = "div[aria-label='Admin Process step']";
@@ -22,7 +22,7 @@ class CleaningManagement extends BasePage {
      this.BuildingSpaces = "div[aria-label='Building spaces Process step item']";
 
      // Sub Types locators ( Sub module : Cleaning Zones )
-     this.CleaningZones = "div[aria-label='Cleaning zones Process step item']";
+     this.CleaningZones2 = "div[aria-label='Cleaning zones Process step item']";
 
      // Sub Types locators ( Sub module : Cleaning Planning )
      this.BuildingSpaces = "div[aria-label='Building spaces Process step item']";
@@ -67,8 +67,8 @@ class CleaningManagement extends BasePage {
    }
 
   async gotoCleaningZones() {
-     await this.page.locator(this.CleaningZones).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.CleaningZones).click();
+     await this.page.locator(this.CleaningZones1).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.CleaningZones1).click();
    }
 
    async gotoCleaningPlanning() {
@@ -104,8 +104,8 @@ class CleaningManagement extends BasePage {
 
     // Navigate to sub types ( Sub module : Cleaning Zones  )
     async gotoCleaningZonesSubType() {
-      await this.page.locator(this.CleaningZones).waitFor({ state: 'visible', timeout: 5000 });
-      await this.page.locator(this.CleaningZones).click();
+      await this.page.locator(this.CleaningZones2).waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.locator(this.CleaningZones2).click();
     }
 
     // Navigate to sub types ( Sub module : Cleaning Planning )

@@ -34,10 +34,10 @@ class AssetManagement extends BasePage {
     this.EquipmentGroups = "div[aria-label='Equipment groups Process step item']";
     this.EquipmentTypes = "div[aria-label='Equipment types Process step item']";
     this.ProductTypes = "div[aria-label='Product types Process step item']";
-    this.ServicePartnersGlobal = "div[aria-label='Service partner globals Process step item']";
+    this.ServicePartnerGlobal = "div[aria-label='Service partner globals Process step item']";
 
     // Sub Types locators ( Sub module : Configuration )
-    this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
+    this.AccessConfigurations = "div[aria-label='Configuration Process step']";
   }
 
   async gotoAssetManagement() {

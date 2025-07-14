@@ -193,8 +193,8 @@ class FinanceManagement extends BasePage {
 
     // Navigate to sub types ( Sub module : Main Budget Frames)
     async gotoBudgetTargetAreas() {
-       await this.page.locator(this.BudgetTargetAreas).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.BudgetTargetAreas).click();
+       await this.page.locator(this.BudgetForTargetAreas).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.BudgetForTargetAreas).click();
     }
 
     async gotoBudgetFilloutTargetAreas() {

@@ -1,4 +1,4 @@
-// tests/TestNavigation.spec.js
+// tests/BuildingArchiveNavigation.spec.js
 const { test } = require('@playwright/test');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -7,7 +7,7 @@ const { loginAndInitialize } = require('../src/testSetup');
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../src/.env') });
 
-test('Test Navigation', async ({ page, context }) => {
+test('Test Navigation Building Archive', async ({ page, context }) => {
   const baseUrl = process.env.URL1; 
 
   // Login and initialize Page Objects with base URL

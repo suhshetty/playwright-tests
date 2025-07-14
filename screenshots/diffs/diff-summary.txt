@@ -1,0 +1,14 @@
+Visual Comparison Summary (14/7/2025, 11:45:28 am):
+
+🟩 gotoHomePage: No visual difference
+🟩 gotoModuleMenu: No visual difference
+🟩 gotoDocumentSearches: No visual difference
+gotoPictures: Error - Image sizes do not match.
+🟩 gotoDrawings: No visual difference
+🟩 gotoDocuments: No visual difference
+🟩 gotoDocumentStack: No visual difference
+🟩 gotoManualChapters: No visual difference
+🟩 gotoManualDefinitions: No visual difference
+🟩 gotoManualSubscribers: No visual difference
+🟩 gotoConfiguration: No visual difference
+🟩 gotoAccessConfigurations: No visual difference
