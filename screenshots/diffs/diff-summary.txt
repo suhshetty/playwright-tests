@@ -1,0 +1,20 @@
+Visual Comparison Summary (14/7/2025, 6:38:18 pm):
+
+gotoHomePage: Error - Image sizes do not match.
+gotoModuleMenu: Error - Image sizes do not match.
+gotoBuildingSpaceOverview: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoBuildingSpaceOverview.png'
+gotoLocateOrganisation: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoLocateOrganisation.png'
+gotoLocateEquipment: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoLocateEquipment.png'
+gotoKeyManagement: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoKeyManagement.png'
+gotoConfiguration: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoConfiguration.png'
+gotoTestÞT: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoTestÞT.png'
+🟩 gotoBuildingSpaces: No visual difference
+🟩 gotoBuildingSpaceInformation: No visual difference
+🟥 gotoDrawing: 45 pixel(s) difference
+🟩 gotoLocateOrganisationSubType: No visual difference
+🟥 gotoObjectOwner: 16715 pixel(s) difference
+🟩 gotoSpaceManagementScenario: No visual difference
+🟩 gotoLocateEquipmentSubType: No visual difference
+🟩 gotoKeyToLock: No visual difference
+🟩 gotoAccessConfiguration: No visual difference
+🟩 gotoWorkOrderHours: No visual difference

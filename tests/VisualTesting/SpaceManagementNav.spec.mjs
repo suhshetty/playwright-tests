@@ -13,6 +13,7 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
+  'gotoHomePage', 'gotoModuleMenu', 
   'gotoBuildingSpaceOverview', 'gotoLocateOrganisation', 'gotoLocateEquipment',
   'gotoKeyManagement', 'gotoConfiguration', 'gotoTestÞT',
   'gotoBuildingSpaces', 'gotoBuildingSpaceInformation', 'gotoDrawing',

@@ -9,6 +9,7 @@ const DocumentManagement = require('../../src/Pages/DocumentManagement');
 const EnergyManagement = require('../../src/Pages/EnergyManagement');
 const EnvironmentalManagement = require('../../src/Pages/EnvironmentalManagement');
 const FinanceManagement = require('../../src/Pages/FinanceManagement');
+const SpaceManagement = require('../../src/Pages/SpaceManagement');
 
 async function loginAndInitialize({ page, context, baseUrl }) {
   // Clear cookies and cache before login
@@ -26,12 +27,13 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const energyManagement = new EnergyManagement(page);
   const environmentalManagement = new EnvironmentalManagement(page);
   const financeManagement = new FinanceManagement(page);
+  const spaceManagement = new SpaceManagement(page);
 
   // Perform login using dynamic URL
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement };
+  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement };
 }
 
 module.exports = { loginAndInitialize };
