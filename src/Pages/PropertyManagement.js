@@ -26,7 +26,7 @@ class PropertyManagement extends BasePage {
     this.Housings = "div[aria-label='Housings Process step item']";
     this.BuildingSpaces = "div[aria-label='Building spaces Process step item']";
     this.HousingSpaces = "div[aria-label='Housing Spaces Process step item']";
-    this.BuildingSpaceInformants = "div[aria-label='Building space Informations Process step item']";
+    this.BuildingSpaceInformations = "div[aria-label='Building space Informations Process step item']";
     this.CapacityObjects = "div[aria-label='Capacity objects Process step item']";
     this.LocateCapacityObjects = "div[aria-label='Locate capacity objects Process step item']";
     this.LocationCostDivision = "div[aria-label='Location cost divisions Process step item']";
@@ -49,7 +49,7 @@ class PropertyManagement extends BasePage {
     this.CostDistributionAgreements = "div[aria-label='Cost distribution agreements Process step item']";
     this.CostDistributionAgreementGroups = "div[aria-label='Cost distribution agreement groups Process step item']";
     this.Products = "div[aria-label='Products Process step item']";
-    this.InvoiceBasis = "div[aria-label='Invoice basis Process step item']";
+    this.InvoiceBasisLCF = "div[aria-label='Invoice basis Process step item']";
 
     // Sub Types locators ( Sub module : Lease Model )
     this.LeaseExaminations = "div[aria-label='Lease Examinations Process step item']";
@@ -67,7 +67,7 @@ class PropertyManagement extends BasePage {
     this.PurchaseContracts = "div[aria-label='Purchase contracts Process step item']";
     this.PurchaseContractReminders = "div[aria-label='Purchase contract reminders Process step item']";
     this.PurchaseContractPaymentItems = "div[aria-label='Purchase contract payment items Process step item']";
-    this.InvoiceBasis = "div[aria-label='Invoice basis Process step item']";
+    this.InvoiceBasisPCO = "div[aria-label='Invoice basis Process step item']";
 
     // Sub Types locators ( Sub module : Lease Holders )
     this.LeaseHolderOrganisations = "div[aria-label='Lease holder organisations Process step item']";
@@ -93,13 +93,13 @@ class PropertyManagement extends BasePage {
     this.MeetingRoomReservations = "div[aria-label='Meeting room reservations Process step item']";
     this.MeetingRoomCateringOrders = "div[aria-label='Meeting room catering orders Process step item']";
     this.MeetingRoomEquipmentOrders = "div[aria-label='Meeting room equipment orders Process step item']";
-    this.InvoiceBasis = "div[aria-label='Invoice basis Process step item']";
+    this.InvoiceBasisRB = "div[aria-label='Invoice basis Process step item']";
 
     // Sub Types locators ( Sub module : Data Set up )
     this.PriceIndexes = "div[aria-label='Price indexes Process step item']";
 
     // Sub Types locators ( Sub module : Configurations )
-    this.Configuration = "div[aria-label='Access configurations Process step item']";
+    this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
   }
 
   async clickpropertyManagement() {
@@ -181,9 +181,9 @@ class PropertyManagement extends BasePage {
      await this.page.locator(this.HousingSpaces).click();
    }
 
-   async gotoBuildingSpaceInformants() {
-     await this.page.locator(this.BuildingSpaceInformants).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.BuildingSpaceInformants).click();
+   async gotoBuildingSpaceInformations() {
+     await this.page.locator(this.BuildingSpaceInformations).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.BuildingSpaceInformations).click();
    }
 
    async gotoCapacityObjects() {
@@ -280,9 +280,9 @@ class PropertyManagement extends BasePage {
      await this.page.locator(this.Products).click();
    }
 
-   async gotoInvoiceBasis() {
-     await this.page.locator(this.InvoiceBasis).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.InvoiceBasis).click();
+   async gotoInvoiceBasisLCF() {
+     await this.page.locator(this.InvoiceBasisLCF).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.InvoiceBasisLCF).click();
    }
 
    // Navigate to sub types ( Sub module : Lease Model)
@@ -355,9 +355,9 @@ class PropertyManagement extends BasePage {
      await this.page.locator(this.PurchaseContractPaymentItems).click();
    }
 
-   async gotoInvoiceBasis() {
-     await this.page.locator(this.InvoiceBasis).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.InvoiceBasis).click();
+   async gotoInvoiceBasisPCO() {
+     await this.page.locator(this.InvoiceBasisPCO).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.InvoiceBasisPCO).click();
    }
 
     // Navigate to sub types ( Sub module : Lease Holders )
@@ -453,9 +453,9 @@ class PropertyManagement extends BasePage {
          await this.page.locator(this.MeetingRoomEquipmentOrders).click();
        }
 
-       async gotoInvoiceBasis() {
-         await this.page.locator(this.InvoiceBasis).waitFor({ state: 'visible', timeout: 5000 });
-         await this.page.locator(this.InvoiceBasis).click();
+       async gotoInvoiceBasisRB() {
+         await this.page.locator(this.InvoiceBasisRB).waitFor({ state: 'visible', timeout: 5000 });
+         await this.page.locator(this.InvoiceBasisRB).click();
        }
        
         // Navigate to sub types ( Sub module : Data Set up )
@@ -467,9 +467,9 @@ class PropertyManagement extends BasePage {
 
        // Navigate to sub types ( Sub module : Configurations)
 
-       async gotoConfigurations() {
-         await this.page.locator(this.Configuration).waitFor({ state: 'visible', timeout: 5000 });
-         await this.page.locator(this.Configuration).click();
+       async gotoAccessConfiguration() {
+         await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
+         await this.page.locator(this.AccessConfiguration).click();
        }
 
 }

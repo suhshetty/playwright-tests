@@ -16,19 +16,19 @@ const labels = [
 'gotoLeaseObjects','gotoLeaseContractsOverview','gotoLeaseContractFinance','gotoLeaseModel',
 'gotoPurchaseContractsOverview','gotoLeaseHolders','gotoHousingBrokerage','gotoMovingInOut',
 'gotoRoomBooking','gotoDataSetup','gotoConfiguration','gotoHousings','gotoBuildingSpaces',
-'gotoHousingSpaces','gotoBuildingSpaceInformants','gotoCapacityObjects','gotoLocateCapacityObjects',
+'gotoHousingSpaces','gotoBuildingSpaceInformations','gotoCapacityObjects','gotoLocateCapacityObjects',
 'gotoLocationCostDivision','gotoWorkOrderPayers','gotoPublishedPriceLists','gotoHeadLeaseContracts',
 'gotoLeaseContracts','gotoSubLeaseContracts','gotoLeaseContractReminders','gotoLeaseContractRenegotiations',
 'gotoLeaseContractUtilizations','gotoSiteLeases','gotoLeaseContractPaymentItems','gotoLeaseContractPayments',
 'gotoLeaseContractCustomerRevenues','gotoCostDistributionAgreements','gotoCostDistributionAgreementGroups',
-'gotoProducts','gotoInvoiceBasis','gotoLeaseExaminations','gotoSiteKeyFigures','gotoSiteBasicCosts',
+'gotoProducts','gotoInvoiceBasisLCF','gotoLeaseExaminations','gotoSiteKeyFigures','gotoSiteBasicCosts',
 'gotoRevenues','gotoCostItems','gotoLoans','gotoSpaceUsages','gotoAnnualPercentages','gotoLeaseHistories',
-'gotoPurchaseContracts','gotoPurchaseContractReminders','gotoPurchaseContractPaymentItems',
+'gotoPurchaseContracts','gotoPurchaseContractReminders','gotoPurchaseContractPaymentItems', 'gotoInvoiceBasisPCO',
 'gotoLeaseHolderOrganisations','gotoResidents','gotoOrganicVatDeclarations','gotoCompanies',
 'gotoPersonsUsers','gotoFailures','gotoLeaseApplications','gotoOpportunities','gotoOpportunityComments',
 'gotoWorkOrders','gotoChecklists','gotoInspections','gotoCheckItems','gotoHousingWorkProcessRules',
-'gotoMeetingRoomReservations','gotoMeetingRoomCateringOrders','gotoMeetingRoomEquipmentOrders',
-'gotoPriceIndexes','gotoConfigurations'
+'gotoMeetingRoomReservations','gotoMeetingRoomCateringOrders','gotoMeetingRoomEquipmentOrders','gotoInvoiceBasisRB',
+'gotoPriceIndexes','gotoAccessConfigurations'
 ];
 
 // Run the visual test for a given URL environment
@@ -47,11 +47,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickpropertyManagement', async () => {
     await propertyManagement.clickpropertyManagement();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickpropertyManagement');
   });
 
 // Lease Objects Module
 await safeStep('gotoLeaseObjects', async () => {
   await propertyManagement.gotoLeaseObjects();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseObjects');
 });
 
 await safeStep('gotoHousings', async () => {
@@ -69,9 +71,9 @@ await safeStep('gotoHousingSpaces', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingSpaces');
 });
 
-await safeStep('gotoBuildingSpaceInformantions', async () => {
-  await propertyManagement.gotoBuildingSpaceInformantions();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceInformantions');
+await safeStep('gotoBuildingSpaceInformations', async () => {
+  await propertyManagement.gotoBuildingSpaceInformations();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceInformations');
 });
 
 await safeStep('gotoCapacityObjects', async () => {
@@ -102,6 +104,7 @@ await safeStep('gotoPublishedPriceLists', async () => {
 // Lease Contracts Overview Module
 await safeStep('gotoLeaseContractsOverview', async () => {
   await propertyManagement.gotoLeaseContractsOverview();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractsOverview');
 });
 
 await safeStep('gotoHeadLeaseContracts', async () => {
@@ -142,6 +145,7 @@ await safeStep('gotoSiteLeases', async () => {
 // Lease Contract Finance Module
 await safeStep('gotoLeaseContractFinance', async () => {
   await propertyManagement.gotoLeaseContractFinance();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractFinance');
 });
 
 await safeStep('gotoLeaseContractPaymentItems', async () => {
@@ -174,15 +178,16 @@ await safeStep('gotoProducts', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoProducts');
 });
 
-await safeStep('gotoInvoiceBasis', async () => {
-  await propertyManagement.gotoInvoiceBasis();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasis');
+await safeStep('gotoInvoiceBasisLCF', async () => {
+  await propertyManagement.gotoInvoiceBasisLCF();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisLCF');
 });
 
 
 //Lease Model Module
 await safeStep('gotoLeaseModel', async () => {
   await propertyManagement.gotoLeaseModel();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseModel');
 });
 
 await safeStep('gotoLeaseExaminations', async () => {
@@ -238,6 +243,7 @@ await safeStep('gotoLeaseHistories', async () => {
 // Purchase Contracts Overview Module
 await safeStep('gotoPurchaseContractsOverview', async () => {
   await propertyManagement.gotoPurchaseContractsOverview();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractsOverview');
 });
 
 await safeStep('gotoPurchaseContracts', async () => {
@@ -255,9 +261,16 @@ await safeStep('gotoPurchaseContractPaymentItems', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractPaymentItems');
 });
 
+await safeStep('gotoInvoiceBasisPCO', async () => {
+  await propertyManagement.gotoInvoiceBasisPCO();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisPCO');
+});
+
+
 // Lease Holders Module
 await safeStep('gotoLeaseHolders', async () => {
   await propertyManagement.gotoLeaseHolders();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseHolders');
 });
 
 await safeStep('gotoLeaseHolderOrganisations', async () => {
@@ -293,6 +306,7 @@ await safeStep('gotoFailures', async () => {
 //Housing Brokerage Module
 await safeStep('gotoHousingBrokerage', async () => {
   await propertyManagement.gotoHousingBrokerage();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingBrokerage');
 });
 
 await safeStep('gotoLeaseApplications', async () => {
@@ -313,6 +327,7 @@ await safeStep('gotoOpportunityComments', async () => {
 //Moving In/Out Module
 await safeStep('gotoMovingInOut', async () => {
   await propertyManagement.gotoMovingInOut();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoMovingInOut');
 });
 
 await safeStep('gotoWorkOrders', async () => {
@@ -343,6 +358,7 @@ await safeStep('gotoHousingWorkProcessRules', async () => {
 //Room Booking Module
 await safeStep('gotoRoomBooking', async () => {
   await propertyManagement.gotoRoomBooking();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoRoomBooking');
 });
 
 await safeStep('gotoMeetingRoomReservations', async () => {
@@ -360,9 +376,16 @@ await safeStep('gotoMeetingRoomEquipmentOrders', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoMeetingRoomEquipmentOrders');
 });
 
+await safeStep('gotoInvoiceBasisRB', async () => {
+  await propertyManagement.gotoInvoiceBasisRB();  
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisRB');
+});
+
+
 //Data Setup Module
 await safeStep('gotoDataSetup', async () => {
   await propertyManagement.gotoDataSetup();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
 });
 
 await safeStep('gotoPriceIndexes', async () => {
@@ -374,7 +397,14 @@ await safeStep('gotoPriceIndexes', async () => {
 // Configuration Module
 await safeStep('gotoConfiguration', async () => {
   await propertyManagement.gotoConfiguration();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
 });
+
+await safeStep('gotoAccessConfigurations', async () => {
+  await propertyManagement.gotoAccessConfiguration();
+  await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfigurations');
+});
+
 
 
 };
