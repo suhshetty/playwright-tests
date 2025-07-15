@@ -7,7 +7,7 @@ class HealthAndSafetyManagement extends BasePage {
     this.page = page;
 
     // Module locators
-    this.humanResources = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Health and Safety Management']";
+    this.healthAndSafetyManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Health and Safety Management']";
 
     // Sub module locators
     this.GeneralOverview = "div[aria-label='General overview Process step']";
@@ -52,7 +52,7 @@ class HealthAndSafetyManagement extends BasePage {
 
     async clickHealthAndSafetyManagement() {
         await this.page.waitForTimeout(3000);
-        const HealthAndSafetyManagement = this.page.locator(this.HealthAndSafetyManagement).first();
+        const HealthAndSafetyManagement = this.page.locator(this.healthAndSafetyManagement).first();
         await HealthAndSafetyManagement.waitFor({ state: 'attached', timeout: 10000 });
         await HealthAndSafetyManagement.evaluate((node) => node.click());
     }
@@ -182,6 +182,7 @@ class HealthAndSafetyManagement extends BasePage {
 
 }
 
+module.exports = HealthAndSafetyManagement;
 
 
 
