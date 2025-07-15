@@ -7,7 +7,7 @@ class DigitalDelivery extends BasePage {
     this.page = page;
 
     // Module locators
-    this.DigitalDelivery = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Digital delivery']";
+    this.digitalDelivery = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Digital delivery']";
 
     // Sub module locators
     this.DigitalDeliverySubModule = "div[aria-label='Digital delivery Process step']";
@@ -39,9 +39,9 @@ class DigitalDelivery extends BasePage {
 
   async clickDigitalDelivery() {
     await this.page.waitForTimeout(3000);
-    const DigitalDelivery = this.page.locator(this.DigitalDelivery).first();
-    await DigitalDelivery.waitFor({ state: 'attached', timeout: 10000 });
-    await DigitalDelivery.evaluate((node) => node.click());
+    const digitalDelivery = this.page.locator(this.digitalDelivery).first();
+    await digitalDelivery.waitFor({ state: 'attached', timeout: 10000 });
+    await digitalDelivery.evaluate((node) => node.click());
   }
 
   // Navigate to sub modules
@@ -133,3 +133,5 @@ class DigitalDelivery extends BasePage {
     await this.page.locator(this.AccessConfiguration).click();
   } 
 }
+
+module.exports = DigitalDelivery;

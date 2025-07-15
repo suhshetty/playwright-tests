@@ -7,7 +7,7 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
     this.page = page;
 
     // Module locators
-    this.ConditionAssessmentAndMaintenanceNeeds = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Condition assessment and maintenance needs']";
+    this.conditionAssessmentAndMaintenanceNeeds = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Condition assessment and maintenance needs']";
 
     // Sub module locators
     this.PlanningOfInspection = "div[aria-label='Planning of inspections Process step']";
@@ -24,7 +24,7 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
     this.MaintenanceIncidentSubType = "div[aria-label='Maintenance incidents Process step item']";
 
     // Sub Types locators ( Sub module : Condition Assessment )
-    this.ConditionAssessmentSubType = "div[aria-label='Condition assessment Process step item']";
+    this.ConditionAssessmentSubType = "div[aria-label='Condition assessments Process step item']";
     this.ConditionRegistration = "div[aria-label='Condition registrations Process step item']";
     this.Condition = "div[aria-label='Conditions Process step item']";
     this.FunctionalSystem = "div[aria-label='Functional systems Process step item']";
@@ -33,7 +33,7 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
 
     // Sub Types locators ( Sub module : Data Setup )
     this.ConditionAssessmentType = "div[aria-label='Condition assessment types Process step item']";
-    this.StandardCondition = "div[aria-label='Condition assessment templates Process step item']";
+    this.StandardCondition = "div[aria-label='Standard conditions Process step item']";
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
@@ -41,9 +41,9 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
 
   async clickConditionAssessmentAndMaintenanceNeeds() {
     await this.page.waitForTimeout(3000);
-    const ConditionAssessmentAndMaintenanceNeeds = this.page.locator(this.ConditionAssessmentAndMaintenanceNeeds).first();
-    await ConditionAssessmentAndMaintenanceNeeds.waitFor({ state: 'attached', timeout: 10000 });
-    await ConditionAssessmentAndMaintenanceNeeds.evaluate((node) => node.click());
+    const conditionAssessmentAndMaintenanceNeeds = this.page.locator(this.conditionAssessmentAndMaintenanceNeeds).first();
+    await conditionAssessmentAndMaintenanceNeeds.waitFor({ state: 'attached', timeout: 10000 });
+    await conditionAssessmentAndMaintenanceNeeds.evaluate((node) => node.click());
   }
 
     // Navigate to sub modules
@@ -138,6 +138,8 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
     }
 
 }
+
+module.exports = ConditionAssessmentAndMaintenanceNeeds;
 
 
 

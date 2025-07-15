@@ -12,6 +12,7 @@ const FinanceManagement = require('../../src/Pages/FinanceManagement');
 const SpaceManagement = require('../../src/Pages/SpaceManagement');
 const PropertyManagement = require('../../src/Pages/PropertyManagement');
 const ConditionAssessmentAndMaintenanceNeeds = require('../../src/Pages/ConditionAssessmentAndMaintenanceNeeds');
+const DigitalDelivery = require('../../src/Pages/DigitalDelivery');
 
 async function loginAndInitialize({ page, context, baseUrl }) {
   // Clear cookies and cache before login
@@ -32,12 +33,13 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const spaceManagement = new SpaceManagement(page);
   const propertyManagement = new PropertyManagement(page);
   const conditionAssessmentAndMaintenanceNeeds = new ConditionAssessmentAndMaintenanceNeeds(page);
+  const digitalDelivery = new DigitalDelivery(page);
 
   // Perform login using dynamic URL
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds };
+  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, digitalDelivery };
 }
 
 module.exports = { loginAndInitialize };
