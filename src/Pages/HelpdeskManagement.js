@@ -8,7 +8,7 @@ class HelpdeskManagement extends BasePage {
     this.page = page;
 
     // Module locators
-    this.projectManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Helpdesk / service management']";
+    this.helpdeskManagement  = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Helpdesk / service management']";
 
     // Sub module locators
     this.Summary = "div[aria-label='Summary Process step']";
@@ -22,7 +22,7 @@ class HelpdeskManagement extends BasePage {
     // Sub Types locators ( Sub module : Summary)
     this.Failures = "div[aria-label='Failures Process step item']";
     this.Issues = "div[aria-label='Issues Process step item']";
-    this.ConditionAssessmentType = "div[aria-label='Condition assessment Process step item']";
+    this.ConditionAssessmentType = "div[aria-label='Condition assessment type Process step item']";
     this.ReleaseItems = "div[aria-label='Release items Process step item']";
     this.IncidentCategory1s = "div[aria-label='Incident category 1s Process step item']";
     this.IncidentCategory2s = "div[aria-label='Incident category 2s Process step item']";
