@@ -105,28 +105,28 @@ class FinanceManagement extends BasePage {
     }
 
     async gotoFixedAssetsDepreciations() {
-       await this.page.locator(this.FixedAssets).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.FixedAssets).click();
+       await this.page.locator(this.FixedAssetsDepreciations).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.FixedAssetsDepreciations).click();
     }   
 
     async gotoInternOrganisationAndCreditors() {
-       await this.page.locator(this.Companies).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.Companies).click();
+       await this.page.locator(this.InternOrganisationsCreditors).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.InternOrganisationsCreditors).click();
     }   
 
     async gotoFinanceDimensions() {
-       await this.page.locator(this.Accounts).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.Accounts).click();
+       await this.page.locator(this.FinanceDimensions).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.FinanceDimensions).click();
     }   
 
     async gotoFinanceAdministrationSettings() {
-       await this.page.locator(this.ConfigureFinanceSettings).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.ConfigureFinanceSettings).click();
+       await this.page.locator(this.FinanceAdministrationSettings).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.FinanceAdministrationSettings).click();
     }   
 
     async gotoConfiguration() { 
-       await this.page.locator(this.AccessConfigurations).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.AccessConfigurations).click();
+       await this.page.locator(this.Configuration).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.Configuration).click();
     }
 
     // Sub Types locators ( Sub module : Invoice Transactions )
@@ -197,9 +197,9 @@ class FinanceManagement extends BasePage {
        await this.page.locator(this.BudgetForTargetAreas).click();
     }
 
-    async gotoBudgetFilloutTargetAreas() {
-       await this.page.locator(this.BudgetFilloutTargetAreas).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.BudgetFilloutTargetAreas).click();
+    async gotoBudgetFilloutForTargetAreas() {
+       await this.page.locator(this.BudgetFilloutForTargetAreas).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.BudgetFilloutForTargetAreas).click();
     }
 
     async gotoBudgetForRegions() {
@@ -222,9 +222,9 @@ class FinanceManagement extends BasePage {
        await this.page.locator(this.BudgetFilloutForPortfolios).click();
     }
 
-    async gotoBudgetFilloutsForPortfolios() {
-       await this.page.locator(this.BudgetFilloutsForPortfolios).waitFor({ state: 'visible', timeout: 5000 });
-       await this.page.locator(this.BudgetFilloutsForPortfolios).click();
+    async gotoBudgetFilloutForPortfolios() {
+       await this.page.locator(this.BudgetFilloutForPortfolios).waitFor({ state: 'visible', timeout: 5000 });
+       await this.page.locator(this.BudgetFilloutForPortfolios).click();
     }
 
     async gotoBudgetForObjects() {

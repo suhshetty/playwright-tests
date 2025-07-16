@@ -41,13 +41,13 @@ await financeManagement.gotoBudgetFrameYears();
 await financeManagement.gotoWorkOrders();
 
 // Main Budget Frames
+await financeManagement.gotoMainBudgetFrames();
 await financeManagement.gotoBudgetTargetAreas();
-await financeManagement.gotoBudgetFilloutTargetAreas();
+await financeManagement.gotoBudgetFilloutForTargetAreas();
 await financeManagement.gotoBudgetForRegions();
 await financeManagement.gotoBudgetFilloutsForRegions();
 await financeManagement.gotoBudgetForPortfolios();
 await financeManagement.gotoBudgetFilloutForPortfolios();
-await financeManagement.gotoBudgetFilloutsForPortfolios();
 await financeManagement.gotoBudgetForObjects();
 await financeManagement.gotoBudgetFilloutForObjects();
 await financeManagement.gotoAnnualMaintenanceBudgets();
