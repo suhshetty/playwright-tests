@@ -7,7 +7,7 @@ class OperationAndMaintenance extends BasePage {
     this.page = page;
 
     // Module locators
-    this.OperationAndMaintenance = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Operation and maintenance']";
+    this.operationAndMaintenance = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Operation and maintenance']";
 
     // Sub module locators
     this.MaintenanceIncidentsOverview= "div[aria-label='Maintenance incidents overview Process step']";
@@ -45,13 +45,13 @@ class OperationAndMaintenance extends BasePage {
     this.CleaningTask = "div[aria-label='Cleaning tasks Process step item']";
     this.IncidentCategory1s = "div[aria-label='Incident category 1s Process step item']";
     this.IncidentCategory2s = "div[aria-label='Incident category 2s Process step item']";
-    this.AllIncidents = "div[id='All incidents Process step item']";
+    this.AllIncidents = "div[aria-label='All incidents Process step item']";
 
     // Sub Types locators ( Sub module : Work Orders Overview )
     this.WorkOrder = "div[aria-label='Work orders Process step item']";
     this.WorkOrderExternal= "div[aria-label='Work orders (External) Process step item']";
-    this.WorkOrderAssignedCost = "div[aria-label='Work order assigned costs Process step item']";
-    this.TimeRegistration = "div[aria-label='Time registration Process step item']";
+    this.WorkOrderAssignedCostWOO = "div[aria-label='Work order assigned costs Process step item']";
+    this.TimeRegistrationWOO = "div[aria-label='Time registration Process step item']";
     this.Inspections = "div[aria-label='Inspections Process step item']";
     this.ReccuringIncidents = "div[aria-label='Recurring incidents Process step item']";
     this.Checklists = "div[aria-label='Checklists Process step item']";
@@ -60,8 +60,8 @@ class OperationAndMaintenance extends BasePage {
 
     // Sub Types locators ( Sub module : Costs and Resource Usage )
     this.ElectronicInvoices = "div[aria-label='Electronic invoices Process step item']";
-    this.WorkOrderAssignedCost = "div[aria-label='Work order assigned costs Process step item']";
-    this.TimeRegistration = "div[aria-label='Time registration Process step item']";
+    this.WorkOrderAssignedCostCRU = "div[aria-label='Work order assigned costs Process step item']";
+    this.TimeRegistrationCRU = "div[aria-label='Time registration Process step item']";
     this.WorkOrderMaterial = "div[aria-label='Work order materials Process step item']";
     this.Transaction = "div[aria-label='Transactions Process step item']";
 
@@ -81,7 +81,7 @@ class OperationAndMaintenance extends BasePage {
     this.StandardChecklist = "div[aria-label='Standard checklists Process step item']";
     this.StandardCheckPoint = "div[aria-label='Standard checkpoints Process step item']";
     this.CheckpointGroups = "div[aria-label='Checkpoint groups Process step item']";
-    this.PendingStandardTsksOnSite = "div[aria-label='Pending standard tasks on site Process step item']";
+    this.PendingStandardTaskOnSite = "div[aria-label='Pending standard tasks on site Process step item']";
 
     // Sub Types locators ( Sub module : Data Setup )
     this.TargetArea = "div[aria-label='Target areas Process step item']";
@@ -100,7 +100,7 @@ class OperationAndMaintenance extends BasePage {
   }
   async clickOperationAndMaintenance() {
     await this.page.waitForTimeout(3000);
-    const operationAndMaintenance = this.page.locator(this.OperationAndMaintenance);
+    const operationAndMaintenance = this.page.locator(this.operationAndMaintenance).first();
     await operationAndMaintenance.waitFor({ state: 'attached', timeout: 10000 });
     await operationAndMaintenance.evaluate((node) => node.click());
   } 
@@ -261,14 +261,14 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.WorkOrderExternal).click();
   }
 
-  async gotoWorkOrderAssignedCost() {
-    await this.page.locator(this.WorkOrderAssignedCost).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.WorkOrderAssignedCost).click();
+  async gotoWorkOrderAssignedCostWOO() {
+    await this.page.locator(this.WorkOrderAssignedCostWOO).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.WorkOrderAssignedCostWOO).click();
   }
 
-  async gotoTimeRegistration() {
-    await this.page.locator(this.TimeRegistration).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.TimeRegistration).click();
+  async gotoTimeRegistrationWOO() {
+    await this.page.locator(this.TimeRegistrationWOO).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.TimeRegistrationWOO).click();
   }
 
   async gotoInspections() {
@@ -300,6 +300,16 @@ class OperationAndMaintenance extends BasePage {
   async gotoElectronicInvoices() {
     await this.page.locator(this.ElectronicInvoices).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.ElectronicInvoices).click();
+  }
+
+  async gotoWorkOrderAssignedCost() {
+    await this.page.locator(this.WorkOrderAssignedCostCRU).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.WorkOrderAssignedCostCRU).click();
+  }
+
+  async gotoTimeRegistration() {
+    await this.page.locator(this.TimeRegistrationCRU).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.TimeRegistrationCRU).click();
   }
 
   async gotoWorkOrderMaterial() {
@@ -437,4 +447,6 @@ class OperationAndMaintenance extends BasePage {
   }
 
 }
+
+module.exports = OperationAndMaintenance;
 
