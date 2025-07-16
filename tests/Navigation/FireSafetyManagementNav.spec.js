@@ -50,17 +50,17 @@ test('Test Navigation Fire Safety Management', async ({ page, context }) => {
 
   // === Activities (Local) ===
   await fireSafetyManagement.gotoActivitiesLocal();
-  await fireSafetyManagement.gotoTaskManagementFireSafety_Local();
-  await fireSafetyManagement.gotoWorkOrderFireSafety_Local();
-  await fireSafetyManagement.gotoChecklistsFireSafety_Local();
-  await fireSafetyManagement.gotoIncidentFireSafety_Local();
+  await fireSafetyManagement.gotoTaskManagementFireSafetyLocal();
+  await fireSafetyManagement.gotoWorkOrderFireSafetyLocal();
+  await fireSafetyManagement.gotoChecklistsFireSafetyLocal();
+  await fireSafetyManagement.gotoIncidentFireSafetyLocal();
 
   // === Activities (Customer) ===
   await fireSafetyManagement.gotoActivitiesCustomer();
-  await fireSafetyManagement.gotoTaskManagementFireSafety_Customer();
-  await fireSafetyManagement.gotoWorkOrderFireSafety_Customer();
-  await fireSafetyManagement.gotoChecklistsFireSafety_Customer();
-  await fireSafetyManagement.gotoIncidentFireSafety_Customer();
+  await fireSafetyManagement.gotoTaskManagementFireSafetyCustomer();
+  await fireSafetyManagement.gotoWorkOrderFireSafetyCustomer();
+  await fireSafetyManagement.gotoChecklistsFireSafetyCustomer();
+  await fireSafetyManagement.gotoIncidentFireSafetyCustomer();
 
   // === Requirements and Guidelines ===
   await fireSafetyManagement.gotoRequirementsAndGuidelines();

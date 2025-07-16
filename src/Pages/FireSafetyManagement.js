@@ -55,7 +55,7 @@ class FireSafetyManagement extends BasePage {
     // Sub Types locators ( Sub module : Activities Customer )
     this.TaskManagementFireSafety_Customer = "div[id='FireSafetyManagement-ActivitiesCustomer-ThemeProcessItemTaskManagementCustomerFireSafety']";
     this.WorkOrderFireSafety_Customer = "div[id='FireSafetyManagement-ActivitiesCustomer-ThemeProcessItemRequestCustomerFireSafety']";
-    this.ChecklistsFireSafety_Customer = "div[id='FireSafetyManagement-ActivitiesCustomer-ThemeProcessItemCustomerChecklistCustomerFireSafety']";
+    this.ChecklistsFireSafety_Customer = "div[id='FireSafetyManagement-ActivitiesCustomer-ThemeProcessItemLocalChecklistCustomerFireSafety']";
     this.IncidentFireSafety_Customer = "div[id='FireSafetyManagement-ActivitiesCustomer-ThemeProcessItemIncidentCustomerFireSafety']";  
 
     // Sub Types locators ( Sub module : Requirements and Guidelines )
@@ -81,218 +81,222 @@ class FireSafetyManagement extends BasePage {
    }
 
   //Navigate to Sub modules
-  async goToGeneralOverview() {
+  async gotoGeneralOverview() {
      await this.page.locator(this.GeneralOverview).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.GeneralOverview).click();
   }    
 
-  async goToResponsibleResources() {
+  async gotoResponsibleResources() {
      await this.page.locator(this.ResponsibleResources).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ResponsibleResources).click();
   }
 
-  async goToTechnicalDocumentation() {
+  async gotoTechnicalDocumentation() {
      await this.page.locator(this.TechnicalDocumentation).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.TechnicalDocumentation).click();
   }
 
-  async goToObjectMarking() {
+  async gotoObjectMarking() {
      await this.page.locator(this.ObjectMarking).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ObjectMarking).click();
   }
 
-  async goToActivities() {
+  async gotoActivities() {
      await this.page.locator(this.Activities).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.Activities).click();
   }
 
-  async goToActivitiesLocal() {
+  async gotoActivitiesLocal() {
      await this.page.locator(this.ActivitiesLocal).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ActivitiesLocal).click();
   }
 
-  async goToActivitiesCustomer() {
+  async gotoActivitiesCustomer() {
      await this.page.locator(this.ActivitiesCustomer).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ActivitiesCustomer).click();
   }
 
-  async goToRequirementsAndGuidelines() {
+  async gotoRequirementsAndGuidelines() {
      await this.page.locator(this.RequirementsAndGuidelines).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.RequirementsAndGuidelines).click();
   }
 
-  async goToDataSetup() {
+  async gotoDataSetup() {
      await this.page.locator(this.DataSetup).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.DataSetup).click();
   }
 
-  async goToConfiguration() {
+  async gotoConfiguration() {
      await this.page.locator(this.Configuration).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.Configuration).click();
   }
 
   //Navigate to Sub Types
   // Navigate to General Overview Sub Types
-  async goToGeneralInformationFireSafety() {
+  async gotoGeneralInformationFireSafety() {
      await this.page.locator(this.GeneralInformationFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.GeneralInformationFireSafety).click();
   }
 
   // Navigate to Responsible Resources Sub Types
-  async goToServicePartners() {
+  async gotoServicePartners() {
      await this.page.locator(this.ServicePartners).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ServicePartners).click();
   }
 
-  async goToServicePartnerManagementFireSafety() {
+  async gotoServicePartnerManagementFireSafety() {
      await this.page.locator(this.ServicePartnerManagementFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ServicePartnerManagementFireSafety).click();
   }
 
-  async goToPersonPermitFireSafety() {
+  async gotoPersonPermitFireSafety() {
      await this.page.locator(this.PersonPermitFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.PersonPermitFireSafety).click();
   }
 
   // Navigate to Technical Documentation Sub Types
-  async goToFireSafetyDocument() {  
+  async gotoFireSafetyDocument() {  
      await this.page.locator(this.FireSafetyDocument).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.FireSafetyDocument).click();
   }
 
-  async goToFireSafetyDocumentTree() {
+  async gotoFireSafetyDocumentTree() {
      await this.page.locator(this.FireSafetyDocumentTree).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.FireSafetyDocumentTree).click();
   }
-  async goToFlammableAndPressurizedMaterial() {
+  async gotoFlammableAndPressurizedMaterial() {
      await this.page.locator(this.FlammableAndPressurizedMaterial).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.FlammableAndPressurizedMaterial).click();
   }
-  async goToFireSafetyZone() {
+  async gotoFireSafetyZone() {
      await this.page.locator(this.FireSafetyZone).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.FireSafetyZone).click();
   }
 
   // Navigate to Object Marking Sub Types
-  async goToTechnicalSystemFireSafety() {
+  async gotoTechnicalSystemFireSafety() {
      await this.page.locator(this.TechnicalSystemFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.TechnicalSystemFireSafety).click();
   }
-  async goToCSSTechnicalSystemFireSafety() {
+  async gotoCSSTechnicalSystemFireSafety() {
      await this.page.locator(this.CSSTechnicalSystemFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.CSSTechnicalSystemFireSafety).click();
   }
 
-  async goToThemeMarking() {
+  async gotoThemeMarking() {
      await this.page.locator(this.ThemeMarking).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ThemeMarking).click();
   }
 
   // Navigate to Activities Sub Types
-  async goToTaskManagementFireSafety() {
+  async gotoTaskManagementFireSafety() {
      await this.page.locator(this.TaskManagementFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.TaskManagementFireSafety).click();
   } 
 
-  async goToWorkOrderFireSafety() {
+  async gotoWorkOrderFireSafety() {
      await this.page.locator(this.WorkOrderFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.WorkOrderFireSafety).click();
   }
 
-  async goToChecklistsFireSafety() {
+  async gotoChecklistsFireSafety() {
      await this.page.locator(this.ChecklistsFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ChecklistsFireSafety).click();
   }
 
-  async goToIncidentFireSafety() {
+  async gotoIncidentFireSafety() {
      await this.page.locator(this.IncidentFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.IncidentFireSafety).click();
   }
 
   // Navigate to Activities Local Sub Types
-  async goToTaskManagementFireSafety_Local() {
+  async gotoTaskManagementFireSafetyLocal() {
       await this.page.locator(this.TaskManagementFireSafety_Local).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.TaskManagementFireSafety_Local).click();
     }
 
-  async goToWorkOrderFireSafety_Local() {
+  async gotoWorkOrderFireSafetyLocal() {
       await this.page.locator(this.WorkOrderFireSafety_Local).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.WorkOrderFireSafety_Local).click();
     }
 
-  async goToChecklistsFireSafety_Local() {
+  async gotoChecklistsFireSafetyLocal() {
       await this.page.locator(this.ChecklistsFireSafety_Local).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.ChecklistsFireSafety_Local).click();
     }
 
-  async goToIncidentFireSafety_Local() {
+  async gotoIncidentFireSafetyLocal() {
       await this.page.locator(this.IncidentFireSafety_Local).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.IncidentFireSafety_Local).click();
     }
     
   // Navigate to Activities Customer Sub Types
-  async goToTaskManagementFireSafety_Customer() {
+  async gotoTaskManagementFireSafetyCustomer() {
       await this.page.locator(this.TaskManagementFireSafety_Customer).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.TaskManagementFireSafety_Customer).click();
     }
     
-  async goToWorkOrderFireSafety_Customer() {
+  async gotoWorkOrderFireSafetyCustomer() {
       await this.page.locator(this.WorkOrderFireSafety_Customer).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.WorkOrderFireSafety_Customer).click();
     }
 
-  async goToChecklistsFireSafety_Customer() {
+  async gotoChecklistsFireSafetyCustomer() {
       await this.page.locator(this.ChecklistsFireSafety_Customer).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.ChecklistsFireSafety_Customer).click();
     }
 
-  async goToIncidentFireSafety_Customer() {
+   
+
+  async gotoIncidentFireSafetyCustomer() {
       await this.page.locator(this.IncidentFireSafety_Customer).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.IncidentFireSafety_Customer).click();
     }
 
   // Navigate to Requirements and Guidelines Sub Types
-  async goToLinksToLawsAndRegulation() {
+  async gotoLinksToLawsAndRegulation() {
      await this.page.locator(this.LinksToLawsAndRegulation).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.LinksToLawsAndRegulation).click();
   }
 
-  async goToInstructionsAndGuidelines() {
+  async gotoInstructionsAndGuidelines() {
      await this.page.locator(this.InstructionsAndGuidelines).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.InstructionsAndGuidelines).click();
   }
 
-  async goToLocalRegulations() {
+  async gotoLocalRegulations() {
      await this.page.locator(this.LocalRegulations).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.LocalRegulations).click();
   }
 
   // Navigate to Data Setup Sub Types
-  async goToDocumentTypes() {
+  async gotoDocumentTypes() {
      await this.page.locator(this.DocumentTypes).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.DocumentTypes).click();
   }
 
-  async goToServiceTypes() {
+  async gotoServiceTypes() {
      await this.page.locator(this.ServiceTypes).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ServiceTypes).click();
   }
 
-  async goToMaterialTypes() {
+  async gotoMaterialTypes() {
      await this.page.locator(this.MaterialTypes).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.MaterialTypes).click();
   }
 
-  async goToPermitFireSafety() {
+  async gotoPermitFireSafety() {
      await this.page.locator(this.PermitFireSafety).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.PermitFireSafety).click();
   }
 
   // Navigate to Configuration Sub Types
-  async goToAccessConfiguration() {
+  async gotoAccessConfiguration() {
      await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.AccessConfiguration).click();
   }
 }
 
-module.exports = FireSafetyManagement; 
+module.exports = FireSafetyManagement;
+
+

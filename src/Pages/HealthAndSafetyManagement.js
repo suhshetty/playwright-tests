@@ -52,9 +52,9 @@ class HealthAndSafetyManagement extends BasePage {
 
     async clickHealthAndSafetyManagement() {
         await this.page.waitForTimeout(3000);
-        const HealthAndSafetyManagement = this.page.locator(this.healthAndSafetyManagement).first();
-        await HealthAndSafetyManagement.waitFor({ state: 'attached', timeout: 10000 });
-        await HealthAndSafetyManagement.evaluate((node) => node.click());
+        const healthAndSafetyManagement = this.page.locator(this.healthAndSafetyManagement).first();
+        await healthAndSafetyManagement.waitFor({ state: 'attached', timeout: 10000 });
+        await healthAndSafetyManagement.evaluate((node) => node.click());
     }
 
     // Navigate to sub modules

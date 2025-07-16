@@ -1,4 +1,4 @@
-// File: FireSafetyManagementNav.spec.js
+// File: FireSafetyManagementNavigation.spec.js
 import { test, expect } from '@playwright/test';
 import { loginAndInitialize } from '../src/testSetup.js';
 import {

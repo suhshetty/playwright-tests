@@ -1,0 +1,28 @@
+Visual Comparison Summary (16/7/2025, 5:59:02 pm):
+
+gotoHomePage: Error - Image sizes do not match.
+gotoModuleMenu: Error - Image sizes do not match.
+clickHealthAndSafetyManagement: Error - Image sizes do not match.
+🟩 gotoGeneralOverview: No visual difference
+gotoGeneralInformationHSE: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoGeneralInformationHSE.png'
+🟩 gotoResponsibleResources: No visual difference
+gotoServicePartners: Error - ENOENT: no such file or directory, open 'C:\Users\ssshe\Documents\GitHub\playwright-tests\screenshots\url1\gotoServicePartners.png'
+🟩 gotoServicePartnersManagementHSE: No visual difference
+🟩 gotoPersonPermitHSE: No visual difference
+🟩 gotoTechnicalDocumentation: No visual difference
+🟩 gotoHSEDocuments: No visual difference
+🟩 gotoHSEDocumentTree: No visual difference
+🟩 gotoRadonRegistration: No visual difference
+🟩 gotoObjectMarking: No visual difference
+🟩 gotoInsuranceCertificate: No visual difference
+🟩 gotoActivities: No visual difference
+🟩 gotoTaskManagementHSE: No visual difference
+🟩 gotoWorkOrderHSE: No visual difference
+🟩 gotoChecklistsHSE: No visual difference
+🟩 gotoIncidentHSE: No visual difference
+🟩 gotoRequirementAndGuidelines: No visual difference
+🟩 gotoLinksToLawsAndRegulation: No visual difference
+🟩 gotoInstructionsAndGuidelines: No visual difference
+🟩 gotoLocalRegulations: No visual difference
+🟩 gotoConfiguration: No visual difference
+🟩 gotoAccessConfiguration: No visual difference
