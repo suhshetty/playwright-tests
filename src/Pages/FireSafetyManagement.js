@@ -7,11 +7,11 @@ class FireSafetyManagement extends BasePage {
     this.page = page;
 
     // Module locators
-    this.FireSafetyManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Fire safety management']";
+    this.fireSafetyManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Fire safety management']";
 
     // Sub module locators
     this.GeneralOverview= "div[aria-label='General overview Process step']";
-    this.RepsonsibleResources = "div[aria-label='Responsible resources Process step']";
+    this.ResponsibleResources = "div[aria-label='Responsible resources Process step']";
     this.TechnicalDocumentation = "div[aria-label='Technical documentation Process step']";
     this.ObjectMarking = "div[aria-label='Object marking Process step']";
     this.Activities = "div[aria-label='Activities Process step']";
@@ -73,15 +73,22 @@ class FireSafetyManagement extends BasePage {
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
   }
 
+   async clickFireSafetyManagement() {
+      await this.page.waitForTimeout(3000);
+      const fireSafetyManagement = this.page.locator(this.fireSafetyManagement).first();
+      await fireSafetyManagement.waitFor({ state: 'attached', timeout: 10000 });
+      await fireSafetyManagement.evaluate((node) => node.click());
+   }
+
   //Navigate to Sub modules
   async goToGeneralOverview() {
      await this.page.locator(this.GeneralOverview).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.GeneralOverview).click();
   }    
 
-  async goToRepsonsibleResources() {
-     await this.page.locator(this.RepsonsibleResources).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.RepsonsibleResources).click();
+  async goToResponsibleResources() {
+     await this.page.locator(this.ResponsibleResources).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.ResponsibleResources).click();
   }
 
   async goToTechnicalDocumentation() {
@@ -287,3 +294,5 @@ class FireSafetyManagement extends BasePage {
      await this.page.locator(this.AccessConfiguration).click();
   }
 }
+
+module.exports = FireSafetyManagement; 
