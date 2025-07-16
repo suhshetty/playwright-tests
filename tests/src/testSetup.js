@@ -13,9 +13,11 @@ const SpaceManagement = require('../../src/Pages/SpaceManagement');
 const PropertyManagement = require('../../src/Pages/PropertyManagement');
 const ConditionAssessmentAndMaintenanceNeeds = require('../../src/Pages/ConditionAssessmentAndMaintenanceNeeds');
 const DigitalDelivery = require('../../src/Pages/DigitalDelivery');
+const HelpdeskManagement = require('../../src/Pages/HelpdeskManagement');
 const OperationAndMaintenance = require('../../src/Pages/OperationAndMaintenance');
 const FireSafetyManagement = require('../../src/Pages/FireSafetyManagement');
 const HealthAndSafetyManagement = require('../../src/Pages/HealthAndSafetyManagement');
+
 
 
 async function loginAndInitialize({ page, context, baseUrl }) {
@@ -38,15 +40,27 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const propertyManagement = new PropertyManagement(page);
   const conditionAssessmentAndMaintenanceNeeds = new ConditionAssessmentAndMaintenanceNeeds(page);
   const digitalDelivery = new DigitalDelivery(page);
+  const helpdeskManagement = new HelpdeskManagement(page);
   const operationAndMaintenance = new OperationAndMaintenance(page);
   const fireSafetyManagement = new FireSafetyManagement(page);
   const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
+
 
   // Perform login using dynamic URL
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
+<<<<<<< HEAD
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, digitalDelivery, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement };
+=======
+
+  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
+    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement };
+
+>>>>>>> 08558eab9e77b15c240fedff37d8bf6472203a92
 }
 
 module.exports = { loginAndInitialize };
+
