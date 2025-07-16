@@ -41,15 +41,19 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const helpdeskManagement = new HelpdeskManagement(page);
   const operationAndMaintenance = new OperationAndMaintenance(page);
   const fireSafetyManagement = new FireSafetyManagement(page);
-a
+
 
   // Perform login using dynamic URL
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
-  
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement};
 
-  
+
+  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
+    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement };
+
+}
 
 module.exports = { loginAndInitialize };
-}
+
