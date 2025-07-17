@@ -51,7 +51,11 @@ jobs:
         run: |
           safe_name=$(echo "${{ matrix.file }}" | sed 's#[/\\]#-#g' | sed 's#\.spec\.js##')
           mkdir -p renamed-reports/$safe_name
-          cp -r playwright-report/* renamed-reports/$safe_name/
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/* renamed-reports/$safe_name/
+          else
+            echo "No report directory found for $safe_name"
+          fi
 
       - name: Upload sanitized report
         if: always()
