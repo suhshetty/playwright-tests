@@ -7,9 +7,27 @@ on:
   workflow_dispatch:
 
 jobs:
-  visual-tests:
+  list-visual-files:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
+      - name: Generate matrix of Visual test files
+        id: set-matrix
+        run: |
+          files=$(find tests/VisualTesting -name '*.spec.mjs' | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "matrix={\"file\": $files}" >> $GITHUB_OUTPUT
+
+  run-visual-tests:
+    needs: list-visual-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.list-visual-files.outputs.matrix) }}
+    name: Run ${{ matrix.file }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -25,30 +43,28 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Get all .mjs visual test files
-        id: get-files
-        run: |
-          echo "files<<EOF" >> $GITHUB_OUTPUT
-          find tests/VisualTesting -type f -name '*.mjs' >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Run Visual Test
+        continue-on-error: true
+        run: npx playwright test ${{ matrix.file }}
 
-      - name: Run each visual test and move its report
+      - name: Rename report folder
+        if: always()
+        id: sanitize
         run: |
-          mkdir -p renamed-visual-reports
-          while IFS= read -r file; do
-            echo "Running: $file"
-            basefile=$(basename "$file" .spec.mjs)
-            npx playwright test "$file" || echo "Test failed for $file"
-            if [ -d playwright-report ]; then
-              mv playwright-report "renamed-visual-reports/${basefile}"
-            else
-              echo "No report generated for $file"
-            fi
-          done <<< "${{ steps.get-files.outputs.files }}"
+          file="${{ matrix.file }}"
+          safe_name=$(basename "$file" .spec.mjs | tr '/' '-' | tr '\\' '-' | tr '.' '-')
+          echo "safe_name=$safe_name" >> $GITHUB_ENV
+          mkdir -p renamed-visual-reports/$safe_name
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/* renamed-visual-reports/$safe_name/
+          else
+            echo "playwright-report directory not found for $file"
+          fi
 
-      - name: Upload all visual reports
+      - name: Upload report artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-visual-reports
-          path: renamed-visual-reports/
+          name: visual-report-${{ env.safe_name }}
+          path: renamed-visual-reports/${{ env.safe_name }}
+        continue-on-error: true
