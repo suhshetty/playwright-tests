@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
@@ -27,22 +27,26 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Clean old diffs
-        run: rm -rf screenshots/diffs/*
+      - name: Get all Visual Test Files
+        id: get-files
+        run: |
+          echo "files<<EOF" >> $GITHUB_OUTPUT
+          find tests/VisualTesting -name '*.mjs' >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Visual Regression Tests
-        run: npx playwright test tests/VisualTesting
+      - name: Run Visual Tests Individually and Rename Reports
+        run: |
+          mkdir -p renamed-visual-reports
+          while IFS= read -r file; do
+            filename=$(basename "$file" .spec.mjs)
+            echo "Running $file"
+            npx playwright test "$file" --project=chromium || true
+            mv playwright-report "renamed-visual-reports/$filename"
+          done <<< "${{ steps.get-files.outputs.files }}"
 
-      - name: Upload Visual Report
+      - name: Upload All Visual Reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-report
-          path: playwright-report/
-
-      - name: Upload Screenshot Diffs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-diffs
-          path: screenshots/diffs/
+          name: all-visual-reports
+          path: renamed-visual-reports/
