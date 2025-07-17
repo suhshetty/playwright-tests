@@ -29,6 +29,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+
   });
 
   await safeStep('gotoModuleMenu', async () => {
@@ -38,11 +39,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickSpaceManagement', async () => {
     await spaceManagement.clickSpaceManagement();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickSpaceManagement');
   });
 
 
   await safeStep('gotoBuildingSpaceOverview', async () => {
     await spaceManagement.gotoBuildingSpaceOverview();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceOverview');
   });
 
 
@@ -66,6 +69,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoLocateOrganisation', async () => {
     await spaceManagement.gotoLocateOrganisation();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateOrganisation');
   });
 
 
@@ -88,6 +92,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoLocateEquipment', async () => {
         await spaceManagement.gotoLocateEquipment();
+        await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateEquipment');
     });
 
     await safeStep('gotoLocateEquipmentSubType', async () => {
@@ -97,6 +102,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoKeyManagement', async () => {
         await spaceManagement.gotoKeyManagement();
+        await waitForProcessingAndTakeScreenshot(page, env, 'gotoKeyManagement');
     });
 
     await safeStep('gotoKeyToLock', async () => {
@@ -106,6 +112,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoConfiguration', async () => {
         await spaceManagement.gotoConfiguration();
+        await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
     });
 
     await safeStep('gotoAccessConfiguration', async () => {
@@ -115,6 +122,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoTestÞT', async () => {
         await spaceManagement.gotoTestÞT();
+        await waitForProcessingAndTakeScreenshot(page, env, 'gotoTestÞT');
     });
 
     await safeStep('gotoWorkOrderHours', async () => {

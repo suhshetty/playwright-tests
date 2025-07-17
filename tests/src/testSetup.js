@@ -17,8 +17,12 @@ const HelpdeskManagement = require('../../src/Pages/HelpdeskManagement');
 const OperationAndMaintenance = require('../../src/Pages/OperationAndMaintenance');
 const FireSafetyManagement = require('../../src/Pages/FireSafetyManagement');
 const HealthAndSafetyManagement = require('../../src/Pages/HealthAndSafetyManagement');
+<<<<<<< Updated upstream
 const HumanResources = require('../../src/Pages/HumanResources');
 const ProjectManagement = require('../../src/Pages/ProjectManagement');
+=======
+const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement');
+>>>>>>> Stashed changes
 
 
 
@@ -46,8 +50,12 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const operationAndMaintenance = new OperationAndMaintenance(page);
   const fireSafetyManagement = new FireSafetyManagement(page);
   const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
+<<<<<<< Updated upstream
   const humanResources = new HumanResources(page);
   const projectManagement = new ProjectManagement(page);
+=======
+  const culturalValueManagement = new CulturalValueManagement(page);
+>>>>>>> Stashed changes
 
 
   // Perform login using dynamic URL
@@ -55,11 +63,18 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   await loginPage.login('suhsh', 'Testing@!123');
 
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
+<<<<<<< Updated upstream
     cleaningManagement, documentManagement, energyManagement, environmentalManagement,
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
     digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
     humanResources, projectManagement
   };
+=======
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
+    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
+    culturalValueManagement };
+>>>>>>> Stashed changes
 
 }
 

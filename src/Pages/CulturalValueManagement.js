@@ -208,6 +208,8 @@ class CulturalValueManagement extends BasePage {
     }   
 }
 
+module.exports = CulturalValueManagement;
+
 
 
 

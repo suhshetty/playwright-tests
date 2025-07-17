@@ -19,10 +19,10 @@ class HealthAndSafetyManagement extends BasePage {
     this.Configuration = "div[aria-label='Configuration Process step']";
 
     // Sub Types locators ( Sub module : General Overview )
-    this.GeneralInformationHSE = "div[aria-label='General overview Process step item']";
+    this.GeneralInformationHSE = "div[aria-label='General information (HSE) Process step item']";
 
     // Sub Types locators ( Sub module : Responsible Resources )
-    this.ServicePartners = "div[aria-label='General information (HSE) Process step item']";
+    this.ServicePartners = "div[aria-label='Service partners Process step item']";
     this.ServicePartnersManagementHSE = "div[aria-label='Service partner management (HSE) Process step item']";
     this.PersonPermitHSE = "div[aria-label='Person permit (HSE) Process step item']";
 
