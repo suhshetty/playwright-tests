@@ -18,8 +18,12 @@ const OperationAndMaintenance = require('../../src/Pages/OperationAndMaintenance
 const FireSafetyManagement = require('../../src/Pages/FireSafetyManagement');
 const HealthAndSafetyManagement = require('../../src/Pages/HealthAndSafetyManagement');
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 const HumanResources = require('../../src/Pages/HumanResources');
 const ProjectManagement = require('../../src/Pages/ProjectManagement');
+=======
+const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement');
+>>>>>>> Stashed changes
 =======
 const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement');
 >>>>>>> Stashed changes
@@ -51,8 +55,12 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const fireSafetyManagement = new FireSafetyManagement(page);
   const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   const humanResources = new HumanResources(page);
   const projectManagement = new ProjectManagement(page);
+=======
+  const culturalValueManagement = new CulturalValueManagement(page);
+>>>>>>> Stashed changes
 =======
   const culturalValueManagement = new CulturalValueManagement(page);
 >>>>>>> Stashed changes
@@ -74,6 +82,9 @@ async function loginAndInitialize({ page, context, baseUrl }) {
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
     digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
     culturalValueManagement };
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 }
