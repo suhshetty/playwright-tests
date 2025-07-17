@@ -53,7 +53,7 @@ class ProjectManagement extends BasePage {
 
      // Sub Types locators ( Sub module : Project Web )
      this.ProjectTreeWithDocuments = "div[aria-label='Project tree with documents Process step item']";
-     this.ProjectWeb = "div[aria-label='Project web Process step item']";
+     this.ProjectWebSubmodule = "div[aria-label='Project web Process step item']";
 
      // Sub Types locators ( Sub module : Standar Tasks Overview )
      this.ProjectStandardTasks = "div[aria-label='Project standard tasks Process step item']";
@@ -63,7 +63,7 @@ class ProjectManagement extends BasePage {
      this.TasksSets = "div[aria-label='Task sets Process step item']";
 
      // Sub Types locators ( Sub module : Configuarion )
-     this.AccessConfiguraions = "div[aria-label='Access configurations Process step item']";
+     this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
   }
 
   async clickProjectManagement() {
@@ -232,9 +232,9 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.ProjectTreeWithDocuments).click();
    }
 
-   async gotoProjectWeb() {
-     await this.page.locator(this.ProjectWeb).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.ProjectWeb).click();
+   async gotoProjectWebSubmodule() {
+     await this.page.locator(this.ProjectWebSubmodule).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.ProjectWebSubmodule).click();
    }
 
    // Navigate to sub types ( Sub module : Standar Tasks Overview )
@@ -254,10 +254,10 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.TasksSets).click();
    }
 
-   // Navigate to sub types ( Sub module : Configuarion )
-   async gotoAccessConfiguraions() {
-     await this.page.locator(this.AccessConfiguraions).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.AccessConfiguraions).click();
+   // Navigate to sub types ( Sub module : Configuration )
+   async gotoAccessConfigurations() {
+     await this.page.locator(this.AccessConfigurations).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.AccessConfigurations).click();
    }
 
 

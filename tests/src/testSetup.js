@@ -17,6 +17,8 @@ const HelpdeskManagement = require('../../src/Pages/HelpdeskManagement');
 const OperationAndMaintenance = require('../../src/Pages/OperationAndMaintenance');
 const FireSafetyManagement = require('../../src/Pages/FireSafetyManagement');
 const HealthAndSafetyManagement = require('../../src/Pages/HealthAndSafetyManagement');
+const HumanResources = require('../../src/Pages/HumanResources');
+const ProjectManagement = require('../../src/Pages/ProjectManagement');
 
 
 
@@ -44,6 +46,8 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const operationAndMaintenance = new OperationAndMaintenance(page);
   const fireSafetyManagement = new FireSafetyManagement(page);
   const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
+  const humanResources = new HumanResources(page);
+  const projectManagement = new ProjectManagement(page);
 
 
   // Perform login using dynamic URL
@@ -53,7 +57,8 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
     cleaningManagement, documentManagement, energyManagement, environmentalManagement,
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
-    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement
+    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
+    humanResources, projectManagement
   };
 
 }

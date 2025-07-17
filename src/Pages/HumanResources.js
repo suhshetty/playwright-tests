@@ -27,7 +27,7 @@ class HumanResources extends BasePage {
 
     // Sub Types locators ( Sub module : Organisations Data )
     this.OrganisationReminders = "div[aria-label='Organisation reminders Process step item']";
-    this.OrganisationsDocuments = "div[aria-label='Organisation documents Process step item']";
+    this.OrganisationDocuments = "div[aria-label='Organisation documents Process step item']";
     this.OrganisationAbsences = "div[aria-label='Organisation absences Process step item']";
     this.PunchinPunchout = "div[aria-label='Punch In/Outs Process step item']";
 
@@ -35,7 +35,10 @@ class HumanResources extends BasePage {
     this.VendorIssues = "div[aria-label='Vendor issues Process step item']";
 
     // Sub Types locators ( Sub module : Permits and Qualifications )
-    this.OrganisationGroups = "div[aria-label='Person permits Process step item']";
+    this.PersonPermits = "div[aria-label='Person permits Process step item']";
+
+    // Sub Types locators ( Sub module : Data Setup )
+    this.OrganisationGroups = "div[aria-label='Organisation groups Process step item']";
     this.Professions = "div[aria-label='Professions Process step item']";
     this.Permits = "div[aria-label='Permits Process step item']";
     this.EmployeeGroups = "div[aria-label='Employee groups Process step item']";
@@ -180,9 +183,9 @@ class HumanResources extends BasePage {
       await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.AccessConfiguration).click();
     }
-
-
 }
+
+module.exports = HumanResources;
 
 
 
