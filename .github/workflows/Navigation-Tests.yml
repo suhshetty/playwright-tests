@@ -1,4 +1,4 @@
-name: Navigation Visual Tests
+name: Navigation Tests
 
 on:
   push:
@@ -46,20 +46,12 @@ jobs:
       - name: Run Playwright test
         run: npx playwright test ${{ matrix.file }}
 
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: report-${{ matrix.file }}  # will be sanitized in next step
-          path: playwright-report/
-        continue-on-error: true
-
-      - name: Rename artifact (sanitize filename)
+      - name: Rename report folder
         if: always()
         run: |
-          safe_name=$(echo "${{ matrix.file }}" | sed 's#[/\\]#-#g')
+          safe_name=$(echo "${{ matrix.file }}" | sed 's#[/\\]#-#g' | sed 's#\.spec\.js##')
           mkdir -p renamed-reports/$safe_name
-          cp -r playwright-report/* renamed-reports/$safe_name
+          cp -r playwright-report/* renamed-reports/$safe_name/
 
       - name: Upload sanitized report
         if: always()
