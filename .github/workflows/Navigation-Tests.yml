@@ -1,4 +1,4 @@
-name: Navigation Tests
+name: Navigation Test
 
 on:
   push:
