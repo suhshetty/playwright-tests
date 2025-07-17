@@ -50,16 +50,12 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
-<<<<<<< HEAD
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement, financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, digitalDelivery, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement };
-=======
-
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
-    cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
-    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
-    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement };
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement,
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
+    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement
+  };
 
->>>>>>> 08558eab9e77b15c240fedff37d8bf6472203a92
 }
 
 module.exports = { loginAndInitialize };
