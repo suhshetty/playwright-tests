@@ -1,0 +1,56 @@
+name: Navigation Tests
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+    branches:
+      - '**'
+  workflow_dispatch:
+
+jobs:
+  list-navigation-files:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set matrix of Navigation test files
+        id: set-matrix
+        run: |
+          files=$(find tests/Navigation -name '*.spec.js' -or -name '*.spec.mjs' | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "matrix={\"file\": $files}" >> "$GITHUB_OUTPUT"
+
+  run-navigation-tests:
+    needs: list-navigation-files
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{fromJson(needs.list-navigation-files.outputs.matrix)}}
+    name: Run ${{ matrix.file }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright test for ${{ matrix.file }}
+        run: npx playwright test ${{ matrix.file }}
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-${{ matrix.file }}
+          path: playwright-report/
