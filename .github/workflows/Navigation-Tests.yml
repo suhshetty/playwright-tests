@@ -50,19 +50,23 @@ jobs:
 
       - name: Rename report folder
         if: always()
+        id: sanitize
         run: |
-          safe_name=$(echo "${{ matrix.file }}" | sed 's#[/\\]#-#g' | sed 's#\.spec\.js##')
+          file="${{ matrix.file }}"
+          safe_name=$(basename "$file" .spec.js | tr '/' '-' | tr '\\' '-' | tr '.' '-')
+          echo "safe_name=$safe_name" >> $GITHUB_ENV
           mkdir -p renamed-reports/$safe_name
           if [ -d "playwright-report" ]; then
             cp -r playwright-report/* renamed-reports/$safe_name/
           else
-            echo "No report directory found for $safe_name"
+            echo "playwright-report directory not found for $file"
           fi
+          echo "Report stored in renamed-reports/$safe_name"
 
-      - name: Upload sanitized report
+      - name: Upload report artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: report-${{ matrix.file }}
-          path: renamed-reports/${{ matrix.file }}
+          name: report-${{ env.safe_name }}
+          path: renamed-reports/${{ env.safe_name }}
         continue-on-error: true

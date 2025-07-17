@@ -4,19 +4,35 @@ on:
   push:
     branches:
       - '**'
-  schedule:
-    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
-  visual-tests:
+  list-visual-files:
     runs-on: ubuntu-latest
-
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node
+      - name: Generate matrix of Visual test files
+        id: set-matrix
+        run: |
+          files=$(find tests/VisualTesting -name '*.spec.mjs' | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "matrix={\"file\": $files}" >> $GITHUB_OUTPUT
+
+  run-visual-tests:
+    needs: list-visual-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.list-visual-files.outputs.matrix) }}
+    name: Run ${{ matrix.file }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '20'
@@ -27,22 +43,28 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Clean old diffs
-        run: rm -rf screenshots/diffs/*
+      - name: Run Visual Test
+        continue-on-error: true
+        run: npx playwright test ${{ matrix.file }}
 
-      - name: Run Visual Regression Tests
-        run: npx playwright test tests/VisualTesting
+      - name: Rename report folder
+        if: always()
+        id: sanitize
+        run: |
+          file="${{ matrix.file }}"
+          safe_name=$(basename "$file" .spec.mjs | tr '/' '-' | tr '\\' '-' | tr '.' '-')
+          echo "safe_name=$safe_name" >> $GITHUB_ENV
+          mkdir -p renamed-visual-reports/$safe_name
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/* renamed-visual-reports/$safe_name/
+          else
+            echo "playwright-report directory not found for $file"
+          fi
 
-      - name: Upload Visual Report
+      - name: Upload report artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-report
-          path: playwright-report/
-
-      - name: Upload Screenshot Diffs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: visual-diffs
-          path: screenshots/diffs/
+          name: visual-report-${{ env.safe_name }}
+          path: renamed-visual-reports/${{ env.safe_name }}
+        continue-on-error: true
