@@ -22,6 +22,7 @@ const ProjectManagement = require('../../src/Pages/ProjectManagement');
 const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement');
 
 
+
 async function loginAndInitialize({ page, context, baseUrl }) {
   // Clear cookies and cache before login
   await context.clearCookies();
@@ -58,9 +59,7 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
     cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
-    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
-    culturalValueManagement,  humanResources, projectManagement };
-
+    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement, culturalValueManagement,  humanResources, projectManagement };
 
 }
 
