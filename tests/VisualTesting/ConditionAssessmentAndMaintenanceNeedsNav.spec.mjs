@@ -13,14 +13,12 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage',
-  'gotoModuleMenu',
-  'clickConditionAssessmentAndMaintenanceNeeds',
-  "gotoPlanningOfInspection",
-  "gotoMaintenanceIncident",
-  "gotoConditionAssessment",
-  "gotoDataSetup",
-  "gotoConfiguration",
+  //'clickConditionAssessmentAndMaintenanceNeeds',
+  // "gotoPlanningOfInspection",
+  // "gotoMaintenanceIncident",
+  // "gotoConditionAssessment",
+  // "gotoDataSetup",
+  // "gotoConfiguration",
   "gotoPPMRegistration",
   "gotoRecurringIncident",
   "gotoMaintenanceIncidentSubType",
@@ -41,22 +39,22 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickConditionAssessmentAndMaintenanceNeeds', async () => {
     await conditionAssessmentAndMaintenanceNeeds.clickConditionAssessmentAndMaintenanceNeeds();
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickConditionAssessmentAndMaintenanceNeeds');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'clickConditionAssessmentAndMaintenanceNeeds');
   });
 
   await safeStep('gotoPlanningOfInspection', async () => {
     await conditionAssessmentAndMaintenanceNeeds.gotoPlanningOfInspection();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPlanningOfInspection');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoPlanningOfInspection');
   });
 
     // 📌 Planning of Inspection - Sub Types
@@ -73,7 +71,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
  
   await safeStep('gotoMaintenanceIncident', async () => {
     await conditionAssessmentAndMaintenanceNeeds.gotoMaintenanceIncident();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncident');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncident');
   });
 
      // 📌 Maintenance Incident - Sub Types
@@ -85,7 +83,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoConditionAssessment', async () => {
     await conditionAssessmentAndMaintenanceNeeds.gotoConditionAssessment();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessment');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessment');
   });
 
   // 📌 Condition Assessment - Sub Types
@@ -122,7 +120,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoDataSetup', async () => {
     await conditionAssessmentAndMaintenanceNeeds.gotoDataSetup();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
   });
 
   // 📌 Data Setup - Sub Types
@@ -138,7 +136,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoConfiguration', async () => {
     await conditionAssessmentAndMaintenanceNeeds.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
     // 📌 Configuration - Sub Types

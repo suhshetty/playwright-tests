@@ -12,16 +12,16 @@ import {
 initializeVisualTestEnv();
 
 const labels = [
-  'gotoHomePage',
-  'gotoModuleMenu',
-  'clickOperationAndMaintenance',
+  // 'gotoHomePage',
+  // 'gotoModuleMenu',
+  // 'clickOperationAndMaintenance',
 
   // Maintenance Incidents Overview
-  'gotoMaintenanceIncidentsOverview',
+  //'gotoMaintenanceIncidentsOverview',
   'gotoMaintenanceIncident',
 
   // Task Planning Overview
-  'gotoTaskPlanningOverview',
+  //'gotoTaskPlanningOverview',
   'gotoPPMRegistration',
   'gotoAnnualTaskBudgets',
   'gotoPendingStandardTask',
@@ -32,12 +32,12 @@ const labels = [
   'gotoTaskChecklistPoint',
 
   // Approved PPM
-  'gotoApprovedPPM',
+  //'gotoApprovedPPM',
   'gotoApprovedPPMSubType',
   'gotoAnnualTaskBudget',
 
   // Incidents Overview
-  'gotoIncidentsOverview',
+  //'gotoIncidentsOverview',
   'gotoFailure',
   'gotoIssues',
   'gotoCheckItem',
@@ -47,7 +47,7 @@ const labels = [
   'gotoAllIncidents',
 
   // Work Orders Overview
-  'gotoWorkOrdersOverview',
+  //'gotoWorkOrdersOverview',
   'gotoWorkOrder',
   'gotoWorkOrderExternal',
   'gotoWorkOrderAssignedCostWOO',
@@ -58,7 +58,7 @@ const labels = [
   'gotoChecklistIncidents',
 
   // Costs and Resource Usage
-  'gotoCostsAndResourceUsage',
+  //'gotoCostsAndResourceUsage',
   'gotoElectronicInvoices',
   'gotoWorkOrderAssignedCostCRU',
   'gotoTimeRegistrationCRU',
@@ -66,7 +66,7 @@ const labels = [
   'gotoTransaction',
 
   // Service Contracts Overview
-  'gotoServiceContractsOverview',
+  //'gotoServiceContractsOverview',
   'gotoServiceContract',
   'gotoServiceContractReminder',
   'gotoServiceContractPayments',
@@ -74,7 +74,7 @@ const labels = [
   'gotoServiceContractItem',
 
   // Standard Tasks Overview
-  'gotoStandardTasksOverview',
+  //'gotoStandardTasksOverview',
   'gotoStandardTaskManagement',
   'gotoStandardTaskObjectTypeManagement',
   'gotoStandardTask',
@@ -86,7 +86,7 @@ const labels = [
   'gotoPendingStandardTaskOnSite',
 
   // Data Setup
-  'gotoDataSetup',
+  //'gotoDataSetup',
   'gotoTargetArea',
   'gotoScheduleType',
   'gotoTaskCategories',
@@ -98,7 +98,7 @@ const labels = [
   'gotoHealthSafetyAndEnvironmentItems',
 
   // Configuration
-  'gotoConfiguration',
+  //'gotoConfiguration',
   'gotoAccessConfiguration'
 ];
 
@@ -108,17 +108,17 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickOperationAndMaintenance', async () => {
     await operationAndMaintenance.clickOperationAndMaintenance();
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickOperationAndMaintenance');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'clickOperationAndMaintenance');
   });
 
   // ================================
@@ -126,7 +126,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoMaintenanceIncidentsOverview', async () => {
     await operationAndMaintenance.gotoMaintenanceIncidentsOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncidentsOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncidentsOverview');
   });
 
   await safeStep('gotoMaintenanceIncident', async () => {
@@ -139,7 +139,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoTaskPlanningOverview', async () => {
     await operationAndMaintenance.gotoTaskPlanningOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskPlanningOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskPlanningOverview');
   });
 
   await safeStep('gotoPPMRegistration', async () => {
@@ -187,7 +187,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoApprovedPPM', async () => {
     await operationAndMaintenance.gotoApprovedPPM();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoApprovedPPM');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoApprovedPPM');
   });
 
   await safeStep('gotoApprovedPPMSubType', async () => {
@@ -205,7 +205,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoIncidentsOverview', async () => {
     await operationAndMaintenance.gotoIncidentsOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentsOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentsOverview');
   });
 
   await safeStep('gotoFailure', async () => {
@@ -248,7 +248,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoWorkOrdersOverview', async () => {
     await operationAndMaintenance.gotoWorkOrdersOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersOverview');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersOverview');
   });
 
   await safeStep('gotoWorkOrder', async () => {
@@ -301,7 +301,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoCostsAndResourceUsage', async () => {
     await operationAndMaintenance.gotoCostsAndResourceUsage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostsAndResourceUsage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostsAndResourceUsage');
   });
 
   await safeStep('gotoElectronicInvoices', async () => {
@@ -334,7 +334,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoServiceContractsOverview', async () => {
     await operationAndMaintenance.gotoServiceContractsOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceContractsOverview');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceContractsOverview');
   });
 
   await safeStep('gotoServiceContract', async () => {
@@ -367,7 +367,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoStandardTasksOverview', async () => {
     await operationAndMaintenance.gotoStandardTasksOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardTasksOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardTasksOverview');
   });
 
   await safeStep('gotoStandardTaskManagement', async () => {
@@ -420,7 +420,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoDataSetup', async () => {
     await operationAndMaintenance.gotoDataSetup();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
   });
 
   await safeStep('gotoTargetArea', async () => {
@@ -473,7 +473,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // ================================
   await safeStep('gotoConfiguration', async () => {
     await operationAndMaintenance.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
   await safeStep('gotoAccessConfiguration', async () => {

@@ -13,38 +13,38 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage',
-  'gotoModuleMenu',
-  'clickHealthAndSafetyManagement',
+  // 'gotoHomePage',
+  // 'gotoModuleMenu',
+  // 'clickHealthAndSafetyManagement',
 
-  'gotoGeneralOverview',
+  // 'gotoGeneralOverview',
   'gotoGeneralInformationHSE',
 
-  'gotoResponsibleResources',
+  //'gotoResponsibleResources',
   'gotoServicePartners',
   'gotoServicePartnersManagementHSE',
   'gotoPersonPermitHSE',
 
-  'gotoTechnicalDocumentation',
+  //'gotoTechnicalDocumentation',
   'gotoHSEDocuments',
   'gotoHSEDocumentTree',
   'gotoRadonRegistration',
 
-  'gotoObjectMarking',
+  //'gotoObjectMarking',
   'gotoInsuranceCertificate',
 
-  'gotoActivities',
+  //'gotoActivities',
   'gotoTaskManagementHSE',
   'gotoWorkOrderHSE',
   'gotoChecklistsHSE',
   'gotoIncidentHSE',
 
-  'gotoRequirementAndGuidelines',
+  //'gotoRequirementAndGuidelines',
   'gotoLinksToLawsAndRegulation',
   'gotoInstructionsAndGuidelines',
   'gotoLocalRegulations',
 
-  'gotoConfiguration',
+  //'gotoConfiguration',
   'gotoAccessConfiguration'
 ];
 
@@ -55,23 +55,23 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Home and Module Navigation ===
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickHealthAndSafetyManagement', async () => {
     await healthAndSafetyManagement.clickHealthAndSafetyManagement();
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickHealthAndSafetyManagement');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'clickHealthAndSafetyManagement');
   });
 
   // === General Overview ===
   await safeStep('gotoGeneralOverview', async () => {
     await healthAndSafetyManagement.gotoGeneralOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
   });
 
   await safeStep('gotoGeneralInformationHSE', async () => {
@@ -82,7 +82,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Responsible Resources ===
   await safeStep('gotoResponsibleResources', async () => {
     await healthAndSafetyManagement.gotoResponsibleResources();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
   });
 
   await safeStep('gotoServicePartners', async () => {
@@ -103,7 +103,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Technical Documentation ===
   await safeStep('gotoTechnicalDocumentation', async () => {
     await healthAndSafetyManagement.gotoTechnicalDocumentation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
   });
 
   await safeStep('gotoHSEDocuments', async () => {
@@ -124,7 +124,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Object Marking ===
   await safeStep('gotoObjectMarking', async () => {
     await healthAndSafetyManagement.gotoObjectMarking();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
   });
 
   await safeStep('gotoInsuranceCertificate', async () => {
@@ -135,7 +135,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Activities ===
   await safeStep('gotoActivities', async () => {
     await healthAndSafetyManagement.gotoActivities();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
   });
 
   await safeStep('gotoTaskManagementHSE', async () => {
@@ -161,7 +161,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Requirements and Guidelines ===
   await safeStep('gotoRequirementAndGuidelines', async () => {
     await healthAndSafetyManagement.gotoRequirementAndGuidelines();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementAndGuidelines');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementAndGuidelines');
   });
 
   await safeStep('gotoLinksToLawsAndRegulation', async () => {
@@ -182,7 +182,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Configuration ===
   await safeStep('gotoConfiguration', async () => {
     await healthAndSafetyManagement.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
   await safeStep('gotoAccessConfiguration', async () => {

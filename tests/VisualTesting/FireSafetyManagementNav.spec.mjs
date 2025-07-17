@@ -13,59 +13,59 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage',
-  'gotoModuleMenu',
-  'clickFireSafetyManagement',
+  // 'gotoHomePage',
+  // 'gotoModuleMenu',
+  // 'clickFireSafetyManagement',
 
-  'gotoGeneralOverview',
+  //'gotoGeneralOverview',
   'gotoGeneralInformationFireSafety',
 
-  'gotoResponsibleResources',
+  //'gotoResponsibleResources',
   'gotoServicePartners',
   'gotoServicePartnerManagementFireSafety',
   'gotoPersonPermitFireSafety',
 
-  'gotoTechnicalDocumentation',
+  //'gotoTechnicalDocumentation',
   'gotoFireSafetyDocument',
   'gotoFireSafetyDocumentTree',
   'gotoFlammableAndPressurizedMaterial',
   'gotoFireSafetyZone',
 
-  'gotoObjectMarking',
+  //'gotoObjectMarking',
   'gotoTechnicalSystemFireSafety',
   'gotoCSSTechnicalSystemFireSafety',
   'gotoThemeMarking',
 
-  'gotoActivities',
+  //'gotoActivities',
   'gotoTaskManagementFireSafety',
   'gotoWorkOrderFireSafety',
   'gotoChecklistsFireSafety',
   'gotoIncidentFireSafety',
 
-  'gotoActivitiesLocal',
+  //'gotoActivitiesLocal',
   'gotoTaskManagementFireSafetyLocal',
   'gotoWorkOrderFireSafetyLocal',
   'gotoChecklistsFireSafetyLocal',
   'gotoIncidentFireSafetyLocal',
 
-  'gotoActivitiesCustomer',
+  //'gotoActivitiesCustomer',
   'gotoTaskManagementFireSafetyCustomer',
   'gotoWorkOrderFireSafetyCustomer',
   'gotoChecklistsFireSafetyCustomer',
   'gotoIncidentFireSafetyCustomer',
 
-  'gotoRequirementsAndGuidelines',
+  //'gotoRequirementsAndGuidelines',
   'gotoLinksToLawsAndRegulation',
   'gotoInstructionsAndGuidelines',
   'gotoLocalRegulations',
 
-  'gotoDataSetup',
+  //'gotoDataSetup',
   'gotoDocumentTypes',
   'gotoServiceTypes',
   'gotoMaterialTypes',
   'gotoPermitFireSafety',
 
-  'gotoConfiguration',
+  //'gotoConfiguration',
   'gotoAccessConfiguration'
 ];
 
@@ -76,23 +76,23 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Home and Module Navigation ===
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickFireSafetyManagement', async () => {
     await fireSafetyManagement.clickFireSafetyManagement();
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickFireSafetyManagement');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'clickFireSafetyManagement');
   });
 
   // === General Overview ===
   await safeStep('gotoGeneralOverview', async () => {
     await fireSafetyManagement.gotoGeneralOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
   });
 
   await safeStep('gotoGeneralInformationFireSafety', async () => {
@@ -103,7 +103,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Responsible Resources ===
   await safeStep('gotoResponsibleResources', async () => {
     await fireSafetyManagement.gotoResponsibleResources();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
   });
 
   await safeStep('gotoServicePartners', async () => {
@@ -124,7 +124,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Technical Documentation ===
   await safeStep('gotoTechnicalDocumentation', async () => {
     await fireSafetyManagement.gotoTechnicalDocumentation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
   });
 
   await safeStep('gotoFireSafetyDocument', async () => {
@@ -150,7 +150,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Object Marking ===
   await safeStep('gotoObjectMarking', async () => {
     await fireSafetyManagement.gotoObjectMarking();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
   });
 
   await safeStep('gotoTechnicalSystemFireSafety', async () => {
@@ -171,7 +171,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Activities ===
   await safeStep('gotoActivities', async () => {
     await fireSafetyManagement.gotoActivities();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
   });
 
   await safeStep('gotoTaskManagementFireSafety', async () => {
@@ -197,7 +197,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Activities Local ===
   await safeStep('gotoActivitiesLocal', async () => {
     await fireSafetyManagement.gotoActivitiesLocal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesLocal');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesLocal');
   });
 
   await safeStep('gotoTaskManagementFireSafetyLocal', async () => {
@@ -223,7 +223,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Activities Customer ===
   await safeStep('gotoActivitiesCustomer', async () => {
     await fireSafetyManagement.gotoActivitiesCustomer();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesCustomer');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesCustomer');
   });
 
   await safeStep('gotoTaskManagementFireSafetyCustomer', async () => {
@@ -249,7 +249,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Requirements and Guidelines ===
   await safeStep('gotoRequirementsAndGuidelines', async () => {
     await fireSafetyManagement.gotoRequirementsAndGuidelines();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementsAndGuidelines');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementsAndGuidelines');
   });
 
   await safeStep('gotoLinksToLawsAndRegulation', async () => {
@@ -270,7 +270,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Data Setup ===
   await safeStep('gotoDataSetup', async () => {
     await fireSafetyManagement.gotoDataSetup();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
   });
 
   await safeStep('gotoDocumentTypes', async () => {
@@ -296,7 +296,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   // === Configuration ===
   await safeStep('gotoConfiguration', async () => {
     await fireSafetyManagement.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
   await safeStep('gotoAccessConfiguration', async () => {

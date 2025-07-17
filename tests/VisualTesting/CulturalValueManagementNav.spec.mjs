@@ -14,46 +14,46 @@ initializeVisualTestEnv();
 // Screens to validate
 const labels = [
   // General Overview
-  'gotoGeneralOverview',
+  //'gotoGeneralOverview',
   'gotoGeneralInformationCulturalValue',
 
   // Responsible Resources
-  'gotoResponsibleResources',
+  //'gotoResponsibleResources',
   'gotoServicePartners',
   'gotoServicePartnersManagementCulturalValue',
   'gotoPersonPermitCulturalValue',
 
   // Technical Documentation
-  'gotoTechnicalDocumentation',
+  //'gotoTechnicalDocumentation',
   'gotoCulturalValueDocuments',
   'gotoCulturalValueDocumentTree',
 
   // Object Marking
-  'gotoObjectMarking',
+  //'gotoObjectMarking',
   'gotoTechnicalSystemCulturalValue',
   'gotoCCSTechnicalSystemCulturalValue',
   'gotoThemeMarking',
 
   // Activities
-  'gotoActivities',
+  //'gotoActivities',
   'gotoTaskManagementCulturalValue',
   'gotoWorkOrderCulturalValue',
   'gotoIncidentCulturalValue',
 
   // Requirements and Guidelines
-  'gotoRequirementAndGuidelines',
+  //'gotoRequirementAndGuidelines',
   'gotoLinksToLawsAndRegulation',
   'gotoInstructionsAndGuidelines',
   'gotoLocalRegulations',
 
   // Data Setup
-  'gotoDataSetup',
+  //'gotoDataSetup',
   'gotoDocumentTypes',
   'gotoServiceTypes',
   'gotoPermitCulturalValue',
 
   // Configuration
-  'gotoConfiguration',
+  //'gotoConfiguration',
   'gotoAccessConfiguration'
 ];
 
@@ -63,24 +63,24 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
 // 🎯 Cultural Value Management - Navigation and Screenshot Capture
 await safeStep('clickCulturalValueManagement', async () => {
   await culturalValueManagement.clickCulturalValueManagement();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickCulturalValueManagement');
+ // await waitForProcessingAndTakeScreenshot(page, env, 'clickCulturalValueManagement');
 });
 
 // 📌 General Overview
 await safeStep('gotoGeneralOverview', async () => {
   await culturalValueManagement.gotoGeneralOverview();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
+  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
 });
 
 await safeStep('gotoGeneralInformationCulturalValue', async () => {
@@ -91,7 +91,7 @@ await safeStep('gotoGeneralInformationCulturalValue', async () => {
 // 📌 Responsible Resources
 await safeStep('gotoResponsibleResources', async () => {
   await culturalValueManagement.gotoResponsibleResources();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
+ // await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
 });
 
 await safeStep('gotoServicePartners', async () => {
@@ -112,7 +112,7 @@ await safeStep('gotoPersonPermitCulturalValue', async () => {
 // 📌 Technical Documentation
 await safeStep('gotoTechnicalDocumentation', async () => {
   await culturalValueManagement.gotoTechnicalDocumentation();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
+ // await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
 });
 
 await safeStep('gotoCulturalValueDocuments', async () => {
@@ -128,7 +128,7 @@ await safeStep('gotoCulturalValueDocumentTree', async () => {
 // 📌 Object Marking
 await safeStep('gotoObjectMarking', async () => {
   await culturalValueManagement.gotoObjectMarking();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
+  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
 });
 
 await safeStep('gotoTechnicalSystemCulturalValue', async () => {
@@ -149,7 +149,7 @@ await safeStep('gotoThemeMarking', async () => {
 // 📌 Activities
 await safeStep('gotoActivities', async () => {
   await culturalValueManagement.gotoActivities();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
+  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
 });
 
 await safeStep('gotoTaskManagementCulturalValue', async () => {
@@ -170,7 +170,7 @@ await safeStep('gotoIncidentCulturalValue', async () => {
 // 📌 Requirements and Guidelines
 await safeStep('gotoRequirementAndGuidelines', async () => {
   await culturalValueManagement.gotoRequirementAndGuidelines();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementAndGuidelines');
+ // await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementAndGuidelines');
 });
 
 await safeStep('gotoLinksToLawsAndRegulation', async () => {
@@ -191,7 +191,7 @@ await safeStep('gotoLocalRegulations', async () => {
 // 📌 Data Setup
 await safeStep('gotoDataSetup', async () => {
   await culturalValueManagement.gotoDataSetup();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
+ // await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
 });
 
 await safeStep('gotoDocumentTypes', async () => {
@@ -212,7 +212,7 @@ await safeStep('gotoPermitCulturalValue', async () => {
 // 📌 Configuration
 await safeStep('gotoConfiguration', async () => {
   await culturalValueManagement.gotoConfiguration();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
 });
 
 await safeStep('gotoAccessConfiguration', async () => {

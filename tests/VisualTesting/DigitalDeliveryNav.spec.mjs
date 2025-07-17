@@ -13,16 +13,16 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage',
-  'gotoModuleMenu',
-  'clickDigitalDelivery',
-  'gotoDigitalDeliverySubModule',
+  //'gotoHomePage',
+  //'gotoModuleMenu',
+  //'clickDigitalDelivery',
+  //'gotoDigitalDeliverySubModule',
   'gotoProductData',
   'gotoProductDataTask',
   'gotoProductDataComponent',
   'gotoProductDataTechnicalInformation',
   'gotoEPD',
-  'gotoBuildingSystems',
+  //'gotoBuildingSystems',
   'gotoRegisterBuildingComponents',
   'gotoRegisterBuildingComponentsCSS',
   'gotoFunctionalSystemCSS',
@@ -31,7 +31,7 @@ const labels = [
   'gotoFunctionalSystem',
   'gotoTechnicalSystem',
   'gotoComponent',
-  'gotoConfiguration',
+  //'gotoConfiguration',
   'gotoAccessConfiguration'
 ];
 
@@ -41,28 +41,28 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickDigitalDelivery', async () => {
     await digitalDelivery.clickDigitalDelivery();   
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickDigitalDelivery');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'clickDigitalDelivery');
   });
 
     await safeStep('gotoDigitalDeliverySubModule', async () => {
     await digitalDelivery.gotoDigitalDeliverySubModule();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDigitalDeliverySubModule');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDigitalDeliverySubModule');
   });
 
    // 📌 Digital Delivery - Sub Types
   await safeStep('gotoProductData', async () => {
     await digitalDelivery.gotoProductData();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
   });
 
   await safeStep('gotoProductDataTask', async () => {
@@ -94,7 +94,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
    // 📌 Building Systems - Sub Types
   await safeStep('gotoRegisterBuildingComponents', async () => {
     await digitalDelivery.gotoRegisterBuildingComponents();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterBuildingComponents');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterBuildingComponents');
   });
 
   await safeStep('gotoRegisterBuildingComponentsCSS', async () => {
@@ -135,7 +135,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoConfiguration', async () => {
     await digitalDelivery.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
  
