@@ -21,7 +21,7 @@ test('Sanity test : EMM-T270.spec.js', async ({ page, context }) => {
     await buildingArchive.gotoSites();
 
     // Register new site
-    await buildingArchive.registerNewSite1("Test Site EMM-T270A");
+    await buildingArchive.registerNewSite("Test Site EMM-T270A");
 
   } catch (error) {
     console.error(`Test failed: ${error.message}`);
