@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - '**'
-  schedule:
-    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
@@ -27,24 +25,28 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Get all Visual Test Files
+      - name: Get all .mjs visual test files
         id: get-files
         run: |
           echo "files<<EOF" >> $GITHUB_OUTPUT
-          find tests/VisualTesting -name '*.mjs' >> $GITHUB_OUTPUT
+          find tests/VisualTesting -type f -name '*.mjs' >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
-      - name: Run Visual Tests Individually and Rename Reports
+      - name: Run each visual test and move its report
         run: |
           mkdir -p renamed-visual-reports
           while IFS= read -r file; do
-            filename=$(basename "$file" .spec.mjs)
-            echo "Running $file"
-            npx playwright test "$file" --project=chromium || true
-            mv playwright-report "renamed-visual-reports/$filename"
+            echo "Running: $file"
+            basefile=$(basename "$file" .spec.mjs)
+            npx playwright test "$file" || echo "Test failed for $file"
+            if [ -d playwright-report ]; then
+              mv playwright-report "renamed-visual-reports/${basefile}"
+            else
+              echo "No report generated for $file"
+            fi
           done <<< "${{ steps.get-files.outputs.files }}"
 
-      - name: Upload All Visual Reports
+      - name: Upload all visual reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
