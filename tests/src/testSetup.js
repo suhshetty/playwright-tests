@@ -1,5 +1,6 @@
 // tests/setup/testSetup.js
 const LoginPage = require('../../src/Pages/LoginPage');
+const LoginPageCore = require('../../src/Pages/LoginPageCore');
 const HomePage = require('../../src/Pages/HomePage');
 const BuildingArchive = require('../../src/Pages/BuildingArchive');
 const AccessManagement = require('../../src/Pages/AccessManagement');
@@ -30,6 +31,7 @@ async function loginAndInitialize({ page, context, baseUrl }) {
 
   // Initialize Page Objects
   const loginPage = new LoginPage(page);
+  const loginPageCore = new LoginPageCore(page);
   const homePage = new HomePage(page);
   const buildingArchive = new BuildingArchive(page);
   const accessManagement = new AccessManagement(page);
@@ -53,15 +55,97 @@ async function loginAndInitialize({ page, context, baseUrl }) {
 
 
   // Perform login using dynamic URL
-  await loginPage.gotoLoginPage(baseUrl);
-  await loginPage.login('suhsh', 'Testing@!123');
+  //await loginPage.gotoLoginPage(baseUrl);
+  //await loginPage.login('suhsh', 'Testing@!123');
+  await loginPageCore.gotoLoginPageCore(baseUrl);
+  await loginPageCore.login('suhsh', 'Testing@!123');
 
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
-    cleaningManagement, documentManagement, energyManagement, environmentalManagement, 
-    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds, 
-    digitalDelivery, helpdeskManagement , operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement, culturalValueManagement,  humanResources, projectManagement };
+  return { loginPage, loginPageCore, homePage, buildingArchive, accessManagement, assetManagement,
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement,
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
+    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement, culturalValueManagement, humanResources, projectManagement };
 
 }
 
-module.exports = { loginAndInitialize };
+// Separate login function for URL1 using LoginPageCore
+async function loginAndInitializeWithCore({ page, context, baseUrl }) {
+  // Clear cookies and cache before login
+  await context.clearCookies();
+  await context.clearPermissions();
+
+  // Initialize Page Objects
+  const loginPage = new LoginPage(page);
+  const loginPageCore = new LoginPageCore(page);
+  const homePage = new HomePage(page);
+  const buildingArchive = new BuildingArchive(page);
+  const accessManagement = new AccessManagement(page);
+  const assetManagement = new AssetManagement(page);
+  const cleaningManagement = new CleaningManagement(page);
+  const documentManagement = new DocumentManagement(page);
+  const energyManagement = new EnergyManagement(page);
+  const environmentalManagement = new EnvironmentalManagement(page);
+  const financeManagement = new FinanceManagement(page);
+  const spaceManagement = new SpaceManagement(page);
+  const propertyManagement = new PropertyManagement(page);
+  const conditionAssessmentAndMaintenanceNeeds = new ConditionAssessmentAndMaintenanceNeeds(page);
+  const digitalDelivery = new DigitalDelivery(page);
+  const helpdeskManagement = new HelpdeskManagement(page);
+  const operationAndMaintenance = new OperationAndMaintenance(page);
+  const fireSafetyManagement = new FireSafetyManagement(page);
+  const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
+  const humanResources = new HumanResources(page);
+  const projectManagement = new ProjectManagement(page);
+  const culturalValueManagement = new CulturalValueManagement(page);
+
+  // Perform login using LoginPageCore
+  await loginPageCore.gotoLoginPageCore(baseUrl);
+  await loginPageCore.login('suhsh', 'Testing@!123');
+
+  return { loginPage, loginPageCore, homePage, buildingArchive, accessManagement, assetManagement,
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement,
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
+    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement, culturalValueManagement, humanResources, projectManagement };
+}
+
+// Separate login function for URL2 using LoginPage
+async function loginAndInitializeWithStandard({ page, context, baseUrl }) {
+  // Clear cookies and cache before login
+  await context.clearCookies();
+  await context.clearPermissions();
+
+  // Initialize Page Objects
+  const loginPage = new LoginPage(page);
+  const loginPageCore = new LoginPageCore(page);
+  const homePage = new HomePage(page);
+  const buildingArchive = new BuildingArchive(page);
+  const accessManagement = new AccessManagement(page);
+  const assetManagement = new AssetManagement(page);
+  const cleaningManagement = new CleaningManagement(page);
+  const documentManagement = new DocumentManagement(page);
+  const energyManagement = new EnergyManagement(page);
+  const environmentalManagement = new EnvironmentalManagement(page);
+  const financeManagement = new FinanceManagement(page);
+  const spaceManagement = new SpaceManagement(page);
+  const propertyManagement = new PropertyManagement(page);
+  const conditionAssessmentAndMaintenanceNeeds = new ConditionAssessmentAndMaintenanceNeeds(page);
+  const digitalDelivery = new DigitalDelivery(page);
+  const helpdeskManagement = new HelpdeskManagement(page);
+  const operationAndMaintenance = new OperationAndMaintenance(page);
+  const fireSafetyManagement = new FireSafetyManagement(page);
+  const healthAndSafetyManagement = new HealthAndSafetyManagement(page);
+  const humanResources = new HumanResources(page);
+  const projectManagement = new ProjectManagement(page);
+  const culturalValueManagement = new CulturalValueManagement(page);
+
+  // Perform login using standard LoginPage
+  await loginPage.gotoLoginPage(baseUrl);
+  await loginPage.login('suhsh', 'Testing@!123');
+
+  return { loginPage, loginPageCore, homePage, buildingArchive, accessManagement, assetManagement,
+    cleaningManagement, documentManagement, energyManagement, environmentalManagement,
+    financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
+    digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement, culturalValueManagement, humanResources, projectManagement };
+}
+
+module.exports = { loginAndInitialize, loginAndInitializeWithCore, loginAndInitializeWithStandard };
 

@@ -41,9 +41,93 @@ class SpaceManagement extends BasePage {
   }
     async clickSpaceManagement() {
         await this.page.waitForTimeout(3000);
-        const SpaceManagement = this.page.locator(this.spaceManagement).first();
-        await SpaceManagement.waitFor({ state: 'attached', timeout: 10000 });
-        await SpaceManagement.evaluate((node) => node.click());
+        
+        try {
+            // Find all Space Management elements
+            const allElements = this.page.locator(this.spaceManagement);
+            const count = await allElements.count();
+            console.log(`Found ${count} Space Management elements`);
+            
+            let clickedSuccessfully = false;
+            
+            // Try to find and click a visible element
+            for (let i = 0; i < count; i++) {
+                const element = allElements.nth(i);
+                const isVisible = await element.isVisible();
+                console.log(`Element ${i}: visible=${isVisible}`);
+                
+                if (isVisible) {
+                    console.log(`Scrolling to and clicking visible element ${i}`);
+                    try {
+                        // Scroll to element first, then force click with maximum timeout
+                        await element.scrollIntoViewIfNeeded({ timeout: 30000 });
+                        await element.click({ force: true, timeout: 30000 });
+                        clickedSuccessfully = true;
+                        break;
+                    } catch (scrollClickError) {
+                        console.log(`Force click failed for element ${i}, trying evaluate:`, scrollClickError.message);
+                        await element.evaluate((node) => node.click());
+                        clickedSuccessfully = true;
+                        break;
+                    }
+                }
+            }
+            
+            // If no visible element found, try the first element with evaluate
+            if (!clickedSuccessfully) {
+                console.log('No visible elements found, using evaluate click on first element');
+                const firstElement = allElements.first();
+                await firstElement.waitFor({ state: 'attached', timeout: 30000 });
+                await firstElement.evaluate((node) => node.click());
+                clickedSuccessfully = true;
+            }
+            
+            if (clickedSuccessfully) {
+                console.log('Space Management click successful');
+            }
+            
+        } catch (error) {
+            console.error('All click attempts failed:', error.message);
+            throw error;
+        }
+        
+        // Wait a bit after clicking to ensure navigation
+        await this.page.waitForTimeout(3000);
+        
+        // Apply font optimizations after navigation for faster screenshots
+        await this.optimizeFontsForPerformance();
+    }
+
+    // New method to optimize fonts for better performance
+    async optimizeFontsForPerformance() {
+        try {
+            await this.page.addStyleTag({
+                content: `
+                    * { 
+                        font-display: swap !important; 
+                    }
+                    @font-face {
+                        font-display: swap !important;
+                    }
+                    /* Disable heavy fonts if they exist */
+                    .heavy-font, .custom-font {
+                        font-family: Arial, sans-serif !important;
+                    }
+                `
+            });
+            
+            await this.page.evaluate(() => {
+                // Disable font loading delays
+                if (document.fonts && document.fonts.ready) {
+                    document.fonts.ready.then = () => Promise.resolve();
+                }
+                document.documentElement.style.setProperty('font-display', 'swap', 'important');
+            });
+            
+            console.log('Font optimizations applied');
+        } catch (error) {
+            console.warn('Font optimization failed:', error.message);
+        }
     }
 
     //Navigate to Sub modules

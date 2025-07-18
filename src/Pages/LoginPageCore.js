@@ -2,15 +2,15 @@
 // src/Pages/LoginPage.js
 const BasePage = require("./BasePage");
 
-class LoginPage extends BasePage {
+class LoginPageCore extends BasePage {
   constructor(page) {
     super(page);
-    this.username = '#lgnUserLogin_UserName';
-    this.password = '#lgnUserLogin_Password';
-    this.loginBtn = '#lgnUserLogin_Login';
+    this.username = '#UserName';
+    this.password = '#Password';
+    this.loginBtn = 'button.btn.blue[type="submit"]';
   }
 
-  async gotoLoginPage(baseUrl) {
+  async gotoLoginPageCore(baseUrl) {
     await this.page.goto(baseUrl); 
   }
 
@@ -29,4 +29,4 @@ class LoginPage extends BasePage {
   }
 }
 
-module.exports = LoginPage;
+module.exports = LoginPageCore;

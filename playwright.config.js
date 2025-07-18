@@ -17,9 +17,26 @@ const config = {
     browserName: 'chromium',
     headless: !!process.env.CI,
     screenshot: {
-      fullPage: true,
+      fullPage: false,  // Use viewport only to avoid crashes with extremely tall pages
+      timeout: 60000,  // Maximum timeout for screenshots
     },
     trace: 'retain-on-failure',
+    
+    // Performance optimizations for slow pages
+    launchOptions: {
+      args: [
+        '--disable-web-security',
+        '--disable-features=VizDisplayCompositor',
+        '--disable-font-subpixel-positioning',
+        '--font-render-hinting=none',
+        '--disable-gpu-sandbox'
+      ]
+    },
+    
+    // Page settings for better performance
+    contextOptions: {
+      reducedMotion: 'reduce',  // Disable animations
+    }
   },
 };
 

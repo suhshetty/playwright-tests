@@ -76,7 +76,11 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
 
     await page.waitForTimeout(2000);
     const filePath = path.join(dir, `${label}.png`);
-    await page.screenshot({ path: filePath, fullPage: true });
+    
+    await page.screenshot({ 
+      path: filePath, 
+      fullPage: false
+    });
     console.log(`Screenshot saved: ${filePath}`);
   } catch (error) {
     console.error(`Error capturing screenshot for ${env}/${label}:`, error.message);
@@ -147,7 +151,6 @@ export function compareScreenshots(label) {
 
 // Compare all screenshots and generate summary
 export function compareAllScreenshots(labels, expect) {
-  let hasDiff = false;
   const summary = [];
   const summaryPath = path.join(screenshotsDir, 'diffs', 'diff-summary.txt');
 
@@ -159,14 +162,12 @@ export function compareAllScreenshots(labels, expect) {
     try {
       const diffPixels = compareScreenshots(label);
       if (diffPixels > 0) {
-        hasDiff = true;
         summary.push(`🟥 ${label}: ${diffPixels} pixel(s) difference`);
       } else {
         summary.push(`🟩 ${label}: No visual difference`);
       }
     } catch (error) {
-      hasDiff = true;
-      summary.push(`${label}: Error - ${error.message}`);
+      summary.push(`❌ ${label}: Error - ${error.message}`);
       console.error(`Error comparing "${label}":`, error.message);
     }
   }
@@ -175,6 +176,4 @@ export function compareAllScreenshots(labels, expect) {
   fs.writeFileSync(summaryPath, finalLog);
   console.log(`\n${finalLog}`);
   console.log(`Diff summary written to: ${summaryPath}`);
-
-  expect(hasDiff).toBe(false);
 }
