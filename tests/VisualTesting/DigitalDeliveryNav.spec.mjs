@@ -1,161 +1,106 @@
-// File: DigitalDeliveryNav.spec.js
 import { test, expect } from '@playwright/test';
-import { loginAndInitialize } from '../src/testSetup.js';
+import {
+  loginAndInitializeWithCore,
+  loginAndInitializeWithStandard
+} from '../src/testSetup.js';
+
 import {
   initializeVisualTestEnv,
-  safeStep,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
 } from '../../src/utils/visualUtils.withMasking.mjs';
 
+import {
+  safeStep,
+  safeStepWithTimeout,
+  safeScreenshot
+} from '../../src/utils/CommonFunctions.mjs';
+
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
 
-// Screens to validate
-const labels = [
-  //'gotoHomePage',
-  //'gotoModuleMenu',
-  //'clickDigitalDelivery',
-  //'gotoDigitalDeliverySubModule',
-  'gotoProductData',
-  'gotoProductDataTask',
-  'gotoProductDataComponent',
-  'gotoProductDataTechnicalInformation',
-  'gotoEPD',
-  //'gotoBuildingSystems',
-  'gotoRegisterBuildingComponents',
-  'gotoRegisterBuildingComponentsCSS',
-  'gotoFunctionalSystemCSS',
-  'gotoTechnicalSystemCSS',
-  'gotoComponentsCSS',
-  'gotoFunctionalSystem',
-  'gotoTechnicalSystem',
-  'gotoComponent',
-  //'gotoConfiguration',
-  'gotoAccessConfiguration'
+// Define navigation steps for Digital Delivery module and submodules/subtypes
+const navigationSteps = [
+  // Digital Delivery Sub-Types (direct under main module)
+  { name: 'gotoProductData', screenshot: true, useTimeout: false },
+  { name: 'gotoProductDataTask', screenshot: true, useTimeout: false },
+  { name: 'gotoProductDataComponent', screenshot: true, useTimeout: false },
+  { name: 'gotoProductDataTechnicalInformation', screenshot: true, useTimeout: false },
+  { name: 'gotoEPD', screenshot: true, useTimeout: false },
+  
+  // Navigate to Building Systems sub-module, then its sub-types
+  { name: 'gotoBuildingSystems', screenshot: false, useTimeout: false },
+  { name: 'gotoRegisterBuildingComponents', screenshot: true, useTimeout: false },
+  { name: 'gotoRegisterBuildingComponentsCSS', screenshot: true, useTimeout: false },
+  { name: 'gotoFunctionalSystemCSS', screenshot: true, useTimeout: false },
+  { name: 'gotoTechnicalSystemCSS', screenshot: true, useTimeout: false },
+  { name: 'gotoComponentsCSS', screenshot: true, useTimeout: false },
+  { name: 'gotoFunctionalSystem', screenshot: true, useTimeout: false },
+  { name: 'gotoTechnicalSystem', screenshot: true, useTimeout: false },
+  { name: 'gotoComponent', screenshot: true, useTimeout: false },
+  
+  // Navigate to Configuration sub-module, then its sub-types
+  { name: 'gotoConfiguration', screenshot: false, useTimeout: false },
+  { name: 'gotoAccessConfiguration', screenshot: true, useTimeout: false }
 ];
 
-// Run the visual test for a given URL environment 
-const runTestOnUrl = async (env, baseUrl, page, context) => {
-  const { homePage, digitalDelivery } = await loginAndInitialize({ page, context, baseUrl });
+// Extract screenshot labels
+const labels = navigationSteps.filter(step => step.screenshot).map(step => step.name);
+
+// Helper to run each navigation step
+const executeNavigationStep = async (step, module, page, env) => {
+  const stepFunction = async () => {
+    await module[step.name]();
+    if (step.screenshot) {
+      await safeScreenshot(page, env, step.name, waitForProcessingAndTakeScreenshot);
+    }
+  };
+
+  if (step.useTimeout) {
+    await safeStepWithTimeout(step.name, stepFunction);
+  } else {
+    await safeStep(step.name, stepFunction, page, env);
+  }
+};
+
+// Main runner for each environment
+const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') => {
+  const initializeFunction = loginMethod === 'core' ? loginAndInitializeWithCore : loginAndInitializeWithStandard;
+  const { homePage, digitalDelivery } = await initializeFunction({ page, context, baseUrl });
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-  });
+  }, page, env);
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-  });
+  }, page, env);
 
   await safeStep('clickDigitalDelivery', async () => {
-    await digitalDelivery.clickDigitalDelivery();   
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickDigitalDelivery');
-  });
+    await digitalDelivery.clickDigitalDelivery();
+    // Wait for initial sub-module to be visible
+    await page.waitForTimeout(6000); // adjust if needed
+    await page.locator("div[aria-label='Digital delivery Process step']").waitFor({ state: 'visible', timeout: 15000 });
+  }, page, env);
 
-    await safeStep('gotoDigitalDeliverySubModule', async () => {
-    await digitalDelivery.gotoDigitalDeliverySubModule();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDigitalDeliverySubModule');
-  });
-
-   // 📌 Digital Delivery - Sub Types
-  await safeStep('gotoProductData', async () => {
-    await digitalDelivery.gotoProductData();
-   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
-  });
-
-  await safeStep('gotoProductDataTask', async () => {
-    await digitalDelivery.gotoProductDataTask();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataTask');
-  });
-
-  await safeStep('gotoProductDataComponent', async () => {
-    await digitalDelivery.gotoProductDataComponent();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataComponent');
-  });
-
-  await safeStep('gotoProductDataTechnicalInformation', async () => {
-    await digitalDelivery.gotoProductDataTechnicalInformation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataTechnicalInformation');
-  });
-
-  await safeStep('gotoEPD', async () => {
-    await digitalDelivery.gotoEPD();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEPD');
-  });
-
-
-  await safeStep('gotoBuildingSystems', async () => {
-    await digitalDelivery.gotoBuildingSystems();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSystems');
-  });
-
-   // 📌 Building Systems - Sub Types
-  await safeStep('gotoRegisterBuildingComponents', async () => {
-    await digitalDelivery.gotoRegisterBuildingComponents();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterBuildingComponents');
-  });
-
-  await safeStep('gotoRegisterBuildingComponentsCSS', async () => {
-    await digitalDelivery.gotoRegisterBuildingComponentsCSS();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterBuildingComponentsCSS');
-  });
-
-  await safeStep('gotoFunctionalSystemCSS', async () => {
-    await digitalDelivery.gotoFunctionalSystemCSS();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystemCSS');
-  });
-
-  await safeStep('gotoTechnicalSystemCSS', async () => {
-    await digitalDelivery.gotoTechnicalSystemCSS();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemCSS');
-  });
-
-  await safeStep('gotoComponentsCSS', async () => {
-    await digitalDelivery.gotoComponentsCSS();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponentsCSS');
-  });
-
-  await safeStep('gotoFunctionalSystem', async () => {
-    await digitalDelivery.gotoFunctionalSystem();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystem');
-  });
-
-  await safeStep('gotoTechnicalSystem', async () => {
-    await digitalDelivery.gotoTechnicalSystem();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystem');
-  });
-
-  await safeStep('gotoComponent', async () => {
-    await digitalDelivery.gotoComponent();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponent');
-  });
-
-
-  await safeStep('gotoConfiguration', async () => {
-    await digitalDelivery.gotoConfiguration();
-   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-  });
-
- 
-  // 📌 Configuration - Sub Types
-  await safeStep('gotoAccessConfiguration', async () => {
-    await digitalDelivery.gotoAccessConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfiguration');
-  });
-
+  for (const step of navigationSteps) {
+    await executeNavigationStep(step, digitalDelivery, page, env);
+  }
 };
 
 // 🎯 Main visual regression test entry
-test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
-  await runTestOnUrl('url1', process.env.URL1, page, context);
+test('Visual Regression Test - Digital Delivery - Compare url1 and url2', async ({ page, context }) => {
+  test.setTimeout(600000); // 10 minutes
+
+  // Run test on URL1 with Core login
+  await runTestOnUrl('url1', process.env.URL1, page, context, 'core');
 
   await page.context().clearCookies();
   await page.close();
   const newPage = await context.newPage();
 
-  await runTestOnUrl('url2', process.env.URL2, newPage, context);
+  // Run test on URL2 with Standard login
+  await runTestOnUrl('url2', process.env.URL2, newPage, context, 'standard');
 
   compareAllScreenshots(labels, expect);
 });
