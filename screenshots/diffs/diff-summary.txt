@@ -1,0 +1,14 @@
+Visual Comparison Summary (22/7/2025, 12:01:17 pm):
+
+🟥 gotoPPMRegistration: 11975 pixel(s) difference
+🟥 gotoRecurringIncident: 18768 pixel(s) difference
+🟥 gotoMaintenanceIncidentSubType: 9768 pixel(s) difference
+🟥 gotoConditionAssessmentSubType: 13634 pixel(s) difference
+🟥 gotoConditionRegistration: 23809 pixel(s) difference
+🟥 gotoCondition: 28767 pixel(s) difference
+🟥 gotoFunctionalSystem: 39451 pixel(s) difference
+🟥 gotoTechnicalSystem: 42594 pixel(s) difference
+🟥 gotoSensor: 10646 pixel(s) difference
+🟥 gotoConditionAssessmentType: 6949 pixel(s) difference
+🟥 gotoStandardCondition: 21279 pixel(s) difference
+🟥 gotoAccessConfiguration: 17424 pixel(s) difference

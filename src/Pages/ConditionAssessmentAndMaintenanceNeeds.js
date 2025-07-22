@@ -41,9 +41,38 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
 
   async clickConditionAssessmentAndMaintenanceNeeds() {
     await this.page.waitForTimeout(3000);
-    const conditionAssessmentAndMaintenanceNeeds = this.page.locator(this.conditionAssessmentAndMaintenanceNeeds).first();
-    await conditionAssessmentAndMaintenanceNeeds.waitFor({ state: 'attached', timeout: 10000 });
-    await conditionAssessmentAndMaintenanceNeeds.evaluate((node) => node.click());
+    
+    // Find all Condition Assessment elements
+    const elements = await this.page.locator(this.conditionAssessmentAndMaintenanceNeeds).all();
+    console.log(`Found ${elements.length} Condition Assessment elements`);
+    
+    for (let i = 0; i < elements.length; i++) {
+        const isVisible = await elements[i].isVisible();
+        console.log(`Element ${i}: visible=${isVisible}`);
+        
+        if (isVisible) {
+            console.log(`Attempting to click element ${i}`);
+            try {
+                // Try force click first to bypass viewport issues
+                await elements[i].click({ force: true });
+                console.log('Condition Assessment click successful');
+                return;
+            } catch (forceClickError) {
+                console.log(`Force click failed for element ${i}, trying evaluate:`, forceClickError.message);
+                try {
+                    // If force click fails, try evaluate click
+                    await elements[i].evaluate((node) => node.click());
+                    console.log('Condition Assessment click successful');
+                    return;
+                } catch (evaluateError) {
+                    console.log(`Evaluate click failed for element ${i}:`, evaluateError.message);
+                    // Continue to next element
+                }
+            }
+        }
+    }
+    
+    throw new Error('No clickable Condition Assessment elements found');
   }
 
     // Navigate to sub modules
