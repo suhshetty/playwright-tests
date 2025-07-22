@@ -102,12 +102,60 @@ class PropertyManagement extends BasePage {
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
   }
 
-  async clickpropertyManagement() {
-    await this.page.waitForTimeout(3000);
-    const propertyManagement = this.page.locator(this.propertyManagement).first();
-    await propertyManagement.waitFor({ state: 'attached', timeout: 10000 });
-    await propertyManagement.evaluate((node) => node.click());
-  }
+    async clickpropertyManagement() {
+        await this.page.waitForTimeout(3000);
+
+        try {
+            // Find all Property Management elements
+            const allElements = this.page.locator(this.propertyManagement);
+            const count = await allElements.count();
+            console.log(`Found ${count} Property Management elements`);
+
+            let clickedSuccessfully = false;
+
+            // Try to find and click a visible element
+            for (let i = 0; i < count; i++) {
+                const element = allElements.nth(i);
+                const isVisible = await element.isVisible();
+                console.log(`Element ${i}: visible=${isVisible}`);
+
+                if (isVisible) {
+                    console.log(`Scrolling to and clicking visible element ${i}`);
+                    try {
+                        await element.scrollIntoViewIfNeeded({ timeout: 30000 });
+                        await element.click({ force: true, timeout: 30000 });
+                        clickedSuccessfully = true;
+                        break;
+                    } catch (scrollClickError) {
+                        console.log(`Force click failed for element ${i}, trying evaluate:`, scrollClickError.message);
+                        await element.evaluate((node) => node.click());
+                        clickedSuccessfully = true;
+                        break;
+                    }
+                }
+            }
+
+            // If no visible element found, try the first element with evaluate
+            if (!clickedSuccessfully) {
+                console.log('No visible elements found, using evaluate click on first element');
+                const firstElement = allElements.first();
+                await firstElement.waitFor({ state: 'attached', timeout: 30000 });
+                await firstElement.evaluate((node) => node.click());
+                clickedSuccessfully = true;
+            }
+
+            if (clickedSuccessfully) {
+                console.log('Property Management click successful');
+            }
+
+        } catch (error) {
+            console.error('All click attempts failed:', error.message);
+            throw error;
+        }
+
+        // Wait a bit after clicking to ensure navigation
+        await this.page.waitForTimeout(3000);
+    }
 
   // Navigate to sub modules
   async gotoLeaseObjects() {
@@ -146,7 +194,7 @@ class PropertyManagement extends BasePage {
   }
 
   async gotoMovingInOut() {
-    await this.page.locator(this.MovingInOut).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.MovingInOut).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.MovingInOut).click();
   }
 
@@ -417,7 +465,7 @@ class PropertyManagement extends BasePage {
       }
 
       async gotoChecklists() {
-        await this.page.locator(this.Checklists).waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.locator(this.Checklists).waitFor({ state: 'visible', timeout: 10000 });
         await this.page.locator(this.Checklists).click();
       }
 

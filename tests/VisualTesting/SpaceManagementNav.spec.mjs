@@ -1,202 +1,89 @@
 // File: SpaceManagementNav.spec.js
 import { test, expect } from '@playwright/test';
-import { loginAndInitialize, loginAndInitializeWithCore, loginAndInitializeWithStandard } from '../src/testSetup.js';
+import { loginAndInitializeWithCore, loginAndInitializeWithStandard } from '../src/testSetup.js';
 import {
   initializeVisualTestEnv,
-  safeStep,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
 } from '../../src/utils/visualUtils.withMasking.mjs';
+import { safeStep, safeStepWithTimeout, safeScreenshot } from '../../src/utils/CommonFunctions.mjs';
 
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
 
-// Helper function for safe screenshot taking with timeout
-const safeScreenshot = async (page, env, label) => {
-  try {
-    // Add a timeout wrapper for the entire screenshot process
-    await Promise.race([
-      waitForProcessingAndTakeScreenshot(page, env, label),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error('Screenshot timeout after 60 seconds')), 60000)
-      )
-    ]);
-  } catch (screenshotError) {
-    console.warn(`Screenshot failed for ${label} ${env}:`, screenshotError.message);
-  }
-};
-
-// Helper function for safe steps with timeout
-const safeStepWithTimeout = async (stepName, stepFunction, timeoutMs = 45000) => {
-  try {
-    await Promise.race([
-      stepFunction(),
-      new Promise((_, reject) => 
-        setTimeout(() => reject(new Error(`Step timeout after ${timeoutMs/1000} seconds`)), timeoutMs)
-      )
-    ]);
-  } catch (error) {
-    console.warn(`Step "${stepName}" failed:`, error.message);
-    // Don't throw - continue with other steps
-  }
-};
-
-// Screens to validate
-const labels = [
-  //'gotoHomePage', 'gotoModuleMenu', 
-  //'gotoBuildingSpaceOverview', 'gotoLocateOrganisation', 'gotoLocateEquipment',
- // 'gotoKeyManagement', 'gotoConfiguration', 'gotoTestÞT',
-  'gotoBuildingSpaces', 'gotoBuildingSpaceInformation', 'gotoDrawing',
-  'gotoLocateOrganisationSubType', 'gotoObjectOwner', 'gotoSpaceManagementScenario',
-  'gotoLocateEquipmentSubType', 'gotoKeyToLock', 'gotoAccessConfiguration','gotoWorkOrderHours'
+// Define navigation steps with their corresponding methods and screenshot requirements
+const navigationSteps = [
+  { name: 'gotoBuildingSpaces', screenshot: true, useTimeout: false },
+  { name: 'gotoBuildingSpaceInformation', screenshot: true, useTimeout: false },
+  { name: 'gotoDrawing', screenshot: true, useTimeout: true },
+  { name: 'gotoLocateOrganisation', screenshot: false, useTimeout: false },
+  { name: 'gotoLocateOrganisationSubType', screenshot: true, useTimeout: true },
+  { name: 'gotoObjectOwner', screenshot: true, useTimeout: true },
+  { name: 'gotoSpaceManagementScenario', screenshot: true, useTimeout: true },
+  { name: 'gotoLocateEquipment', screenshot: false, useTimeout: false },
+  { name: 'gotoLocateEquipmentSubType', screenshot: true, useTimeout: true },
+  { name: 'gotoKeyManagement', screenshot: false, useTimeout: false },
+  { name: 'gotoKeyToLock', screenshot: true, useTimeout: true },
+  { name: 'gotoConfiguration', screenshot: false, useTimeout: false },
+  { name: 'gotoAccessConfiguration', screenshot: true, useTimeout: true },
+  { name: 'gotoTestÞT', screenshot: false, useTimeout: false },
+  { name: 'gotoWorkOrderHours', screenshot: true, useTimeout: true }
 ];
 
+// Extract labels for screenshots
+const labels = navigationSteps.filter(step => step.screenshot).map(step => step.name);
+
+// Helper function to execute a navigation step
+const executeNavigationStep = async (step, spaceManagement, page, env) => {
+  const stepFunction = async () => {
+    await spaceManagement[step.name]();
+    if (step.screenshot) {
+      await safeScreenshot(page, env, step.name, waitForProcessingAndTakeScreenshot);
+    }
+  };
+
+  if (step.useTimeout) {
+    await safeStepWithTimeout(step.name, stepFunction);
+  } else {
+    await safeStep(step.name, stepFunction, page, env);
+  }
+};
 
 // Run the visual test for a given URL environment
 const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') => {
-  let initializeFunction;
-  
-  // Choose the appropriate login method
-  if (loginMethod === 'core') {
-    initializeFunction = loginAndInitializeWithCore;
-  } else {
-    initializeFunction = loginAndInitializeWithStandard;
-  }
-  
+  const initializeFunction = loginMethod === 'core' ? loginAndInitializeWithCore : loginAndInitializeWithStandard;
   const { homePage, spaceManagement } = await initializeFunction({ page, context, baseUrl });
 
+  // Navigate to home and module menu
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-
-  });
+  }, page, env);
 
   await safeStep('gotoModuleMenu', async () => {
     console.log(`Going to module menu for ${env}...`);
     await homePage.gotoModuleMenu();
-    
-    // Wait for the module menu to be fully loaded
     await page.waitForTimeout(2000);
     
-    // Check if Space Management option is available
     const spaceManagementExists = await page.locator("//span[@class='m-menu__link-text mm-menu-link-text' and text()='Space management']").count();
     console.log(`Space Management menu items found for ${env}: ${spaceManagementExists}`);
-    
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-  });
+  }, page, env);
 
+  // Click Space Management
   await safeStep('clickSpaceManagement', async () => {
     console.log(`Attempting to click Space Management for ${env}...`);
-    try {
-      await spaceManagement.clickSpaceManagement();
-      console.log(`Successfully clicked Space Management for ${env}`);
-    } catch (error) {
-      console.error(`Failed to click Space Management for ${env}:`, error.message);
-      
-      // Take a screenshot for debugging
-      await page.screenshot({ path: `debug-${env}-clickSpaceManagement-failed.png`, fullPage: true });
-      
-      // Try to get page info
-      const url = page.url();
-      const title = await page.title();
-      console.log(`Current URL: ${url}, Title: ${title}`);
-      
-      throw error;
-    }
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickSpaceManagement');
-  });
+    await spaceManagement.clickSpaceManagement();
+    console.log(`Successfully clicked Space Management for ${env}`);
+  }, page, env);
 
-
+  // Navigate to building space overview
   await safeStep('gotoBuildingSpaceOverview', async () => {
     await spaceManagement.gotoBuildingSpaceOverview();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceOverview');
-  });
+  }, page, env);
 
-
-  await safeStep('gotoBuildingSpaces', async () => {
-     await spaceManagement.gotoBuildingSpaces();
-     await safeScreenshot(page, env, 'gotoBuildingSpaces');
-  });
-
-
-    await safeStep('gotoBuildingSpaceInformation', async () => {
-     await spaceManagement.gotoBuildingSpaceInformation();
-     await safeScreenshot(page, env, 'gotoBuildingSpaceInformation');
-  });
-
-
-    await safeStepWithTimeout('gotoDrawing', async () => {
-     await spaceManagement.gotoDrawing();
-     await safeScreenshot(page, env, 'gotoDrawing');
-  });
-
-
-    await safeStep('gotoLocateOrganisation', async () => {
-    await spaceManagement.gotoLocateOrganisation();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateOrganisation');
-  });
-
-
-    await safeStepWithTimeout('gotoLocateOrganisationSubType', async () => {
-     await spaceManagement.gotoLocateOrganisationSubType();
-     await safeScreenshot(page, env, 'gotoLocateOrganisationSubType');
-  });
-
-
-    await safeStepWithTimeout('gotoObjectOwner', async () => {
-        await spaceManagement.gotoObjectOwner();
-        await safeScreenshot(page, env, 'gotoObjectOwner');
-    });
-
-
-    await safeStepWithTimeout('gotoSpaceManagementScenario', async () => {
-        await spaceManagement.gotoSpaceManagementScenario();
-        await safeScreenshot(page, env, 'gotoSpaceManagementScenario');
-    });
-
-    await safeStep('gotoLocateEquipment', async () => {
-        await spaceManagement.gotoLocateEquipment();
-       // await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateEquipment');
-    });
-
-    await safeStepWithTimeout('gotoLocateEquipmentSubType', async () => {
-        await spaceManagement.gotoLocateEquipmentSubType();
-        await safeScreenshot(page, env, 'gotoLocateEquipmentSubType');
-    });
-
-    await safeStep('gotoKeyManagement', async () => {
-        await spaceManagement.gotoKeyManagement();
-        //await waitForProcessingAndTakeScreenshot(page, env, 'gotoKeyManagement');
-    });
-
-    await safeStepWithTimeout('gotoKeyToLock', async () => {
-        await spaceManagement.gotoKeyToLock();
-        await safeScreenshot(page, env, 'gotoKeyToLock');
-    });
-
-    await safeStep('gotoConfiguration', async () => {
-        await spaceManagement.gotoConfiguration();
-       // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-    });
-
-    await safeStepWithTimeout('gotoAccessConfiguration', async () => {
-        await spaceManagement.gotoAccessConfiguration();
-        await safeScreenshot(page, env, 'gotoAccessConfiguration');
-    });
-
-    await safeStep('gotoTestÞT', async () => {
-        await spaceManagement.gotoTestÞT();
-        //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTestÞT');
-    });
-
-    await safeStepWithTimeout('gotoWorkOrderHours', async () => {
-        await spaceManagement.gotoWorkOrderHours();
-        await safeScreenshot(page, env, 'gotoWorkOrderHours');
-    });
-
-
-
-
+  // Execute all navigation steps
+  for (const step of navigationSteps) {
+    await executeNavigationStep(step, spaceManagement, page, env);
+  }
 };
 
 // 🎯 Main visual regression test entry
