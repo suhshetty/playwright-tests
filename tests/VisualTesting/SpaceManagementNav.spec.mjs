@@ -13,6 +13,7 @@ initializeVisualTestEnv();
 
 // Define navigation steps with their corresponding methods and screenshot requirements
 const navigationSteps = [
+  { name: 'gotoBuildingSpaceOverview', screenshot: false, useTimeout: false },
   { name: 'gotoBuildingSpaces', screenshot: true, useTimeout: false },
   { name: 'gotoBuildingSpaceInformation', screenshot: true, useTimeout: false },
   { name: 'gotoDrawing', screenshot: true, useTimeout: true },
@@ -60,31 +61,20 @@ const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') =
   }, page, env);
 
   await safeStep('gotoModuleMenu', async () => {
-    console.log(`Going to module menu for ${env}...`);
     await homePage.gotoModuleMenu();
-    await page.waitForTimeout(2000);
-    
-    const spaceManagementExists = await page.locator("//span[@class='m-menu__link-text mm-menu-link-text' and text()='Space management']").count();
-    console.log(`Space Management menu items found for ${env}: ${spaceManagementExists}`);
   }, page, env);
 
-  // Click Space Management
   await safeStep('clickSpaceManagement', async () => {
-    console.log(`Attempting to click Space Management for ${env}...`);
     await spaceManagement.clickSpaceManagement();
-    console.log(`Successfully clicked Space Management for ${env}`);
+    // Wait for space Management module to fully load
+    await page.waitForTimeout(8000);
   }, page, env);
 
-  // Navigate to building space overview
-  await safeStep('gotoBuildingSpaceOverview', async () => {
-    await spaceManagement.gotoBuildingSpaceOverview();
-  }, page, env);
-
-  // Execute all navigation steps
   for (const step of navigationSteps) {
     await executeNavigationStep(step, spaceManagement, page, env);
   }
 };
+
 
 // 🎯 Main visual regression test entry
 test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {

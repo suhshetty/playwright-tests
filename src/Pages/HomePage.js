@@ -22,9 +22,12 @@ class HomePage extends BasePage {
   async gotoModuleMenu() {
     try {
       await this.page.locator(this.moduleMenuBtn).waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.locator(this.moduleMenuBtn).scrollIntoViewIfNeeded();
+      await this.page.waitForTimeout(500);
       await this.page.locator(this.moduleMenuBtn).click();
+      await this.page.waitForTimeout(2000);
     } catch (error) {
-      console.log('Module menu button not found or not visible');
+      console.log('Module menu button not found or not visible:', error.message);
       throw error;
     }
   }

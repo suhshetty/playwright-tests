@@ -1,33 +1,26 @@
+// File: DigitalDeliveryNav.spec.js
 import { test, expect } from '@playwright/test';
-import {
-  loginAndInitializeWithCore,
-  loginAndInitializeWithStandard
-} from '../src/testSetup.js';
-
+import { loginAndInitializeWithCore, loginAndInitializeWithStandard } from '../src/testSetup.js';
 import {
   initializeVisualTestEnv,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
 } from '../../src/utils/visualUtils.withMasking.mjs';
-
-import {
-  safeStep,
-  safeStepWithTimeout,
-  safeScreenshot
-} from '../../src/utils/CommonFunctions.mjs';
+import { safeStep, safeStepWithTimeout, safeScreenshot } from '../../src/utils/CommonFunctions.mjs';
 
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
 
-// Define navigation steps for Digital Delivery module and submodules/subtypes
+// Define navigation steps with their corresponding methods and screenshot requirements
 const navigationSteps = [
+  { name: 'gotoDigitalDeliverySub', screenshot: true, useTimeout: false },
   // Digital Delivery Sub-Types (direct under main module)
   { name: 'gotoProductData', screenshot: true, useTimeout: false },
   { name: 'gotoProductDataTask', screenshot: true, useTimeout: false },
   { name: 'gotoProductDataComponent', screenshot: true, useTimeout: false },
   { name: 'gotoProductDataTechnicalInformation', screenshot: true, useTimeout: false },
   { name: 'gotoEPD', screenshot: true, useTimeout: false },
-  
+
   // Navigate to Building Systems sub-module, then its sub-types
   { name: 'gotoBuildingSystems', screenshot: false, useTimeout: false },
   { name: 'gotoRegisterBuildingComponents', screenshot: true, useTimeout: false },
@@ -38,19 +31,19 @@ const navigationSteps = [
   { name: 'gotoFunctionalSystem', screenshot: true, useTimeout: false },
   { name: 'gotoTechnicalSystem', screenshot: true, useTimeout: false },
   { name: 'gotoComponent', screenshot: true, useTimeout: false },
-  
+
   // Navigate to Configuration sub-module, then its sub-types
   { name: 'gotoConfiguration', screenshot: false, useTimeout: false },
   { name: 'gotoAccessConfiguration', screenshot: true, useTimeout: false }
 ];
 
-// Extract screenshot labels
+// Extract labels for screenshots
 const labels = navigationSteps.filter(step => step.screenshot).map(step => step.name);
 
-// Helper to run each navigation step
-const executeNavigationStep = async (step, module, page, env) => {
+// Helper function to execute a navigation step
+const executeNavigationStep = async (step, digitalDelivery, page, env) => {
   const stepFunction = async () => {
-    await module[step.name]();
+    await digitalDelivery[step.name]();
     if (step.screenshot) {
       await safeScreenshot(page, env, step.name, waitForProcessingAndTakeScreenshot);
     }
@@ -63,11 +56,12 @@ const executeNavigationStep = async (step, module, page, env) => {
   }
 };
 
-// Main runner for each environment
+// Run the visual test for a given URL environment
 const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') => {
   const initializeFunction = loginMethod === 'core' ? loginAndInitializeWithCore : loginAndInitializeWithStandard;
   const { homePage, digitalDelivery } = await initializeFunction({ page, context, baseUrl });
 
+  // Navigate to home and module menu
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
   }, page, env);
@@ -78,8 +72,8 @@ const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') =
 
   await safeStep('clickDigitalDelivery', async () => {
     await digitalDelivery.clickDigitalDelivery();
-    // Wait for initial sub-module to be visible
-    await page.waitForTimeout(6000); // adjust if needed
+    // Wait for Digital Delivery module to fully load
+    await page.waitForTimeout(6000);
     await page.locator("div[aria-label='Digital delivery Process step']").waitFor({ state: 'visible', timeout: 15000 });
   }, page, env);
 
@@ -90,16 +84,17 @@ const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') =
 
 // 🎯 Main visual regression test entry
 test('Visual Regression Test - Digital Delivery - Compare url1 and url2', async ({ page, context }) => {
-  test.setTimeout(600000); // 10 minutes
+  // Set longer timeout for this specific test
+  test.setTimeout(600000); // 10 minutes total
 
-  // Run test on URL1 with Core login
+  // Run URL1 with LoginPageCore
   await runTestOnUrl('url1', process.env.URL1, page, context, 'core');
 
   await page.context().clearCookies();
   await page.close();
   const newPage = await context.newPage();
 
-  // Run test on URL2 with Standard login
+  // Run URL2 with standard LoginPage
   await runTestOnUrl('url2', process.env.URL2, newPage, context, 'standard');
 
   compareAllScreenshots(labels, expect);
