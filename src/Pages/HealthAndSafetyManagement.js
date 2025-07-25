@@ -11,7 +11,7 @@ class HealthAndSafetyManagement extends BasePage {
 
     // Sub module locators
     this.GeneralOverview = "div[aria-label='General overview Process step']";
-    this.RepsonsibleResources = "div[aria-label='Responsible resources Process step']";
+    this.ResponsibleResources = "div[aria-label='Responsible resources Process step']";
     this.TechnicalDocumentation = "div[aria-label='Technical documentation Process step']";
     this.ObjectMarking = "div[aria-label='Object marking Process step']";
     this.Activities = "div[aria-label='Activities Process step']";
@@ -52,9 +52,40 @@ class HealthAndSafetyManagement extends BasePage {
 
     async clickHealthAndSafetyManagement() {
         await this.page.waitForTimeout(3000);
-        const healthAndSafetyManagement = this.page.locator(this.healthAndSafetyManagement).first();
-        await healthAndSafetyManagement.waitFor({ state: 'attached', timeout: 10000 });
-        await healthAndSafetyManagement.evaluate((node) => node.click());
+
+        try {
+            const allElements = this.page.locator(this.healthAndSafetyManagement);
+            const count = await allElements.count();
+
+            // Try to click a visible element
+            for (let i = 0; i < count; i++) {
+                const element = allElements.nth(i);
+                const isVisible = await element.isVisible();
+
+                if (isVisible) {
+                    try {
+                        await element.scrollIntoViewIfNeeded();
+                        await element.click({ force: true, timeout: 5000 });
+                        return; // Success
+                    } catch (error) {
+                        // Fallback: JavaScript click
+                        await element.evaluate((node) => node.click());
+                        return;
+                    }
+                }
+            }
+
+            // No visible element found — fallback to first element via JS
+            if (count > 0) {
+                await allElements.first().evaluate((node) => node.click());
+            }
+
+        } catch (error) {
+            console.error('Health and Safety Management click failed:', error.message);
+            throw error;
+        }
+
+        await this.page.waitForTimeout(3000);
     }
 
     // Navigate to sub modules
@@ -64,8 +95,8 @@ class HealthAndSafetyManagement extends BasePage {
     }
 
     async gotoResponsibleResources() {
-        await this.page.locator(this.RepsonsibleResources).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.RepsonsibleResources).click();
+        await this.page.locator(this.ResponsibleResources).waitFor({ state: 'visible', timeout: 5000 });
+        await this.page.locator(this.ResponsibleResources).click();
     }
 
     async gotoTechnicalDocumentation() {
