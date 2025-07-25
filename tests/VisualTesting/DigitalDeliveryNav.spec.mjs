@@ -87,15 +87,15 @@ test('Visual Regression Test - Digital Delivery - Compare url1 and url2', async 
   // Set longer timeout for this specific test
   test.setTimeout(600000); // 10 minutes total
 
-  // Run URL1 with LoginPageCore
-  await runTestOnUrl('url1', process.env.URL1, page, context, 'core');
+  // Run URL1 with standard LoginPage (now MMV2 Legacy)
+  await runTestOnUrl('url1', process.env.URL1, page, context, 'standard');
 
   await page.context().clearCookies();
   await page.close();
   const newPage = await context.newPage();
 
-  // Run URL2 with standard LoginPage
-  await runTestOnUrl('url2', process.env.URL2, newPage, context, 'standard');
+  // Run URL2 with LoginPageCore (now Core system)
+  await runTestOnUrl('url2', process.env.URL2, newPage, context, 'core');
 
   compareAllScreenshots(labels, expect);
 });

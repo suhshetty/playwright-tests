@@ -1,319 +1,138 @@
-// File: FireSafetyManagementNavigation.spec.js
+// File: FireSafetyManagementNav.spec.js
+
 import { test, expect } from '@playwright/test';
-import { loginAndInitialize } from '../src/testSetup.js';
+import { loginAndInitializeWithCore, loginAndInitializeWithStandard } from '../src/testSetup.js';
 import {
   initializeVisualTestEnv,
-  safeStep,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
 } from '../../src/utils/visualUtils.withMasking.mjs';
 
+import { safeStep, safeStepWithTimeout, safeScreenshot } from '../../src/utils/CommonFunctions.mjs';
+
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
 
-// Screens to validate
-const labels = [
-  // 'gotoHomePage',
-  // 'gotoModuleMenu',
-  // 'clickFireSafetyManagement',
+// Define navigation steps for Fire Safety module
+const navigationSteps = [
+  // General Overview
+  { name: 'gotoGeneralOverview', screenshot: false },
+  { name: 'gotoGeneralInformationFireSafety', screenshot: true },
 
-  //'gotoGeneralOverview',
-  'gotoGeneralInformationFireSafety',
+  // Responsible Resources
+  { name: 'gotoResponsibleResources', screenshot: false },
+  { name: 'gotoServicePartners', screenshot: true },
+  { name: 'gotoServicePartnerManagementFireSafety', screenshot: true },
+  { name: 'gotoPersonPermitFireSafety', screenshot: true },
 
-  //'gotoResponsibleResources',
-  'gotoServicePartners',
-  'gotoServicePartnerManagementFireSafety',
-  'gotoPersonPermitFireSafety',
+  // Technical Documentation
+  { name: 'gotoTechnicalDocumentation', screenshot: false },
+  { name: 'gotoFireSafetyDocument', screenshot: true },
+  { name: 'gotoFireSafetyDocumentTree', screenshot: true },
+  { name: 'gotoFlammableAndPressurizedMaterial', screenshot: true },
+  { name: 'gotoFireSafetyZone', screenshot: true },
 
-  //'gotoTechnicalDocumentation',
-  'gotoFireSafetyDocument',
-  'gotoFireSafetyDocumentTree',
-  'gotoFlammableAndPressurizedMaterial',
-  'gotoFireSafetyZone',
+  // Object Marking
+  { name: 'gotoObjectMarking', screenshot: false },
+  { name: 'gotoTechnicalSystemFireSafety', screenshot: true },
+  { name: 'gotoCSSTechnicalSystemFireSafety', screenshot: true },
+  { name: 'gotoThemeMarking', screenshot: true },
 
-  //'gotoObjectMarking',
-  'gotoTechnicalSystemFireSafety',
-  'gotoCSSTechnicalSystemFireSafety',
-  'gotoThemeMarking',
+  // Activities
+  { name: 'gotoActivities', screenshot: false },
+  { name: 'gotoTaskManagementFireSafety', screenshot: true },
+  { name: 'gotoWorkOrderFireSafety', screenshot: true },
+  { name: 'gotoChecklistsFireSafety', screenshot: true },
+  { name: 'gotoIncidentFireSafety', screenshot: true },
 
-  //'gotoActivities',
-  'gotoTaskManagementFireSafety',
-  'gotoWorkOrderFireSafety',
-  'gotoChecklistsFireSafety',
-  'gotoIncidentFireSafety',
+  // Activities Local
+  { name: 'gotoActivitiesLocal', screenshot: false },
+  { name: 'gotoTaskManagementFireSafetyLocal', screenshot: true },
+  { name: 'gotoWorkOrderFireSafetyLocal', screenshot: true },
+  { name: 'gotoChecklistsFireSafetyLocal', screenshot: true },
+  { name: 'gotoIncidentFireSafetyLocal', screenshot: true },
 
-  //'gotoActivitiesLocal',
-  'gotoTaskManagementFireSafetyLocal',
-  'gotoWorkOrderFireSafetyLocal',
-  'gotoChecklistsFireSafetyLocal',
-  'gotoIncidentFireSafetyLocal',
+  // Activities Customer
+  { name: 'gotoActivitiesCustomer', screenshot: false },
+  { name: 'gotoTaskManagementFireSafetyCustomer', screenshot: true },
+  { name: 'gotoWorkOrderFireSafetyCustomer', screenshot: true },
+  { name: 'gotoChecklistsFireSafetyCustomer', screenshot: true },
+  { name: 'gotoIncidentFireSafetyCustomer', screenshot: true },
 
-  //'gotoActivitiesCustomer',
-  'gotoTaskManagementFireSafetyCustomer',
-  'gotoWorkOrderFireSafetyCustomer',
-  'gotoChecklistsFireSafetyCustomer',
-  'gotoIncidentFireSafetyCustomer',
+  // Requirements and Guidelines
+  { name: 'gotoRequirementsAndGuidelines', screenshot: false },
+  { name: 'gotoLinksToLawsAndRegulation', screenshot: true },
+  { name: 'gotoInstructionsAndGuidelines', screenshot: true },
+  { name: 'gotoLocalRegulations', screenshot: true },
 
-  //'gotoRequirementsAndGuidelines',
-  'gotoLinksToLawsAndRegulation',
-  'gotoInstructionsAndGuidelines',
-  'gotoLocalRegulations',
+  // Data Setup
+  { name: 'gotoDataSetup', screenshot: false },
+  { name: 'gotoDocumentTypes', screenshot: true },
+  { name: 'gotoServiceTypes', screenshot: true },
+  { name: 'gotoMaterialTypes', screenshot: true },
+  { name: 'gotoPermitFireSafety', screenshot: true },
 
-  //'gotoDataSetup',
-  'gotoDocumentTypes',
-  'gotoServiceTypes',
-  'gotoMaterialTypes',
-  'gotoPermitFireSafety',
-
-  //'gotoConfiguration',
-  'gotoAccessConfiguration'
+  // Configuration
+  { name: 'gotoConfiguration', screenshot: false },
+  { name: 'gotoAccessConfiguration', screenshot: true }
 ];
 
-// Run the visual test for a given URL environment
-const runTestOnUrl = async (env, baseUrl, page, context) => {
-  const { homePage, fireSafetyManagement } = await loginAndInitialize({ page, context, baseUrl });
+// Extract screenshot labels
+const labels = navigationSteps.filter(step => step.screenshot).map(step => step.name);
 
-  // === Home and Module Navigation ===
+// Helper function to execute steps
+const executeNavigationStep = async (step, fireSafetyManagement, page, env) => {
+  const stepFn = async () => {
+    await fireSafetyManagement[step.name]();
+    if (step.screenshot) {
+      await safeScreenshot(page, env, step.name, waitForProcessingAndTakeScreenshot);
+    }
+  };
+
+  // Apply timeout wrapper if flagged
+  if (step.useTimeout) {
+    await safeStepWithTimeout(step.name, stepFn);
+  } else {
+    await safeStep(step.name, stepFn, page, env);
+  }
+};
+
+// Visual test runner for an environment
+const runTestOnUrl = async (env, baseUrl, page, context, loginMethod = 'core') => {
+  const initializeFunction = loginMethod === 'core' ? loginAndInitializeWithCore : loginAndInitializeWithStandard;
+  const { homePage, fireSafetyManagement } = await initializeFunction({ page, context, baseUrl });
+
+  // Top-level navigation
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-  });
+  }, page, env);
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-  });
+  }, page, env);
 
   await safeStep('clickFireSafetyManagement', async () => {
     await fireSafetyManagement.clickFireSafetyManagement();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickFireSafetyManagement');
-  });
+    await page.waitForTimeout(8000); // wait for module load
+  }, page, env);
 
-  // === General Overview ===
-  await safeStep('gotoGeneralOverview', async () => {
-    await fireSafetyManagement.gotoGeneralOverview();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralOverview');
-  });
-
-  await safeStep('gotoGeneralInformationFireSafety', async () => {
-    await fireSafetyManagement.gotoGeneralInformationFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGeneralInformationFireSafety');
-  });
-
-  // === Responsible Resources ===
-  await safeStep('gotoResponsibleResources', async () => {
-    await fireSafetyManagement.gotoResponsibleResources();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoResponsibleResources');
-  });
-
-  await safeStep('gotoServicePartners', async () => {
-    await fireSafetyManagement.gotoServicePartners();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartners');
-  });
-
-  await safeStep('gotoServicePartnerManagementFireSafety', async () => {
-    await fireSafetyManagement.gotoServicePartnerManagementFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnerManagementFireSafety');
-  });
-
-  await safeStep('gotoPersonPermitFireSafety', async () => {
-    await fireSafetyManagement.gotoPersonPermitFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitFireSafety');
-  });
-
-  // === Technical Documentation ===
-  await safeStep('gotoTechnicalDocumentation', async () => {
-    await fireSafetyManagement.gotoTechnicalDocumentation();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalDocumentation');
-  });
-
-  await safeStep('gotoFireSafetyDocument', async () => {
-    await fireSafetyManagement.gotoFireSafetyDocument();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFireSafetyDocument');
-  });
-
-  await safeStep('gotoFireSafetyDocumentTree', async () => {
-    await fireSafetyManagement.gotoFireSafetyDocumentTree();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFireSafetyDocumentTree');
-  });
-
-  await safeStep('gotoFlammableAndPressurizedMaterial', async () => {
-    await fireSafetyManagement.gotoFlammableAndPressurizedMaterial();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFlammableAndPressurizedMaterial');
-  });
-
-  await safeStep('gotoFireSafetyZone', async () => {
-    await fireSafetyManagement.gotoFireSafetyZone();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFireSafetyZone');
-  });
-
-  // === Object Marking ===
-  await safeStep('gotoObjectMarking', async () => {
-    await fireSafetyManagement.gotoObjectMarking();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectMarking');
-  });
-
-  await safeStep('gotoTechnicalSystemFireSafety', async () => {
-    await fireSafetyManagement.gotoTechnicalSystemFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemFireSafety');
-  });
-
-  await safeStep('gotoCSSTechnicalSystemFireSafety', async () => {
-    await fireSafetyManagement.gotoCSSTechnicalSystemFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCSSTechnicalSystemFireSafety');
-  });
-
-  await safeStep('gotoThemeMarking', async () => {
-    await fireSafetyManagement.gotoThemeMarking();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoThemeMarking');
-  });
-
-  // === Activities ===
-  await safeStep('gotoActivities', async () => {
-    await fireSafetyManagement.gotoActivities();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivities');
-  });
-
-  await safeStep('gotoTaskManagementFireSafety', async () => {
-    await fireSafetyManagement.gotoTaskManagementFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementFireSafety');
-  });
-
-  await safeStep('gotoWorkOrderFireSafety', async () => {
-    await fireSafetyManagement.gotoWorkOrderFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderFireSafety');
-  });
-
-  await safeStep('gotoChecklistsFireSafety', async () => {
-    await fireSafetyManagement.gotoChecklistsFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsFireSafety');
-  });
-
-  await safeStep('gotoIncidentFireSafety', async () => {
-    await fireSafetyManagement.gotoIncidentFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentFireSafety');
-  });
-
-  // === Activities Local ===
-  await safeStep('gotoActivitiesLocal', async () => {
-    await fireSafetyManagement.gotoActivitiesLocal();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesLocal');
-  });
-
-  await safeStep('gotoTaskManagementFireSafetyLocal', async () => {
-    await fireSafetyManagement.gotoTaskManagementFireSafetyLocal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementFireSafetyLocal');
-  });
-
-  await safeStep('gotoWorkOrderFireSafetyLocal', async () => {
-    await fireSafetyManagement.gotoWorkOrderFireSafetyLocal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderFireSafetyLocal');
-  });
-
-  await safeStep('gotoChecklistsFireSafetyLocal', async () => {
-    await fireSafetyManagement.gotoChecklistsFireSafetyLocal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsFireSafetyLocal');
-  });
-
-  await safeStep('gotoIncidentFireSafetyLocal', async () => {
-    await fireSafetyManagement.gotoIncidentFireSafetyLocal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentFireSafetyLocal');
-  });
-
-  // === Activities Customer ===
-  await safeStep('gotoActivitiesCustomer', async () => {
-    await fireSafetyManagement.gotoActivitiesCustomer();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoActivitiesCustomer');
-  });
-
-  await safeStep('gotoTaskManagementFireSafetyCustomer', async () => {
-    await fireSafetyManagement.gotoTaskManagementFireSafetyCustomer();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementFireSafetyCustomer');
-  });
-
-  await safeStep('gotoWorkOrderFireSafetyCustomer', async () => {
-    await fireSafetyManagement.gotoWorkOrderFireSafetyCustomer();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderFireSafetyCustomer');
-  });
-
-  await safeStep('gotoChecklistsFireSafetyCustomer', async () => {
-    await fireSafetyManagement.gotoChecklistsFireSafetyCustomer();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsFireSafetyCustomer');
-  });
-
-  await safeStep('gotoIncidentFireSafetyCustomer', async () => {
-    await fireSafetyManagement.gotoIncidentFireSafetyCustomer();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentFireSafetyCustomer');
-  });
-
-  // === Requirements and Guidelines ===
-  await safeStep('gotoRequirementsAndGuidelines', async () => {
-    await fireSafetyManagement.gotoRequirementsAndGuidelines();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoRequirementsAndGuidelines');
-  });
-
-  await safeStep('gotoLinksToLawsAndRegulation', async () => {
-    await fireSafetyManagement.gotoLinksToLawsAndRegulation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAndRegulation');
-  });
-
-  await safeStep('gotoInstructionsAndGuidelines', async () => {
-    await fireSafetyManagement.gotoInstructionsAndGuidelines();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAndGuidelines');
-  });
-
-  await safeStep('gotoLocalRegulations', async () => {
-    await fireSafetyManagement.gotoLocalRegulations();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulations');
-  });
-
-  // === Data Setup ===
-  await safeStep('gotoDataSetup', async () => {
-    await fireSafetyManagement.gotoDataSetup();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
-  });
-
-  await safeStep('gotoDocumentTypes', async () => {
-    await fireSafetyManagement.gotoDocumentTypes();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentTypes');
-  });
-
-  await safeStep('gotoServiceTypes', async () => {
-    await fireSafetyManagement.gotoServiceTypes();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceTypes');
-  });
-
-  await safeStep('gotoMaterialTypes', async () => {
-    await fireSafetyManagement.gotoMaterialTypes();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaterialTypes');
-  });
-
-  await safeStep('gotoPermitFireSafety', async () => {
-    await fireSafetyManagement.gotoPermitFireSafety();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPermitFireSafety');
-  });
-
-  // === Configuration ===
-  await safeStep('gotoConfiguration', async () => {
-    await fireSafetyManagement.gotoConfiguration();
-   // await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-  });
-
-  await safeStep('gotoAccessConfiguration', async () => {
-    await fireSafetyManagement.gotoAccessConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfiguration');
-  });
+  // Run all defined steps
+  for (const step of navigationSteps) {
+    await executeNavigationStep(step, fireSafetyManagement, page, env);
+  }
 };
 
 // 🎯 Main visual regression test entry
-test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
-  await runTestOnUrl('url1', process.env.URL1, page, context);
+test('Visual Regression Test - Fire Safety Management - Compare url1 and url2', async ({ page, context }) => {
+  test.setTimeout(600000); // 10 minutes
+
+  await runTestOnUrl('url1', process.env.URL1, page, context, 'standard');
 
   await page.context().clearCookies();
   await page.close();
   const newPage = await context.newPage();
 
-  await runTestOnUrl('url2', process.env.URL2, newPage, context);
+  await runTestOnUrl('url2', process.env.URL2, newPage, context, 'core');
 
   compareAllScreenshots(labels, expect);
 });
