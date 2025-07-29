@@ -53,7 +53,7 @@ class OperationAndMaintenance extends BasePage {
     this.WorkOrderAssignedCostWOO = "div[aria-label='Work order assigned costs Process step item']";
     this.TimeRegistrationWOO = "div[aria-label='Time registration Process step item']";
     this.Inspections = "div[aria-label='Inspections Process step item']";
-    this.ReccuringIncidents = "div[aria-label='Recurring incidents Process step item']";
+    this.RecurringIncidents = "div[aria-label='Recurring incidents Process step item']";
     this.Checklists = "div[aria-label='Checklists Process step item']";
     this.ChecklistPoints = "div[aria-label='Checklist points Process step item']";
     this.ChecklistIncidents = "div[aria-label='Checklist incidents Process step item']";
@@ -69,7 +69,7 @@ class OperationAndMaintenance extends BasePage {
     this.ServiceContract = "div[aria-label='Service contracts Process step item']";
     this.ServiceContractReminder = "div[aria-label='Service contract reminders Process step item']";
     this.ServiceContractPayments = "div[aria-label='Service contract payments Process step item']";
-    this.ServiceContractPaymemtItems = "div[aria-label='Service contract payment items Process step item']";
+    this.ServiceContractPaymentItems = "div[aria-label='Service contract payment items Process step item']";
     this.ServiceContractItem = "div[aria-label='Service contract items Process step item']";
 
     // Sub Types locators ( Sub module : Standard Tasks Overview )
@@ -81,7 +81,7 @@ class OperationAndMaintenance extends BasePage {
     this.StandardChecklist = "div[aria-label='Standard checklists Process step item']";
     this.StandardCheckPoint = "div[aria-label='Standard checkpoints Process step item']";
     this.CheckpointGroups = "div[aria-label='Checkpoint groups Process step item']";
-    this.PendingStandardTaskOnSite = "div[aria-label='Pending standard tasks on site Process step item']";
+    this.PendingStandardTaskOnSite = "div[aria-label='Pending standard tasks on sites Process step item']";
 
     // Sub Types locators ( Sub module : Data Setup )
     this.TargetArea = "div[aria-label='Target areas Process step item']";
@@ -98,12 +98,50 @@ class OperationAndMaintenance extends BasePage {
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
   }
-  async clickOperationAndMaintenance() {
+ async clickOperationAndMaintenance() {
+  await this.page.waitForTimeout(3000);
+
+  try {
+    const allElements = this.page.locator(this.operationAndMaintenance);
+    const count = await allElements.count();
+
+    // Try to click a visible element
+    for (let i = 0; i < count; i++) {
+      const element = allElements.nth(i);
+      const isVisible = await element.isVisible();
+
+      if (isVisible) {
+        try {
+          await element.scrollIntoViewIfNeeded();
+          await element.click({ force: true, timeout: 5000 });
+          return; // Success, exit method
+        } catch (error) {
+          // Fallback: JavaScript click
+          await element.evaluate((node) => node.click());
+          return; // Success, exit method
+        }
+      }
+    }
+
+    // If no visible element found, try the first with JS click
+    if (count > 0) {
+      await allElements.first().evaluate((node) => node.click());
+    }
+
+  } catch (error) {
+    console.error('Operation and Maintenance click failed:', error.message);
+    throw error;
+  }
+
+  await this.page.waitForTimeout(3000);
+}
+  
+  async gotoOperationAndMaintenance() {
     await this.page.waitForTimeout(3000);
     const operationAndMaintenance = this.page.locator(this.operationAndMaintenance).first();
     await operationAndMaintenance.waitFor({ state: 'attached', timeout: 10000 });
     await operationAndMaintenance.evaluate((node) => node.click());
-  } 
+  }
 
   // Navigate to sub modules
   async gotoMaintenanceIncidentsOverview() {
@@ -276,9 +314,9 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.Inspections).click();
   }
 
-  async gotoReccuringIncidents() {
-    await this.page.locator(this.ReccuringIncidents).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.ReccuringIncidents).click();
+  async gotoRecurringIncidents() {
+    await this.page.locator(this.RecurringIncidents).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.RecurringIncidents).click();
   } 
 
   async gotoChecklists() {
@@ -338,9 +376,9 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.ServiceContractPayments).click();
   }
 
-  async gotoServiceContractPaymemtItems() {
-    await this.page.locator(this.ServiceContractPaymemtItems).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.ServiceContractPaymemtItems).click();
+  async gotoServiceContractPaymentItems() {
+    await this.page.locator(this.ServiceContractPaymentItems).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.ServiceContractPaymentItems).click();
   }
 
   async gotoServiceContractItem() {
@@ -389,9 +427,9 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.CheckpointGroups).click();
   }
 
-  async gotoPendingStandardTsksOnSite() {
-    await this.page.locator(this.PendingStandardTsksOnSite).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.PendingStandardTsksOnSite).click();
+  async gotoPendingStandardTasksOnSite() {
+    await this.page.locator(this.PendingStandardTaskOnSite).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.PendingStandardTaskOnSite).click();
   }
 
   // Navigate to sub types in Data Setup  

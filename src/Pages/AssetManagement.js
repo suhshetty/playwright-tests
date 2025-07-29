@@ -39,7 +39,43 @@ class AssetManagement extends BasePage {
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Configuration Process step']";
   }
+async clickAssetManagement() {
+  await this.page.waitForTimeout(3000);
 
+  try {
+    const allElements = this.page.locator(this.assetManagement);
+    const count = await allElements.count();
+
+    // Try to click a visible element
+    for (let i = 0; i < count; i++) {
+      const element = allElements.nth(i);
+      const isVisible = await element.isVisible();
+
+      if (isVisible) {
+        try {
+          await element.scrollIntoViewIfNeeded();
+          await element.click({ force: true, timeout: 5000 });
+          return; // Success, exit method
+        } catch (error) {
+          // Fallback: JavaScript click
+          await element.evaluate((node) => node.click());
+          return;
+        }
+      }
+    }
+
+    // If no visible element found, try the first with JS click
+    if (count > 0) {
+      await allElements.first().evaluate((node) => node.click());
+    }
+
+  } catch (error) {
+    console.error('clickAssetManagement failed:', error.message);
+    throw error;
+  }
+
+  await this.page.waitForTimeout(3000);
+}
   async gotoAssetManagement() {
     await this.page.waitForTimeout(3000);
     const assetManagement = this.page.locator(this.assetManagement).first();

@@ -1,0 +1,21 @@
+Visual Comparison Summary (29/7/2025, 6:04:09 pm):
+
+🟥 gotoBuildOrganisationTrees: 25267 pixel(s) difference
+🟥 gotoCompanies: 14008 pixel(s) difference
+🟥 gotoWorkGroups: 5018 pixel(s) difference
+🟥 gotoEmployees: 9059 pixel(s) difference
+🟥 gotoPersonsUsers: 17864 pixel(s) difference
+🟥 gotoOrganisationReminders: 10875 pixel(s) difference
+🟥 gotoOrganisationDocuments: 18820 pixel(s) difference
+🟥 gotoOrganisationAbsences: 15397 pixel(s) difference
+🟥 gotoPunchinPunchout: 5167 pixel(s) difference
+🟥 gotoStakeholderManagement: 8828 pixel(s) difference
+🟥 gotoVendorIssues: 8828 pixel(s) difference
+🟥 gotoPermitsandQualifications: 12360 pixel(s) difference
+🟥 gotoPersonPermits: 12360 pixel(s) difference
+🟥 gotoOrganisationGroups: 4886 pixel(s) difference
+🟥 gotoProfessions: 42379 pixel(s) difference
+🟥 gotoPermits: 16084 pixel(s) difference
+🟥 gotoEmployeeGroups: 4534 pixel(s) difference
+🟥 gotoAvailabilityProfiles: 4633 pixel(s) difference
+🟥 gotoAccessConfiguration: 15476 pixel(s) difference

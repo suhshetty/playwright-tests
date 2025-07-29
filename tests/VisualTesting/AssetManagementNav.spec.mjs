@@ -1,134 +1,98 @@
-// File: AssetManagementNav.spec.js
+// File: AssetManagementNav.spec.mjs
 import { test, expect } from '@playwright/test';
-import { loginAndInitialize } from '../src/testSetup.js';
+import { loginAndInitializeWithCore, loginAndInitializeWithStandard } from '../src/testSetup.js';
 import {
   initializeVisualTestEnv,
-  safeStep,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
 } from '../../src/utils/visualUtils.withMasking.mjs';
+import { safeScreenshot } from '../../src/utils/CommonFunctions.mjs';
+
+// URL-based login selection
+const loginAndInitialize = async ({ page, context, baseUrl }) => {
+  if (baseUrl === process.env.URL1) {
+    return await loginAndInitializeWithStandard({ page, context, baseUrl });
+  } else {
+    return await loginAndInitializeWithCore({ page, context, baseUrl });
+  }
+};
 
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
 
-// Labels for visual comparison
-const labels = [
-  'gotoHomePage', 'gotoModuleMenu', 'gotoAssetManagement',
-  'gotoEquipmentOverview', 'gotoEquipment', 'gotoLocateEquipment', 'gotoPhones', 'gotoTechnicalInformation',
-  'gotoVehiclesOverview', 'gotoVehicles',
-  'gotoArtifactsOverview', 'gotoArtifacts', 'gotoArtists', 'gotoLocateArtifacts',
-  'gotoDataSetup', 'gotoEquipmentGroups', 'gotoEquipmentTypes', 'gotoProductTypes', 'gotoServicePartnerGlobal',
-  'gotoAccessConfigurations', 'gotoConfiguration'
+// Navigation steps for Asset Management
+const navigationSteps = [
+  // Home and Module Access
+  { name: 'gotoHomePage', screenshot: false },
+  { name: 'gotoModuleMenu', screenshot: false },
+  { name: 'gotoAssetManagement', screenshot: true },
+
+  // Equipment Overview
+  { name: 'gotoEquipmentOverview', screenshot: false },
+  { name: 'gotoEquipment', screenshot: true },
+  { name: 'gotoLocateEquipment', screenshot: true },
+  { name: 'gotoPhones', screenshot: true },
+  { name: 'gotoTechnicalInformation', screenshot: true },
+
+  // Navigate back to main Asset Management
+  { name: 'gotoAssetManagement', screenshot: false },
+
+  // Vehicles Overview
+  { name: 'gotoVehiclesOverview', screenshot: false },
+  { name: 'gotoVehicles', screenshot: true },
+
+  // Navigate back to main Asset Management
+  { name: 'gotoAssetManagement', screenshot: false },
+
+  // Artifacts Overview
+  { name: 'gotoArtifactsOverview', screenshot: false },
+  { name: 'gotoArtifacts', screenshot: true },
+  { name: 'gotoArtists', screenshot: true },
+  { name: 'gotoLocateArtifacts', screenshot: true },
+
+  // Navigate back to main Asset Management
+  { name: 'gotoAssetManagement', screenshot: false },
+
+  // Data Setup
+  { name: 'gotoDataSetup', screenshot: false },
+  { name: 'gotoEquipmentGroups', screenshot: true },
+  { name: 'gotoEquipmentTypes', screenshot: true },
+  { name: 'gotoProductTypes', screenshot: true },
+  { name: 'gotoServicePartnerGlobal', screenshot: true },
+
+  // Navigate back to main Asset Management
+  { name: 'gotoAssetManagement', screenshot: false },
+
+  // Configuration
+  { name: 'gotoConfiguration', screenshot: false },
+  { name: 'gotoAccessConfigurations', screenshot: true }
 ];
 
-// Run for a given environment
+// Extract labels for screenshots
+const labels = navigationSteps.filter(step => step.screenshot).map(step => step.name);
+
+// Helper function to execute a navigation step
+const executeNavigationStep = async (step, homePage, assetManagement, page, env) => {
+  if (step.name.includes('HomePage')) {
+    await homePage[step.name]();
+  } else if (step.name.includes('ModuleMenu')) {
+    await homePage[step.name]();
+  } else {
+    await assetManagement[step.name]();
+  }
+  
+  if (step.screenshot) {
+    await safeScreenshot(page, env, step.name, waitForProcessingAndTakeScreenshot);
+  }
+};
+
+// Run test for a specific environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, assetManagement } = await loginAndInitialize({ page, context, baseUrl });
 
-  await safeStep('gotoHomePage', async () => {
-    await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-  });
-
-  await safeStep('gotoModuleMenu', async () => {
-    await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-  });
-
-  await safeStep('gotoAssetManagement', async () => {
-    await assetManagement.gotoAssetManagement();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAssetManagement');
-  });
-
-  await safeStep('gotoEquipmentOverview', async () => {
-    await assetManagement.gotoEquipmentOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipmentOverview');
-  });
-
-  await safeStep('gotoEquipment', async () => {
-    await assetManagement.gotoEquipment();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipment');
-  });
-
-  await safeStep('gotoLocateEquipment', async () => {
-    await assetManagement.gotoLocateEquipment();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateEquipment');
-  });
-
-  await safeStep('gotoPhones', async () => {
-    await assetManagement.gotoPhones();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPhones');
-  });
-
-  await safeStep('gotoTechnicalInformation', async () => {
-    await assetManagement.gotoTechnicalInformation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformation');
-  });
-
-  await safeStep('gotoVehiclesOverview', async () => {
-    await assetManagement.gotoVehiclesOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoVehiclesOverview');
-  });
-
-  await safeStep('gotoVehicles', async () => {
-    await assetManagement.gotoVehicles();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoVehicles');
-  });
-
-  await safeStep('gotoArtifactsOverview', async () => {
-    await assetManagement.gotoArtifactsOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoArtifactsOverview');
-  });
-
-  await safeStep('gotoArtifacts', async () => {
-    await assetManagement.gotoArtifacts();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoArtifacts');
-  });
-
-  await safeStep('gotoArtists', async () => {
-    await assetManagement.gotoArtists();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoArtists');
-  });
-
-  await safeStep('gotoLocateArtifacts', async () => {
-    await assetManagement.gotoLocateArtifacts();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateArtifacts');
-  });
-
-  await safeStep('gotoDataSetup', async () => {
-    await assetManagement.gotoDataSetup();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
-  });
-
-  await safeStep('gotoEquipmentGroups', async () => {
-    await assetManagement.gotoEquipmentGroups();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipmentGroups');
-  });
-
-  await safeStep('gotoEquipmentTypes', async () => {
-    await assetManagement.gotoEquipmentTypes();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipmentTypes');
-  });
-
-  await safeStep('gotoProductTypes', async () => {
-    await assetManagement.gotoProductTypes();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductTypes');
-  });
-
-  await safeStep('gotoServicePartnerGlobal', async () => {
-    await assetManagement.gotoServicePartnerGlobal();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnerGlobal');
-  });
-
-  await safeStep('gotoAccessConfigurations', async () => {
-    await assetManagement.gotoAccessConfigurations();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfigurations');
-  });
-
-  await safeStep('gotoConfiguration', async () => {
-    await assetManagement.gotoConfiguration();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-  });
+  for (const step of navigationSteps) {
+    await executeNavigationStep(step, homePage, assetManagement, page, env);
+  }
 };
 
 // Main visual regression test

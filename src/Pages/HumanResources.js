@@ -48,12 +48,43 @@ class HumanResources extends BasePage {
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
   }
 
-  async clickHumanResources() {
-    await this.page.waitForTimeout(3000);
-    const humanResources = this.page.locator(this.humanResources).first();
-    await humanResources.waitFor({ state: 'attached', timeout: 10000 });
-    await humanResources.evaluate((node) => node.click());
+async clickHumanResources() {
+  await this.page.waitForTimeout(3000);
+
+  try {
+    const allElements = this.page.locator(this.humanResources);
+    const count = await allElements.count();
+
+    // Try to click a visible element
+    for (let i = 0; i < count; i++) {
+      const element = allElements.nth(i);
+      const isVisible = await element.isVisible();
+
+      if (isVisible) {
+        try {
+          await element.scrollIntoViewIfNeeded();
+          await element.click({ force: true, timeout: 5000 });
+          return; // Success, exit method
+        } catch (error) {
+          // Fallback: JavaScript click
+          await element.evaluate((node) => node.click());
+          return;
+        }
+      }
+    }
+
+    // If no visible element found, try the first with JS click
+    if (count > 0) {
+      await allElements.first().evaluate((node) => node.click());
+    }
+
+  } catch (error) {
+    console.error('clickHumanResources failed:', error.message);
+    throw error;
   }
+
+  await this.page.waitForTimeout(3000);
+}
 
   // Navigate to sub modules
   async gotoSummary() {
