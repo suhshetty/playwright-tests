@@ -13,20 +13,25 @@ initializeVisualTestEnv();
 
 // Labels for screenshot steps
 const labels = [
-  'gotoElectronicInvoices', 'gotoWorkOrderCosts', 'gotoTimeRegistration', 
-  'gotoWorkOrderMaterials', 'gotoLeaseContractPaymentItems', 'gotoPurchaseContractPaymentItems',
-  'gotoServiceContractPaymentItems', 'gotoTransactions', 'gotoTransactionCorrections', 'gotoBudgetTargetAreas',
-  'gotoBudgetFrames', 'gotoBudgetFrameYears', 'gotoWorkOrders',
-  'gotoBudgetForFilloutTargetAreas', 'gotoBudgetForRegions', 'gotoBudgetFilloutsForRegions',
-  'gotoBudgetForPortfolios', 'gotoBudgetFilloutForPortfolios',
-  'gotoBudgetForObjects', 'gotoBudgetFilloutForObjects', 'gotoAnnualMaintenanceBudgets', 'gotoFundings', 'gotoTargetAreas',
-  'gotoFixedAssets', 'gotoFixedAssetGroups', 'gotoFixedAssetSubGroups',
-  'gotoCompanies', 'gotoDepartments', 'gotoDivisions', 'gotoBranches',
-  'gotoAccounts', 'gotoAccountSections', 'gotoAccountActivities', 'gotoAccountKeys',
-  'gotoFinanceSubjects', 'gotoCostCenters', 'gotoFinanceSections', 'gotoPurposes', 'gotoFinanceProjects',
-  'gotoProducts', 'gotoFinanceDataSets',
-  'gotoConfigureFinanceSettings',
-  'gotoConfiguration', 'gotoAccessConfigurations'
+  'gotoElectronicInvoices', 'gotoWorkOrderCosts', 'clickRegisterWorkOrderCost', 'gotoTimeRegistration', 
+  'gotoWorkOrderMaterials', 'clickRegisterWorkOrderMaterials', 'gotoLeaseContractPaymentItems', 'gotoPurchaseContractPaymentItems',
+  'gotoServiceContractPaymentItems', 'gotoTransactions', 'gotoTransactionCorrections', 
+  'gotoBudgetFrames', 'clickRegisterBudgetFrames', 'gotoBudgetFrameYears', 'clickRegisterBudgetFrameYears', 'gotoWorkOrders',
+  'gotoBudgetTargetAreas', 'clickRegisterBudgetForTargetAreas', 'gotoBudgetFilloutForTargetAreas', 
+  'gotoBudgetForRegions', 'clickRegisterBudgetForRegions', 'gotoBudgetFilloutsForRegions',
+  'gotoBudgetForPortfolios', 'clickRegisterBudgetForPortfolios', 'gotoBudgetFilloutForPortfolios',
+  'gotoBudgetForObjects', 'clickRegisterBudgetForObjects', 'gotoBudgetFilloutForObjects', 
+  'gotoAnnualMaintenanceBudgets', 'clickRegisterAnnualMaintenanceBudgets', 'gotoFundings', 'clickRegisterFundings', 
+  'gotoTargetAreas', 'clickRegisterTargetAreas',
+  'gotoFixedAssets', 'clickRegisterFixedAssets', 'gotoFixedAssetGroups', 'clickRegisterFixedAssetGroups', 
+  'gotoFixedAssetSubGroups', 'clickRegisterFixedAssetSubGroups',
+  'gotoCompanies', 'clickRegisterCompanies', 'gotoDepartments', 'gotoDivisions', 'gotoBranches', 'clickRegisterBranches',
+  'gotoAccounts', 'clickRegisterAccounts', 'gotoAccountSections', 'gotoAccountActivities', 'gotoAccountKeys', 'clickRegisterAccountKeys',
+  'gotoFinanceSubjects', 'clickRegisterFinanceSubjects', 'gotoCostCenters', 'clickRegisterCostCenters', 
+  'gotoFinanceSections', 'clickRegisterFinanceSections', 'gotoPurposes', 'clickRegisterPurposes', 
+  'gotoFinanceProjects', 'clickRegisterFinanceProjects', 'gotoProducts', 'clickRegisterProducts', 
+  'gotoFinanceDataSets', 'clickRegisterFinanceDataSets',
+  'gotoConfigureFinanceSettings', 'gotoConfiguration', 'gotoAccessConfigurations'
 ];
 
 // Run for a given environment
@@ -64,6 +69,8 @@ await safeStep('gotoElectronicInvoices', async () => {
 await safeStep('gotoWorkOrderCosts', async () => {
   await financeManagement.gotoWorkOrderCosts();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCosts');
+  await financeManagement.clickRegisterWorkOrderCost();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrderCost');
 });
 
 await safeStep('gotoTimeRegistration', async () => {
@@ -74,6 +81,8 @@ await safeStep('gotoTimeRegistration', async () => {
 await safeStep('gotoWorkOrderMaterials', async () => {
   await financeManagement.gotoWorkOrderMaterials();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderMaterials');
+  await financeManagement.clickRegisterWorkOrderMaterials();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrderMaterials');
 });
 
 await safeStep('gotoLeaseContractPaymentItems', async () => {
@@ -110,11 +119,15 @@ await safeStep('gotoBudgetFramesOverview', async () => {
 await safeStep('gotoBudgetFrames', async () => {
   await financeManagement.gotoBudgetFrames();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetFrames');
+  await financeManagement.clickRegisterBudgetFrames();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetFrames');
 });
 
 await safeStep('gotoBudgetFrameYears', async () => {
   await financeManagement.gotoBudgetFrameYears();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetFrameYears');
+  await financeManagement.clickRegisterBudgetFrameYears();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetFrameYears');
 });
 
 await safeStep('gotoWorkOrders', async () => {
@@ -131,6 +144,8 @@ await safeStep('gotoMainBudgetFrames', async () => {
 await safeStep('gotoBudgetTargetAreas', async () => {
   await financeManagement.gotoBudgetTargetAreas();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetTargetAreas');
+  await financeManagement.clickRegisterBudgetForTargetAreas();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetForTargetAreas');
 });
 
 await safeStep('gotoBudgetFilloutForTargetAreas', async () => {
@@ -141,6 +156,8 @@ await safeStep('gotoBudgetFilloutForTargetAreas', async () => {
 await safeStep('gotoBudgetForRegions', async () => {
   await financeManagement.gotoBudgetForRegions();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetForRegions');
+  await financeManagement.clickRegisterBudgetForRegions();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetForRegions');
 });
 
 await safeStep('gotoBudgetFilloutsForRegions', async () => {
@@ -151,6 +168,8 @@ await safeStep('gotoBudgetFilloutsForRegions', async () => {
 await safeStep('gotoBudgetForPortfolios', async () => {
   await financeManagement.gotoBudgetForPortfolios();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetForPortfolios');
+  await financeManagement.clickRegisterBudgetForPortfolios();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetForPortfolios');
 });
 
 await safeStep('gotoBudgetFilloutForPortfolios', async () => {
@@ -161,6 +180,8 @@ await safeStep('gotoBudgetFilloutForPortfolios', async () => {
 await safeStep('gotoBudgetForObjects', async () => {
   await financeManagement.gotoBudgetForObjects();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBudgetForObjects');
+  await financeManagement.clickRegisterBudgetForObjects();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBudgetForObjects');
 });
 
 await safeStep('gotoBudgetFilloutForObjects', async () => {
@@ -171,16 +192,22 @@ await safeStep('gotoBudgetFilloutForObjects', async () => {
 await safeStep('gotoAnnualMaintenanceBudgets', async () => {
   await financeManagement.gotoAnnualMaintenanceBudgets();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoAnnualMaintenanceBudgets');
+  await financeManagement.clickRegisterAnnualMaintenanceBudgets();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualMaintenanceBudgets');
 });
 
 await safeStep('gotoFundings', async () => {
   await financeManagement.gotoFundings();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFundings');
+  await financeManagement.clickRegisterFundings();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFundings');
 });
 
 await safeStep('gotoTargetAreas', async () => {
   await financeManagement.gotoTargetAreas();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoTargetAreas');
+  await financeManagement.clickRegisterTargetAreas();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTargetAreas');
 });
 
 // Fixed Assets and Depreciations
@@ -192,16 +219,22 @@ await safeStep('gotoFixedAssetsDepreciations', async () => {
 await safeStep('gotoFixedAssets', async () => {
   await financeManagement.gotoFixedAssets();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFixedAssets');
+  await financeManagement.clickRegisterFixedAssets();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFixedAssets');
 });
 
 await safeStep('gotoFixedAssetGroups', async () => {
   await financeManagement.gotoFixedAssetGroups();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFixedAssetGroups');
+  await financeManagement.clickRegisterFixedAssetGroups();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFixedAssetGroups');
 });
 
 await safeStep('gotoFixedAssetSubGroups', async () => {
   await financeManagement.gotoFixedAssetSubGroups();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFixedAssetSubGroups');
+  await financeManagement.clickRegisterFixedAssetSubGroups();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFixedAssetSubGroups');
 });
 
 // Intern Organisation and Creditors
@@ -213,6 +246,8 @@ await safeStep('gotoInternOrganisationAndCreditors', async () => {
 await safeStep('gotoCompanies', async () => {
   await financeManagement.gotoCompanies();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoCompanies');
+  await financeManagement.clickRegisterCompanies();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterCompanies');
 });
 
 await safeStep('gotoDepartments', async () => {
@@ -228,6 +263,8 @@ await safeStep('gotoDivisions', async () => {
 await safeStep('gotoBranches', async () => {
   await financeManagement.gotoBranches();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoBranches');
+  await financeManagement.clickRegisterBranches();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBranches');
 });
 
 // Finance Dimensions
@@ -239,6 +276,8 @@ await safeStep('gotoFinanceDimensions', async () => {
 await safeStep('gotoAccounts', async () => {
   await financeManagement.gotoAccounts();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccounts');
+  await financeManagement.clickRegisterAccounts();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAccounts');
 });
 
 await safeStep('gotoAccountSections', async () => {
@@ -254,41 +293,57 @@ await safeStep('gotoAccountActivities', async () => {
 await safeStep('gotoAccountKeys', async () => {
   await financeManagement.gotoAccountKeys();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccountKeys');
+  await financeManagement.clickRegisterAccountKeys();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAccountKeys');
 });
 
 await safeStep('gotoFinanceSubjects', async () => {
   await financeManagement.gotoFinanceSubjects();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFinanceSubjects');
+  await financeManagement.clickRegisterFinanceSubjects();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFinanceSubjects');
 });
 
 await safeStep('gotoCostCenters', async () => {
   await financeManagement.gotoCostCenters();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostCenters');
+  await financeManagement.clickRegisterCostCenters();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterCostCenters');
 });
 
 await safeStep('gotoFinanceSections', async () => {
   await financeManagement.gotoFinanceSections();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFinanceSections');
+  await financeManagement.clickRegisterFinanceSections();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFinanceSections');
 });
 
 await safeStep('gotoPurposes', async () => {
   await financeManagement.gotoPurposes();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurposes');
+  await financeManagement.clickRegisterPurposes();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPurposes');
 });
 
 await safeStep('gotoFinanceProjects', async () => {
   await financeManagement.gotoFinanceProjects();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFinanceProjects');
+  await financeManagement.clickRegisterFinanceProjects();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFinanceProjects');
 });
 
 await safeStep('gotoProducts', async () => {
   await financeManagement.gotoProducts();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoProducts');
+  await financeManagement.clickRegisterProducts();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProducts');
 });
 
 await safeStep('gotoFinanceDataSets', async () => {
   await financeManagement.gotoFinanceDataSets();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFinanceDataSets');
+  await financeManagement.clickRegisterFinanceDataSets();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFinanceDataSets');
 });
 
 // Finance Administration Settings

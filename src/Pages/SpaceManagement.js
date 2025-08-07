@@ -38,103 +38,129 @@ class SpaceManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Test ÞT )
     this.WorkOrderHours = "div[aria-label='Work order hours Process step item']";
-}
-    async clickSpaceManagement() {
-        await this.page.waitForTimeout(3000);
-        const SpaceManagement = this.page.locator(this.spaceManagement).first();
-        await SpaceManagement.waitFor({ state: 'attached', timeout: 10000 });
-        await SpaceManagement.evaluate((node) => node.click());
-    }
 
-    //Navigate to Sub modules
-    async gotoBuildingSpaceOverview() {
-        await this.page.locator(this.BuildingSpaceOverview).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.BuildingSpaceOverview).click();
-    }
+    //Add new data locators
+    //this.newBuildingSpaceBtn = "//button[@aria-label='Register new building space']";
+    // this.SiteDropDown = "//span[@aria-label='select2-MainManFilter_TFGroundID-container']";
+    // this.spaceDropDownArrow = "(//span[@class ='select2-selection__arrow'])[3]";
+    // this.SiteDropDownTextBox = "//input[@class='select2-search__field' and @placeholder='Nothing selected']";
+    //this.newDrawingBtn = "//button[@aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
+   // this.newSpaceManagementScenarios = "//button[@aria-label='Register new space management scenario']";
+   // this.newKeyToLocks = "//button[@aria-label='Register new key to lock (Standard) - Standard']";
+   // this.newWorkOrderHours = "//button[@aria-label='Register my hours - RegisterMyHours']";
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+  }
+  async clickSpaceManagement() {
+    await this.page.waitForTimeout(3000);
+    const SpaceManagement = this.page.locator(this.spaceManagement).first();
+    await SpaceManagement.waitFor({ state: 'attached', timeout: 10000 });
+    await SpaceManagement.evaluate((node) => node.click());
+  }
+
+  async gotoBuildingSpaceOverview() {
+    await this.page.locator(this.BuildingSpaceOverview).click();
+  }
+
+  async gotoLocateOrganisation() {
+    await this.page.locator(this.LocateOrganisation).click();
+  }
+
+  async gotoLocateEquipment() {
+    await this.page.locator(this.LocateEquipment).click();
+  }
+
+  async gotoKeyManagement() {
+    await this.page.locator(this.KeyManagement).click();
+  }
+
+  async gotoConfiguration() {
+    await this.page.locator(this.Configuration).click();
+  }
+
+  async gotoTestÞT() {
+    await this.page.locator(this.TestÞT).click();
+  }
+
+  async gotoBuildingSpaces() {
+    await this.page.locator(this.BuildingSpace).click();
+  }
+
+  async gotoBuildingSpaceInformation() {
+    await this.page.locator(this.BuildingSpaceInformation).click();
+  }
+
+  async gotoDrawing() {
+    await this.page.locator(this.Drawing).click();
+  }
+
+  async gotoLocateOrganisationSubType() {
+    await this.page.locator(this.LocateOrganisationSubType).click();
+  }
+
+  async gotoObjectOwner() {
+    await this.page.locator(this.ObjectOwner).click();
+  }
+
+  async gotoSpaceManagementScenario() {
+    await this.page.locator(this.SpaceManagementScenario).click();
+  }
+
+  async gotoLocateEquipmentSubType() {
+    await this.page.locator(this.LocateEquipmentSubType).click();
+  }
+
+  async gotoKeyToLock() {
+    await this.page.locator(this.KeyToLock).click();
+  }
+
+  async gotoAccessConfiguration() {
+    await this.page.locator(this.AccessConfiguration).click();
+  }
+
+  async gotoWorkOrderHours() {
+    await this.page.locator(this.WorkOrderHours).click();
+  }
+
+  async clickRegisterNewBuildingSpace(){
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  // async clickRegisterDrawings(){
+  //   await this.page.locator(this.SiteDropDown).waitFor({ state: 'visible', timeout: 10000 });
+  //   await this.page.locator(this.SiteDropDown).click();
+  //   await this.page.waitForTimeout(2000);
+
+  //   await this.selectDropdownOptionByText(
+  //     this.page.locator('li[role="treeitem"]'), 
+  //     'Activity center'
+  //   );
+  //   await this.page.waitForTimeout(500);
     
-    async gotoLocateOrganisation() {
-        await this.page.locator(this.LocateOrganisation).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.LocateOrganisation).click();     
-    }
+  //   await this.page.locator(this.Add).click();
+  // }
 
-    async gotoLocateEquipment() {
-        await this.page.locator(this.LocateEquipment).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.LocateEquipment).click();    
-    } 
-
-    async gotoKeyManagement() {
-        await this.page.locator(this.KeyManagement).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.KeyManagement).click();    
-    } 
-
-    async gotoConfiguration() {
-        await this.page.locator(this.Configuration).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.Configuration).click();
-    }
-
-    async gotoTestÞT() {
-        await this.page.locator(this.TestÞT).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.TestÞT).click(); 
-    }
-
-
-    // Navigate to sub types in Building Space Overview
-    async gotoBuildingSpaces() {
-        await this.page.locator(this.BuildingSpace).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.BuildingSpace).click();
-    }
-    
-    async gotoBuildingSpaceInformation() {
-        await this.page.locator(this.BuildingSpaceInformation).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.BuildingSpaceInformation).click();
-    }
-    
-    async gotoDrawing() {
-        await this.page.locator(this.Drawing).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.Drawing).click();
-    }
-
-    // Navigate to sub types in Location Organisation
-    async gotoLocateOrganisationSubType() {
-        await this.page.locator(this.LocateOrganisationSubType).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.LocateOrganisationSubType).click();
-    }
-
-    async gotoObjectOwner() {
-        await this.page.locator(this.ObjectOwner).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.ObjectOwner).click();
-    }
-
-    async gotoSpaceManagementScenario() {
-        await this.page.locator(this.SpaceManagementScenario).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.SpaceManagementScenario).click();
-    }
-
-    // Navigate to sub types in Locate Equipment
-    async gotoLocateEquipmentSubType() {
-        await this.page.locator(this.LocateEquipmentSubType).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.LocateEquipmentSubType).click();
-    }
-
-    // Navigate to sub types in Key Management
-    async gotoKeyToLock() {
-        await this.page.locator(this.KeyToLock).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.KeyToLock).click();
-    }
-
-    // Navigate to sub types in Configuration
-    async gotoAccessConfiguration() {
-        await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.AccessConfiguration).click();
-    }
-
-    // Navigate to sub types in Test ÞT
-    async gotoWorkOrderHours() {
-        await this.page.locator(this.WorkOrderHours).waitFor({ state: 'visible', timeout: 5000 });
-        await this.page.locator(this.WorkOrderHours).click();
-    }
+  async clickRegisterSpaceManagementScenario(){
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
 
   }
+
+  async clickRegisterKeyToLocks(){
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterWorkOrderHours(){
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+
+  }
+
+
 
 module.exports = SpaceManagement;
 

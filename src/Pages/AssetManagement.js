@@ -38,8 +38,15 @@ class AssetManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Configuration Process step']";
-  }
 
+    //Add new data locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+  }
+async clickAssetManagement() {
+    await this.page.waitForTimeout(3000);
+    await this.page.locator(this.assetManagement).first().evaluate((node) => node.click());
+  }
   async gotoAssetManagement() {
     await this.page.waitForTimeout(3000);
     const assetManagement = this.page.locator(this.assetManagement).first();
@@ -142,6 +149,56 @@ class AssetManagement extends BasePage {
   async gotoAccessConfigurations() {
     await this.page.locator(this.AccessConfigurations).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.AccessConfigurations).click();
+  }
+
+  async clickRegisterEquipment() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterPhones() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterTechnicalInformation() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterVehicles() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterArtifacts() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterArtists() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterEquipmentGroups() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterEquipmentTypes() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterProductTypes() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
+  }
+
+  async clickRegisterServicePartnerGlobals() {
+    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Close).click();
   }
 
 }

@@ -16,11 +16,10 @@ const labels = [
   'gotoHomePage', 'gotoModuleMenu', 
   'gotoBuildingSpaceOverview', 'gotoLocateOrganisation', 'gotoLocateEquipment',
   'gotoKeyManagement', 'gotoConfiguration', 'gotoTestÞT',
-  'gotoBuildingSpaces', 'gotoBuildingSpaceInformation', 'gotoDrawing',
-  'gotoLocateOrganisationSubType', 'gotoObjectOwner', 'gotoSpaceManagementScenario',
-  'gotoLocateEquipmentSubType', 'gotoKeyToLock', 'gotoAccessConfiguration','gotoWorkOrderHours'
+  'gotoBuildingSpaces', 'clickRegisterNewBuildingSpace', 'gotoBuildingSpaceInformation', 'gotoDrawing',
+  'gotoLocateOrganisationSubType', 'gotoObjectOwner', 'gotoSpaceManagementScenario', 'clickRegisterSpaceManagementScenario',
+  'gotoLocateEquipmentSubType', 'gotoKeyToLock', 'clickRegisterKeyToLocks', 'gotoAccessConfiguration','gotoWorkOrderHours'
 ];
-
 
 // Run the visual test for a given URL environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
@@ -29,7 +28,6 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-
   });
 
   await safeStep('gotoModuleMenu', async () => {
@@ -39,60 +37,52 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickSpaceManagement', async () => {
     await spaceManagement.clickSpaceManagement();
-    await waitForProcessingAndTakeScreenshot(page, env, 'clickSpaceManagement');
   });
-
 
   await safeStep('gotoBuildingSpaceOverview', async () => {
     await spaceManagement.gotoBuildingSpaceOverview();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceOverview');
   });
-
 
   await safeStep('gotoBuildingSpaces', async () => {
      await spaceManagement.gotoBuildingSpaces();
      await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaces');
+     await spaceManagement.clickRegisterNewBuildingSpace();
+     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterNewBuildingSpace');
   });
-
 
     await safeStep('gotoBuildingSpaceInformation', async () => {
      await spaceManagement.gotoBuildingSpaceInformation();
      await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaceInformation');
   });
 
-
     await safeStep('gotoDrawing', async () => {
      await spaceManagement.gotoDrawing();
      await waitForProcessingAndTakeScreenshot(page, env, 'gotoDrawing');
   });
 
-
     await safeStep('gotoLocateOrganisation', async () => {
     await spaceManagement.gotoLocateOrganisation();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateOrganisation');
   });
-
 
     await safeStep('gotoLocateOrganisationSubType', async () => {
      await spaceManagement.gotoLocateOrganisationSubType();
      await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateOrganisationSubType');
   });
 
-
     await safeStep('gotoObjectOwner', async () => {
         await spaceManagement.gotoObjectOwner();
         await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectOwner');
     });
 
-
     await safeStep('gotoSpaceManagementScenario', async () => {
         await spaceManagement.gotoSpaceManagementScenario();
         await waitForProcessingAndTakeScreenshot(page, env, 'gotoSpaceManagementScenario');
+        await spaceManagement.clickRegisterSpaceManagementScenario();
+        await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSpaceManagementScenario');
     });
 
     await safeStep('gotoLocateEquipment', async () => {
         await spaceManagement.gotoLocateEquipment();
-        await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocateEquipment');
     });
 
     await safeStep('gotoLocateEquipmentSubType', async () => {
@@ -102,17 +92,17 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoKeyManagement', async () => {
         await spaceManagement.gotoKeyManagement();
-        await waitForProcessingAndTakeScreenshot(page, env, 'gotoKeyManagement');
     });
 
     await safeStep('gotoKeyToLock', async () => {
         await spaceManagement.gotoKeyToLock();
         await waitForProcessingAndTakeScreenshot(page, env, 'gotoKeyToLock');
+        await spaceManagement.clickRegisterKeyToLocks();
+        await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterKeyToLocks');
     });
 
     await safeStep('gotoConfiguration', async () => {
         await spaceManagement.gotoConfiguration();
-        await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
     });
 
     await safeStep('gotoAccessConfiguration', async () => {
@@ -122,16 +112,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
     await safeStep('gotoTestÞT', async () => {
         await spaceManagement.gotoTestÞT();
-        await waitForProcessingAndTakeScreenshot(page, env, 'gotoTestÞT');
     });
 
     await safeStep('gotoWorkOrderHours', async () => {
         await spaceManagement.gotoWorkOrderHours();
         await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderHours');
+
     });
-
-
-
 };
 
 // 🎯 Main visual regression test entry

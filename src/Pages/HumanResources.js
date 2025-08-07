@@ -46,13 +46,15 @@ class HumanResources extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
+    
+    //Add data locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
   }
 
-  async clickHumanResources() {
+async clickHumanResources() {
     await this.page.waitForTimeout(3000);
-    const humanResources = this.page.locator(this.humanResources).first();
-    await humanResources.waitFor({ state: 'attached', timeout: 10000 });
-    await humanResources.evaluate((node) => node.click());
+    await this.page.locator(this.humanResources).first().evaluate((node) => node.click());
   }
 
   // Navigate to sub modules
@@ -183,6 +185,62 @@ class HumanResources extends BasePage {
       await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.AccessConfiguration).click();
     }
+
+    async clickRegisterCompanies(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWorkGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEmployees(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterPersonsUsers(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterVendorIssues(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterPersonPermits(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterOrganisationGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProfessions(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterPermits(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEmployeeGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAvailabilityProfiles(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+    
 }
 
 module.exports = HumanResources;

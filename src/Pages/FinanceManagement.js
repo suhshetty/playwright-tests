@@ -79,6 +79,10 @@ class FinanceManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
+
+    //Add new data locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
   }
 
     async gotoFinanceManagement() {
@@ -356,6 +360,134 @@ class FinanceManagement extends BasePage {
        await this.page.locator(this.AccessConfigurations).waitFor({ state: 'visible', timeout: 5000 });
        await this.page.locator(this.AccessConfigurations).click();
     }
+
+    async clickRegisterWorkOrderCost(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWorkOrderMaterials(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetFrames(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetFrameYears(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetForTargetAreas(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetForRegions(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetForPortfolios(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBudgetForObjects(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAnnualMaintenanceBudgets(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFundings(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterTargetAreas(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFixedAssets(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFixedAssetGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFixedAssetSubGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterCompanies(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterBranches(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAccounts(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAccountKeys(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFinanceSubjects(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterCostCenters(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFinanceSections(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterPurposes(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFinanceProjects(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProducts(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterFinanceDataSets(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+
+
 }
 
 module.exports = FinanceManagement;

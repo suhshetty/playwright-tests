@@ -1,9 +1,8 @@
-// tests/SpaceManagementNavigation.spec.js
+// tests/SpaceManagementNav.spec.js
 const { test } = require('@playwright/test');
 const path = require('path');
 const dotenv = require('dotenv');
 const { loginAndInitialize } = require('../src/testSetup');
-const { access } = require('fs');
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../src/.env') });
@@ -14,14 +13,14 @@ test('Test Navigation Space Management', async ({ page, context }) => {
   // Login and initialize Page Objects with base URL
   const { homePage, spaceManagement } = await loginAndInitialize({ page, context, baseUrl });
 
-await homePage.gotoHomePage();
-await homePage.gotoModuleMenu();
-await spaceManagement.clickSpaceManagement();
+  await homePage.gotoHomePage();
+  await homePage.gotoModuleMenu();
+  await spaceManagement.clickSpaceManagement();
 
-
-// === Building Space Overview ===
+  // === Building Space Overview ===
 await spaceManagement.gotoBuildingSpaceOverview();
 await spaceManagement.gotoBuildingSpaces();
+await spaceManagement.clickRegisterNewBuildingSpace();
 await spaceManagement.gotoBuildingSpaceInformation();
 await spaceManagement.gotoDrawing();
 
@@ -30,6 +29,7 @@ await spaceManagement.gotoLocateOrganisation();
 await spaceManagement.gotoLocateOrganisationSubType();
 await spaceManagement.gotoObjectOwner();
 await spaceManagement.gotoSpaceManagementScenario();
+await spaceManagement.clickRegisterSpaceManagementScenario();
 
 // === Locate Equipment ===
 await spaceManagement.gotoLocateEquipment();
@@ -38,6 +38,7 @@ await spaceManagement.gotoLocateEquipmentSubType();
 // === Key Management ===
 await spaceManagement.gotoKeyManagement();
 await spaceManagement.gotoKeyToLock();
+await spaceManagement.clickRegisterKeyToLocks();
 
 // === Configuration ===
 await spaceManagement.gotoConfiguration();

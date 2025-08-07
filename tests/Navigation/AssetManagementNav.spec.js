@@ -24,26 +24,36 @@ await assetManagement.gotoAssetManagement();
 // Equipment Overview 
 await assetManagement.gotoEquipmentOverview();
 await assetManagement.gotoEquipment();
+await assetManagement.clickRegisterEquipment();
 await assetManagement.gotoLocateEquipment();
 await assetManagement.gotoPhones();
+await assetManagement.clickRegisterPhones();
 await assetManagement.gotoTechnicalInformation();
+await assetManagement.clickRegisterTechnicalInformation();
 
 // Vehicles Overview 
 await assetManagement.gotoVehiclesOverview();
 await assetManagement.gotoVehicles();
+await assetManagement.clickRegisterVehicles();
 
 // Artifacts Overview
 await assetManagement.gotoArtifactsOverview();
 await assetManagement.gotoArtifacts();
+await assetManagement.clickRegisterArtifacts();
 await assetManagement.gotoArtists();
+await assetManagement.clickRegisterArtists();
 await assetManagement.gotoLocateArtifacts();
 
 // Data Setup sub-types
 await assetManagement.gotoDataSetup();
 await assetManagement.gotoEquipmentGroups();
+await assetManagement.clickRegisterEquipmentGroups();
 await assetManagement.gotoEquipmentTypes();
+await assetManagement.clickRegisterEquipmentTypes();
 await assetManagement.gotoProductTypes();
+await assetManagement.clickRegisterProductTypes();
 await assetManagement.gotoServicePartnerGlobal();
+await assetManagement.clickRegisterServicePartnerGlobals();
 
 // Configuration sub-types
 await assetManagement.gotoAccessConfigurations();

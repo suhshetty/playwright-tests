@@ -21,7 +21,6 @@ const labels = [
   'gotoAccessConfigurations', 'gotoConfiguration'
 ];
 
-
 // Run for a given environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, assetManagement } = await loginAndInitialize({ page, context, baseUrl });
@@ -49,6 +48,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoEquipment', async () => {
     await assetManagement.gotoEquipment();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipment');
+    await assetManagement.clickRegisterEquipment();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEquipment');
   });
 
   await safeStep('gotoLocateEquipment', async () => {
@@ -59,11 +60,15 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoPhones', async () => {
     await assetManagement.gotoPhones();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPhones');
+    await assetManagement.clickRegisterPhones();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPhones');
   });
 
   await safeStep('gotoTechnicalInformation', async () => {
     await assetManagement.gotoTechnicalInformation();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformation');
+    await assetManagement.clickRegisterTechnicalInformation();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTechnicalInformation');
   });
 
   await safeStep('gotoVehiclesOverview', async () => {
@@ -74,6 +79,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoVehicles', async () => {
     await assetManagement.gotoVehicles();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoVehicles');
+    await assetManagement.clickRegisterVehicles();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterVehicles');
   });
 
   await safeStep('gotoArtifactsOverview', async () => {
@@ -84,11 +91,15 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoArtifacts', async () => {
     await assetManagement.gotoArtifacts();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoArtifacts');
+    await assetManagement.clickRegisterArtifacts();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterArtifacts');
   });
 
   await safeStep('gotoArtists', async () => {
     await assetManagement.gotoArtists();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoArtists');
+    await assetManagement.clickRegisterArtists();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterArtists');
   });
 
   await safeStep('gotoLocateArtifacts', async () => {
@@ -104,21 +115,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoEquipmentGroups', async () => {
     await assetManagement.gotoEquipmentGroups();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipmentGroups');
+    await assetManagement.clickRegisterEquipmentGroups();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEquipmentGroups');
   });
 
   await safeStep('gotoEquipmentTypes', async () => {
     await assetManagement.gotoEquipmentTypes();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoEquipmentTypes');
+    await assetManagement.clickRegisterEquipmentTypes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEquipmentTypes');
   });
 
   await safeStep('gotoProductTypes', async () => {
     await assetManagement.gotoProductTypes();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductTypes');
+    await assetManagement.clickRegisterProductTypes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProductTypes');
   });
 
   await safeStep('gotoServicePartnerGlobal', async () => {
     await assetManagement.gotoServicePartnerGlobal();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnerGlobal');
+    await assetManagement.clickRegisterServicePartnerGlobals();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterServicePartnerGlobals');
   });
 
   await safeStep('gotoAccessConfigurations', async () => {

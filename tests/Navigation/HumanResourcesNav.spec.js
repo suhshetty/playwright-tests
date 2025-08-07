@@ -26,38 +26,44 @@ await humanResources.clickHumanResources();
 
 // Navigate to sub types in Organisations Overview
 
+// === Organisations Overview ===
 await humanResources.gotoOrganisationsOverview();
 await humanResources.gotoBuildOrganisationTrees();
 await humanResources.gotoCompanies();
+await humanResources.clickRegisterCompanies();
 await humanResources.gotoWorkGroups();
+await humanResources.clickRegisterWorkGroups();
 await humanResources.gotoEmployees();
+await humanResources.clickRegisterEmployees();
 await humanResources.gotoPersonsUsers();
+await humanResources.clickRegisterPersonsUsers();
 
-// Navigate to sub types in Organisations Data
+// === Organisation Data ===
 await humanResources.gotoOrganisationData();
 await humanResources.gotoOrganisationReminders();
 await humanResources.gotoOrganisationDocuments();
-await humanResources.gotoOrganisationAbsences();
-await humanResources.gotoPunchinPunchout();
 
-// Navigate to sub types in Stakeholder Management
+// === Stakeholder Management ===
 await humanResources.gotoStakeholderManagement();
 await humanResources.gotoVendorIssues();
+await humanResources.clickRegisterVendorIssues();
 
-// Navigate to sub types in Permits and Qualifications
+// === Permits and Qualifications ===
 await humanResources.gotoPermitsandQualifications();
 await humanResources.gotoPersonPermits();
+await humanResources.clickRegisterPersonPermits();
 
-// Navigate to sub types in Data Setup
+// === Data Setup ===
 await humanResources.gotoDataSetup();
 await humanResources.gotoOrganisationGroups();
+await humanResources.clickRegisterOrganisationGroups();
 await humanResources.gotoProfessions();
+await humanResources.clickRegisterProfessions();
 await humanResources.gotoPermits();
+await humanResources.clickRegisterPermits();
 await humanResources.gotoEmployeeGroups();
+await humanResources.clickRegisterEmployeeGroups();
 await humanResources.gotoAvailabilityProfiles();
-
-// Navigate to sub types in Configuration
-await humanResources.gotoConfiguration();
-await humanResources.gotoAccessConfiguration();
+await humanResources.clickRegisterAvailabilityProfiles();
 });
 
