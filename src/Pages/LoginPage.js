@@ -1,29 +1,40 @@
 // src/Pages/LoginPage.js
 const BasePage = require("./BasePage");
+const { smartLocator } = require("../utils/smartLocator");
 
 class LoginPage extends BasePage {
   constructor(page) {
     super(page);
-    this.username = '#lgnUserLogin_UserName';
-    this.password = '#lgnUserLogin_Password';
-    this.loginBtn = '#lgnUserLogin_Login';
+    this.page = page;
+    
+    // Lists of possible selectors (self-healing options)
+    this.usernameSelectors = [
+      '#lgnUserLogin_UserName',
+      '#UserName'
+    ];
+    this.passwordSelectors = [
+      '#lgnUserLogin_Password',
+      '#Password',
+
+    ];
+    this.loginBtnSelectors = [
+      '#lgnUserLogin_Login',
+      'button[type="submit"]'
+    ];
   }
 
   async gotoLoginPage(baseUrl) {
-    await this.page.goto(baseUrl); 
+    await this.page.goto(baseUrl);
   }
 
   async login(username, password) {
-    const usernameField = this.page.locator(this.username);
-    await usernameField.waitFor({ state: 'visible', timeout: 5000 });
+    const usernameField = await smartLocator(this.page, this.usernameSelectors);
     await usernameField.fill(username);
 
-    const passwordField = this.page.locator(this.password);
-    await passwordField.waitFor({ state: 'visible', timeout: 5000 });
+    const passwordField = await smartLocator(this.page, this.passwordSelectors);
     await passwordField.fill(password);
 
-    const loginBtn = this.page.locator(this.loginBtn);
-    await loginBtn.waitFor({ state: 'visible', timeout: 5000 });
+    const loginBtn = await smartLocator(this.page, this.loginBtnSelectors);
     await loginBtn.click();
   }
 }

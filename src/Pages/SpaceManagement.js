@@ -38,7 +38,7 @@ class SpaceManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Test ÞT )
     this.WorkOrderHours = "div[aria-label='Work order hours Process step item']";
-  }
+}
     async clickSpaceManagement() {
         await this.page.waitForTimeout(3000);
         const SpaceManagement = this.page.locator(this.spaceManagement).first();

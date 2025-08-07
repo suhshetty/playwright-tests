@@ -20,6 +20,8 @@ test('Sanity test : EMM-T270.spec.js', async ({ page, context }) => {
     await buildingArchive.gotoSiteRegistration();
     await buildingArchive.gotoSites();
 
+    await page.pause(); 
+
     // Register new site
     await buildingArchive.registerNewSite("Test Site EMM-T270A");
 

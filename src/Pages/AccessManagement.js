@@ -52,6 +52,12 @@ class AccessManagement extends BasePage {
 
     // Navigate to sub types ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
+
+    // Add ,Close & Export Operations
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+    this.Export = "button[aria-label='This action exports data - ExportData']";
+    this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
   }
 
   async gotoAccessManagement() {

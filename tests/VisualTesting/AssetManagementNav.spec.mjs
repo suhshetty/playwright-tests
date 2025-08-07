@@ -21,6 +21,7 @@ const labels = [
   'gotoAccessConfigurations', 'gotoConfiguration'
 ];
 
+
 // Run for a given environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, assetManagement } = await loginAndInitialize({ page, context, baseUrl });

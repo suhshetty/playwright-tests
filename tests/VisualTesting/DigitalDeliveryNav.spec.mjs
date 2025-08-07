@@ -18,17 +18,35 @@ const labels = [
   'clickDigitalDelivery',
   'gotoDigitalDeliverySubModule',
   'gotoProductData',
+  'productDataAddClicked',
+  'productDataCloseClicked',
   'gotoProductDataTask',
+  'productDataTaskAddClicked',
+  'productDataTaskCloseClicked',
   'gotoProductDataComponent',
+  'ProductDataComponentExportClicked',
+  'ProductDataComponentCloseClicked',
   'gotoProductDataTechnicalInformation',
+  'productDataTechnicalInfoAddClicked',
+  'productDataTechnicalInfoCloseClicked',
   'gotoEPD',
+  'epdAddClicked',
+  'epdCloseClicked',
   'gotoBuildingSystems',
   'gotoRegisterBuildingComponents',
   'gotoRegisterBuildingComponentsCSS',
   'gotoFunctionalSystemCSS',
+  'functionalSystemCSSExportClicked',
+  'functionalSystemCSSCloseClicked',
   'gotoTechnicalSystemCSS',
+  'technicalSystemCSSAddClicked',
+  'technicalSystemCSSCloseClicked',
   'gotoComponentsCSS',
+  'componentsCSSAddClicked',
+  'componentsCSSCloseClicked',
   'gotoFunctionalSystem',
+  'functionalSystemExportClicked',
+  'functionalSystemCloseClicked',
   'gotoTechnicalSystem',
   'gotoComponent',
   'gotoConfiguration',
@@ -54,15 +72,25 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'clickDigitalDelivery');
   });
 
-    await safeStep('gotoDigitalDeliverySubModule', async () => {
+  await safeStep('gotoDigitalDeliverySubModule', async () => {
     await digitalDelivery.gotoDigitalDeliverySubModule();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDigitalDeliverySubModule');
   });
 
-   // 📌 Digital Delivery - Sub Types
+  // Digital Delivery - Sub Types
   await safeStep('gotoProductData', async () => {
     await digitalDelivery.gotoProductData();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
+  });
+
+  await safeStep('productDataAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataAddClicked');
+  });
+
+  await safeStep('productDataCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataCloseClicked');
   });
 
   await safeStep('gotoProductDataTask', async () => {
@@ -70,9 +98,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataTask');
   });
 
+  await safeStep('productDataTaskAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataTaskAddClicked');
+  });
+
+  await safeStep('productDataTaskCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataTaskCloseClicked');
+  });
+
   await safeStep('gotoProductDataComponent', async () => {
     await digitalDelivery.gotoProductDataComponent();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataComponent');
+  });
+
+  await safeStep('ProductDataComponentExportClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'ProductDataComponentExportClicked');
+  });
+
+  await safeStep('ProductDataComponentCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'ProductDataComponentCloseClicked');
   });
 
   await safeStep('gotoProductDataTechnicalInformation', async () => {
@@ -80,18 +128,37 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductDataTechnicalInformation');
   });
 
+  await safeStep('productDataTechnicalInfoAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataTechnicalInfoAddClicked');
+  });
+
+  await safeStep('productDataTechnicalInfoCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'productDataTechnicalInfoCloseClicked');
+  });
+
   await safeStep('gotoEPD', async () => {
     await digitalDelivery.gotoEPD();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoEPD');
   });
 
+  await safeStep('epdAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'epdAddClicked');
+  });
+
+  await safeStep('epdCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'epdCloseClicked');
+  });
 
   await safeStep('gotoBuildingSystems', async () => {
     await digitalDelivery.gotoBuildingSystems();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSystems');
   });
 
-   // 📌 Building Systems - Sub Types
+  // Building Systems - Sub Types
   await safeStep('gotoRegisterBuildingComponents', async () => {
     await digitalDelivery.gotoRegisterBuildingComponents();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterBuildingComponents');
@@ -107,9 +174,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystemCSS');
   });
 
+  await safeStep('functionalSystemCSSExportClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemCSSExportClicked');
+  });
+
+  await safeStep('functionalSystemCSSCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemCSSCloseClicked');
+  });
+
   await safeStep('gotoTechnicalSystemCSS', async () => {
     await digitalDelivery.gotoTechnicalSystemCSS();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemCSS');
+  });
+
+  await safeStep('technicalSystemCSSAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'technicalSystemCSSAddClicked');
+  });
+
+  await safeStep('technicalSystemCSSCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'technicalSystemCSSCloseClicked');
   });
 
   await safeStep('gotoComponentsCSS', async () => {
@@ -117,9 +204,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponentsCSS');
   });
 
+  await safeStep('componentsCSSAddClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'componentsCSSAddClicked');
+  });
+
+  await safeStep('componentsCSSCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'componentsCSSCloseClicked');
+  });
+
   await safeStep('gotoFunctionalSystem', async () => {
     await digitalDelivery.gotoFunctionalSystem();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystem');
+  });
+
+  await safeStep('functionalSystemExportClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemExportClicked');
+  });
+
+  await safeStep('functionalSystemCloseClicked', async () => {
+    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemCloseClicked');
   });
 
   await safeStep('gotoTechnicalSystem', async () => {
@@ -132,22 +239,19 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponent');
   });
 
-
   await safeStep('gotoConfiguration', async () => {
     await digitalDelivery.gotoConfiguration();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
 
- 
-  // 📌 Configuration - Sub Types
+  // Configuration - Sub Types
   await safeStep('gotoAccessConfiguration', async () => {
     await digitalDelivery.gotoAccessConfiguration();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfiguration');
   });
-
 };
 
-// 🎯 Main visual regression test entry
+// Main visual regression test entry
 test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 

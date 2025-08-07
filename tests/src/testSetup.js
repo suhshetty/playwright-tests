@@ -24,6 +24,7 @@ const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement
 
 
 
+
 async function loginAndInitialize({ page, context, baseUrl }) {
   // Clear cookies and cache before login
   await context.clearCookies();
@@ -56,9 +57,7 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   await loginPage.gotoLoginPage(baseUrl);
   await loginPage.login('suhsh', 'Testing@!123');
 
-  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, 
-
-    cleaningManagement, documentManagement, energyManagement, environmentalManagement,
+  return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement,
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
     digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
     humanResources, projectManagement, culturalValueManagement

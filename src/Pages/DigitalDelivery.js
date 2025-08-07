@@ -1,3 +1,4 @@
+//src//Pages//DigitalDelivery.js
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
 
@@ -32,10 +33,23 @@ class DigitalDelivery extends BasePage {
     this.TechnicalSystem = "div[aria-label='Technical systems Process step item']";
     this.Component = "div[aria-label='Components Process step item']";
 
+    // Add ,Close & Export Operations
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+    this.Export = "button[aria-label='This action exports data - ExportData']";
+
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
-  }
+    // Add operations ( Sub module : Digital Delivery )
+    this.AddProductData = "button[aria-label='Register new product data']";
+    this.AddProductDataTasks = "button[aria-label='Register new product data task']";
+    this.ProductDataTechnicalInformations = "button[aria-label='Register new product data technical information']";
+    this.AddEPDS = "button[aria-label='Register new epd']";
+
+    // Add operations ( Sub module : Building Systems )
+    this.AddFunctionalSystemCSS = "button[aria-label='Register new functional system']";
+ }
 
   async clickDigitalDelivery() {
     await this.page.waitForTimeout(3000);

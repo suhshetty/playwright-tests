@@ -8,7 +8,7 @@ dotenv.config({ path: path.resolve('tests/src/.env') });
 
 test('Sanity test: EMM-T271.spec.js', async ({ page, context }) => {
   try {
-    const baseUrl = process.env.URL1; // 👈 Load URL from .env
+    const baseUrl = process.env.URL1; //
 
     // Login and initialize Page Objects
     const { homePage, buildingArchive } = await loginAndInitialize({ page, context, baseUrl });
