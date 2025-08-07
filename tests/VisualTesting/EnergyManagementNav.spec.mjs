@@ -1,4 +1,4 @@
-// File: CleaningManagementNavigation.spec.js
+// File: EnergyManagementNavigation.spec.js
 import { test, expect } from '@playwright/test';
 import { loginAndInitialize } from '../src/testSetup.js';
 import {
@@ -12,11 +12,11 @@ import {
 initializeVisualTestEnv();
 
 const labels = [
-  'gotoEnergyZones', 'gotoCreateZones',
-  'gotoWeatherStations', 'gotoGlobalWeatherStations', 'gotoWeatherStationNormalPeriod',
-  'gotoEnergyProvidersSubType',
-  'gotoEnergyZones', 'gotoEnergyDistributions', 'gotoEnergyProcesses', 'gotoGauges', 'gotoGaugesReadings', 'gotoEnerkeyProfiles',
-  'gotoAnnualEnergyUsages', 'gotoEnergySavingsPotential',
+  'gotoEnergyZones', 'clickRegisterEnergyZones', 'gotoCreateZones',
+  'gotoWeatherStations', 'clickRegisterWeatherStations', 'gotoGlobalWeatherStations', 'gotoWeatherStationNormalPeriod', 'clickRegisterWeatherStationNormalPeriods',
+  'gotoEnergyProvidersSubType', 'clickRegisterEnergyProviders',
+  'gotoEnergyDistributions', 'clickRegisterEnergyDistributions', 'gotoEnergyProcesses', 'clickRegisterEnergyProcesses', 'gotoGauges', 'clickRegisterGauges', 'gotoGaugesReadings', 'gotoEnerkeyProfiles',
+  'gotoAnnualEnergyUsages', 'clickRegisterAnnualEnergyUsages', 'gotoEnergySavingsPotential', 'clickRegisterEnergySavingPotentials',
   'gotoConfiguration', 'gotoAccessConfiguration'
 ];
 
@@ -52,6 +52,11 @@ await safeStep('gotoEnergyZones', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZones');
 });
 
+await safeStep('clickRegisterEnergyZones', async () => {
+  await energyManagement.clickRegisterEnergyZones();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyZones');
+});
+
 await safeStep('gotoCreateZones', async () => {
   await energyManagement.gotoCreateZones();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoCreateZones');
@@ -68,6 +73,11 @@ await safeStep('gotoWeatherStations', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStations');
 });
 
+await safeStep('clickRegisterWeatherStations', async () => {
+  await energyManagement.clickRegisterWeatherStations();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWeatherStations');
+});
+
 await safeStep('gotoGlobalWeatherStations', async () => {
   await energyManagement.gotoGlobalWeatherStations();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStations');
@@ -78,10 +88,20 @@ await safeStep('gotoWeatherStationNormalPeriod', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriod');
 });
 
+await safeStep('clickRegisterWeatherStationNormalPeriods', async () => {
+  await energyManagement.clickRegisterWeatherStationNormalPeriods();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWeatherStationNormalPeriods');
+});
+
 // Energy Providers
 await safeStep('gotoEnergyProviders', async () => {
   await energyManagement.gotoEnergyProviders();
   //await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProviders');
+});
+
+await safeStep('clickRegisterEnergyProviders', async () => {
+  await energyManagement.clickRegisterEnergyProviders();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProviders');
 });
 
 await safeStep('gotoEnergyProvidersSubType', async () => {
@@ -95,14 +115,14 @@ await safeStep('gotoGaugesOverview', async () => {
   //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugesOverview');
 });
 
-await safeStep('gotoEnergyZones', async () => {
-  await energyManagement.gotoEnergyZones();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZones');
-});
-
 await safeStep('gotoEnergyDistributions', async () => {
   await energyManagement.gotoEnergyDistributions();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyDistributions');
+});
+
+await safeStep('clickRegisterEnergyDistributions', async () => {
+  await energyManagement.clickRegisterEnergyDistributions();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyDistributions');
 });
 
 await safeStep('gotoEnergyProcesses', async () => {
@@ -110,9 +130,19 @@ await safeStep('gotoEnergyProcesses', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProcesses');
 });
 
+await safeStep('clickRegisterEnergyProcesses', async () => {
+  await energyManagement.clickRegisterEnergyProcesses();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProcesses');
+});
+
 await safeStep('gotoGauges', async () => {
   await energyManagement.gotoGauges();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoGauges');
+});
+
+await safeStep('clickRegisterGauges', async () => {
+  await energyManagement.clickRegisterGauges();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterGauges');
 });
 
 await safeStep('gotoGaugesReadings', async () => {
@@ -136,9 +166,19 @@ await safeStep('gotoAnnualEnergyUsages', async () => {
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoAnnualEnergyUsages');
 });
 
+await safeStep('clickRegisterAnnualEnergyUsages', async () => {
+  await energyManagement.clickRegisterAnnualEnergyUsages();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualEnergyUsages');
+});
+
 await safeStep('gotoEnergySavingsPotential', async () => {
   await energyManagement.gotoEnergySavingsPotential();
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergySavingsPotential');
+});
+
+await safeStep('clickRegisterEnergySavingPotentials', async () => {
+  await energyManagement.clickRegisterEnergySavingPotentials();
+  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergySavingPotentials');
 });
 
 // Configuration
@@ -154,7 +194,7 @@ await safeStep('gotoAccessConfiguration', async () => {
 }
 
 // Main visual regression test
-test('Visual Regression Test - Energy  Management: Compare URL1 and URL2', async ({ page, context }) => {
+test('Visual Regression Test - Energy Management: Compare URL1 and URL2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 
   await page.context().clearCookies();

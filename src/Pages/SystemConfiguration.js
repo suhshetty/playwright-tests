@@ -7,7 +7,7 @@ class SystemConfiguration extends BasePage {
     this.page = page;
 
     // Module locators
-    this.environmentalManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='System configuration']";
+    this.systemConfiguration = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='System configuration']";
 
     // Sub module locators
     this.SystemLocalization = "div[aria-label='System localization Process step']";

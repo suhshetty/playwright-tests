@@ -20,6 +20,8 @@ const HealthAndSafetyManagement = require('../../src/Pages/HealthAndSafetyManage
 const HumanResources = require('../../src/Pages/HumanResources');
 const ProjectManagement = require('../../src/Pages/ProjectManagement');
 const CulturalValueManagement = require('../../src/Pages/CulturalValueManagement');
+const SystemConfiguration = require('../../src/Pages/SystemConfiguration');
+const UniversalDesign = require('../../src/Pages/UniversalDesign'); 
 
 
 
@@ -52,6 +54,8 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   const humanResources = new HumanResources(page);
   const projectManagement = new ProjectManagement(page);
   const culturalValueManagement = new CulturalValueManagement(page);
+  const universalDesign = new UniversalDesign(page);
+  const systemConfiguration = new SystemConfiguration(page);
 
   // Perform login using dynamic URL
   await loginPage.gotoLoginPage(baseUrl);
@@ -60,7 +64,7 @@ async function loginAndInitialize({ page, context, baseUrl }) {
   return { loginPage, homePage, buildingArchive, accessManagement, assetManagement, cleaningManagement, documentManagement, energyManagement, environmentalManagement,
     financeManagement, spaceManagement, propertyManagement, conditionAssessmentAndMaintenanceNeeds,
     digitalDelivery, helpdeskManagement, operationAndMaintenance, fireSafetyManagement, healthAndSafetyManagement,
-    humanResources, projectManagement, culturalValueManagement
+    humanResources, projectManagement, culturalValueManagement, universalDesign, systemConfiguration
   };
 
 

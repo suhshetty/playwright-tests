@@ -8,7 +8,7 @@ const { access } = require('fs');
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../src/.env') });
 
-test('Test Navigation Asset Management', async ({ page, context }) => {
+test('Test Navigation Energy Management', async ({ page, context }) => {
   const baseUrl = process.env.URL1; 
 
 // Login and initialize Page Objects with base URL
@@ -24,31 +24,40 @@ await energyManagement.gotoEnergyManagement();
 // Energy Zones Overview
 await energyManagement.gotoEnergyZonesOverview();
 await energyManagement.gotoEnergyZones();
+await energyManagement.clickRegisterEnergyZones();
 await energyManagement.gotoCreateZones();
 
 // Weather Stations Overview
 await energyManagement.gotoWeatherStationsOverview();
 await energyManagement.gotoWeatherStations();
+await energyManagement.clickRegisterWeatherStations();
 await energyManagement.gotoGlobalWeatherStations();
 await energyManagement.gotoWeatherStationNormalPeriod();
+await energyManagement.clickRegisterWeatherStationNormalPeriods();
 
 // Energy Providers
 await energyManagement.gotoEnergyProviders();
+await energyManagement.clickRegisterEnergyProviders();
 await energyManagement.gotoEnergyProvidersSubType();
 
 // Gauges Overview 
 await energyManagement.gotoGaugesOverview(); 
 await energyManagement.gotoEnergyZones();
 await energyManagement.gotoEnergyDistributions();
+await energyManagement.clickRegisterEnergyDistributions();
 await energyManagement.gotoEnergyProcesses();
+await energyManagement.clickRegisterEnergyProcesses();
 await energyManagement.gotoGauges();
+await energyManagement.clickRegisterGauges();
 await energyManagement.gotoGaugesReadings();
 await energyManagement.gotoEnerkeyProfiles();
 
 // Energy Projects 
 await energyManagement.gotoEnergyProjects();
 await energyManagement.gotoAnnualEnergyUsages();
+await energyManagement.clickRegisterAnnualEnergyUsages();
 await energyManagement.gotoEnergySavingsPotential();
+await energyManagement.clickRegisterEnergySavingPotentials();
 
 // Configuration 
 await energyManagement.gotoConfiguration();

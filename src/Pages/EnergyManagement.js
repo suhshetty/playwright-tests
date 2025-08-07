@@ -164,8 +164,56 @@ class EnergyManagement extends BasePage {
       await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
       await this.page.locator(this.AccessConfiguration).click();
     }
-}
 
+    // Add these methods to your EnergyManagement class
+
+    async clickRegisterEnergyZones(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWeatherStations(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWeatherStationNormalPeriods(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEnergyProviders(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEnergyDistributions(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEnergyProcesses(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterGauges(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAnnualEnergyUsages(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterEnergySavingPotentials(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+      
+  }
+  
 module.exports = EnergyManagement;
 
 

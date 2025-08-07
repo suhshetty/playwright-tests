@@ -7,7 +7,7 @@ class UniversalDesign extends BasePage {
     this.page = page;
 
     // Module locators
-    this.environmentalManagement = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Universal design']";
+    this.universalDesign = "//span[@class='m-menu__link-text mm-menu-link-text' and text()='Universal design']";
 
     // Sub module locators
     this.GeneralOverview = "div[aria-label='General overview Process step']";

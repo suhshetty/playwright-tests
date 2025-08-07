@@ -48,6 +48,9 @@ class HealthAndSafetyManagement extends BasePage {
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
+    //Add new data Locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
     }
 
     async clickHealthAndSafetyManagement() {
