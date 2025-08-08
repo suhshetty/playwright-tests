@@ -31,7 +31,7 @@ class EnergyManagement extends BasePage {
     this.EnergyProviders2 = "div[aria-label='Energy providers Process step item']";
 
     // Sub Types locators ( Sub module : Gauges Overview )
-    this.EnergyZones = "div[aria-label='Energy zones Process step item']";
+    this.EnergyZonesGO = "div[aria-label='Energy zones Process step item']";
     this.EnergyDistributions = "div[aria-label='Energy distributions Process step item']";
     this.EnergyProcesses = "div[aria-label='Energy processes Process step item']";
     this.Gauges = "div[aria-label='Gauges Process step item']";
@@ -44,6 +44,10 @@ class EnergyManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
      this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
+
+     //Add new data locators
+     this.Add = "#newRecordButton";
+     this.Close = "i[title='Close window (alt+x)']";
   }
 
   async gotoEnergyManagement() {
@@ -118,9 +122,9 @@ class EnergyManagement extends BasePage {
     }
 
     // Navigate to sub types ( Sub module : Gauges Overview  )
-    async gotoEnergyZones() {
-      await this.page.locator(this.EnergyZones).waitFor({ state: 'visible', timeout: 5000 });
-      await this.page.locator(this.EnergyZones).click();
+    async gotoEnergyZonesGO() {
+      await this.page.locator(this.EnergyZonesGO).waitFor({ state: 'visible', timeout: 5000 });
+      await this.page.locator(this.EnergyZonesGO).click();
     }
 
     async gotoEnergyDistributions() {

@@ -47,6 +47,10 @@ class HelpdeskManagement extends BasePage {
 
      // Sub Types locators ( Sub module : Configuarion )
      this.AccessConfiguraions = "div[aria-label='Access configurations Process step item']";
+
+     //Add new data locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
   }
 
   async clickHelpdeskManagement() {
@@ -183,6 +187,72 @@ class HelpdeskManagement extends BasePage {
      await this.page.locator(this.AccessConfiguraions).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.AccessConfiguraions).click();
    }
+
+    async clickRegisterFailures(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterIssues(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterConditionAssessmentType(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterReleaseItems(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterIncidentCategory1s(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAllIncidents(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWorkOrders(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterSLAKPIDemands(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterReminders(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterIncidentGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterIncidentTypes(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterTaskPriorities(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProfessions(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
 }
 
 module.exports = HelpdeskManagement;
