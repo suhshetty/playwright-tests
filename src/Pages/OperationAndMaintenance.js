@@ -81,7 +81,7 @@ class OperationAndMaintenance extends BasePage {
     this.StandardChecklist = "div[aria-label='Standard checklists Process step item']";
     this.StandardCheckPoint = "div[aria-label='Standard checkpoints Process step item']";
     this.CheckpointGroups = "div[aria-label='Checkpoint groups Process step item']";
-    this.PendingStandardTaskOnSite = "div[aria-label='Pending standard tasks on site Process step item']";
+    this.PendingStandardTaskOnSite = "div[aria-label='Pending standard tasks on sites Process step item']";
 
     // Sub Types locators ( Sub module : Data Setup )
     this.TargetArea = "div[aria-label='Target areas Process step item']";
@@ -96,6 +96,10 @@ class OperationAndMaintenance extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
+
+    //Add new data locators
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
 
   }
   async clickOperationAndMaintenance() {
@@ -302,12 +306,12 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.ElectronicInvoices).click();
   }
 
-  async gotoWorkOrderAssignedCost() {
+  async gotoWorkOrderAssignedCostCRU() {
     await this.page.locator(this.WorkOrderAssignedCostCRU).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.WorkOrderAssignedCostCRU).click();
   }
 
-  async gotoTimeRegistration() {
+  async gotoTimeRegistrationCRU() {
     await this.page.locator(this.TimeRegistrationCRU).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.TimeRegistrationCRU).click();
   }
@@ -389,9 +393,9 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.CheckpointGroups).click();
   }
 
-  async gotoPendingStandardTsksOnSite() {
-    await this.page.locator(this.PendingStandardTsksOnSite).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.PendingStandardTsksOnSite).click();
+  async gotoPendingStandardTaskOnSite() {
+    await this.page.locator(this.PendingStandardTaskOnSite).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.PendingStandardTaskOnSite).click();
   }
 
   // Navigate to sub types in Data Setup  
@@ -445,6 +449,126 @@ class OperationAndMaintenance extends BasePage {
     await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.AccessConfiguration).click();
   }
+
+  async clickRegisterMaintenanceIncidents(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterPPMRegistration(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterFailures(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterIssues(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterIncidentCategory1s(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterAllIncidents(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterWorkOrders(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterWorkOrdersExternal(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterWorkOrderAssignedCosts(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterInspections(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterRecurringIncidents(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterServiceContracts(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterStandardTasks(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterStandardChecklists(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterStandardCheckpoints(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterCheckpointGroups(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterTargetAreas(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterScheduleTypes(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterTaskCategories(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterTaskClassifications(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterTaskSets(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterIncidentPriorities(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterTaskClassificationRelations(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
+
+async clickRegisterHealthSafetyEnvironmentItems(){
+  await this.page.locator(this.Add).click();
+  await this.page.locator(this.Close).click();
+}
 
 }
 

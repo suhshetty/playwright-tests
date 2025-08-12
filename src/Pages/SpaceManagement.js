@@ -33,7 +33,7 @@ class SpaceManagement extends BasePage {
     // Sub Types locators ( Sub module : Key Management )
     this.KeyToLock = "div[aria-label='Key to locks Process step item']";
 
-    //Sub Types locators ( Sub module : Configuration )
+    //Sub Types locators ( Sub module : Configuration Maintenance incidents)
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
     // Sub Types locators ( Sub module : Test ÞT )

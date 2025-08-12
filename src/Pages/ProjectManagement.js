@@ -64,6 +64,10 @@ class ProjectManagement extends BasePage {
 
      // Sub Types locators ( Sub module : Configuarion )
      this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
+
+     //Add new data locators
+     this.Add = "#newRecordButton"
+     this.Close = "i[title='Close window (alt+x)']";
   }
 
   async clickProjectManagement() {
@@ -259,6 +263,68 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.AccessConfigurations).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.AccessConfigurations).click();
    }
+
+   // Add these methods to your ProjectManagement.js page object class
+
+    async clickRegisterMaintenanceIncidents(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProjects(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterAnnualBudgetsForProjects(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterTaskPlanning(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWorkOrders(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterInspections(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProjectContracts(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterWorkOrderCosts(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProjectWorkOrderMaterials(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProjectStandardTasks(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterProjectGroups(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
+
+    async clickRegisterTaskSets(){
+      await this.page.locator(this.Add).click();
+      await this.page.locator(this.Close).click();
+    }
 
 
 

@@ -21,10 +21,12 @@ test('Test Navigation Operation And Maintenance', async ({ page, context }) => {
   // === Maintenance Incidents Overview ===
   await operationAndMaintenance.gotoMaintenanceIncidentsOverview();
   await operationAndMaintenance.gotoMaintenanceIncident();
+  await operationAndMaintenance.clickRegisterMaintenanceIncidents();
 
   // === Task Planning Overview ===
   await operationAndMaintenance.gotoTaskPlanningOverview();
   await operationAndMaintenance.gotoPPMRegistration();
+  await operationAndMaintenance.clickRegisterPPMRegistration();
   await operationAndMaintenance.gotoAnnualTaskBudgets();
   await operationAndMaintenance.gotoPendingStandardTask();
   await operationAndMaintenance.gotoObjectsShowingPendingStandardTasks();
@@ -41,21 +43,30 @@ test('Test Navigation Operation And Maintenance', async ({ page, context }) => {
   // === Incidents Overview ===
   await operationAndMaintenance.gotoIncidentsOverview();
   await operationAndMaintenance.gotoFailure();
+  await operationAndMaintenance.clickRegisterFailures();
   await operationAndMaintenance.gotoIssues();
+  await operationAndMaintenance.clickRegisterIssues();
   await operationAndMaintenance.gotoCheckItem();
   await operationAndMaintenance.gotoCleaningTask();
   await operationAndMaintenance.gotoIncidentCategory1s();
+  await operationAndMaintenance.clickRegisterIncidentCategory1s();
   await operationAndMaintenance.gotoIncidentCategory2s();
   await operationAndMaintenance.gotoAllIncidents();
+  await operationAndMaintenance.clickRegisterAllIncidents();
 
   // === Work Orders Overview ===
   await operationAndMaintenance.gotoWorkOrdersOverview();
   await operationAndMaintenance.gotoWorkOrder();
+  await operationAndMaintenance.clickRegisterWorkOrders();
   await operationAndMaintenance.gotoWorkOrderExternal();
+  await operationAndMaintenance.clickRegisterWorkOrdersExternal();
   await operationAndMaintenance.gotoWorkOrderAssignedCostWOO();
+  await operationAndMaintenance.clickRegisterWorkOrderAssignedCosts();
   await operationAndMaintenance.gotoTimeRegistrationWOO();
   await operationAndMaintenance.gotoInspections();
+  await operationAndMaintenance.clickRegisterInspections();
   await operationAndMaintenance.gotoReccuringIncidents();
+  await operationAndMaintenance.clickRegisterRecurringIncidents();
   await operationAndMaintenance.gotoChecklists();
   await operationAndMaintenance.gotoChecklistPoints();
   await operationAndMaintenance.gotoChecklistIncidents();
@@ -71,6 +82,7 @@ test('Test Navigation Operation And Maintenance', async ({ page, context }) => {
   // === Service Contracts Overview ===
   await operationAndMaintenance.gotoServiceContractsOverview();
   await operationAndMaintenance.gotoServiceContract();
+  await operationAndMaintenance.clickRegisterServiceContracts();
   await operationAndMaintenance.gotoServiceContractReminder();
   await operationAndMaintenance.gotoServiceContractPayments();
   await operationAndMaintenance.gotoServiceContractPaymemtItems();
@@ -81,24 +93,36 @@ test('Test Navigation Operation And Maintenance', async ({ page, context }) => {
   await operationAndMaintenance.gotoStandardTaskManagement();
   await operationAndMaintenance.gotoStandardTaskObjectTypeManagement();
   await operationAndMaintenance.gotoStandardTask();
+  await operationAndMaintenance.clickRegisterStandardTasks();
   await operationAndMaintenance.gotoStandardChecklistManagement();
   await operationAndMaintenance.gotoStandardCheckpointObjectTypeManagement();
   await operationAndMaintenance.gotoStandardChecklist();
+  await operationAndMaintenance.clickRegisterStandardChecklists();
   await operationAndMaintenance.gotoStandardCheckPoint();
+  await operationAndMaintenance.clickRegisterStandardCheckpoints();
   await operationAndMaintenance.gotoCheckpointGroups();
+  await operationAndMaintenance.clickRegisterCheckpointGroups();
   await operationAndMaintenance.gotoPendingStandardTaskOnSite();
 
   // === Data Setup ===
   await operationAndMaintenance.gotoDataSetup();
   await operationAndMaintenance.gotoTargetArea();
+  await operationAndMaintenance.clickRegisterTargetAreas();
   await operationAndMaintenance.gotoScheduleType();
+  await operationAndMaintenance.clickRegisterScheduleTypes();
   await operationAndMaintenance.gotoTaskCategories();
+  await operationAndMaintenance.clickRegisterTaskCategories();
   await operationAndMaintenance.gotoTaskSubcategories();
   await operationAndMaintenance.gotoTaskClassification();
+  await operationAndMaintenance.clickRegisterTaskClassifications();
   await operationAndMaintenance.gotoTaskSet();
+  await operationAndMaintenance.clickRegisterTaskSets();
   await operationAndMaintenance.gotoIncidentPriorities();
+  await operationAndMaintenance.clickRegisterIncidentPriorities();
   await operationAndMaintenance.gotoTaskClassificationRelation();
+  await operationAndMaintenance.clickRegisterTaskClassificationRelations();
   await operationAndMaintenance.gotoHealthSafetyAndEnvironmentItems();
+  await operationAndMaintenance.clickRegisterHealthSafetyEnvironmentItems();
 
   // === Configuration ===
   await operationAndMaintenance.gotoConfiguration();

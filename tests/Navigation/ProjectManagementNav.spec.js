@@ -1,77 +1,78 @@
-// tests/EnvironmentalManagementNav.spec.js
+// tests/ProjectManagementNavigation.spec.js
 const { test } = require('@playwright/test');
 const path = require('path');
 const dotenv = require('dotenv');
 const { loginAndInitialize } = require('../src/testSetup');
-const { access } = require('fs');
 
 // Load environment variables
 dotenv.config({ path: path.resolve(__dirname, '../src/.env') });
 
-test('Test Navigation Environmental Management', async ({ page, context }) => {
-  const baseUrl = process.env.URL1; 
+test('Test Navigation Project Management', async ({ page, context }) => {
+  const baseUrl = process.env.URL1;
 
-// Login and initialize Page Objects with base URL
-const { homePage, projectManagement } = await loginAndInitialize({ page, context, baseUrl });
+  // Login and initialize Page Objects with base URL
+  const { homePage, projectManagement } = await loginAndInitialize({ page, context, baseUrl });
 
-// Home Page   
-await homePage.gotoHomePage();
-await homePage.gotoModuleMenu();
+  // === Home and Module Navigation ===
+  await homePage.gotoHomePage();
+  await homePage.gotoModuleMenu();
+  await projectManagement.clickProjectManagement();
 
-// Main module navigation
-await projectManagement.clickProjectManagement();
+  // === Maintenance Incidents Overview ===
+  await projectManagement.gotoMaintenanceIncidentsOverview();
+  await projectManagement.gotoMaintenanceIncidents();
+  await projectManagement.clickRegisterMaintenanceIncidents();
 
-// Sub module: Project Initiatives
-await projectManagement.gotoProjectInitiatives();
-await projectManagement.gotoPurchaseOrder();
-await projectManagement.gotoMaintenanceIncidents();
+  // === Projects Overview ===
+  await projectManagement.gotoProjectsOverview();
+  await projectManagement.gotoProjects();
+  await projectManagement.clickRegisterProjects();
+  await projectManagement.gotoAnnualBudgetsForProjects();
+  await projectManagement.clickRegisterAnnualBudgetsForProjects();
 
-// Sub module: Projects Overview
+  // === Task Planning Overview ===
+  await projectManagement.gotoTaskPlanningOverview();
+  await projectManagement.gotoTaskPlanning();
+  await projectManagement.clickRegisterTaskPlanning();
 
-await projectManagement.gotoProjectsOverview();
-await projectManagement.gotoProjects();
-await projectManagement.gotoAnnualBudgetForProjects();
-await projectManagement.gotoTaskPlanning();
-await projectManagement.gotoTaskManagement();
-await projectManagement.gotoProjectAnnualTaskBudgets();
-await projectManagement.gotoWorkOrders();
-await projectManagement.gotoInspections();
-await projectManagement.gotoCheckItems();
+  // === Work Orders Overview ===
+  await projectManagement.gotoWorkOrdersOverview();
+  await projectManagement.gotoWorkOrders();
+  await projectManagement.clickRegisterWorkOrders();
 
-// Sub module: Project Details
-await projectManagement.gotoProjectDetails();
-await projectManagement.gotoProjectOrganisations();
-await projectManagement.gotoProjectAssessments();
-await projectManagement.gotoProjectChangeManagement();
+  // === Inspections Overview ===
+  await projectManagement.gotoInspectionsOverview();
+  await projectManagement.gotoInspections();
+  await projectManagement.clickRegisterInspections();
 
-// Sub module: Project Contracts Overview
-await projectManagement.gotoProjectContractsOverview();
-await projectManagement.gotoProjectContrcats();
-await projectManagement.gotoProjectContrcatPayments();
+  // === Project Contracts Overview ===
+  await projectManagement.gotoProjectContractsOverview();
+  await projectManagement.gotoProjectContracts();
+  await projectManagement.clickRegisterProjectContracts();
 
-// Sub module: Costs and Resource Usage
-await projectManagement.gotoCostsAndResourceUsage();
-await projectManagement.gotoElectronicInvoices();
-await projectManagement.gotoWorkOrderCosts();
-await projectManagement.gotoTimeRegistration();
-await projectManagement.gotoProjectWorkOrderMaterials();
-await projectManagement.gotoTransactions();
+  // === Work Order Costs Overview ===
+  await projectManagement.gotoWorkOrderCostsOverview();
+  await projectManagement.gotoWorkOrderCosts();
+  await projectManagement.clickRegisterWorkOrderCosts();
 
-// Sub module: Project Web
-await projectManagement.gotoProjectWeb();
-await projectManagement.gotoProjectTreeWithDocuments();
-await projectManagement.gotoProjectWebSubmodule();
+  // === Project Work Order Materials Overview ===
+  await projectManagement.gotoProjectWorkOrderMaterialsOverview();
+  await projectManagement.gotoProjectWorkOrderMaterials();
+  await projectManagement.clickRegisterProjectWorkOrderMaterials();
 
-// Sub module: Standard Tasks Overview
-await projectManagement.gotoStandardsTasksOverview();
-await projectManagement.gotoProjectStandardTasks();
+  // === Project Standard Tasks Overview ===
+  await projectManagement.gotoProjectStandardTasksOverview();
+  await projectManagement.gotoProjectStandardTasks();
+  await projectManagement.clickRegisterProjectStandardTasks();
 
-// Sub module: Data Setup
-await projectManagement.gotoDataSetup();
-await projectManagement.gotoProjectGroups();
-await projectManagement.gotoTasksSets();
+  // === Data Setup ===
+  await projectManagement.gotoDataSetup();
+  await projectManagement.gotoProjectGroups();
+  await projectManagement.clickRegisterProjectGroups();
+  await projectManagement.gotoTaskSets();
+  await projectManagement.clickRegisterTaskSets();
 
-// Sub module: Configuration
-await projectManagement.gotoConfiguration();
-await projectManagement.gotoAccessConfigurations();
+  // === Configuration ===
+  await projectManagement.gotoConfiguration();
+  await projectManagement.gotoAccessConfiguration();
 });
