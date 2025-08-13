@@ -1,7 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
 
-
 class ProjectManagement extends BasePage {
   constructor(page) {
     super(page);
@@ -17,7 +16,7 @@ class ProjectManagement extends BasePage {
     this.ProjectContractsOverview ="div[aria-label='Project contracts overview Process step']";
     this.CostsAndResourceUsage = "div[aria-label='Costs and resource usage Process step']";
     this.ProjectWeb = "div[aria-label='Project web Process step']";
-    this.StandarsTasksOverview = "div[aria-label='Standard tasks overview Process step']";
+    this.StandardTasksOverview = "div[aria-label='Standard tasks overview Process step']"; // Fixed: was StandarsTasksOverview
     this.DataSetup = "div[aria-label='Data setup Process step']";
     this.Configuration = "div[aria-label='Configuration Process step']";
 
@@ -27,7 +26,7 @@ class ProjectManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Projects Overview )
     this.Projects = "div[aria-label='Projects Process step item']";
-    this.AnnualBudgetForProjects = "div[aria-label='Annual budgets for projects Process step item']";
+    this.AnnualBudgetsForProjects = "div[aria-label='Annual budgets for projects Process step item']";
     this.TaskPlanning = "div[aria-label='Task planning Process step item']";
     this.TaskManagement = "div[aria-label='Task management Process step item']";
     this.ProjectAnnualTaskBudgets = "div[aria-label='Project annual task budgets Process step item']";
@@ -40,9 +39,9 @@ class ProjectManagement extends BasePage {
     this.ProjectAssessments = "div[aria-label='Project assessments Process step item']";
     this.ProjectChangeManagement = "div[aria-label='Project change management Process step item']";
 
-    // Sub Types locators ( Sub module : Project Contrcats Overview )
-    this.ProjectContrcats = "div[aria-label='Project contracts Process step item']";
-    this.ProjectContrcatPayments = "div[aria-label='Project contract payments Process step item']";
+    // Sub Types locators ( Sub module : Project Contracts Overview )
+    this.ProjectContracts = "div[aria-label='Project contracts Process step item']"; // Fixed: was ProjectContrcats
+    this.ProjectContractPayments = "div[aria-label='Project contract payments Process step item']"; // Fixed: was ProjectContrcatPayments
 
     // Sub Types locators ( Sub module : Costs and Resource Usage )
     this.ElectronicInvoices = "div[aria-label='Electronic invoices Process step item']";
@@ -55,14 +54,14 @@ class ProjectManagement extends BasePage {
      this.ProjectTreeWithDocuments = "div[aria-label='Project tree with documents Process step item']";
      this.ProjectWebSubmodule = "div[aria-label='Project web Process step item']";
 
-     // Sub Types locators ( Sub module : Standar Tasks Overview )
+     // Sub Types locators ( Sub module : Standard Tasks Overview )
      this.ProjectStandardTasks = "div[aria-label='Project standard tasks Process step item']";
 
      // Sub Types locators ( Sub module : Data Setup )
      this.ProjectGroups = "div[aria-label='Project groups Process step item']";
-     this.TasksSets = "div[aria-label='Task sets Process step item']";
+     this.TaskSets = "div[aria-label='Task sets Process step item']"; // Fixed: was TasksSets
 
-     // Sub Types locators ( Sub module : Configuarion )
+     // Sub Types locators ( Sub module : Configuration )
      this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
 
      //Add new data locators
@@ -108,9 +107,9 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.ProjectWeb).click();
   }
 
-   async gotoStandardsTasksOverview() {
-     await this.page.locator(this.StandarsTasksOverview).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.StandarsTasksOverview).click();
+   async gotoStandardTasksOverview() { // Fixed: was gotoStandardsTasksOverview
+     await this.page.locator(this.StandardTasksOverview).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.StandardTasksOverview).click();
   }
 
    async gotoDataSetup() {
@@ -141,9 +140,9 @@ class ProjectManagement extends BasePage {
     await this.page.locator(this.Projects).click();
   }
 
-  async gotoAnnualBudgetForProjects() {
-    await this.page.locator(this.AnnualBudgetForProjects).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.AnnualBudgetForProjects).click();
+  async gotoAnnualBudgetsForProjects() {
+    await this.page.locator(this.AnnualBudgetsForProjects).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.AnnualBudgetsForProjects).click();
   }
 
   async gotoTaskPlanning() {
@@ -192,15 +191,15 @@ class ProjectManagement extends BasePage {
     await this.page.locator(this.ProjectChangeManagement).click();
   }
 
-  // Navigate to sub types ( Sub module : Project Contrcats Overview  )
-  async gotoProjectContrcats() {
-    await this.page.locator(this.ProjectContrcats).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.ProjectContrcats).click();
+  // Navigate to sub types ( Sub module : Project Contracts Overview  )
+  async gotoProjectContracts() { // Fixed: was gotoProjectContrcats
+    await this.page.locator(this.ProjectContracts).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.ProjectContracts).click();
   }
 
-  async gotoProjectContrcatPayments() {
-    await this.page.locator(this.ProjectContrcatPayments).waitFor({ state: 'visible', timeout: 5000 });
-    await this.page.locator(this.ProjectContrcatPayments).click();
+  async gotoProjectContractPayments() { // Fixed: was gotoProjectContrcatPayments
+    await this.page.locator(this.ProjectContractPayments).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.ProjectContractPayments).click();
   }
 
    // Navigate to sub types ( Sub module : Costs and Resource Usage )
@@ -229,7 +228,6 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.Transactions).click();
    }
 
-
    // Navigate to sub types ( Sub module : Project Web  )
    async gotoProjectTreeWithDocuments() {
      await this.page.locator(this.ProjectTreeWithDocuments).waitFor({ state: 'visible', timeout: 5000 });
@@ -241,7 +239,7 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.ProjectWebSubmodule).click();
    }
 
-   // Navigate to sub types ( Sub module : Standar Tasks Overview )
+   // Navigate to sub types ( Sub module : Standard Tasks Overview )
    async gotoProjectStandardTasks() {
      await this.page.locator(this.ProjectStandardTasks).waitFor({ state: 'visible', timeout: 5000 });
      await this.page.locator(this.ProjectStandardTasks).click();
@@ -253,9 +251,9 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.ProjectGroups).click();
    }
 
-   async gotoTasksSets() {
-     await this.page.locator(this.TasksSets).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.TasksSets).click();
+   async gotoTaskSets() { // Fixed: was gotoTasksSets
+     await this.page.locator(this.TaskSets).waitFor({ state: 'visible', timeout: 5000 });
+     await this.page.locator(this.TaskSets).click();
    }
 
    // Navigate to sub types ( Sub module : Configuration )
@@ -264,8 +262,7 @@ class ProjectManagement extends BasePage {
      await this.page.locator(this.AccessConfigurations).click();
    }
 
-   // Add these methods to your ProjectManagement.js page object class
-
+   // Click register methods
     async clickRegisterMaintenanceIncidents(){
       await this.page.locator(this.Add).click();
       await this.page.locator(this.Close).click();
@@ -325,23 +322,6 @@ class ProjectManagement extends BasePage {
       await this.page.locator(this.Add).click();
       await this.page.locator(this.Close).click();
     }
-
-
-
 }
 
 module.exports = ProjectManagement;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

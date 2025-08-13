@@ -18,8 +18,9 @@ test('Test Navigation Project Management', async ({ page, context }) => {
   await homePage.gotoModuleMenu();
   await projectManagement.clickProjectManagement();
 
-  // === Maintenance Incidents Overview ===
-  await projectManagement.gotoMaintenanceIncidentsOverview();
+  // === Project Initiatives ===
+  await projectManagement.gotoProjectInitiatives();
+  await projectManagement.gotoPurchaseOrder();
   await projectManagement.gotoMaintenanceIncidents();
   await projectManagement.clickRegisterMaintenanceIncidents();
 
@@ -29,39 +30,45 @@ test('Test Navigation Project Management', async ({ page, context }) => {
   await projectManagement.clickRegisterProjects();
   await projectManagement.gotoAnnualBudgetsForProjects();
   await projectManagement.clickRegisterAnnualBudgetsForProjects();
-
-  // === Task Planning Overview ===
-  await projectManagement.gotoTaskPlanningOverview();
   await projectManagement.gotoTaskPlanning();
   await projectManagement.clickRegisterTaskPlanning();
-
-  // === Work Orders Overview ===
-  await projectManagement.gotoWorkOrdersOverview();
+  await projectManagement.gotoTaskManagement();
+  await projectManagement.gotoProjectAnnualTaskBudgets();
   await projectManagement.gotoWorkOrders();
   await projectManagement.clickRegisterWorkOrders();
-
-  // === Inspections Overview ===
-  await projectManagement.gotoInspectionsOverview();
   await projectManagement.gotoInspections();
   await projectManagement.clickRegisterInspections();
+  await projectManagement.gotoCheckItems();
+
+  // === Project Details ===
+  await projectManagement.gotoProjectDetails();
+  await projectManagement.gotoProjectOrganisations();
+  await projectManagement.gotoProjectAssessments();
+  await projectManagement.gotoProjectChangeManagement();
 
   // === Project Contracts Overview ===
   await projectManagement.gotoProjectContractsOverview();
-  await projectManagement.gotoProjectContracts();
+  await projectManagement.gotoProjectContracts(); // Fixed: was gotoProjectContrcats
   await projectManagement.clickRegisterProjectContracts();
+  await projectManagement.gotoProjectContractPayments(); // Fixed: was gotoProjectContrcatPayments
 
-  // === Work Order Costs Overview ===
-  await projectManagement.gotoWorkOrderCostsOverview();
+  // === Costs and Resource Usage ===
+  await projectManagement.gotoCostsAndResourceUsage();
+  await projectManagement.gotoElectronicInvoices();
   await projectManagement.gotoWorkOrderCosts();
   await projectManagement.clickRegisterWorkOrderCosts();
-
-  // === Project Work Order Materials Overview ===
-  await projectManagement.gotoProjectWorkOrderMaterialsOverview();
+  await projectManagement.gotoTimeRegistration();
   await projectManagement.gotoProjectWorkOrderMaterials();
   await projectManagement.clickRegisterProjectWorkOrderMaterials();
+  await projectManagement.gotoTransactions();
 
-  // === Project Standard Tasks Overview ===
-  await projectManagement.gotoProjectStandardTasksOverview();
+  // === Project Web ===
+  await projectManagement.gotoProjectWeb();
+  await projectManagement.gotoProjectTreeWithDocuments();
+  await projectManagement.gotoProjectWebSubmodule();
+
+  // === Standard Tasks Overview ===
+  await projectManagement.gotoStandardTasksOverview(); // Fixed: was gotoStandardsTasksOverview
   await projectManagement.gotoProjectStandardTasks();
   await projectManagement.clickRegisterProjectStandardTasks();
 
@@ -69,10 +76,10 @@ test('Test Navigation Project Management', async ({ page, context }) => {
   await projectManagement.gotoDataSetup();
   await projectManagement.gotoProjectGroups();
   await projectManagement.clickRegisterProjectGroups();
-  await projectManagement.gotoTaskSets();
+  await projectManagement.gotoTaskSets(); // Fixed: was gotoTasksSets
   await projectManagement.clickRegisterTaskSets();
 
   // === Configuration ===
   await projectManagement.gotoConfiguration();
-  await projectManagement.gotoAccessConfiguration();
+  await projectManagement.gotoAccessConfigurations();
 });
