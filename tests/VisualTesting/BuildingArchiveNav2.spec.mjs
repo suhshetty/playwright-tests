@@ -13,14 +13,16 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage', 'gotoModuleMenu', 'gotoRealProperties', 'gotoPropertyValuationsBuildings',
-  'gotoPropertyValuationParts', 'gotoRegisterBuildingComponents', 'gotoRegisterBuildingComponentsCCS',
-  'gotoFunctionalSystemsCCS', 'gotoTechnicalSystemsCCS', 'gotoComponentsCCS',
+  'gotoHomePage', 'gotoModuleMenu', 'clickBuildingArchive',
+  'gotoPropertyValuation', 'gotoRealProperties', 'clickRegisterRealProperties',
+  'gotoPropertyValuationsBuildings', 'clickRegisterPropertyValuationBuildings',
+  'gotoPropertyValuationParts', 'gotoBuildingSystems', 'gotoRegisterBuildingComponents',
+  'gotoRegisterBuildingComponentsCCS', 'gotoFunctionalSystemsCCS', 'clickRegisterFunctionalSystemsCCS',
+  'gotoTechnicalSystemsCCS', 'clickRegisterTechnicalSystemsCCS', 'gotoComponentsCCS', 'clickRegisterComponentsCCS',
   'gotoFunctionalSystems', 'gotoTechnicalSystems', 'gotoComponents',
-  'gotoDocumentationObjects', 'gotoProductData', 'gotoLocationProductData',
-  'gotoLocateSystems', 'gotoObjectLocations'
+  'gotoDocumentationObjects', 'clickRegisterDocumentationObjects', 'gotoProductData', 'clickRegisterProductData',
+  'gotoLocationProductData', 'gotoLocationsOfObjects', 'gotoLocateSystems', 'gotoObjectLocations'
 ];
-
 
 // Run the test for each environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
@@ -38,22 +40,26 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickBuildingArchive', async () => {
     await buildingArchive.clickBuildingArchive();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
   });
 
-    await safeStep('gotoPropertyValuation', async () => {
+  await safeStep('gotoPropertyValuation', async () => {
     await buildingArchive.gotoPropertyValuation();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoPropertyValuation');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPropertyValuation');
   });
 
   await safeStep('gotoRealProperties', async () => {
     await buildingArchive.gotoRealProperties();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRealProperties');
+    await buildingArchive.clickRegisterRealProperties();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterRealProperties');
   });
 
   await safeStep('gotoPropertyValuationsBuildings', async () => {
     await buildingArchive.gotoPropertyValuationsBuildings();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPropertyValuationsBuildings');
+    await buildingArchive.clickRegisterPropertyValuationBuildings();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPropertyValuationBuildings');
   });
 
   await safeStep('gotoPropertyValuationParts', async () => {
@@ -63,7 +69,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoBuildingSystems', async () => {
     await buildingArchive.gotoBuildingSystems();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSystems');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSystems');
   });
 
   await safeStep('gotoRegisterBuildingComponents', async () => {
@@ -79,16 +85,22 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoFunctionalSystemsCCS', async () => {
     await buildingArchive.gotoFunctionalSystemsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystemsCCS');
+    await buildingArchive.clickRegisterFunctionalSystemsCCS();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFunctionalSystemsCCS');
   });
 
   await safeStep('gotoTechnicalSystemsCCS', async () => {
     await buildingArchive.gotoTechnicalSystemsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemsCCS');
+    await buildingArchive.clickRegisterTechnicalSystemsCCS();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTechnicalSystemsCCS');
   });
 
   await safeStep('gotoComponentsCCS', async () => {
     await buildingArchive.gotoComponentsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponentsCCS');
+    await buildingArchive.clickRegisterComponentsCCS();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterComponentsCCS');
   });
 
   await safeStep('gotoFunctionalSystems', async () => {
@@ -109,11 +121,15 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoDocumentationObjects', async () => {
     await buildingArchive.gotoDocumentationObjects();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentationObjects');
+    await buildingArchive.clickRegisterDocumentationObjects();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterDocumentationObjects');
   });
 
   await safeStep('gotoProductData', async () => {
     await buildingArchive.gotoProductData();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
+    await buildingArchive.clickRegisterProductData();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProductData');
   });
 
   await safeStep('gotoLocationProductData', async () => {
@@ -123,7 +139,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoLocationsOfObjects', async () => {
     await buildingArchive.gotoLocationsOfObjects();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocationsOfObjects');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocationsOfObjects');
   });
 
   await safeStep('gotoLocateSystems', async () => {
@@ -135,13 +151,10 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await buildingArchive.gotoObjectLocations();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectLocations');
   });
-
-
-} 
-
+};
 
 // Main test entry point
-test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
+test('Visual Regression Test - Building Archive 2: Compare url1 and url2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 
   await page.context().clearCookies();

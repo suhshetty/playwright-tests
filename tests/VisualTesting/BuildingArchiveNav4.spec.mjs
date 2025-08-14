@@ -13,11 +13,14 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage', 'gotoModuleMenu', 'gotoQRBarCodes', 'gotoObjectInformation',
-  'gotoTechnicalInformation', 'gotoObjectColors', 'gotoObjectExternalReferences',
-  'gotoMaterials', 'gotoMaster', 'gotoStructureTemplateManagement', 'gotoStructureTemplates',
-  'gotoObjectTypeThemes', 'gotoCCSStandard', 'gotoSfbStandard', 'gotoObjectTypes',
-  'gotoObjectSubTypes', 'gotoConfiguration'
+  'gotoHomePage', 'gotoModuleMenu', 'clickBuildingArchive', 'gotoTechnicalData',
+  'gotoQRBarCodes', 'clickRegisterQRBarCodes', 'gotoObjectInformation', 'clickRegisterObjectInformation',
+  'gotoTechnicalInformation', 'clickRegisterTechnicalInformation', 'gotoObjectColors', 
+  'gotoObjectExternalReferences', 'clickRegisterObjectExternalReferences',
+  'gotoMaterials', 'clickRegisterMaterials', 'gotoClassificationSystems', 'gotoMaster', 
+  'gotoStructureTemplateManagement', 'gotoStructureTemplates', 'clickRegisterStructureTemplates',
+  'gotoObjectTypeThemes', 'gotoCCSStandard', 'gotoSfbStandard', 'clickRegisterSfBStandards', 
+  'gotoObjectTypes', 'gotoObjectSubTypes', 'gotoConfiguration'
 ];
 
 // Run the test for each environment
@@ -36,27 +39,33 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickBuildingArchive', async () => {
     await buildingArchive.clickBuildingArchive();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
   });
 
   await safeStep('gotoTechnicalData', async () => {
     await buildingArchive.gotoTechnicalData();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalData');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalData');
   });
 
   await safeStep('gotoQRBarCodes', async () => {
     await buildingArchive.gotoQRBarCodes();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQRBarCodes');
+    await buildingArchive.clickRegisterQRBarCodes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterQRBarCodes');
   });
 
   await safeStep('gotoObjectInformation', async () => {
     await buildingArchive.gotoObjectInformation();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectInformation');
+    await buildingArchive.clickRegisterObjectInformation();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterObjectInformation');
   });
 
   await safeStep('gotoTechnicalInformation', async () => {
     await buildingArchive.gotoTechnicalInformation();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformation');
+    await buildingArchive.clickRegisterTechnicalInformation();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTechnicalInformation');
   });
 
   await safeStep('gotoObjectColors', async () => {
@@ -67,16 +76,20 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoObjectExternalReferences', async () => {
     await buildingArchive.gotoObjectExternalReferences();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectExternalReferences');
+    await buildingArchive.clickRegisterObjectExternalReferences();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterObjectExternalReferences');
   });
 
   await safeStep('gotoMaterials', async () => {
     await buildingArchive.gotoMaterials();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaterials');
+    await buildingArchive.clickRegisterMaterials();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterMaterials');
   });
 
   await safeStep('gotoClassificationSystems', async () => {
     await buildingArchive.gotoClassificationSystems();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoClassificationSystems');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoClassificationSystems');
   });
 
   await safeStep('gotoMaster', async () => {
@@ -92,6 +105,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoStructureTemplates', async () => {
     await buildingArchive.gotoStructureTemplates();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStructureTemplates');
+    await buildingArchive.clickRegisterStructureTemplates();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterStructureTemplates');
   });
 
   await safeStep('gotoObjectTypeThemes', async () => {
@@ -107,6 +122,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoSfbStandard', async () => {
     await buildingArchive.gotoSfbStandard();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSfbStandard');
+    await buildingArchive.clickRegisterSfBStandards();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSfBStandards');
   });
 
   await safeStep('gotoObjectTypes', async () => {
@@ -123,11 +140,10 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await buildingArchive.gotoConfiguration();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
   });
-} 
-
+};
 
 // Main test entry point
-test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
+test('Visual Regression Test - Building Archive 4: Compare url1 and url2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 
   await page.context().clearCookies();

@@ -13,11 +13,13 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage', 'gotoModuleMenu', 'gotoInteractiveDrawingImports', 'gotoInteractiveDrawings',
-  'gotoDrawings', 'gotoReleaseItems', 'gotoLocateDrawingIcons', 'gotoDocumentLayouts',
-  'gotoBimProjects', 'gotoBIMModels', 'gotoBIMElements', 'gotoAttributeMapping',
+  'gotoHomePage', 'gotoModuleMenu', 'clickBuildingArchive',
+  'gotoInteractiveDrawingImport', 'gotoInteractiveDrawingImports', 'gotoInteractiveDrawings',
+  'gotoDrawings', 'gotoReleaseItems', 'clickRegisterReleaseItems', 'gotoLocateDrawingIcons', 
+  'gotoDocumentLayouts', 'clickRegisterDocumentLayouts',
+  'gotoBimProcessing', 'gotoBimProjects', 'gotoBIMModels', 'gotoBIMElements', 'gotoAttributeMapping',
   'gotoProcessingOfLocationElements', 'gotoProcessingOfSystemElements', 'gotoProductDataAgain',
-  'gotoRegisterSystemStructures', 'gotoPictures', 'gotoDrawingsAgain',
+  'gotoRegisterSystemStructures', 'gotoOMdocuments', 'gotoPictures', 'gotoDrawingsAgain',
   'gotoDocuments', 'gotoObjectDocuments', 'gotoStructureWithDocuments'
 ];
 
@@ -37,12 +39,12 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('clickBuildingArchive', async () => {
     await buildingArchive.clickBuildingArchive();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickBuildingArchive');
   });
 
   await safeStep('gotoInteractiveDrawingImport', async () => {
     await buildingArchive.gotoInteractiveDrawingImport();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoInteractiveDrawingImport');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInteractiveDrawingImport');
   });
 
   await safeStep('gotoInteractiveDrawingImports', async () => {
@@ -55,7 +57,6 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInteractiveDrawings');
   });
 
-
   await safeStep('gotoDrawings', async () => {
     await buildingArchive.gotoDrawings();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDrawings');
@@ -64,6 +65,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoReleaseItems', async () => {
     await buildingArchive.gotoReleaseItems();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoReleaseItems');
+    await buildingArchive.clickRegisterReleaseItems();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReleaseItems');
   });
 
   await safeStep('gotoLocateDrawingIcons', async () => {
@@ -74,11 +77,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoDocumentLayouts', async () => {
     await buildingArchive.gotoDocumentLayouts();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentLayouts');
+    await buildingArchive.clickRegisterDocumentLayouts();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterDocumentLayouts');
   });
 
   await safeStep('gotoBimProcessing', async () => {
     await buildingArchive.gotoBimProcessing();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoBimProcessing');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoBimProcessing');
   });
 
   await safeStep('gotoBimProjects', async () => {
@@ -123,7 +128,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoOMdocuments', async () => {
     await buildingArchive.gotoOMdocuments();
-    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoOMdocuments');
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoOMdocuments');
   });
 
   await safeStep('gotoPictures', async () => {
@@ -150,12 +155,10 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await buildingArchive.gotoStructureWithDocuments();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStructureWithDocuments');
   });
-
-  
-} 
+};
 
 // Main test entry point
-test('Visual Regression Test - Compare url1 and url2', async ({ page, context }) => {
+test('Visual Regression Test - Building Archive 3: Compare url1 and url2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 
   await page.context().clearCookies();
