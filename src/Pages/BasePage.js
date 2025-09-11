@@ -38,7 +38,48 @@ class BasePage {
   }
 
   // Reusable method for selecting from any searchable dropdown
-  async selectSearchableDropdown(containerSelector, searchInputSelector, optionsSelector, targetText) {
+// In BasePage.js - Add this new function alongside the existing one:
+async selectSearchableDropdownSimple(containerSelector, targetText) {
+    await this.page.locator(containerSelector).click();
+    await this.page.waitForTimeout(300);
+    
+    // Auto-detect search input - find the visible one
+    const searchInputs = this.page.locator('.select2-search__field');
+    const count = await searchInputs.count();
+    
+    for (let i = 0; i < count; i++) {
+        const input = searchInputs.nth(i);
+        if (await input.isVisible()) {
+            await input.fill(targetText);
+            break;
+        }
+    }
+    
+    await this.page.waitForTimeout(500);
+    
+    // Auto-detect options - look for visible dropdown results
+    const possibleSelectors = [
+        `ul[id*="TFTypeID-results"] li:has-text("${targetText}")`,
+        `ul[id*="select2-Modal3_TFSetID-results"] li:has-text("${targetText}")`,
+        `ul[id*="TFSetID-results"] li:has-text("${targetText}")`,
+        `ul[id*="results"] li:has-text("${targetText}")`,
+        `li:has-text("${targetText}")`,
+        `ul[id="select2-Modal3_TFSetID-results"] li:has-text("${targetText}")`
+    ];
+    
+    for (const selector of possibleSelectors) {
+        const option = this.page.locator(selector).first();
+        if (await option.count() > 0 && await option.isVisible()) {
+            await option.click();
+            return;
+        }
+    }
+    
+    throw new Error(`Option "${targetText}" not found in any dropdown`);
+}
+
+// select from a dropdown with 4 parameters
+async selectSearchableDropdown(containerSelector, searchInputSelector, optionsSelector, targetText) {
     await this.page.locator(containerSelector).click();
     await this.page.locator(searchInputSelector).fill(targetText);
 
@@ -46,9 +87,9 @@ class BasePage {
     await optionsLocator.first().waitFor({ state: 'visible', timeout: 5000 });
 
     await this.selectDropdownOptionByText(optionsLocator, targetText);
-  }
+}
 
-async selectDropdown(type, text = 'Enter Data') {
+async selectDropdown(type, targetText) {
   const searchInputSelector = '.select2-search__field';
   let containerSelector, optionsSelector;
 
@@ -72,7 +113,7 @@ async selectDropdown(type, text = 'Enter Data') {
       throw new Error(`Unknown dropdown type: "${type}"`);
   }
 
-  await this.selectSearchableDropdown(containerSelector, searchInputSelector, optionsSelector, text);
+  await this.selectSearchableDropdownSimple(containerSelector, targetText);
 }
 
 
