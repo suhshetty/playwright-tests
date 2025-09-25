@@ -21,22 +21,23 @@ test('EMM-3981.spec.js', async ({ page, context }) => {
     await documentManagement.gotoDocuments();
     await documentManagement.selectDropdown('site', 'Activity center');
     // await documentManagement.VerifyExtraDocumentSubtypesNotDisplayed();
-    // await documentManagement.OpenDocument();
+    await documentManagement.OpenDocument();
 
     // await documentManagement.OpenDocument();
     // await documentManagement.AddDocumentTypesAndSubtypes([
     //   'Brand - ABA inspektionsrapporter'
     // ]);
-    await documentManagement.OpenDocument();
+    //await documentManagement.OpenDocument();
     // await documentManagement.CreateDocumentType('Type3');
     // await documentManagement.CreateDocumentSubType('Type3', 'SubType3');
 
-    await documentManagement.AddExtraDocumentSubtypes([
-       'Type3 - SubType3', 
-       'Datablad - Motorventil'
-    ]); 
+    // await documentManagement.AddExtraDocumentSubtypes([
+    //     'Type3 - SubType3',
+    //     'AT - Rapport'
+    // ]);
 
-
+    //await documentManagement.FilterExtraSubTypeDocument('Type3',['Type3 - SubType3']); 
+    await documentManagement.SetMandatory();
 
 
 
@@ -45,6 +46,7 @@ test('EMM-3981.spec.js', async ({ page, context }) => {
     await page.screenshot({ path: 'screenshots/EMM-3981-failure.png', fullPage: true });
     throw error;
   }
-});
+}
+);
 
 
