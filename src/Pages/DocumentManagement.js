@@ -43,21 +43,34 @@ class DocumentManagement extends BasePage {
     this.ExtraDocumentSubtypes_List = "ul[id='select2-Modal1_TFDocumentSubtypeSelection-results']";
     this.DocumentTypeDropdown = "span[id='select2-Modal1_TFTypeID-container']";
     this.DocumentSubtypeDropdown = "span[id='select2-Modal1_TFSubtypeID-container']";
-    this.CreateDocumentType_Name = "input[title='Name [Module key: Name]']";
+    this.InputName = "input[title='Name [Module key: Name]']";
     this.DocumentTypeOpenActionMenu = "//div[starts-with(@title, 'Document type:')]//button[@aria-label='Open action menu' and contains(@onclick, 'Modal1_TFTypeID')]";
-    this.CreateDocumentSubType_Name = "input[title='Name [Module key: Name]']";
+    //this.CreateDocumentSubType_Name = "input[title='Name [Module key: Name]']";
     this.DocumentSubTypeOpenActionMenu = "//div[starts-with(@title, 'Document subtype:')]//button[@aria-label='Open action menu' and contains(@onclick, 'Modal1_TFSubtypeID')]";
     this.ClickShowDataInPopup ="a[title='Show data in popup list - ShowDataInPopupList']";
+    this.ClickOpenDocumentType = "a[title='Open document type']";
+    this.ClickOpenDocumentSubType = "a[title = 'Open document subtype']";
+   // this.ClickOpenDocumentType_Name = "input[title='Name [Module key: Name]']";
     this.documentSave = "button[id='Modal3SaveNav']";
     this.ClickOK = "//button[text()='OK']";
     this.CreateDocumentSubType_Parent="span[id='select2-Modal3_TFSetID-container']";
     this.SubTypeOnDocument = "//a[@href='#SubtypeOnDocument_1']";
-    this.table = '#MMListCol-41423594966981';
+    this.mainTable = "(//th[@title='Extra document subtypes'])[1]";
+    this.table = '[id^="MMListCol-"][id*="-"]:not([id*="Document"])';
     this.EditFormButton = "//span[@id='editModalButton']";
     this.DataModelButton = "//button[@id='EditModeDataModelBtn1']";
-    this.RequiredExtraDocumentSubtypeIcon = "//i[@id='Modal1_DocumentSubtypeSelection_required_icon']";
-    this.MandatoryErrorMessage = "//div[@id='m_form_2_msg']";
+    this.RequiredExtraDocumentSubtypeIcon_Click = "//i[@id='Modal1_DocumentSubtypeSelection_required_icon']";
+    this.RequiredExtraDocumentSubtypeIcon = "//i[@id='Modal1_DocumentSubtypeSelection_required_icon' and @class='far fa-exclamation-circle']";
 
+    this.MandatoryErrorMessage = "//div[@id='m_form_2_msg']";
+    this.SelectAllCheckbox = "(//table[contains(@class,'table-checkable')]//th[contains(@class,'dt-checkbox')]//span[not(@class)])[2]";
+    this.DeleteButton = "(//button[@title='Deletes selected records - Delete'])[2]";
+    this.ExecuteButton = "//button[@id='Modal2SaveNav']";
+    this.OK = "//button[normalize-space(text())='OK']";
+    this.GeneralButton = "";
+    
+
+    
 
     //Filter options
     this.FilterButton = "//button[@title='Filter (alt+f)']";
@@ -66,23 +79,18 @@ class DocumentManagement extends BasePage {
     this.Filter_ExtraDocumentSubtypesList = "ul[id='select2-DataFilter_TFDocumentSubtypeSelection-results']";
     this.CloseFilterButton= "//button[@title='Clear filter']";
 
-    //Export to excel
-    this.ExportButton = "//button[@title='This action exports data - ExportData']";
-    this.ExecuteButton = "//button[@id='Modal1SaveNav']";
 
-
-
-
-    
 
 
     // Register, Add ,Close, Save & Export Operations
     this.RegisterDocumentButton = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
     this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
+    this.Add2 = "(//button[@id='newRecordButton'])[2]";
+    this.Close1 = "i[title='Close window (alt+x)']";
     //the second pop up form - when two forms are open
     this.Close2 =  "(//i[@title='Close window (alt+x)'])[2]";
     this.Save = "button[id='Modal1SaveNav']";
+    this.Save2= "button[id='Modal2SaveNav']";
     this.SaveDropdown = "div[aria-label='Toggle save dropdown']";
     this.SaveAndContinue = "(//a[@title='Apply and continue editing.'])[2]";
     this.Export = "button[aria-label='This action exports data - ExportData']";
@@ -170,6 +178,11 @@ class DocumentManagement extends BasePage {
     await this.page.waitForTimeout(1000);
   }
 
+  async Close(){
+  await this.page.waitForTimeout(1000);
+  await this.page.locator(this.Close1).click();
+}
+
   //T303 - Verify that the new field "Extra document subtypes" is not displayed under "Documents" during the add process.
   async VerifyExtraDocumentSubtypesNotDisplayed() {
     //Click on Register button
@@ -182,7 +195,7 @@ class DocumentManagement extends BasePage {
     } else {
       console.log('Extra document subtypes field is displayed.');
     }
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.Close1).click();
   }
   async OpenDocument(){
     await this.page.locator(this.OpenDocumentButton).click();
@@ -190,37 +203,20 @@ class DocumentManagement extends BasePage {
     await this.page.locator(this.ExtraDocumentSubtypes_Title).waitFor({ state: 'visible' });
 
   }
-// async AddExtraDocumentSubtypes(typesToSelect) {
-//   console.log(`🔍 Adding Extra Document Subtypes: ${JSON.stringify(typesToSelect)}`);
-  
-//   await this.page.locator(this.ExtraDocumentSubtypes_Title).waitFor({ state: 'visible', timeout: 10000 });
-  
-//   for (const types of typesToSelect) {
-//     console.log(`🔍 Processing: "${types}"`);
-    
-//     // Click the textbox to open dropdown (no typing)
-//     await this.page.locator(this.ExtraDocumentSubtypes_textbox).click();
-//     await this.page.waitForTimeout(1000); // Wait for dropdown to load
-    
-//     // Wait for the dropdown list to appear
-//     await this.page.locator(this.ExtraDocumentSubtypes_List).waitFor({ state: 'visible', timeout: 3000 });
-    
-//     // Look for the option in the dropdown and click it directly
-//     const option = this.page.locator(`${this.ExtraDocumentSubtypes_List} li:has-text("${types}")`).first();
-//     if (await option.count() > 0 && await option.isVisible()) {
-//       await option.click();
-//       console.log(`✅ Found and clicked: "${types}"`);
-//     } else {
-//       console.log(`❌ Option "${types}" not found in dropdown`);
-//     }
-    
-//     await this.page.waitForTimeout(500);
-//   }
+
 async AddExtraDocumentSubtypes(subtypesToSelect) {
   console.log(`🔍 Adding Extra Document Subtypes: ${JSON.stringify(subtypesToSelect)}`);
   
   // Check if title ExtraDocumentSubtypes is visible
+  await this.page.waitForTimeout(1000);
+
   await this.page.locator(this.ExtraDocumentSubtypes_Title).waitFor({ state: 'visible', timeout: 10000 });
+
+  await this.page.locator(this.ExtraDocumentSubtypes_textbox).click();
+  await this.page.waitForTimeout(1000);
+  await this.page.keyboard.press('Backspace');
+  await this.page.waitForTimeout(1000);
+  await this.page.locator(this.ExtraDocumentSubtypes_textbox).click();
   
   // Select each subtype
   for (const subtype of subtypesToSelect) {
@@ -234,6 +230,7 @@ async AddExtraDocumentSubtypes(subtypesToSelect) {
     await this.page.waitForTimeout(500);
     
     // Type the extracted type to filter the dropdown
+
     await this.page.keyboard.type(typeFilter);
     await this.page.waitForTimeout(500);
     
@@ -256,36 +253,6 @@ async AddExtraDocumentSubtypes(subtypesToSelect) {
   await this.page.locator(this.SaveDropdown).click();
   await this.page.locator(this.SaveAndContinue).click();
   await this.page.locator(this.ClickOK).click();
-
- // await this.page.locator(this.Close).click();
-
-
-
-   await this.page.locator(this.SubTypeOnDocument).click();
-  console.log(`🔍 Searching for Document Type: "${type1}" with Subtype: "${subtype1}"`);
-  
-  try {
-    // Find the row containing the document type and check if it has the expected subtype
-    const targetRow = this.page.locator(`${this.table} tr:has(td:has-text("${type1}"))`);
-
-    if (await targetRow.count() > 0) {
-      const subtypeCell = targetRow.locator('td').filter({ hasText: subtype1 });
-
-      if (await subtypeCell.count() > 0) {
-        console.log(`✅ Found Document Type "${type1}" with Subtype "${subtype1}"`);
-        return true;
-      } else {
-        console.log(`❌ Found Document Type "${type1}" but Subtype "${subtype1}" not found`);
-        return false;
-      }
-    } else {
-      console.log(`❌ Document Type "${type1}" not found in table`);
-      return false;
-    }
-  } catch (error) {
-    console.log(`❌ Error: ${error.message}`);
-    return false;
-  }
 
 }
 
@@ -315,11 +282,11 @@ async selectDocumentType(documentType) {
 async selectDocumentSubtype(documentSubtype) {
   try {
     await this.page.locator(this.DocumentSubtypeDropdown).click();
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     
     // Just type directly - the active dropdown will receive the text
     await this.page.keyboard.type(documentSubtype);
-    await this.page.waitForTimeout(500);
+    await this.page.waitForTimeout(1000);
     
     const option = this.page.locator(`ul[id*="select2-Modal1_TFSubtypeID-results"] li:has-text("${documentSubtype}")`).first();
     await option.waitFor({ state: 'visible', timeout: 3000 });
@@ -335,6 +302,8 @@ async selectDocumentSubtype(documentSubtype) {
 }
 
 async AddDocumentTypesAndSubtypes(typeSubtypePairs) {
+  await this.OpenDocument();
+
 
   for (const pair of typeSubtypePairs) {
     const [type, subtype] = pair.split(' - ');
@@ -349,18 +318,19 @@ async AddDocumentTypesAndSubtypes(typeSubtypePairs) {
   }
 
   await this.page.locator(this.Save).click();
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close1).click();
 }
   
 async CreateDocumentType(documentType){
+    await this.OpenDocument();
     await this.page.locator(this.DocumentTypeOpenActionMenu).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.DocumentTypeOpenActionMenu).click();
     await this.page.locator(this.ClickShowDataInPopup).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.ClickShowDataInPopup).click();
-    await this.page.locator(this.Add).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Add).click();
-    await this.page.locator(this.CreateDocumentType_Name).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.CreateDocumentType_Name).fill(documentType);
+    await this.page.locator(this.Add2).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Add2).click();
+    await this.page.locator(this.InputName).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.InputName).fill(documentType);
     await this.page.locator(this.documentSave).click();
     await this.page.locator(this.ClickOK).click();
     await this.page.locator(this.Close2).waitFor({ state: 'visible', timeout: 10000 });
@@ -368,17 +338,20 @@ async CreateDocumentType(documentType){
 }
 
 async CreateDocumentSubType(documentType, documentSubType){
+    await this.page.waitForTimeout(1000);
     await this.page.locator(this.DocumentSubTypeOpenActionMenu).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.DocumentSubTypeOpenActionMenu).click();
     await this.page.locator(this.ClickShowDataInPopup).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.ClickShowDataInPopup).click();
-    await this.page.locator(this.Add).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Add).click();
+    await this.page.locator(this.Add2).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Add2).click();
 
 
         // Basic approach - Click dropdown and type
     await this.page.locator(this.CreateDocumentSubType_Parent).click();
     await this.page.waitForTimeout(500);
+
+
     
     // Type the document type in the search box
     await this.page.keyboard.type(documentType);
@@ -391,21 +364,28 @@ async CreateDocumentSubType(documentType, documentSubType){
 
     ////await this.page.locator(this.selectSearchableDropdownSimple(this.CreateDocumentSubType_Parent, documentType));
 
-    await this.page.locator(this.CreateDocumentSubType_Name).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.CreateDocumentSubType_Name).fill(documentSubType);
+    await this.page.locator(this.InputName).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.InputName).fill(documentSubType);
 
     await this.page.locator(this.documentSave).click();
     await this.page.locator(this.ClickOK).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.ClickOK).click();
-    await this.page.locator(this.Close2).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.waitForTimeout(1000);
     await this.page.locator(this.Close2).click();
-    await this.page.locator(this.Close2).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Close2).click();
+    await this.page.waitForTimeout(2000);
+ 
+    console.log("End of method 1");
+    await this.page.locator(this.Close1).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Close1).click();
+
+
 
 }
 
 async FilterExtraSubTypeDocument(type1, subtypesToSelect){
     await this.page.locator(this.FilterButton).click();
+    await this.page.waitForTimeout(1000);
+
     await this.page.locator(this.Filter_ExtraDocumentSubtypesTitle).waitFor({ state: 'visible', timeout: 10000 });
     
     for (const subtype of subtypesToSelect) {
@@ -413,7 +393,7 @@ async FilterExtraSubTypeDocument(type1, subtypesToSelect){
         
         // Click the filter textbox to open the dropdown
         await this.page.locator(this.Filter_ExtraDocumentSubtypesTextBox).click();
-        await this.page.waitForTimeout(500);
+        await this.page.waitForTimeout(1000);
         
         // Type the subtype to filter the dropdown
         await this.page.keyboard.type(type1);
@@ -425,49 +405,43 @@ async FilterExtraSubTypeDocument(type1, subtypesToSelect){
         await filterOption.click();
         
         console.log(`✅ Selected filter: "${subtype}"`);
-        await this.page.waitForTimeout(5000);
+        await this.page.waitForTimeout(2000);
     }
+
+     await this.page.locator(this.CloseFilterButton).click();
+    await this.page.waitForTimeout(1000);
+
+    await this.page.locator(this.FilterButton).click();
+
     
-    await this.page.locator(this.CloseFilterButton).click();
+
+}
+
+async VerifyExtraSubtypesInTable(expectedSubtypes) {
+  await this.OpenDocument();
+  await this.page.locator(this.SubTypeOnDocument).click();
+  await this.page.waitForTimeout(2000);
+  
+  const tableText = await this.page.locator(this.table).textContent();
+  
+  for (const subtype of expectedSubtypes) {
+    const [type, sub] = subtype.split(' - ');
+    const hasType = tableText.includes(type);
+    const hasSub = tableText.includes(sub);
+    
+    console.log(`${hasType && hasSub ? '✅' : '❌'} ${type} - ${sub}: Type=${hasType}, Sub=${hasSub}`);
+    
+    if (!hasType || !hasSub) return false;
+  }
+
+  await this.page.locator(this.Close1).click();
+  return true;
 }
 
 
 
-// async SelectAndDeleteExtraSubTypeDocument(page, tableSelector, col1Index, data1, col2Index, data2){
-//   // Locate the table
-//   const table = page.locator(tableSelector);
-
-//   // Get all rows inside the table
-//   const rows = table.locator("tr");
-//   const rowCount = await rows.count();
-
-//   for (let i = 0; i < rowCount; i++) {
-//     const row = rows.nth(i);
-
-//     // Get all columns for the row
-//     const cols = row.locator("td");
-//     const colCount = await cols.count();
-
-//     if (colCount >= Math.max(col1Index, col2Index)) {
-//       const col1Text = (await cols.nth(col1Index - 1).innerText()).trim();
-//       const col2Text = (await cols.nth(col2Index - 1).innerText()).trim();
-
-//       if (col1Text === data1 && col2Text === data2) {
-//         console.log(`✅ Found matching row ${i + 1} → col${col1Index}="${data1}", col${col2Index}="${data2}"`);
-//         return row; // Return the matching row locator
-//       }
-//     }
-//   }
-
-//   console.log(`❌ No row found with col${col1Index}="${data1}" and col${col2Index}="${data2}"`);
-//   return null;
-// }
-
-
-
 async SetMandatory(){
-  await this.page.locator(this.OpenDocumentButton).click();
-  await this.page.waitForTimeout(2000);
+  await this.OpenDocument();
   await this.page.locator(this.EditFormButton).click();
   await this.page.waitForTimeout(2000);
   await this.page.locator(this.DataModelButton).click();
@@ -478,10 +452,10 @@ async SetMandatory(){
   }
   else {
     console.log('❌ Extra Document Subtype is NOT set to Mandatory.');
-    await this.page.locator(this.RequiredExtraDocumentSubtypeIcon).click();
+    await this.page.locator(this.RequiredExtraDocumentSubtypeIcon_Click).click();
   }
 
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close1).click();
 
     await this.page.locator(this.OpenDocumentButton).click();
     await this.page.waitForTimeout(2000);
@@ -504,62 +478,100 @@ async SetMandatory(){
   } else {
     console.log('❌ Mandatory error message NOT displayed when expected.');
   }
-  await this.page.locator(this.Close).click();
-
+  await this.page.locator(this.Close1).click();
 }
 
 
-async ExportAndVerifyInExcel() {
-  console.log('🔍 Exporting data and checking for "Extra document subtypes" column');
+
+//Verify that updates in Document type and Document subtype are reflected correctly in "Extra document subtypes"
+async UpdateDocumentTypeAndDocumentSubtype(oldtypesubtype1, oldtypesubtype2, newtypesubtype, newtype, newsubtype){  
+  // Step 1: Create/Add the old document types and subtypes
+  //await this.OpenDocument();
+  await this.page.waitForTimeout(2000);
   
-  try {
-    // Start waiting for download before clicking export
-    const downloadPromise = this.page.waitForEvent('download');
-    
-    // Click export button to trigger download
-    await this.page.locator(this.ExportButton).click();
-    await this.page.locator(this.ExecuteButton).click();
-    
-    // Wait for the download to complete
-    const download = await downloadPromise;
-    
-    // Get the downloaded file path
-    const filePath = await download.path();
-    console.log(`📁 Downloaded file path: ${filePath}`);
-    
-    // Now check the Excel file
-    return await this.checkExcelForExtraDocumentSubtypesColumn(filePath);
-    
-  } catch (error) {
-    console.log(`❌ Error in export and verify process: ${error.message}`);
-    return { found: false, error: error.message };
-  }
+  await this.AddDocumentTypesAndSubtypes([oldtypesubtype1]);
+ // await this.page.locator(this.Close).click(); // Close the document
+  await this.page.waitForTimeout(2000);
+
+  
+  // Step 2: Add Extra Document Subtypes with old values
+  await this.OpenDocument();
+  await this.AddExtraDocumentSubtypes([oldtypesubtype1, oldtypesubtype2]);
+  //await this.page.locator(this.Close).click(); // Close the document
+
+  // Step 3: Update Document Type
+  console.log(`📝 Updating Document Type to: "${newtype}"`);
+  await this.page.locator(this.DocumentTypeOpenActionMenu).waitFor({ state: 'visible', timeout: 10000 });
+  await this.page.locator(this.DocumentTypeOpenActionMenu).click();
+  await this.page.locator(this.ClickOpenDocumentType).click();
+  
+  // Clear existing text and type new type name
+  await this.page.locator(this.InputName).click();
+  await this.page.waitForTimeout(2000);
+
+  await this.page.keyboard.press('Control+A');
+  await this.page.keyboard.press('Delete');
+  await this.page.keyboard.type(newtype);
+  
+  await this.page.locator(this.Save2).click();
+  await this.page.waitForTimeout(1000);
+  await this.page.locator(this.ClickOK).click();
+  
+  // Step 4: Update Document Subtype  
+  console.log(`📝 Updating Document Subtype to: "${newsubtype}"`);
+  await this.page.locator(this.DocumentSubTypeOpenActionMenu).waitFor({ state: 'visible', timeout: 10000 });
+  await this.page.locator(this.DocumentSubTypeOpenActionMenu).click();
+  await this.page.locator(this.ClickOpenDocumentSubType).click();
+  
+  // Clear existing text and type new subtype name
+  await this.page.locator(this.InputName).click();
+  await this.page.keyboard.press('Control+A');
+  await this.page.keyboard.press('Delete');
+  await this.page.keyboard.type(newsubtype);
+  
+  await this.page.locator(this.Save2).click();
+  await this.page.waitForTimeout(1000);
+
+  await this.page.locator(this.ClickOK).click();
+  await this.page.locator(this.Close1).click();
+
+  
+
 }
 
-async checkExcelForExtraDocumentSubtypesColumn(filePath) {
-  try {
-    const ExcelJS = require('exceljs');
-    const workbook = new ExcelJS.Workbook();
-    await workbook.xlsx.readFile(filePath);
-    
-    const headerRow = workbook.getWorksheet(1).getRow(1);
-    let columnIndex = -1;
-    
-    headerRow.eachCell((cell, colNumber) => {
-      if (cell.value?.toString().toLowerCase().includes('extra document subtypes')) {
-        columnIndex = colNumber;
-      }
-    });
-    
-    const found = columnIndex !== -1;
-    console.log(`${found ? '✅' : '❌'} Extra document subtypes column ${found ? 'found at column ' + columnIndex : 'not found'}`);
-    
-    return { found, columnIndex };
-  } catch (error) {
-    console.log(`❌ Error reading Excel: ${error.message}`);
-    return { found: false, error: error.message };
-  }
+//Verify that valid data is displayed when “Extra document subtypes” is added as a column in the UI.
+async VerifyExtraDocumentSubtypesColumn() {
+  //await this.page.locator(this.SubTypeOnDocument).click();
+  await this.page.waitForTimeout(5000);
+  
+  const isPresent = await this.page.locator(this.mainTable).isVisible();
+  console.log(`📊 Main Table present: ${isPresent}`);
+  
+  return isPresent;
 }
+
+
+async DeleteExtraDocumentSubtype(subtype)
+{
+  await this.OpenDocument();
+  await this.page.waitForTimeout(1000);
+  await this.page.locator(this.SubTypeOnDocument).click();
+  await this.page.waitForTimeout(1000);
+
+  await this.page.locator(this.SelectAllCheckbox).click();
+  await this.page.waitForTimeout(2000);
+  
+  await this.page.locator(this.DeleteButton).click();
+  await this.page.locator(this.ExecuteButton).click();
+  await this.page.locator(this.OK).click();
+  await this.page.locator(this.OK).click();
+  await this.page.locator(this.Close2).click();
+
+  //await this.selectDocumentSubtype(subtype);
+  await this.page.locator(this.Close1).click();
+
+}
+
 
 
 }

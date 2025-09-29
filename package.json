@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "dotenv": "^17.2.0",
+    "exceljs": "^4.4.0",
     "pixelmatch": "^7.1.0"
   }
 }
