@@ -24,56 +24,177 @@ test('Test Navigation Fire Safety Management', async ({ page, context }) => {
 
   // === Responsible Resources ===
   await fireSafetyManagement.gotoResponsibleResources();
+
   await fireSafetyManagement.gotoServicePartners();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoServicePartnerManagementFireSafety();
+
   await fireSafetyManagement.gotoPersonPermitFireSafety();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
 
   // === Technical Documentation ===
   await fireSafetyManagement.gotoTechnicalDocumentation();
+
   await fireSafetyManagement.gotoFireSafetyDocument();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoFireSafetyDocumentTree();
+
   await fireSafetyManagement.gotoFlammableAndPressurizedMaterial();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoFireSafetyZone();
 
   // === Object Marking ===
   await fireSafetyManagement.gotoObjectMarking();
+
   await fireSafetyManagement.gotoTechnicalSystemFireSafety();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoCSSTechnicalSystemFireSafety();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoThemeMarking();
 
   // === Activities ===
   await fireSafetyManagement.gotoActivities();
+  
   await fireSafetyManagement.gotoTaskManagementFireSafety();
+
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoWorkOrderFireSafety();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoChecklistsFireSafety();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoIncidentFireSafety();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
 
   // === Activities (Local) ===
   await fireSafetyManagement.gotoActivitiesLocal();
+
   await fireSafetyManagement.gotoTaskManagementFireSafetyLocal();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoWorkOrderFireSafetyLocal();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoChecklistsFireSafetyLocal();
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoIncidentFireSafetyLocal();
+      await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+    await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
 
   // === Activities (Customer) ===
   await fireSafetyManagement.gotoActivitiesCustomer();
+
   await fireSafetyManagement.gotoTaskManagementFireSafetyCustomer();
+      await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoWorkOrderFireSafetyCustomer();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoChecklistsFireSafetyCustomer();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoIncidentFireSafetyCustomer();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
 
   // === Requirements and Guidelines ===
   await fireSafetyManagement.gotoRequirementsAndGuidelines();
+
   await fireSafetyManagement.gotoLinksToLawsAndRegulation();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoInstructionsAndGuidelines();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoLocalRegulations();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
 
   // === Data Setup ===
   await fireSafetyManagement.gotoDataSetup();
+
   await fireSafetyManagement.gotoDocumentTypes();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
   await fireSafetyManagement.gotoServiceTypes();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoMaterialTypes();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+
+
   await fireSafetyManagement.gotoPermitFireSafety();
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Add);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Export);
+  await fireSafetyManagement.clickElement(fireSafetyManagement.Close);
 
   // === Configuration ===
   await fireSafetyManagement.gotoConfiguration();

@@ -32,7 +32,7 @@ class UniversalDesign extends BasePage {
     this.UniversalDesignDocumentTypes = "div[aria-label='Universal design document tree Process step item']";
 
     // Sub Types locators ( Sub module : Object Marking )
-    this.TechnicalSystem = "div[aria-label='Technical system (Uni=versal Design) Process step item']";
+    this.TechnicalSystem = "div[aria-label='Technical system (Universal Design) Process step item']";
     this.CCSTechnicalSystem = "div[aria-label='CCS Technical system (Universal Design) Process step item']";
     this.ThemeMarking = "div[aria-label='Theme markings Process step item']";
 

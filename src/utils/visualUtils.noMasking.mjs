@@ -22,14 +22,21 @@ export function initializeVisualTestEnv() {
   console.log('Environment variables loaded');
   console.log('URL1:', process.env.URL1);
   console.log('URL2:', process.env.URL2);
-} 
+
+  // Ensure base dirs exist
+  const url1Dir = path.join(screenshotsDir, 'url1');
+  const url2Dir = path.join(screenshotsDir, 'url2');
+  if (!fs.existsSync(url1Dir)) fs.mkdirSync(url1Dir, { recursive: true });
+  if (!fs.existsSync(url2Dir)) fs.mkdirSync(url2Dir, { recursive: true });
+}
 
 // Safe wrapper for test steps
 export async function safeStep(stepName, fn) {
   try {
     await fn();
   } catch (error) {
-    console.warn(`Step "${stepName}" failed:`, error.message);
+    console.error(`Step "${stepName}" failed:`, error.message);
+    throw error; // fail fast so missing screenshots don't cascade
   }
 }
 
@@ -60,9 +67,18 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   }
 
   try {
+    // Wait for stable header (like masking version)
+    const header = page.locator('#m_header');
+    await header.waitFor({ state: 'visible', timeout: 10000 });
+
     await page.waitForTimeout(2000);
+
     const filePath = path.join(dir, `${label}.png`);
     await page.screenshot({ path: filePath, fullPage: true });
+
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Screenshot not created: ${filePath}`);
+    }
 
     const size = fs.statSync(filePath).size;
     if (size < 10000) {
@@ -72,6 +88,7 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
     console.log(`Screenshot saved: ${filePath}`);
   } catch (error) {
     console.error(`Error capturing screenshot for ${env}/${label}:`, error.message);
+    throw error;
   }
 }
 
@@ -79,6 +96,13 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
 export function compareScreenshots(label) {
   const img1Path = path.join(screenshotsDir, 'url1', `${label}.png`);
   const img2Path = path.join(screenshotsDir, 'url2', `${label}.png`);
+
+  if (!fs.existsSync(img1Path)) {
+    throw new Error(`Missing baseline screenshot: ${img1Path}`);
+  }
+  if (!fs.existsSync(img2Path)) {
+    throw new Error(`Missing comparison screenshot: ${img2Path}`);
+  }
 
   const img1 = PNG.sync.read(fs.readFileSync(img1Path));
   const img2 = PNG.sync.read(fs.readFileSync(img2Path));

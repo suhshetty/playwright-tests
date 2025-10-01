@@ -55,6 +55,11 @@ class EnvironmentalManagement extends BasePage {
 
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
+
+    // Add ,Close & Export Operations
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+    this.Export = "button[aria-label='This action exports data - ExportData']";
   }
 
   async gotoEnvironmentalManagement() {

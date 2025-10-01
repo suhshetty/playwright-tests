@@ -16,12 +16,12 @@ class LoginPage extends BasePage {
     ];
     this.passwordSelectors = [
       '#lgnUserLogin_Password',
-      '#Password',
+      '#Password'
 
     ];
     this.loginBtnSelectors = [
       '#lgnUserLogin_Login',
-      'button[type="submit"]'
+      '//button[@type="submit" and normalize-space(text())="Sign in"]'
     ];
   }
 

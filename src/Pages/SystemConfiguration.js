@@ -60,6 +60,12 @@ class SystemConfiguration extends BasePage {
     this.CommonActions = "div[aria-label='Common actions Process step item']";
     this.MMTutorials = "div[aria-label='MM Tutorials Process step item']";
     this.MMTutorialSteps = "div[aria-label='MM Tutorial steps Process step item']";
+  
+
+    // Add ,Close & Export Operations
+    this.Add = "#newRecordButton"
+    this.Close = "i[title='Close window (alt+x)']";
+    this.Export = "button[aria-label='This action exports data - ExportData']";
   }
 
     async gotosystemConfiguration() {

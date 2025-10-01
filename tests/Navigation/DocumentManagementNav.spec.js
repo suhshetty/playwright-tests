@@ -23,17 +23,52 @@ await documentManagement.clickDocumentManagement();
 
 // DocumentOverview
 await documentManagement.gotoDocumentOverview();
+
 await documentManagement.gotoDocumentSearches();
+  await documentManagement.clickElement(documentManagement.Export);
+  await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoPictures();
+await spaceManagement.selectDropdown('site', 'ICECONSULT DANMARK ApS');
+await documentManagement.clickElement(documentManagement.MultiRegister);
+await documentManagement.clickElement(documentManagement.Close);
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoDrawings();
+await documentManagement.clickElement(documentManagement.MultiRegister);
+await documentManagement.clickElement(documentManagement.Close);
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoDocuments();
+await documentManagement.clickElement(documentManagement.MultiRegister);
+await documentManagement.clickElement(documentManagement.Close);
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoDocumentStack();
+await documentManagement.clickElement(documentManagement.MultiRegister);
+await documentManagement.clickElement(documentManagement.Close);
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
 
 // Manuals Overview
 await documentManagement.gotoManualsOverview();
+
 await documentManagement.gotoManualChapters();
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoManualDefinitions();
+await documentManagement.clickElement(documentManagement.Add);
+await documentManagement.clickElement(documentManagement.Close);
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
+
 await documentManagement.gotoManualSubscribers();
+await documentManagement.clickElement(documentManagement.Export);
+await documentManagement.clickElement(documentManagement.Close);
 
 // Configuration
 await documentManagement.gotoConfiguration();
