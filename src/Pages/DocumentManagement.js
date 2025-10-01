@@ -31,6 +31,7 @@ class DocumentManagement extends BasePage {
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfigurations = "div[aria-label='Access configurations Process step item']";
 
+<<<<<<< Updated upstream
     //Top bar - Site dropdown
     this.TopSite = "span[aria-label='select2-MainManFilter_TFGroundID-container']";
 
@@ -94,6 +95,18 @@ class DocumentManagement extends BasePage {
     this.SaveDropdown = "div[aria-label='Toggle save dropdown']";
     this.SaveAndContinue = "(//a[@title='Apply and continue editing.'])[2]";
     this.Export = "button[aria-label='This action exports data - ExportData']";
+=======
+    // Add ,Close & Export Operations
+    this.Add = "#newRecordButton"
+    
+    this.Close = [
+  "i[title='Close window (alt+x)']",
+  "i[title='Close window ()']"
+];
+    
+    this.Export = "button[aria-label='This action exports data - ExportData']";
+    this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
+>>>>>>> Stashed changes
   }
 
   async clickDocumentManagement() {
