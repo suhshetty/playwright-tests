@@ -67,4 +67,5 @@ test('EMM-4235 - Test Different Login Methods', async ({ page, context }) => {
     await page.screenshot({ path: 'screenshots/EMM-4235-failure.png', fullPage: true });
     throw error;
   }
-});
+}
+);
