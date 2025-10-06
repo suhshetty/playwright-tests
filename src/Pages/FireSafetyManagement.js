@@ -72,16 +72,10 @@ class FireSafetyManagement extends BasePage {
     // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
-<<<<<<< Updated upstream
-    //Add new data locators
-    this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
-=======
-   // Add ,Close & Export Operations
-    this.Add = "#newRecordButton"
+   // Add, Close & Export Operations
+    this.Add = "#newRecordButton";
     this.Close = "i[title='Close window (alt+x)']";
     this.Export = "button[aria-label='This action exports data - ExportData']";
->>>>>>> Stashed changes
   }
 
    async clickFireSafetyManagement() {
