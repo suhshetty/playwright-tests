@@ -27,7 +27,7 @@ class BasePage {
     const searchInput = this.page.locator('.select2-search__field').first();
     if (await searchInput.isVisible()) {
       await searchInput.fill(targetText);
-      await this.page.waitForTimeout(500);
+      await this.page.waitForTimeout(1500);
     }
     
     const selectors = [
@@ -40,6 +40,8 @@ class BasePage {
       const option = this.page.locator(selector).first();
       if (await option.count() > 0) {
         await option.click();
+        await this.page.waitForTimeout(1500);
+
         return;
       }
     }

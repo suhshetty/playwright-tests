@@ -1,7 +1,7 @@
 const { test } = require('@playwright/test');
 const path = require('path');
 const dotenv = require('dotenv');
-const { loginAndInitialize } = require('../../../src/testSetup'); // Changed from ../../../ to ../../../../
+const { loginAndInitialize } = require('../../src/testSetup'); // Changed from ../../../ to ../../../../
 
 dotenv.config({ path: path.resolve('tests/src/.env') });
 

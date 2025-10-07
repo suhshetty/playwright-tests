@@ -68,9 +68,7 @@ class DocumentManagement extends BasePage {
     this.ExecuteButton = "//button[@id='Modal2SaveNav']";
     this.OK = "//button[normalize-space(text())='OK']";
     this.GeneralButton = "";
-    
-
-    
+  
 
     //Filter options
     this.FilterButton = "//button[@title='Filter (alt+f)']";
@@ -83,12 +81,12 @@ class DocumentManagement extends BasePage {
 
 
     // Register, Add ,Close, Save & Export Operations
-    this.RegisterDocumentButton = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
+    this.RegisterDocumentButton = "button[title='Register new document (alt+n)']";
     this.Add = "#newRecordButton"
     this.Add2 = "(//button[@id='newRecordButton'])[2]";
    // this.Close = "i[title='Close window (alt+x)']";
     //the second pop up form - when two forms are open
-    this.Close2 =  "(//i[@title='Close window (alt+x)'])[2]";
+    // this.Close[1] =  "(//i[@title='Close window (alt+x)'])[2]";
     this.Save = "button[id='Modal1SaveNav']";
     this.Save2= "button[id='Modal2SaveNav']";
     this.SaveDropdown = "div[aria-label='Toggle save dropdown']";
@@ -98,9 +96,10 @@ class DocumentManagement extends BasePage {
     // this.Add = "#newRecordButton"
     
     this.Close = [
-  "i[title='Close window (alt+x)']",
-  "i[title='Close window ()']"
-];
+      "(//i[@title='Close window (alt+x)'])[2]", // Second occurrence - index 0
+      "(//i[@title='Close window (alt+x)'])[1]", // First occurrence - index 1
+      "i[title='Close window ()']"               // Alternative selector - index 2
+    ];
     
     //this.Export = "button[aria-label='This action exports data - ExportData']";
     this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
@@ -190,11 +189,12 @@ class DocumentManagement extends BasePage {
 
   async CloseForm(){
   await this.page.waitForTimeout(1000);
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 }
 
   //T303 - Verify that the new field "Extra document subtypes" is not displayed under "Documents" during the add process.
   async VerifyExtraDocumentSubtypesNotDisplayed() {
+    await this.page.waitForTimeout(2000);
     //Click on Register button
     await this.page.locator(this.RegisterDocumentButton).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.RegisterDocumentButton).click();
@@ -205,7 +205,7 @@ class DocumentManagement extends BasePage {
     } else {
       console.log('Extra document subtypes field is displayed.');
     }
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.Close[0]).click();
   }
   async OpenDocument(){
     await this.page.locator(this.OpenDocumentButton).click();
@@ -328,7 +328,7 @@ async AddDocumentTypesAndSubtypes(typeSubtypePairs) {
   }
 
   await this.page.locator(this.Save).click();
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 }
   
 async CreateDocumentType(documentType){
@@ -343,8 +343,9 @@ async CreateDocumentType(documentType){
     await this.page.locator(this.InputName).fill(documentType);
     await this.page.locator(this.documentSave).click();
     await this.page.locator(this.ClickOK).click();
-    await this.page.locator(this.Close2).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Close2).click();
+    await this.page.waitForTimeout(1000);
+    await this.page.locator(this.Close[1]).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Close[1]).click();
 }
 
 async CreateDocumentSubType(documentType, documentSubType){
@@ -381,12 +382,12 @@ async CreateDocumentSubType(documentType, documentSubType){
     await this.page.locator(this.ClickOK).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.ClickOK).click();
     await this.page.waitForTimeout(1000);
-    await this.page.locator(this.Close2).click();
+    await this.page.locator(this.Close[1]).click();
     await this.page.waitForTimeout(2000);
  
     console.log("End of method 1");
-    await this.page.locator(this.Close).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.Close[1]).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Close[1]).click();
 
 
 
@@ -444,7 +445,7 @@ async VerifyExtraSubtypesInTable(expectedSubtypes) {
     if (!hasType || !hasSub) return false;
   }
 
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
   return true;
 }
 
@@ -465,7 +466,7 @@ async SetMandatory(){
     await this.page.locator(this.RequiredExtraDocumentSubtypeIcon_Click).click();
   }
 
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 
     await this.page.locator(this.OpenDocumentButton).click();
     await this.page.waitForTimeout(2000);
@@ -488,7 +489,7 @@ async SetMandatory(){
   } else {
     console.log('❌ Mandatory error message NOT displayed when expected.');
   }
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 }
 
 
@@ -500,14 +501,14 @@ async UpdateDocumentTypeAndDocumentSubtype(oldtypesubtype1, oldtypesubtype2, new
   await this.page.waitForTimeout(2000);
   
   await this.AddDocumentTypesAndSubtypes([oldtypesubtype1]);
- // await this.page.locator(this.Close).click(); // Close the document
+ // await this.page.locator(this.Close[0]).click(); // Close the document
   await this.page.waitForTimeout(2000);
 
   
   // Step 2: Add Extra Document Subtypes with old values
   await this.OpenDocument();
   await this.AddExtraDocumentSubtypes([oldtypesubtype1, oldtypesubtype2]);
-  //await this.page.locator(this.Close).click(); // Close the document
+  //await this.page.locator(this.Close[0]).click(); // Close the document
 
   // Step 3: Update Document Type
   console.log(`📝 Updating Document Type to: "${newtype}"`);
@@ -543,7 +544,7 @@ async UpdateDocumentTypeAndDocumentSubtype(oldtypesubtype1, oldtypesubtype2, new
   await this.page.waitForTimeout(1000);
 
   await this.page.locator(this.ClickOK).click();
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 
   
 
@@ -575,10 +576,10 @@ async DeleteExtraDocumentSubtype(subtype)
   await this.page.locator(this.ExecuteButton).click();
   await this.page.locator(this.OK).click();
   await this.page.locator(this.OK).click();
-  await this.page.locator(this.Close2).click();
+  await this.page.locator(this.Close[1]).click();
 
   //await this.selectDocumentSubtype(subtype);
-  await this.page.locator(this.Close).click();
+  await this.page.locator(this.Close[0]).click();
 
 }
 
