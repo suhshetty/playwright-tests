@@ -33,9 +33,9 @@ test('Sanity test: select & remove multi-select values (with separate inputs)', 
   await projectManagement.click_ShowDataInPopupList();
   await projectManagement.click_RegisterNewInPopupList();
 
-  await projectManagement.fill_Project_classification_name('Classification 3Z1');
-  await projectManagement.fill_Project_classification_number('Classification 3Z1');
-  await projectManagement.fill_Project_classification_description('Description for Classification 3Z1');
+  await projectManagement.fill_Project_classification_name('Classification 4Z');
+  await projectManagement.fill_Project_classification_number('Classification 4Z');
+  await projectManagement.fill_Project_classification_description('Description for Classification 4Z');
   await projectManagement.click_Save_button();
   
   await projectManagement.verifyErrorPopup();

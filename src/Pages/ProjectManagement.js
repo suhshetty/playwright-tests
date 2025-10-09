@@ -69,12 +69,14 @@ class ProjectManagement extends BasePage {
      this.Close = "i[title='Close window (alt+x)']";
 
      //Field : Classification
-      this.multiselect_dropdown_field = "#select2-Modal1_TFClassificationSelection-container";
-      this.multiselect_dropdown_values = "ul#select2-Modal1_TFClassificationSelection-results li.select2-results__option span.mm-combobox-item";
+      this.classification_label_name = "//div[@title='Classification:' and @id='Modal1_TFClassificationSelection_label']";
+      this.classification_multiselect_dropdown_field = "#select2-Modal1_TFClassificationSelection-container";
+      this.classification_multiselect_dropdown_values = "ul#select2-Modal1_TFClassificationSelection-results li.select2-results__option span.mm-combobox-item";
       this.classification_ActionMenu = "//div[@title='Classification:']/ancestor::div[contains(@class,'modal-chapter-content-container')]//button[@title='Open action menu']";
       this.Project_classification_name = '//input[@title="Name [Module key: Name]"]';
       this.Project_classification_number = '//input[@title="No [Module key: Nr]"]';
       this.Project_classification_description = 'textarea[title="Description [Module key: Description]"]';
+      this.edit_show_data_in_popup_list = "(//button[@title='Open project classification'])[2]";
       
 
   }
