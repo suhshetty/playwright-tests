@@ -40,11 +40,12 @@ test('EMM-4235 - Validate multi-select functionality of "Classification" field',
   await projectManagement.click_Classification_ActionMenu();
   await projectManagement.click_ShowDataInPopupList();
   await projectManagement.click_RegisterNewInPopupList();
-  await projectManagement.fill_Project_classification_name('Classification 221D');
-  await projectManagement.fill_Project_classification_number('Classification 221D');
-  await projectManagement.fill_Project_classification_description('Description for Classification 221D');
+  await projectManagement.fill_Project_classification_name('Classification E221E');
+  await projectManagement.fill_Project_classification_number('Classification E221E');
+  await projectManagement.fill_Project_classification_description('Description for Classification 1221B');
   await projectManagement.click_Save_button();
   await projectManagement.verifySuccessPopup();
+  //await page.pause();
   await projectManagement.clickElement(projectManagement.ok, 'OK button on popup');
 
   
