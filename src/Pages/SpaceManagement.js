@@ -49,8 +49,33 @@ class SpaceManagement extends BasePage {
    // this.newKeyToLocks = "//button[@aria-label='Register new key to lock (Standard) - Standard']";
    // this.newWorkOrderHours = "//button[@aria-label='Register my hours - RegisterMyHours']";
     this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
+    this.CloseButton = [
+      "(//i[@title='Close window (alt+x)'])", 
+      "//i[@title='Close window ()']"
+    ];
   }
+
+async Close() {
+  await this.page.waitForTimeout(1000);
+  for (let i = 0; i < this.CloseButton.length; i++) {
+    try {
+      await this.page.waitForTimeout(1000);
+
+      const closeButton = this.page.locator(this.Close[i]);
+      if (await closeButton.isVisible()) {
+        //console.log("Found visible close button at index ${i}");
+        await closeButton.click();
+        await this.page.waitForTimeout(1000);
+        return;
+      }
+    } catch (error) {
+      console.log(`⏭️ Close button at index ${i} failed: ${error.message}`);
+      continue;
+    }
+  }
+}
+
+
   async clickSpaceManagement() {
     await this.page.waitForTimeout(3000);
     const SpaceManagement = this.page.locator(this.spaceManagement).first();
@@ -124,7 +149,7 @@ class SpaceManagement extends BasePage {
 
   async clickRegisterNewBuildingSpace(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+await this.Close();
   }
 
   // async clickRegisterDrawings(){
@@ -143,18 +168,18 @@ class SpaceManagement extends BasePage {
 
   async clickRegisterSpaceManagementScenario(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+await this.Close();
 
   }
 
   async clickRegisterKeyToLocks(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+await this.Close();
   }
 
   async clickRegisterWorkOrderHours(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+await this.Close();
   }
 
 
