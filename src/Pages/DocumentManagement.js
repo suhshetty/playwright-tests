@@ -95,11 +95,31 @@ class DocumentManagement extends BasePage {
     // // Add ,Close & Export Operations
     // this.Add = "#newRecordButton"
     
-    this.Close = [
-      "(//i[@title='Close window (alt+x)'])[2]", // Second occurrence - index 0
-      "(//i[@title='Close window (alt+x)'])[1]", // First occurrence - index 1
-      "i[title='Close window ()']"               // Alternative selector - index 2
+    this.CloseButton = [
+      "(//i[@title='Close window (alt+x)'])", 
+      "//i[@title='Close window ()']"
     ];
+  }
+
+async Close() {
+  await this.page.waitForTimeout(1000);
+  for (let i = 0; i < this.CloseButton.length; i++) {
+    try {
+      await this.page.waitForTimeout(1000);
+
+      const closeButton = this.page.locator(this.Close[i]);
+      if (await closeButton.isVisible()) {
+        //console.log("Found visible close button at index ${i}");
+        await closeButton.click();
+        await this.page.waitForTimeout(1000);
+        return;
+      }
+    } catch (error) {
+      console.log(`⏭️ Close button at index ${i} failed: ${error.message}`);
+      continue;
+    }
+  }
+
     
     //this.Export = "button[aria-label='This action exports data - ExportData']";
     this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
