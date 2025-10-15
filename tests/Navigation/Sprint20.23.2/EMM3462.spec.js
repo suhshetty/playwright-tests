@@ -111,4 +111,7 @@ test('EMM-4235 - Validate multi-select functionality of "Classification" field',
   await projectManagement.clickElement(projectManagement.ok, 'OK button on popup');
   await projectManagement.clickElement(projectManagement.close_popup, 'Close button on popup');
 
+ 
+
+
 });

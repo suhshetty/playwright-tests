@@ -77,6 +77,12 @@ class ProjectManagement extends BasePage {
       this.Project_classification_number = '//input[@title="No [Module key: Nr]"]';
       this.Project_classification_description = 'textarea[title="Description [Module key: Description]"]';
       this.edit_show_data_in_popup_list = "(//button[@title='Open project classification'])[2]";
+
+      //Add new Project
+      this.project_type_dropdown = "//select[@id='Modal1_TFTypeID']/following-sibling::span//span[@class='select2-selection select2-selection--single']";
+      this.project_name_dropdown = "//input[@id='Modal1_TFName' and @title='Project name [Module key: Name]']";
+
+
       
 
   }
@@ -352,6 +358,8 @@ class ProjectManagement extends BasePage {
     async fill_Project_classification_description(text){
       await this.page.locator(this.Project_classification_description).fill(text);
     }
+
+
 }
 
 module.exports = ProjectManagement;
