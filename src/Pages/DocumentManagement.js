@@ -86,7 +86,7 @@ class DocumentManagement extends BasePage {
     this.Add2 = "(//button[@id='newRecordButton'])[2]";
    // this.Close = "i[title='Close window (alt+x)']";
     //the second pop up form - when two forms are open
-    // this.Close[1] =  "(//i[@title='Close window (alt+x)'])[2]";
+    // this.Close =  "(//i[@title='Close window (alt+x)'])[2]";
     this.Save = "button[id='Modal1SaveNav']";
     this.Save2= "button[id='Modal2SaveNav']";
     this.SaveDropdown = "div[aria-label='Toggle save dropdown']";
@@ -105,9 +105,9 @@ async Close() {
   await this.page.waitForTimeout(1000);
   for (let i = 0; i < this.CloseButton.length; i++) {
     try {
-      await this.page.waitForTimeout(1000);
+      await this.page.waitForTimeout(2000);
 
-      const closeButton = this.page.locator(this.Close[i]);
+      const closeButton = this.page.locator(this.CloseButton[i]);
       if (await closeButton.isVisible()) {
         //console.log("Found visible close button at index ${i}");
         await closeButton.click();
@@ -207,21 +207,6 @@ async Close() {
     await this.page.waitForTimeout(1000);
   }
   
-  async Close() {
-  for (let i = 0; i < this.Close.length; i++) {
-    try {
-      console.log(`🔍 Attempting to click close button at index ${i} without visibility check...`);
-      await this.page.locator(this.Close[i]).click({ timeout: 2000 });
-      await this.page.waitForTimeout(1000);
-      console.log(`✅ Successfully clicked close button at index ${i}`);
-      return;
-    } catch (error) {
-      console.log(`⏭️ Close button at index ${i} click failed: ${error.message}`);
-      continue;
-    }
-  }
-  
-}
 
   //T303 - Verify that the new field "Extra document subtypes" is not displayed under "Documents" during the add process.
   async VerifyExtraDocumentSubtypesNotDisplayed() {
@@ -376,8 +361,8 @@ async CreateDocumentType(documentType){
     await this.page.locator(this.documentSave).click();
     await this.page.locator(this.ClickOK).click();
     await this.page.waitForTimeout(1000);
-    await this.page.locator(this.Close[1]).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Close[1]).click();
+    await this.page.locator(this.Close).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Close).click();
 }
 
 async CreateDocumentSubType(documentType, documentSubType){
@@ -414,12 +399,12 @@ async CreateDocumentSubType(documentType, documentSubType){
     await this.page.locator(this.ClickOK).waitFor({ state: 'visible', timeout: 10000 });
     await this.page.locator(this.ClickOK).click();
     await this.page.waitForTimeout(1000);
-    await this.page.locator(this.Close[1]).click();
+    await this.page.locator(this.Close).click();
     await this.page.waitForTimeout(2000);
  
     console.log("End of method 1");
-    await this.page.locator(this.Close[1]).waitFor({ state: 'visible', timeout: 10000 });
-    await this.page.locator(this.Close[1]).click();
+    await this.page.locator(this.Close).waitFor({ state: 'visible', timeout: 10000 });
+    await this.page.locator(this.Close).click();
 
 
 
@@ -608,7 +593,7 @@ async DeleteExtraDocumentSubtype(subtype)
   await this.page.locator(this.ExecuteButton).click();
   await this.page.locator(this.OK).click();
   await this.page.locator(this.OK).click();
-  await this.page.locator(this.Close[1]).click();
+  await this.page.locator(this.Close).click();
 
   //await this.selectDocumentSubtype(subtype);
   await this.Close();

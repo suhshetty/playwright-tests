@@ -61,7 +61,7 @@ async Close() {
     try {
       await this.page.waitForTimeout(1000);
 
-      const closeButton = this.page.locator(this.Close[i]);
+      const closeButton = this.page.locator(this.CloseButton[i]);
       if (await closeButton.isVisible()) {
         //console.log("Found visible close button at index ${i}");
         await closeButton.click();
