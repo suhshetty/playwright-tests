@@ -6,6 +6,7 @@ class BasePage {
     this.show_data_in_popup_list = "//a[@title='Show data in popup list - ShowDataInPopupList']";
     this.register_new_in_popup_list = "div.modal-chapter-content-container button#newRecordButton";
     this.save_button = '#Modal3SaveNav';
+    this.close_show_data_in_popup_list = "(//i[@title='Close window (alt+x)'])[2]";
 
     // Common selectors (Area: Success or Failed messages in popup)
     this.error_message = "//h2[contains(text(),'Error')]";

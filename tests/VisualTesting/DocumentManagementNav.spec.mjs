@@ -58,6 +58,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'clickDocumentManagement');
   });
 
+  await page.pause();
+
   // === Document Overview ===
   await safeStep('gotoDocumentOverview', async () => {
     await documentManagement.gotoDocumentOverview();
