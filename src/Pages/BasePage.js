@@ -13,6 +13,10 @@ class BasePage {
     this.success_message = "//h2[contains(text(),'Success')]";
     this.ok = "//button[text()='OK']";
     this.close_popup = "(//i[@title='Close window (alt+x)'])[3]";
+
+    // Common selectors (Area: User Profile)
+    this.profile = "//i[@class='fal fa-user']"; 
+    this.darkmode = "#userDarkMode";
   }
 
   async selectDropdownOptionByText(optionsLocator, targetText) {
@@ -26,6 +30,17 @@ class BasePage {
     }
     throw new Error(`Option "${targetText}" not found`);
   }
+
+  async toggleDarkModeAndClickProfile() {
+  await this.page.locator(this.profile).click();
+  await this.page.locator(this.darkmode).click();
+  await this.page.waitForTimeout(1000);
+  await this.page.locator(this.darkmode).click();
+  await this.page.locator(this.profile).click();
+}
+
+
+  
 
   // Click an element by selector (accepts string or array of selectors)
   async clickElement(selectors, options = {}) {

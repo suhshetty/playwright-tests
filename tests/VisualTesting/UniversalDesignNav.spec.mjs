@@ -68,6 +68,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
+  await universalDesign.toggleDarkModeAndClickProfile();
+
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
@@ -105,12 +107,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersExportClicked');
   });
 
-  await safeStep('gotoServicePartnersCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersCloseClicked');
-  });
 
-  await safeStep('gotoServicePartnerManagement', async () => {
+  await safeStep('gotoServicePartnersCloseClicked', async () => {
+   await universalDesign.clickClose();
+   await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersCloseClicked');
+});
+
+   await safeStep('gotoServicePartnerManagement', async () => {
     await universalDesign.gotoServicePartnerManagement();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnerManagement');
   });
@@ -126,7 +129,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPersonPermitCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitCloseClicked');
   });
 
@@ -147,7 +150,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoUniversalDesignDocumentsCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoUniversalDesignDocumentsCloseClicked');
   });
 
@@ -173,7 +176,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTechnicalSystemCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemCloseClicked');
   });
 
@@ -188,7 +191,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCCSTechnicalSystemCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCCSTechnicalSystemCloseClicked');
   });
 
@@ -198,7 +201,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCCSTechnicalSystemCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCCSTechnicalSystemCloseClicked2');
   });
 
@@ -224,7 +227,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTaskManagementCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementCloseClicked');
   });
 
@@ -239,7 +242,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCloseClicked');
   });
 
@@ -249,7 +252,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCloseClicked2');
   });
 
@@ -264,7 +267,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoIncidentCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCloseClicked');
   });
 
@@ -274,7 +277,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoIncidentCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCloseClicked2');
   });
 
@@ -295,7 +298,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLinksToLawsCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsCloseClicked');
   });
 
@@ -310,7 +313,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInstructionsCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsCloseClicked');
   });
 
@@ -325,7 +328,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLocalRegulationsCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsCloseClicked');
   });
 
@@ -346,7 +349,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentTypesCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentTypesCloseClicked');
   });
 
@@ -356,7 +359,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentTypesCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentTypesCloseClicked2');
   });
 
@@ -371,7 +374,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoServiceTypesCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceTypesCloseClicked');
   });
 
@@ -381,7 +384,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoServiceTypesCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceTypesCloseClicked2');
   });
 
@@ -396,7 +399,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPermitCloseClicked', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPermitCloseClicked');
   });
 
@@ -406,7 +409,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPermitCloseClicked2', async () => {
-    await universalDesign.clickElement(universalDesign.Close);
+    await universalDesign.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPermitCloseClicked2');
   });
 
