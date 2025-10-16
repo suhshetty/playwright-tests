@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class HumanResources extends BasePage {
   constructor(page) {
@@ -49,7 +50,7 @@ class HumanResources extends BasePage {
     
     //Add data locators
     this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
   }
 
 async clickHumanResources() {
@@ -240,6 +241,11 @@ async clickHumanResources() {
       await this.page.locator(this.Add).click();
       await this.page.locator(this.Close).click();
     }
+
+        async clickClose(timeout = 5000) {
+      const locator = await smartLocator(this.page, this.Close, timeout);
+      await locator.click();
+  }
     
 }
 

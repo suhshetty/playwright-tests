@@ -48,6 +48,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
+  await documentManagement.toggleDarkModeAndClickProfile();
+
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
@@ -58,7 +60,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'clickDocumentManagement');
   });
 
-  await page.pause();
+
 
   // === Document Overview ===
   await safeStep('gotoDocumentOverview', async () => {
@@ -78,7 +80,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentSearchesCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentSearchesCloseClicked');
   });
 
@@ -99,7 +101,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPicturesCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPicturesCloseClicked');
   });
 
@@ -109,7 +111,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPicturesCloseClicked2', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPicturesCloseClicked2');
   });
 
@@ -125,7 +127,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDrawingsCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDrawingsCloseClicked');
   });
 
@@ -135,7 +137,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDrawingsCloseClicked2', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDrawingsCloseClicked2');
   });
 
@@ -151,7 +153,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentsCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentsCloseClicked');
   });
 
@@ -161,7 +163,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentsCloseClicked2', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentsCloseClicked2');
   });
 
@@ -177,7 +179,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentStackCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentStackCloseClicked');
   });
 
@@ -187,7 +189,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentStackCloseClicked2', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentStackCloseClicked2');
   });
 
@@ -209,7 +211,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoManualChaptersCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoManualChaptersCloseClicked');
   });
 
@@ -225,7 +227,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoManualDefinitionsCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoManualDefinitionsCloseClicked');
   });
 
@@ -235,7 +237,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoManualDefinitionsCloseClicked2', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoManualDefinitionsCloseClicked2');
   });
 
@@ -251,7 +253,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoManualSubscribersCloseClicked', async () => {
-    await documentManagement.clickElement(documentManagement.Close);
+    await documentManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoManualSubscribersCloseClicked');
   });
 

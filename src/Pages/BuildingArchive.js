@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class BuildingArchive extends BasePage {
   constructor(page) {
@@ -126,7 +127,7 @@ class BuildingArchive extends BasePage {
 
     //Add new data locators
     this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
 
   }
 
@@ -696,6 +697,11 @@ async registerNewBuilding(siteName, buildingName) {
   await this.page.locator(this.AddBuildingSuccessMsg).waitFor({ state: 'visible', timeout: 5000 });
   await expect(this.page.locator(this.AddBuildingSuccessMsg)).toHaveText("Your work has been saved");
 }
+
+    async clickClose(timeout = 5000) {
+      const locator = await smartLocator(this.page, this.Close, timeout);
+      await locator.click();
+  }
 
 }
 

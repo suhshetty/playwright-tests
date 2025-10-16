@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class PropertyManagement extends BasePage {
   constructor(page) {
@@ -103,7 +104,7 @@ class PropertyManagement extends BasePage {
 
         // Add ,Close & Export Operations
     this.Add = "#newRecordButton"
-    this.Close = "i[title='Close window (alt+x)']";
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
     this.Export = "button[aria-label='This action exports data - ExportData']";
     this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
   }
@@ -477,6 +478,11 @@ class PropertyManagement extends BasePage {
          await this.page.locator(this.AccessConfiguration).waitFor({ state: 'visible', timeout: 5000 });
          await this.page.locator(this.AccessConfiguration).click();
        }
+
+      async clickClose(timeout = 5000) {
+         const locator = await smartLocator(this.page, this.Close, timeout);
+         await locator.click();
+  }
 
 }
 

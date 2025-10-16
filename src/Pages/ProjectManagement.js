@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class ProjectManagement extends BasePage {
   constructor(page) {
@@ -66,7 +67,7 @@ class ProjectManagement extends BasePage {
 
      //Add new data locators
      this.Add = "#newRecordButton"
-     this.Close = "i[title='Close window (alt+x)']";
+     this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
 
      //Field : Classification
       this.classification_label_name = "//div[@title='Classification:' and @id='Modal1_TFClassificationSelection_label']";
@@ -358,6 +359,11 @@ class ProjectManagement extends BasePage {
     async fill_Project_classification_description(text){
       await this.page.locator(this.Project_classification_description).fill(text);
     }
+
+        async clickClose(timeout = 5000) {
+      const locator = await smartLocator(this.page, this.Close, timeout);
+      await locator.click();
+  }
 
 
 }

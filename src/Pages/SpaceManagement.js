@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class SpaceManagement extends BasePage {
   constructor(page) {
@@ -49,10 +50,7 @@ class SpaceManagement extends BasePage {
    // this.newKeyToLocks = "//button[@aria-label='Register new key to lock (Standard) - Standard']";
    // this.newWorkOrderHours = "//button[@aria-label='Register my hours - RegisterMyHours']";
     this.Add = "#newRecordButton"
-    this.CloseButton = [
-      "(//i[@title='Close window (alt+x)'])", 
-      "//i[@title='Close window ()']"
-    ];
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
   }
 
 async Close() {

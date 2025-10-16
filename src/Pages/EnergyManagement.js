@@ -1,5 +1,6 @@
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
+const { smartLocator } = require("../utils/smartLocator");
 
 class EnergyManagement extends BasePage {
   constructor(page) {
@@ -47,7 +48,7 @@ class EnergyManagement extends BasePage {
 
      //Add new data locators
      this.Add = "#newRecordButton";
-     this.Close = "i[title='Close window (alt+x)']";
+     this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
   }
 
   async gotoEnergyManagement() {
@@ -215,6 +216,11 @@ class EnergyManagement extends BasePage {
       await this.page.locator(this.Add).click();
       await this.page.locator(this.Close).click();
     }
+
+        async clickClose(timeout = 5000) {
+      const locator = await smartLocator(this.page, this.Close, timeout);
+      await locator.click();
+  }
       
   }
   

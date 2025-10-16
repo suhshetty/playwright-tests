@@ -2,6 +2,7 @@ const { type } = require("node:os");
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
 const { types } = require("node:util");
+const { smartLocator } = require("../utils/smartLocator");
 
 class DocumentManagement extends BasePage {
   constructor(page) {
@@ -95,10 +96,7 @@ class DocumentManagement extends BasePage {
     // // Add ,Close & Export Operations
     // this.Add = "#newRecordButton"
     
-    this.CloseButton = [
-      "(//i[@title='Close window (alt+x)'])", 
-      "//i[@title='Close window ()']"
-    ];
+    this.Close2 = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
   }
 
 async Close() {
@@ -599,6 +597,11 @@ async DeleteExtraDocumentSubtype(subtype)
   await this.Close();
 
 }
+
+    async clickClose(timeout = 5000) {
+      const locator = await smartLocator(this.page, this.Close2, timeout);
+      await locator.click();
+  }
 
 
 
