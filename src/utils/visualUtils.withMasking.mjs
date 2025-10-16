@@ -7,7 +7,7 @@ import { PNG } from 'pngjs';
 
 // Directory for screenshots
 export const screenshotsDir = 'screenshots';
-let ignoreRegion = null; // Region to ignore in diff
+let ignoreRegion = null; // Region to ignore in diff (set during screenshot capture)
 
 // Clean screenshot folders
 export function cleanScreenshotsFolder() {
@@ -24,6 +24,12 @@ export function initializeVisualTestEnv() {
   console.log('Environment variables loaded');
   console.log('URL1:', process.env.URL1);
   console.log('URL2:', process.env.URL2);
+
+  // Ensure base dirs exist
+  const url1Dir = path.join(screenshotsDir, 'url1');
+  const url2Dir = path.join(screenshotsDir, 'url2');
+  if (!fs.existsSync(url1Dir)) fs.mkdirSync(url1Dir, { recursive: true });
+  if (!fs.existsSync(url2Dir)) fs.mkdirSync(url2Dir, { recursive: true });
 }
 
 // Wrap a step with safe error handling
@@ -35,7 +41,7 @@ export async function safeStep(stepName, fn) {
   }
 }
 
-// Wait for loader to disappear and take screenshot
+// Wait for loader to disappear and take screenshot (sets ignoreRegion from header)
 export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   const dir = path.join(screenshotsDir, env);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
@@ -61,20 +67,27 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   }
 
   try {
+    // Wait for stable header (used to compute ignoreRegion)
     const header = page.locator('#m_header');
     await header.waitFor({ state: 'visible', timeout: 10000 });
+
+    // compute bounding box for header and set ignoreRegion (if box available)
     const box = await header.boundingBox();
     if (box) {
       ignoreRegion = {
-        x: 0,
-        y: 0,
+        x: Math.max(0, Math.floor(box.x)),
+        y: Math.max(0, Math.floor(box.y)),
         width: Math.ceil(box.width),
-        height: Math.ceil(box.height + 10)
+        height: Math.ceil(box.height + 10) // small padding
       };
       console.log('Ignoring region during comparison:', ignoreRegion);
+    } else {
+      ignoreRegion = null;
     }
 
+    // short wait to ensure final painting/rendering
     await page.waitForTimeout(2000);
+
     const filePath = path.join(dir, `${label}.png`);
     await page.screenshot({ path: filePath, fullPage: true });
     console.log(`Screenshot saved: ${filePath}`);
@@ -83,46 +96,117 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
   }
 }
 
-// Compare screenshots with masking
+/* ---------- Image utilities ---------- */
+
+// Pad a PNG image to target width/height by placing the source at top-left
+function padImageTo(img, targetWidth, targetHeight, fillRGBA = [255, 255, 255, 0]) {
+  const out = new PNG({ width: targetWidth, height: targetHeight });
+
+  // fill with given RGBA
+  for (let y = 0; y < targetHeight; y++) {
+    for (let x = 0; x < targetWidth; x++) {
+      const idx = (targetWidth * y + x) << 2;
+      out.data[idx] = fillRGBA[0];
+      out.data[idx + 1] = fillRGBA[1];
+      out.data[idx + 2] = fillRGBA[2];
+      out.data[idx + 3] = fillRGBA[3];
+    }
+  }
+
+  // copy source image into top-left
+  for (let y = 0; y < img.height; y++) {
+    for (let x = 0; x < img.width; x++) {
+      const srcIdx = (img.width * y + x) << 2;
+      const dstIdx = (targetWidth * y + x) << 2;
+      out.data[dstIdx] = img.data[srcIdx];
+      out.data[dstIdx + 1] = img.data[srcIdx + 1];
+      out.data[dstIdx + 2] = img.data[srcIdx + 2];
+      out.data[dstIdx + 3] = img.data[srcIdx + 3];
+    }
+  }
+  return out;
+}
+
+// Compare screenshots with masking (handles different sizes by padding)
 export function compareScreenshots(label) {
   const img1Path = path.join(screenshotsDir, 'url1', `${label}.png`);
   const img2Path = path.join(screenshotsDir, 'url2', `${label}.png`);
 
+  if (!fs.existsSync(img1Path)) {
+    throw new Error(`Missing baseline screenshot: ${img1Path}`);
+  }
+  if (!fs.existsSync(img2Path)) {
+    throw new Error(`Missing comparison screenshot: ${img2Path}`);
+  }
+
   const img1 = PNG.sync.read(fs.readFileSync(img1Path));
   const img2 = PNG.sync.read(fs.readFileSync(img2Path));
-  const { width, height } = img1;
-  const diff = new PNG({ width, height });
-  const debugOverlay = new PNG({ width, height });
 
-  if (ignoreRegion) {
-    const regionHeight = ignoreRegion.height;
-    for (let y = 0; y < regionHeight; y++) {
-      for (let x = 0; x < width; x++) {
-        const idx = (width * y + x) << 2;
-        img1.data[idx + 3] = 0;
-        img2.data[idx + 3] = 0;
+  console.log(`Screenshot sizes: url1=${img1.width}x${img1.height}, url2=${img2.width}x${img2.height}`);
 
-        // Red overlay for excluded area
-        debugOverlay.data[idx] = 255;
-        debugOverlay.data[idx + 1] = 0;
-        debugOverlay.data[idx + 2] = 0;
-        debugOverlay.data[idx + 3] = 100;
-      }
-    }
+  // Determine target size (max of both)
+  const targetWidth = Math.max(img1.width, img2.width);
+  const targetHeight = Math.max(img1.height, img2.height);
 
-    for (let y = regionHeight; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const idx = (width * y + x) << 2;
-        debugOverlay.data[idx] = img1.data[idx];
-        debugOverlay.data[idx + 1] = img1.data[idx + 1];
-        debugOverlay.data[idx + 2] = img1.data[idx + 2];
-        debugOverlay.data[idx + 3] = img1.data[idx + 3];
+  let a = img1;
+  let b = img2;
+
+  if (img1.width !== targetWidth || img1.height !== targetHeight) {
+    a = padImageTo(img1, targetWidth, targetHeight, [255, 255, 255, 0]);
+  }
+  if (img2.width !== targetWidth || img2.height !== targetHeight) {
+    b = padImageTo(img2, targetWidth, targetHeight, [255, 255, 255, 0]);
+  }
+
+  // Apply ignoreRegion mask (make alpha 0 for both a & b in that region)
+  if (ignoreRegion && typeof ignoreRegion === 'object') {
+    const { x = 0, y = 0, width = 0, height = 0 } = ignoreRegion;
+    const maxX = Math.min(targetWidth, x + width);
+    const maxY = Math.min(targetHeight, y + height);
+    console.log('Applying ignoreRegion mask:', ignoreRegion);
+
+    for (let yy = Math.max(0, y); yy < maxY; yy++) {
+      for (let xx = Math.max(0, x); xx < maxX; xx++) {
+        const idx = (targetWidth * yy + xx) << 2;
+        a.data[idx + 3] = 0;
+        b.data[idx + 3] = 0;
       }
     }
   }
 
-  const numDiffPixels = pixelmatch(img1.data, img2.data, diff.data, width, height, {
-    threshold: 0.2,
+  const diff = new PNG({ width: targetWidth, height: targetHeight });
+  const debugOverlay = new PNG({ width: targetWidth, height: targetHeight });
+
+  // Build debug overlay from image 'a' and highlight ignored region in translucent red
+  for (let y = 0; y < targetHeight; y++) {
+    for (let x = 0; x < targetWidth; x++) {
+      const i = (targetWidth * y + x) << 2;
+      debugOverlay.data[i] = a.data[i];
+      debugOverlay.data[i + 1] = a.data[i + 1];
+      debugOverlay.data[i + 2] = a.data[i + 2];
+      debugOverlay.data[i + 3] = a.data[i + 3];
+    }
+  }
+
+  if (ignoreRegion) {
+    const ih = Math.min(ignoreRegion.height, targetHeight - ignoreRegion.y);
+    const iw = Math.min(ignoreRegion.width, targetWidth - ignoreRegion.x);
+    for (let yy = 0; yy < ih; yy++) {
+      for (let xx = 0; xx < iw; xx++) {
+        const px = ignoreRegion.x + xx;
+        const py = ignoreRegion.y + yy;
+        if (px < 0 || px >= targetWidth || py < 0 || py >= targetHeight) continue;
+        const idx = (targetWidth * py + px) << 2;
+        debugOverlay.data[idx] = 255;     // red
+        debugOverlay.data[idx + 1] = 0;
+        debugOverlay.data[idx + 2] = 0;
+        debugOverlay.data[idx + 3] = 100; // semi-transparent
+      }
+    }
+  }
+
+  const numDiffPixels = pixelmatch(a.data, b.data, diff.data, targetWidth, targetHeight, {
+    threshold: 0.1,
     alpha: 0.5,
     includeAA: false
   });
