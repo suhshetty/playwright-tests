@@ -41,8 +41,8 @@ const labels = [
   'gotoIncidentCulturalValue', 'gotoIncidentAddClicked', 'gotoIncidentCloseClicked',
 
   // Requirements and Guidelines
-  'gotoLinksToLawsAndRegulation', 'gotoLinksToLawsExportClicked',
-  'gotoLinksToLawsCloseClicked', 'gotoInstructionsAndGuidelines', 'gotoInstructionsExportClicked',
+  'gotoLinksToLawsAndRegulation', 'gotoLinksToLawsAddClicked',
+  'gotoLinksToLawsCloseClicked', 'gotoInstructionsAndGuidelines', 'gotoInstructionsAddClicked',
   'gotoInstructionsCloseClicked', 'gotoLocalRegulations', 'gotoLocalRegulationsExportClicked',
   'gotoLocalRegulationsCloseClicked',
 
@@ -71,6 +71,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await homePage.gotoModuleMenu();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
+
+  await culturalValueManagement.toggleDarkModeAndClickProfileIcon();
 
   await safeStep('clickCulturalValueManagement', async () => {
     await culturalValueManagement.clickCulturalValueManagement();
@@ -105,7 +107,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoServicePartnersCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersCloseClicked');
   });
 
@@ -125,7 +127,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPersonPermitCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitCloseClicked');
   });
 
@@ -146,7 +148,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCulturalValueDocumentsCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCulturalValueDocumentsCloseClicked');
   });
 
@@ -172,7 +174,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTechnicalSystemCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemCloseClicked');
   });
 
@@ -187,7 +189,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCCSTechnicalSystemCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCCSTechnicalSystemCloseClicked');
   });
 
@@ -197,7 +199,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCCSTechnicalSystemCloseClicked2', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCCSTechnicalSystemCloseClicked2');
   });
 
@@ -223,7 +225,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTaskManagementCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementCloseClicked');
   });
 
@@ -238,7 +240,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCloseClicked');
   });
 
@@ -248,7 +250,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderCloseClicked2', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCloseClicked2');
   });
 
@@ -263,7 +265,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoIncidentCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCloseClicked');
   });
 
@@ -278,13 +280,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAndRegulation');
   });
 
-  await safeStep('gotoLinksToLawsExportClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Export);
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsExportClicked');
+  await safeStep('gotoLinksToLawsAddClicked', async () => {
+    await culturalValueManagement.clickElement(culturalValueManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAddClicked');
   });
 
   await safeStep('gotoLinksToLawsCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsCloseClicked');
   });
 
@@ -293,13 +295,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAndGuidelines');
   });
 
-  await safeStep('gotoInstructionsExportClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Export);
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsExportClicked');
+  await safeStep('gotoInstructionsAddClicked', async () => {
+    await culturalValueManagement.clickElement(culturalValueManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAddClicked');
   });
 
   await safeStep('gotoInstructionsCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsCloseClicked');
   });
 
@@ -314,7 +316,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLocalRegulationsCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsCloseClicked');
   });
 
@@ -335,7 +337,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentTypesCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentTypesCloseClicked');
   });
 
@@ -345,7 +347,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentTypesCloseClicked2', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentTypesCloseClicked2');
   });
 
@@ -360,7 +362,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoServiceTypesCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceTypesCloseClicked');
   });
 
@@ -370,7 +372,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoServiceTypesCloseClicked2', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceTypesCloseClicked2');
   });
 
@@ -385,7 +387,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPermitCloseClicked', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPermitCloseClicked');
   });
 
@@ -395,7 +397,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPermitCloseClicked2', async () => {
-    await culturalValueManagement.clickElement(culturalValueManagement.Close);
+    await culturalValueManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPermitCloseClicked2');
   });
 

@@ -70,7 +70,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBuildingsCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingsCloseClicked');
   });
 
@@ -85,7 +85,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBuildingSpacesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpacesCloseClicked');
   });
 
@@ -105,7 +105,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningZonesSubTypeCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningZonesSubTypeCloseClicked');
   });
 
@@ -125,7 +125,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBuildingSpacesPlanningCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpacesPlanningCloseClicked');
   });
 
@@ -140,7 +140,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningModelsPlanningCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningModelsPlanningCloseClicked');
   });
 
@@ -155,7 +155,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPPMRegistrationCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPPMRegistrationCloseClicked');
   });
 
@@ -170,7 +170,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoApprovedPPMCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoApprovedPPMCloseClicked');
   });
 
@@ -185,7 +185,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrdersCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersCloseClicked');
   });
 
@@ -210,7 +210,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCheckItemCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCheckItemCloseClicked');
   });
 
@@ -240,7 +240,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningZonesPlanningZonesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningZonesPlanningZonesCloseClicked');
   });
 
@@ -255,7 +255,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningTeamsPlanningZonesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningTeamsPlanningZonesCloseClicked');
   });
 
@@ -275,7 +275,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInsta800QualityMatrixCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsta800QualityMatrixCloseClicked');
   });
 
@@ -290,7 +290,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningModelsAdminCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningModelsAdminCloseClicked');
   });
 
@@ -305,7 +305,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningFrequencyColorsCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningFrequencyColorsCloseClicked');
   });
 
@@ -320,7 +320,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningTeamsAdminCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningTeamsAdminCloseClicked');
   });
 
@@ -335,7 +335,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSpaceUsagesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSpaceUsagesCloseClicked');
   });
 
@@ -350,7 +350,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSurfaceTypesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSurfaceTypesCloseClicked');
   });
 
@@ -365,7 +365,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCleaningTeamProfilesCloseClicked', async () => {
-    await cleaningManagement.clickElement(cleaningManagement.Close);
+    await cleaningManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCleaningTeamProfilesCloseClicked');
   });
 
