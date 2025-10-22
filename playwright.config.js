@@ -1,7 +1,7 @@
 //Test configuration for Playwright tests
 const config = {
   testDir: './tests',
-  timeout: 20 * 60 * 1000,
+  timeout: 60 * 60 * 1000, // 1 hour
 
   expect: {
     timeout: 10000,

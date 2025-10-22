@@ -65,7 +65,7 @@ class SystemConfiguration extends BasePage {
 
     // Add ,Close & Export Operations
     this.Add = "#newRecordButton"
-    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+    this.Close = [ "i[title='Close window (alt+x)']", "i[title='Close window ()']" ]
     this.Export = "button[aria-label='This action exports data - ExportData']";
   }
 

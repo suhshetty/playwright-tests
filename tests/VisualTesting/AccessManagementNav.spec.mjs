@@ -80,7 +80,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCompaniesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCompaniesCloseClicked');
   });
 
@@ -96,7 +96,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDepartmentsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDepartmentsCloseClicked');
   });
 
@@ -112,7 +112,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDivisionsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDivisionsCloseClicked');
   });
 
@@ -128,7 +128,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBranchesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBranchesCloseClicked');
   });
 
@@ -144,7 +144,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBranchSectionsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBranchSectionsCloseClicked');
   });
 
@@ -160,7 +160,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBranchSubSectionsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBranchSubSectionsCloseClicked');
   });
 
@@ -176,7 +176,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkGroupsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkGroupsCloseClicked');
   });
 
@@ -192,7 +192,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoEmployeesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoEmployeesCloseClicked');
   });
 
@@ -240,7 +240,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPortfoliosCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPortfoliosCloseClicked');
   });
 
@@ -262,7 +262,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPersonsUsersCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonsUsersCloseClicked');
   });
 
@@ -283,7 +283,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoUserRolesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoUserRolesCloseClicked');
   });
 
@@ -299,7 +299,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoAppSetupsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAppSetupsCloseClicked');
   });
 
@@ -326,7 +326,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDataTableCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataTableCloseClicked');
   });
 
@@ -342,7 +342,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainModulesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainModulesCloseClicked');
   });
 
@@ -358,7 +358,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainModuleItemsCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainModuleItemsCloseClicked');
   });
 
@@ -374,7 +374,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainModuleAccessesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainModuleAccessesCloseClicked');
   });
 
@@ -390,7 +390,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainModuleItemAccessesCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainModuleItemAccessesCloseClicked');
   });
 
@@ -406,7 +406,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMProcessIncludedCloseClicked', async () => {
-    await accessManagement.clickElement(accessManagement.Close);
+    await accessManagement.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMProcessIncludedCloseClicked');
   });
 

@@ -281,6 +281,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCloseClicked2');
   });
 
+  await page.pause();
+
   // === Requirements and Guidelines ===
   await safeStep('gotoRequirementsandGuidelines', async () => {
     await universalDesign.gotoRequirementsandGuidelines();

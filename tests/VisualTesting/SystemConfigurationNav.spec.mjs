@@ -102,6 +102,8 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
+  await systemConfiguration.toggleDarkModeAndClickProfile();
+
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
@@ -129,7 +131,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMTranslationsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTranslationsCloseClicked');
   });
 
@@ -139,7 +141,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMTranslationsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTranslationsCloseClicked2');
   });
 
@@ -154,7 +156,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMInternalTranslationsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMInternalTranslationsCloseClicked');
   });
 
@@ -164,7 +166,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMInternalTranslationsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMInternalTranslationsCloseClicked2');
   });
 
@@ -179,7 +181,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoExternalHelpCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalHelpCloseClicked');
   });
 
@@ -189,7 +191,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoExternalHelpCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalHelpCloseClicked2');
   });
 
@@ -204,7 +206,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTimeZonesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTimeZonesCloseClicked');
   });
 
@@ -225,7 +227,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainSummariesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainSummariesCloseClicked');
   });
 
@@ -235,7 +237,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMainSummariesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMainSummariesCloseClicked2');
   });
 
@@ -250,7 +252,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoProductConfigurationsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductConfigurationsCloseClicked');
   });
 
@@ -260,7 +262,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoProductConfigurationsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductConfigurationsCloseClicked2');
   });
 
@@ -275,7 +277,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoReportTemplatesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoReportTemplatesCloseClicked');
   });
 
@@ -285,7 +287,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoReportTemplatesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoReportTemplatesCloseClicked2');
   });
 
@@ -300,7 +302,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSnapshotsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSnapshotsCloseClicked');
   });
 
@@ -310,7 +312,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSnapshotsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSnapshotsCloseClicked2');
   });
 
@@ -325,7 +327,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTemplatesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTemplatesCloseClicked');
   });
 
@@ -340,7 +342,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMShortcutsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMShortcutsCloseClicked');
   });
 
@@ -350,7 +352,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMShortcutsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMShortcutsCloseClicked2');
   });
 
@@ -365,7 +367,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDateWarehouseViewsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDateWarehouseViewsCloseClicked');
   });
 
@@ -375,7 +377,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDateWarehouseViewsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDateWarehouseViewsCloseClicked2');
   });
 
@@ -396,7 +398,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoAutomaticActionsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAutomaticActionsCloseClicked');
   });
 
@@ -406,7 +408,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoAutomaticActionsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAutomaticActionsCloseClicked2');
   });
 
@@ -421,7 +423,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoRemindersCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRemindersCloseClicked');
   });
 
@@ -431,7 +433,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoRemindersCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRemindersCloseClicked2');
   });
 
@@ -446,7 +448,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoNotificationRulesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoNotificationRulesCloseClicked');
   });
 
@@ -456,7 +458,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoNotificationRulesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoNotificationRulesCloseClicked2');
   });
 
@@ -471,7 +473,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoActionLogsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoActionLogsCloseClicked');
   });
 
@@ -486,7 +488,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoHistoryLogsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHistoryLogsCloseClicked');
   });
 
@@ -501,7 +503,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMLogsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMLogsCloseClicked');
   });
 
@@ -516,7 +518,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWebServiceSettingsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWebServiceSettingsCloseClicked');
   });
 
@@ -526,7 +528,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWebServiceSettingsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWebServiceSettingsCloseClicked2');
   });
 
@@ -541,7 +543,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentEmailImportSetupsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentEmailImportSetupsCloseClicked');
   });
 
@@ -551,7 +553,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentEmailImportSetupsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentEmailImportSetupsCloseClicked2');
   });
 
@@ -566,7 +568,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMirrorDefinationsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMirrorDefinationsCloseClicked');
   });
 
@@ -576,7 +578,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMirrorDefinationsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMirrorDefinationsCloseClicked2');
   });
 
@@ -591,7 +593,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMirrorReceivingRulesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMirrorReceivingRulesCloseClicked');
   });
 
@@ -601,7 +603,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMirrorReceivingRulesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMirrorReceivingRulesCloseClicked2');
   });
 
@@ -616,7 +618,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMirrorItemsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMirrorItemsCloseClicked');
   });
 
@@ -631,7 +633,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueImportsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueImportsCloseClicked');
   });
 
@@ -641,7 +643,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueImportsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueImportsCloseClicked2');
   });
 
@@ -656,7 +658,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueExportsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueExportsCloseClicked');
   });
 
@@ -666,7 +668,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueExportsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueExportsCloseClicked2');
   });
 
@@ -681,7 +683,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueItemsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueItemsCloseClicked');
   });
 
@@ -691,7 +693,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoQueueItemsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQueueItemsCloseClicked2');
   });
 
@@ -717,7 +719,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWMSLayersCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWMSLayersCloseClicked');
   });
 
@@ -727,7 +729,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWMSLayersCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWMSLayersCloseClicked2');
   });
 
@@ -742,7 +744,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMFormTemplatesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMFormTemplatesCloseClicked');
   });
 
@@ -752,7 +754,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMMFormTemplatesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMFormTemplatesCloseClicked2');
   });
 
@@ -765,7 +767,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformationTypesAddClicked');
   });
   await safeStep('gotoTechnicalInformationTypesCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformationTypesCloseClicked');
   });
   await safeStep('gotoTechnicalInformationTypesExportClicked', async () => {
@@ -773,7 +775,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformationTypesExportClicked');
   });
   await safeStep('gotoTechnicalInformationTypesCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformationTypesCloseClicked2');
   });
 
@@ -786,7 +788,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMBoardsExportClicked');
   });
   await safeStep('gotoMMBoardsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMBoardsCloseClicked');
   });
 
@@ -799,7 +801,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalActionMenusAddClicked');
   });
   await safeStep('gotoGlobalActionMenusCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalActionMenusCloseClicked');
   });
   await safeStep('gotoGlobalActionMenusExportClicked', async () => {
@@ -807,7 +809,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalActionMenusExportClicked');
   });
   await safeStep('gotoGlobalActionMenusCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalActionMenusCloseClicked2');
   });
 
@@ -820,7 +822,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalLinksAddClicked');
   });
   await safeStep('gotoExternalLinksCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalLinksCloseClicked');
   });
   await safeStep('gotoExternalLinksExportClicked', async () => {
@@ -828,7 +830,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalLinksExportClicked');
   });
   await safeStep('gotoExternalLinksCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoExternalLinksCloseClicked2');
   });
 
@@ -841,7 +843,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAppKeysAddClicked');
   });
   await safeStep('gotoAppKeysCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAppKeysCloseClicked');
   });
   await safeStep('gotoAppKeysExportClicked', async () => {
@@ -849,7 +851,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAppKeysExportClicked');
   });
   await safeStep('gotoAppKeysCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAppKeysCloseClicked2');
   });
 
@@ -862,7 +864,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMExternalSetupsAddClicked');
   });
   await safeStep('gotoMMExternalSetupsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMExternalSetupsCloseClicked');
   });
   await safeStep('gotoMMExternalSetupsExportClicked', async () => {
@@ -870,7 +872,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMExternalSetupsExportClicked');
   });
   await safeStep('gotoMMExternalSetupsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMExternalSetupsCloseClicked2');
   });
 
@@ -888,7 +890,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialsAddClicked');
   });
   await safeStep('gotoMMTutorialsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialsCloseClicked');
   });
   await safeStep('gotoMMTutorialsExportClicked', async () => {
@@ -896,7 +898,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialsExportClicked');
   });
   await safeStep('gotoMMTutorialsCloseClicked2', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialsCloseClicked2');
   });
 
@@ -909,7 +911,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialStepsExportClicked');
   });
   await safeStep('gotoMMTutorialStepsCloseClicked', async () => {
-    await systemConfiguration.clickElement(systemConfiguration.Close);
+    await systemConfiguration.clickClose();;
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMMTutorialStepsCloseClicked');
    });
 };
