@@ -49,7 +49,10 @@ class EnergyManagement extends BasePage {
      //Add new data locators
      this.Add = "#newRecordButton";
      this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+     this.Export = "button[aria-label='This action exports data - ExportData']";
   }
+
+  
 
   async gotoEnergyManagement() {
     await this.page.waitForTimeout(3000);

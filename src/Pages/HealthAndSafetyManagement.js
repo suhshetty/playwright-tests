@@ -52,6 +52,7 @@ class HealthAndSafetyManagement extends BasePage {
     //Add new data Locators
     this.Add = "#newRecordButton"
     this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+    this.Export = "button[aria-label='This action exports data - ExportData']";
     }
 
     async clickHealthAndSafetyManagement() {

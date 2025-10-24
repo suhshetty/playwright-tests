@@ -22,27 +22,57 @@ const labels = [
 
   'gotoResponsibleResources',
   'gotoServicePartners',
+  'gotoServicePartnersAddClicked',
+  'gotoServicePartnersCloseClicked',
+  'gotoServicePartnersExportClicked',
+  'gotoServicePartnersExportCloseClicked',
   'gotoServicePartnersManagementHSE',
   'gotoPersonPermitHSE',
+  'gotoPersonPermitHSEExportClicked',
+  'gotoPersonPermitHSEExportCloseClicked',
 
   'gotoTechnicalDocumentation',
   'gotoHSEDocuments',
+  'gotoHSEDocumentsAddClicked',
+  'gotoHSEDocumentsCloseClicked',
   'gotoHSEDocumentTree',
   'gotoRadonRegistration',
+  'gotoRadonRegistrationAddClicked',
+  'gotoRadonRegistrationCloseClicked',
 
   'gotoObjectMarking',
   'gotoInsuranceCertificate',
+  'gotoInsuranceCertificateAddClicked',
+  'gotoInsuranceCertificateCloseClicked',
+  'gotoInsuranceCertificateExportClicked',
+  'gotoInsuranceCertificateExportCloseClicked',
 
   'gotoActivities',
   'gotoTaskManagementHSE',
+  'gotoTaskManagementHSEExportClicked',
+  'gotoTaskManagementHSEExportCloseClicked',
   'gotoWorkOrderHSE',
+  'gotoWorkOrderHSEExportClicked',
+  'gotoWorkOrderHSEExportCloseClicked',
   'gotoChecklistsHSE',
+  'gotoChecklistsHSEExportClicked',
+  'gotoChecklistsHSEExportCloseClicked',
   'gotoIncidentHSE',
+  'gotoIncidentHSEAddClicked',
+  'gotoIncidentHSECloseClicked',
 
   'gotoRequirementAndGuidelines',
   'gotoLinksToLawsAndRegulation',
+  'gotoLinksToLawsAndRegulationAddClicked',
+  'gotoLinksToLawsAndRegulationCloseClicked',
   'gotoInstructionsAndGuidelines',
+  'gotoInstructionsAndGuidelinesAddClicked',
+  'gotoInstructionsAndGuidelinesCloseClicked',
   'gotoLocalRegulations',
+  'gotoLocalRegulationsAddClicked',
+  'gotoLocalRegulationsCloseClicked',
+  'gotoLocalRegulationsExportClicked',
+  'gotoLocalRegulationsExportCloseClicked',
 
   'gotoConfiguration',
   'gotoAccessConfiguration'
@@ -90,6 +120,26 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartners');
   });
 
+  await safeStep('gotoServicePartnersAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersAddClicked');
+  });
+
+  await safeStep('gotoServicePartnersCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersCloseClicked');
+  });
+
+  await safeStep('gotoServicePartnersExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersExportClicked');
+  });
+
+  await safeStep('gotoServicePartnersExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersExportCloseClicked');
+  });
+
   await safeStep('gotoServicePartnersManagementHSE', async () => {
     await healthAndSafetyManagement.gotoServicePartnersManagementHSE();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartnersManagementHSE');
@@ -98,6 +148,16 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoPersonPermitHSE', async () => {
     await healthAndSafetyManagement.gotoPersonPermitHSE();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitHSE');
+  });
+
+  await safeStep('gotoPersonPermitHSEExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitHSEExportClicked');
+  });
+
+  await safeStep('gotoPersonPermitHSEExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonPermitHSEExportCloseClicked');
   });
 
   // === Technical Documentation ===
@@ -111,6 +171,16 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHSEDocuments');
   });
 
+  await safeStep('gotoHSEDocumentsAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHSEDocumentsAddClicked');
+  });
+
+  await safeStep('gotoHSEDocumentsCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHSEDocumentsCloseClicked');
+  });
+
   await safeStep('gotoHSEDocumentTree', async () => {
     await healthAndSafetyManagement.gotoHSEDocumentTree();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHSEDocumentTree');
@@ -119,6 +189,16 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoRadonRegistration', async () => {
     await healthAndSafetyManagement.gotoRadonRegistration();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRadonRegistration');
+  });
+
+  await safeStep('gotoRadonRegistrationAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRadonRegistrationAddClicked');
+  });
+
+  await safeStep('gotoRadonRegistrationCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRadonRegistrationCloseClicked');
   });
 
   // === Object Marking ===
@@ -132,6 +212,26 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsuranceCertificate');
   });
 
+  await safeStep('gotoInsuranceCertificateAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsuranceCertificateAddClicked');
+  });
+
+  await safeStep('gotoInsuranceCertificateCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsuranceCertificateCloseClicked');
+  });
+
+  await safeStep('gotoInsuranceCertificateExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsuranceCertificateExportClicked');
+  });
+
+  await safeStep('gotoInsuranceCertificateExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInsuranceCertificateExportCloseClicked');
+  });
+
   // === Activities ===
   await safeStep('gotoActivities', async () => {
     await healthAndSafetyManagement.gotoActivities();
@@ -143,9 +243,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementHSE');
   });
 
+  await safeStep('gotoTaskManagementHSEExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementHSEExportClicked');
+  });
+
+  await safeStep('gotoTaskManagementHSEExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskManagementHSEExportCloseClicked');
+  });
+
   await safeStep('gotoWorkOrderHSE', async () => {
     await healthAndSafetyManagement.gotoWorkOrderHSE();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderHSE');
+  });
+
+  await safeStep('gotoWorkOrderHSEExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderHSEExportClicked');
+  });
+
+  await safeStep('gotoWorkOrderHSEExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderHSEExportCloseClicked');
   });
 
   await safeStep('gotoChecklistsHSE', async () => {
@@ -153,9 +273,29 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsHSE');
   });
 
+  await safeStep('gotoChecklistsHSEExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsHSEExportClicked');
+  });
+
+  await safeStep('gotoChecklistsHSEExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsHSEExportCloseClicked');
+  });
+
   await safeStep('gotoIncidentHSE', async () => {
     await healthAndSafetyManagement.gotoIncidentHSE();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentHSE');
+  });
+
+  await safeStep('gotoIncidentHSEAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentHSEAddClicked');
+  });
+
+  await safeStep('gotoIncidentHSECloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentHSECloseClicked');
   });
 
   // === Requirements and Guidelines ===
@@ -169,14 +309,54 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAndRegulation');
   });
 
+  await safeStep('gotoLinksToLawsAndRegulationAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAndRegulationAddClicked');
+  });
+
+  await safeStep('gotoLinksToLawsAndRegulationCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLinksToLawsAndRegulationCloseClicked');
+  });
+
   await safeStep('gotoInstructionsAndGuidelines', async () => {
     await healthAndSafetyManagement.gotoInstructionsAndGuidelines();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAndGuidelines');
   });
 
+  await safeStep('gotoInstructionsAndGuidelinesAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAndGuidelinesAddClicked');
+  });
+
+  await safeStep('gotoInstructionsAndGuidelinesCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoInstructionsAndGuidelinesCloseClicked');
+  });
+
   await safeStep('gotoLocalRegulations', async () => {
     await healthAndSafetyManagement.gotoLocalRegulations();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulations');
+  });
+
+  await safeStep('gotoLocalRegulationsAddClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsAddClicked');
+  });
+
+  await safeStep('gotoLocalRegulationsCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsCloseClicked');
+  });
+
+  await safeStep('gotoLocalRegulationsExportClicked', async () => {
+    await healthAndSafetyManagement.clickElement(healthAndSafetyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsExportClicked');
+  });
+
+  await safeStep('gotoLocalRegulationsExportCloseClicked', async () => {
+    await healthAndSafetyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocalRegulationsExportCloseClicked');
   });
 
   // === Configuration ===

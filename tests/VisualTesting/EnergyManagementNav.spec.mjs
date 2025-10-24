@@ -24,6 +24,8 @@ const labels = [
 const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, energyManagement } = await loginAndInitialize({ page, context, baseUrl });
 
+
+
   // Home Page
 await safeStep('gotoHomePage', async () => {
   await homePage.gotoHomePage();
