@@ -1,4 +1,4 @@
-// File: EnergyManagementNavigation.spec.js
+// tests/Navigation/EnergyManagementNav.spec.js
 import { test, expect } from '@playwright/test';
 import { loginAndInitialize } from '../src/testSetup.js';
 import {
@@ -12,190 +12,380 @@ import {
 initializeVisualTestEnv();
 
 const labels = [
-  'gotoEnergyZones', 'clickRegisterEnergyZones', 'gotoCreateZones',
-  'gotoWeatherStations', 'clickRegisterWeatherStations', 'gotoGlobalWeatherStations', 'gotoWeatherStationNormalPeriod', 'clickRegisterWeatherStationNormalPeriods',
-  'gotoEnergyProvidersSubType', 'clickRegisterEnergyProviders',
-  'gotoEnergyDistributions', 'clickRegisterEnergyDistributions', 'gotoEnergyProcesses', 'clickRegisterEnergyProcesses', 'gotoGauges', 'clickRegisterGauges', 'gotoGaugesReadings', 'gotoEnerkeyProfiles',
-  'gotoAnnualEnergyUsages', 'clickRegisterAnnualEnergyUsages', 'gotoEnergySavingsPotential', 'clickRegisterEnergySavingPotentials',
-  'gotoConfiguration', 'gotoAccessConfiguration'
+  // Energy Zones Overview
+  'gotoEnergyZones', 'clickRegisterEnergyZones','CloseRegisterEnergyZones', 'gotoCreateZones',
+
+  // Weather Stations Overview
+  'gotoWeatherStations', 'clickRegisterWeatherStations','clickCloseRegisterWeatherStations',
+  'gotoGlobalWeatherStations','gotoGlobalWeatherStationsAddClicked','gotoGlobalWeatherStationsCloseClicked','gotoGlobalWeatherStationsExportClicked','gotoGlobalWeatherStationsExportCloseClicked',
+
+  'gotoWeatherStationNormalPeriod','gotoWeatherStationNormalPeriodAddClicked','gotoWeatherStationNormalPeriodCloseClicked','gotoWeatherStationNormalPeriodExportClicked','gotoWeatherStationNormalPeriodExportCloseClicked',
+
+  // Energy Providers
+  'gotoEnergyProvidersSubType','clickRegisterEnergyProviders','clickCloseRegisterEnergyProviders','clickExportRegisterEnergyProviders','clickCloseExportRegisterEnergyProviders',
+
+  // Gauges Overview
+  'gotoGaugesOverview','gotoEnergyZonesGO','gotoEnergyZonesGOAddClicked','gotoEnergyZonesGOCloseClicked',
+  'gotoEnergyDistributions','clickRegisterEnergyDistributions','clickCloseRegisterEnergyDistributions',
+  'gotoEnergyProcesses','clickRegisterEnergyProcesses','clickCloseRegisterEnergyProcesses',
+  'gotoGauges','clickRegisterGauges','clickCloseRegisterGauges','clickExportRegisterGauges','clickCloseExportRegisterGauges',
+  'gotoGaugesReadings','gotoRegisterGaugesReadings','gotoCloseRegisterGaugesReadings','gotoExportGaugesReadings','gotoCloseExportGaugesReadings',
+  'gotoGaugeResults','gotoExportGaugeResults','gotoCloseExportGaugeResults','gotoEnerkeyProfiles','gotoExportEnerkeyProfiles','gotoCloseExportEnerkeyProfiles',
+
+  // Energy Projects
+  'gotoAnnualEnergyUsages','clickRegisterAnnualEnergyUsages','clickCloseRegisterAnnualEnergyUsages','clickExportRegisterAnnualEnergyUsages','clickCloseExportRegisterAnnualEnergyUsages',
+  'gotoEnergySavingsPotential','clickRegisterEnergySavingPotentials','clickCloseRegisterEnergySavingPotentials','clickExportRegisterEnergySavingPotentials','clickCloseExportEnergySavingPotentials',
+
+  // Configuration
+  'gotoConfiguration','gotoAccessConfiguration'
 ];
 
-// Run for a given environment
 const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, energyManagement } = await loginAndInitialize({ page, context, baseUrl });
 
+  // Home
+  await safeStep('gotoHomePage', async () => {
+    await homePage.gotoHomePage();
+  });
 
+  //Add a 2 seconds hard wait to ensure all elements are loaded before starting the test steps
+  await page.waitForTimeout(2000);
 
-  // Home Page
-await safeStep('gotoHomePage', async () => {
-  await homePage.gotoHomePage();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-});
+  await safeStep('gotoModuleMenu', async () => {
+    await homePage.gotoModuleMenu();
+  });
 
-await safeStep('gotoModuleMenu', async () => {
-  await homePage.gotoModuleMenu();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-});
+  await page.waitForTimeout(2000);
 
-// Main Energy Management module
-await safeStep('gotoEnergyManagement', async () => {
-  await energyManagement.gotoEnergyManagement();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyManagement');
-});
+  // Open Energy Management
+  await safeStep('gotoEnergyManagement', async () => {
+    await energyManagement.gotoEnergyManagement();
+  });
 
-// Energy Zones Overview
-await safeStep('gotoEnergyZonesOverview', async () => {
-  await energyManagement.gotoEnergyZonesOverview();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZonesOverview');
-});
+  // Energy Zones Overview
+  await safeStep('gotoEnergyZonesOverview', async () => {
+    await energyManagement.gotoEnergyZonesOverview();
+  });
 
-await safeStep('gotoEnergyZones', async () => {
-  await energyManagement.gotoEnergyZones();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZones');
-});
+  await safeStep('gotoEnergyZones', async () => {
+    await energyManagement.gotoEnergyZones();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZones');
+  });
 
-await safeStep('clickRegisterEnergyZones', async () => {
-  await energyManagement.clickRegisterEnergyZones();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyZones');
-});
+  // Add (use clickElement like U1/U2) and then close via clickClose()
+  await safeStep('clickRegisterEnergyZones', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyZones');
+  });
 
-await safeStep('gotoCreateZones', async () => {
-  await energyManagement.gotoCreateZones();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoCreateZones');
-});
+  await safeStep('CloseRegisterEnergyZones', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'CloseRegisterEnergyZones');
+  });
 
-// Weather Stations Overview
-await safeStep('gotoWeatherStationsOverview', async () => {
-  await energyManagement.gotoWeatherStationsOverview();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationsOverview');
-});
+  await safeStep('gotoCreateZones', async () => {
+    await energyManagement.gotoCreateZones();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCreateZones');
+  });
 
-await safeStep('gotoWeatherStations', async () => {
-  await energyManagement.gotoWeatherStations();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStations');
-});
+  // Weather Stations
+  await safeStep('gotoWeatherStationsOverview', async () => {
+    await energyManagement.gotoWeatherStationsOverview();
+  });
 
-await safeStep('clickRegisterWeatherStations', async () => {
-  await energyManagement.clickRegisterWeatherStations();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWeatherStations');
-});
+  await safeStep('gotoWeatherStations', async () => {
+    await energyManagement.gotoWeatherStations();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStations');
+  });
 
-await safeStep('gotoGlobalWeatherStations', async () => {
-  await energyManagement.gotoGlobalWeatherStations();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStations');
-});
+  await safeStep('clickRegisterWeatherStations', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWeatherStations');
+  });
 
-await safeStep('gotoWeatherStationNormalPeriod', async () => {
-  await energyManagement.gotoWeatherStationNormalPeriod();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriod');
-});
+  await safeStep('clickCloseRegisterWeatherStations', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterWeatherStations');
+  });
 
-await safeStep('clickRegisterWeatherStationNormalPeriods', async () => {
-  await energyManagement.clickRegisterWeatherStationNormalPeriods();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWeatherStationNormalPeriods');
-});
+  // Global Weather Stations add/export/close using clickElement / clickClose
+  await safeStep('gotoGlobalWeatherStations', async () => {
+    await energyManagement.gotoGlobalWeatherStations();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStations');
+  });
 
-// Energy Providers
-await safeStep('gotoEnergyProviders', async () => {
-  await energyManagement.gotoEnergyProviders();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProviders');
-});
+  await safeStep('gotoGlobalWeatherStationsAddClicked', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStationsAddClicked');
+  });
 
-await safeStep('clickRegisterEnergyProviders', async () => {
-  await energyManagement.clickRegisterEnergyProviders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProviders');
-});
+  await safeStep('gotoGlobalWeatherStationsCloseClicked', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStationsCloseClicked');
+  });
 
-await safeStep('gotoEnergyProvidersSubType', async () => {
-  await energyManagement.gotoEnergyProvidersSubType();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProvidersSubType');
-});
+  await safeStep('gotoGlobalWeatherStationsExportClicked', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStationsExportClicked');
+  });
 
-// Gauges Overview
-await safeStep('gotoGaugesOverview', async () => {
-  await energyManagement.gotoGaugesOverview();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugesOverview');
-});
+  await safeStep('gotoGlobalWeatherStationsExportCloseClicked', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGlobalWeatherStationsExportCloseClicked');
+  });
 
-await safeStep('gotoEnergyDistributions', async () => {
-  await energyManagement.gotoEnergyDistributions();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyDistributions');
-});
+  // Weather Station Normal Period
+  await safeStep('gotoWeatherStationNormalPeriod', async () => {
+    await energyManagement.gotoWeatherStationNormalPeriod();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriod');
+  });
 
-await safeStep('clickRegisterEnergyDistributions', async () => {
-  await energyManagement.clickRegisterEnergyDistributions();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyDistributions');
-});
+  await safeStep('gotoWeatherStationNormalPeriodAddClicked', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriodAddClicked');
+  });
 
-await safeStep('gotoEnergyProcesses', async () => {
-  await energyManagement.gotoEnergyProcesses();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProcesses');
-});
+  await safeStep('gotoWeatherStationNormalPeriodCloseClicked', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriodCloseClicked');
+  });
 
-await safeStep('clickRegisterEnergyProcesses', async () => {
-  await energyManagement.clickRegisterEnergyProcesses();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProcesses');
-});
+  await safeStep('gotoWeatherStationNormalPeriodExportClicked', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriodExportClicked');
+  });
 
-await safeStep('gotoGauges', async () => {
-  await energyManagement.gotoGauges();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoGauges');
-});
+  await safeStep('gotoWeatherStationNormalPeriodExportCloseClicked', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWeatherStationNormalPeriodExportCloseClicked');
+  });
 
-await safeStep('clickRegisterGauges', async () => {
-  await energyManagement.clickRegisterGauges();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterGauges');
-});
+  // Energy Providers
+  await safeStep('gotoEnergyProviders', async () => {
+    await energyManagement.gotoEnergyProviders();
+  });
 
-await safeStep('gotoGaugesReadings', async () => {
-  await energyManagement.gotoGaugesReadings();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugesReadings');
-});
+  await safeStep('clickRegisterEnergyProviders', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProviders');
+  });
 
-await safeStep('gotoEnerkeyProfiles', async () => {
-  await energyManagement.gotoEnerkeyProfiles();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnerkeyProfiles');
-});
+  await safeStep('clickCloseRegisterEnergyProviders', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterEnergyProviders');
+  });
 
-// Energy Projects
-await safeStep('gotoEnergyProjects', async () => {
-  await energyManagement.gotoEnergyProjects();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProjects');
-});
+  await safeStep('clickExportRegisterEnergyProviders', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickExportRegisterEnergyProviders');
+  });
 
-await safeStep('gotoAnnualEnergyUsages', async () => {
-  await energyManagement.gotoAnnualEnergyUsages();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoAnnualEnergyUsages');
-});
+  await safeStep('clickCloseExportRegisterEnergyProviders', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseExportRegisterEnergyProviders');
+  });
 
-await safeStep('clickRegisterAnnualEnergyUsages', async () => {
-  await energyManagement.clickRegisterAnnualEnergyUsages();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualEnergyUsages');
-});
+  // Gauges Overview
+  await safeStep('gotoGaugesOverview', async () => {
+    await energyManagement.gotoGaugesOverview();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugesOverview');
+  });
 
-await safeStep('gotoEnergySavingsPotential', async () => {
-  await energyManagement.gotoEnergySavingsPotential();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergySavingsPotential');
-});
+  await safeStep('gotoEnergyZonesGO', async () => {
+    await energyManagement.gotoEnergyZonesGO();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZonesGO');
+  });
 
-await safeStep('clickRegisterEnergySavingPotentials', async () => {
-  await energyManagement.clickRegisterEnergySavingPotentials();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergySavingPotentials');
-});
+   await safeStep('gotoEnergyZonesGOAddClicked', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZonesGOAddClicked');
+  });
 
-// Configuration
-await safeStep('gotoConfiguration', async () => {
-  await energyManagement.gotoConfiguration();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-});
+    await safeStep('gotoEnergyZonesGOCloseClicked', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyZonesGOCloseClicked');
+  });
 
-await safeStep('gotoAccessConfiguration', async () => {
-  await energyManagement.gotoAccessConfiguration();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfiguration');
-});
-}
+  await safeStep('gotoEnergyDistributions', async () => {
+    await energyManagement.gotoEnergyDistributions();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyDistributions');
+  });
 
-// Main visual regression test
+  await safeStep('clickRegisterEnergyDistributions', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyDistributions');
+  });
+
+  await safeStep('clickCloseRegisterEnergyDistributions', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterEnergyDistributions');
+  });
+
+  await safeStep('gotoEnergyProcesses', async () => {
+    await energyManagement.gotoEnergyProcesses();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergyProcesses');
+  });
+
+  await safeStep('clickRegisterEnergyProcesses', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergyProcesses');
+  });
+
+  await safeStep('clickCloseRegisterEnergyProcesses', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterEnergyProcesses');
+  });
+
+  await safeStep('gotoGauges', async () => {
+    await energyManagement.gotoGauges();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGauges');
+  });
+
+  await safeStep('clickRegisterGauges', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterGauges');
+  });
+
+  await safeStep('clickCloseRegisterGauges', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterGauges');
+  });
+
+  await safeStep('clickExportRegisterGauges', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickExportRegisterGauges');
+  });
+
+  await safeStep('clickCloseExportRegisterGauges', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseExportRegisterGauges');
+  });
+
+  // Gauges Readings flows
+  await safeStep('gotoGaugesReadings', async () => {
+    await energyManagement.gotoGaugesReadings();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugesReadings');
+  });
+
+  await safeStep('gotoRegisterGaugesReadings', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoRegisterGaugesReadings');
+  });
+
+  await safeStep('gotoCloseRegisterGaugesReadings', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCloseRegisterGaugesReadings');
+  });
+
+  await safeStep('gotoExportGaugesReadings', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoExportGaugesReadings');
+  });
+
+  await safeStep('gotoCloseExportGaugesReadings', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCloseExportGaugesReadings');
+  });
+
+  // Gauge Results
+  await safeStep('gotoGaugeResults', async () => {
+    await energyManagement.gotoGaugeResults();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoGaugeResults');
+  });
+
+  await safeStep('gotoExportGaugeResults', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoExportGaugeResults');
+  });
+
+  await safeStep('gotoCloseExportGaugeResults', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCloseExportGaugeResults');
+  });
+
+    // Enerkey Profiles
+  await safeStep('gotoEnerkeyProfiles', async () => {
+    await energyManagement.gotoEnerkeyProfiles();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnerkeyProfiles');
+  });
+
+    await safeStep('gotoExportEnerkeyProfiles', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoExportEnerkeyProfiles');
+  });
+
+  await safeStep('gotoCloseExportEnerkeyProfiles', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoCloseExportEnerkeyProfiles');
+  });
+
+  // Energy Projects
+  await safeStep('gotoEnergyProjects', async () => {
+    await energyManagement.gotoEnergyProjects();
+  });
+
+  await safeStep('gotoAnnualEnergyUsages', async () => {
+    await energyManagement.gotoAnnualEnergyUsages();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAnnualEnergyUsages');
+  });
+
+  await safeStep('clickRegisterAnnualEnergyUsages', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualEnergyUsages');
+  });
+
+  await safeStep('clickCloseRegisterAnnualEnergyUsages', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterAnnualEnergyUsages');
+  });
+
+  await safeStep('clickExportRegisterAnnualEnergyUsages', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickExportRegisterAnnualEnergyUsages');
+  });
+
+  await safeStep('clickCloseExportRegisterAnnualEnergyUsages', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseExportRegisterAnnualEnergyUsages');
+  });
+
+  await safeStep('gotoEnergySavingsPotential', async () => {
+    await energyManagement.gotoEnergySavingsPotential();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoEnergySavingsPotential');
+  });
+
+  await safeStep('clickRegisterEnergySavingPotentials', async () => {
+    await energyManagement.clickElement(energyManagement.Add);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterEnergySavingPotentials');
+  });
+
+  await safeStep('clickCloseRegisterEnergySavingPotentials', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterEnergySavingPotentials');
+  });
+
+  await safeStep('clickExportRegisterEnergySavingPotentials', async () => {
+    await energyManagement.clickElement(energyManagement.Export);
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickExportRegisterEnergySavingPotentials');
+  });
+
+  await safeStep('clickCloseExportEnergySavingPotentials', async () => {
+    await energyManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseExportEnergySavingPotentials');
+  });
+
+  // Configuration
+  await safeStep('gotoConfiguration', async () => {
+    await energyManagement.gotoConfiguration();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+  });
+
+  await safeStep('gotoAccessConfiguration', async () => {
+    await energyManagement.gotoAccessConfiguration();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfiguration');
+  });
+};
+
 test('Visual Regression Test - Energy Management: Compare URL1 and URL2', async ({ page, context }) => {
   await runTestOnUrl('url1', process.env.URL1, page, context);
 

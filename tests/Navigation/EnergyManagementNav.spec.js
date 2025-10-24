@@ -15,7 +15,7 @@ test('Test Navigation Energy Management', async ({ page, context }) => {
 const { homePage, energyManagement } = await loginAndInitialize({ page, context, baseUrl });
 
 // Home Page   
-await page.pause();
+
 await homePage.gotoHomePage();
 await homePage.gotoModuleMenu();
 

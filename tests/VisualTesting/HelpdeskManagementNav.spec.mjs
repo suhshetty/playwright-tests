@@ -12,11 +12,30 @@ import {
 initializeVisualTestEnv();
 
 const labels = [
-  'gotoFailures', 'clickRegisterFailures', 'gotoIssues', 'clickRegisterIssues', 'gotoConditionAssessmentType', 'clickRegisterConditionAssessmentType', 
-  'gotoReleaseItems', 'clickRegisterReleaseItems', 'gotoIncidentCategory1s', 'clickRegisterIncidentCategory1s', 'gotoIncidentCategory2s', 'gotoAllIncidents', 'clickRegisterAllIncidents',
-  'gotoWorkOrdersOverview', 'gotoWorkOrders', 'clickRegisterWorkOrders', 'gotoServicePartners', 'gotoSLAKPIDemands', 'clickRegisterSLAKPIDemands', 'gotoSLAKPIDemandIncidentTypes',
-  'gotoNotificationsandReminders', 'gotoReminders', 'clickRegisterReminders',
-  'gotoIncidentGroups', 'clickRegisterIncidentGroups', 'gotoIncidentTypes', 'clickRegisterIncidentTypes', 'gotoTaskPriorities', 'clickRegisterTaskPriorities', 'gotoProfessions', 'clickRegisterProfessions',
+  'gotoFailures', 'clickRegisterFailures', 'clickCloseRegisterFailures',
+  'gotoIssues', 'clickRegisterIssues', 'clickCloseRegisterIssues',
+  'gotoConditionAssessmentType', 'clickRegisterConditionAssessmentType', 'clickCloseRegisterConditionAssessmentType',
+  'gotoReleaseItems', 'clickRegisterReleaseItems', 'clickCloseRegisterReleaseItems',
+  'gotoIncidentCategory1s', 'clickRegisterIncidentCategory1s', 'clickCloseRegisterIncidentCategory1s',
+  'gotoIncidentCategory2s',
+  'gotoAllIncidents', 'clickRegisterAllIncidents', 'clickCloseRegisterAllIncidents',
+
+  'gotoWorkOrdersOverview', 'gotoWorkOrders', 'clickRegisterWorkOrders', 'clickCloseRegisterWorkOrders',
+
+  'gotoServiceInformationOverview',
+  'gotoServicePartners',
+  'gotoSLAKPIDemands', 'clickRegisterSLAKPIDemands', 'clickCloseRegisterSLAKPIDemands',
+  'gotoSLAKPIDemandIncidentTypes',
+
+  'gotoNotificationsandReminders',
+  'gotoReminders', 'clickRegisterReminders', 'clickCloseRegisterReminders',
+
+  'gotoDataSetup',
+  'gotoIncidentGroups', 'clickRegisterIncidentGroups', 'clickCloseRegisterIncidentGroups',
+  'gotoIncidentTypes', 'clickRegisterIncidentTypes', 'clickCloseRegisterIncidentTypes',
+  'gotoTaskPriorities', 'clickRegisterTaskPriorities', 'clickCloseRegisterTaskPriorities',
+  'gotoProfessions', 'clickRegisterProfessions', 'clickCloseRegisterProfessions',
+
   'gotoConfiguration', 'gotoAccessConfigurations'
 ];
 
@@ -25,169 +44,251 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   const { homePage, helpdeskManagement } = await loginAndInitialize({ page, context, baseUrl });
 
   // Home Page
-await safeStep('gotoHomePage', async () => {
-  await homePage.gotoHomePage();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
-});
+  await safeStep('gotoHomePage', async () => {
+    await homePage.gotoHomePage();
+  });
 
-await safeStep('gotoModuleMenu', async () => {
-  await homePage.gotoModuleMenu();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
-});
+  //Wait for 2 seconds to ensure all elements are loaded
+  await page.waitForTimeout(2000);
 
-// Main Helpdesk Management module
-await safeStep('gotoHelpdeskManagement', async () => {
-  await helpdeskManagement.clickHelpdeskManagement();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHelpdeskManagement');
-});
+  await safeStep('gotoModuleMenu', async () => {
+    await homePage.gotoModuleMenu();
+  });
 
-// Incidents Overview
-await safeStep('gotoIncidentsOverview', async () => {
-  await helpdeskManagement.gotoIncidentsOverview();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentsOverview');
-});
+  //Wait for 2 seconds to ensure all elements are loaded
+  await page.waitForTimeout(2000);
 
-await safeStep('gotoFailures', async () => {
-  await helpdeskManagement.gotoFailures();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoFailures');
-  await helpdeskManagement.clickRegisterFailures();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFailures');
-});
+  // Main Helpdesk Management module
+  await safeStep('gotoHelpdeskManagement', async () => {
+    await helpdeskManagement.clickHelpdeskManagement();
+  });
 
-await safeStep('gotoIssues', async () => {
-  await helpdeskManagement.gotoIssues();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoIssues');
-  await helpdeskManagement.clickRegisterIssues();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIssues');
-});
+  // === Incidents Overview ===
+  await safeStep('gotoIncidentsOverview', async () => {
+    await helpdeskManagement.gotoIncidentsOverview();
+  });
 
-await safeStep('gotoConditionAssessmentType', async () => {
-  await helpdeskManagement.gotoConditionAssessmentType();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentType');
-  await helpdeskManagement.clickRegisterConditionAssessmentType();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterConditionAssessmentType');
-});
+  // Failures
+  await safeStep('gotoFailures', async () => {
+    await helpdeskManagement.gotoFailures();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoFailures');
+  });
+  await safeStep('clickRegisterFailures', async () => {
+    await helpdeskManagement.clickRegisterFailures();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFailures');
+  });
+  await safeStep('clickCloseRegisterFailures', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterFailures');
+  });
 
-await safeStep('gotoReleaseItems', async () => {
-  await helpdeskManagement.gotoReleaseItems();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoReleaseItems');
-  await helpdeskManagement.clickRegisterReleaseItems();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReleaseItems');
-});
+  // Issues
+  await safeStep('gotoIssues', async () => {
+    await helpdeskManagement.gotoIssues();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIssues');
+  });
+  await safeStep('clickRegisterIssues', async () => {
+    await helpdeskManagement.clickRegisterIssues();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIssues');
+  });
+  await safeStep('clickCloseRegisterIssues', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterIssues');
+  });
 
-await safeStep('gotoIncidentCategory1s', async () => {
-  await helpdeskManagement.gotoIncidentCategory1s();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCategory1s');
-  await helpdeskManagement.clickRegisterIncidentCategory1s();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentCategory1s');
-});
+  // Condition Assessment Type
+  await safeStep('gotoConditionAssessmentType', async () => {
+    await helpdeskManagement.gotoConditionAssessmentType();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentType');
+  });
+  await safeStep('clickRegisterConditionAssessmentType', async () => {
+    await helpdeskManagement.clickRegisterConditionAssessmentType();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterConditionAssessmentType');
+  });
+  await safeStep('clickCloseRegisterConditionAssessmentType', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterConditionAssessmentType');
+  });
 
-await safeStep('gotoIncidentCategory2s', async () => {
-  await helpdeskManagement.gotoIncidentCategory2s();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCategory2s');
-});
+  // Release Items
+  await safeStep('gotoReleaseItems', async () => {
+    await helpdeskManagement.gotoReleaseItems();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoReleaseItems');
+  });
+  await safeStep('clickRegisterReleaseItems', async () => {
+    await helpdeskManagement.clickRegisterReleaseItems();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReleaseItems');
+  });
+  await safeStep('clickCloseRegisterReleaseItems', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterReleaseItems');
+  });
 
-await safeStep('gotoAllIncidents', async () => {
-  await helpdeskManagement.gotoAllIncidents();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoAllIncidents');
-  await helpdeskManagement.clickRegisterAllIncidents();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAllIncidents');
-});
+  // Incident Category 1
+  await safeStep('gotoIncidentCategory1s', async () => {
+    await helpdeskManagement.gotoIncidentCategory1s();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCategory1s');
+  });
+  await safeStep('clickRegisterIncidentCategory1s', async () => {
+    await helpdeskManagement.clickRegisterIncidentCategory1s();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentCategory1s');
+  });
+  await safeStep('clickCloseRegisterIncidentCategory1s', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterIncidentCategory1s');
+  });
 
-// Work Orders Overview
-await safeStep('gotoWorkOrdersOverview', async () => {
-  await helpdeskManagement.gotoWorkOrdersOverview();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersOverview');
-});
+  // Incident Category 2
+  await safeStep('gotoIncidentCategory2s', async () => {
+    await helpdeskManagement.gotoIncidentCategory2s();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCategory2s');
+  });
 
-await safeStep('gotoWorkOrders', async () => {
-  await helpdeskManagement.gotoWorkOrders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrders');
-  await helpdeskManagement.clickRegisterWorkOrders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrders');
-});
+  // All Incidents
+  await safeStep('gotoAllIncidents', async () => {
+    await helpdeskManagement.gotoAllIncidents();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAllIncidents');
+  });
+  await safeStep('clickRegisterAllIncidents', async () => {
+    await helpdeskManagement.clickRegisterAllIncidents();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAllIncidents');
+  });
+  await safeStep('clickCloseRegisterAllIncidents', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterAllIncidents');
+  });
 
-// Service Information Overview
-await safeStep('gotoServiceInformationOverview', async () => {
-  await helpdeskManagement.gotoServiceInformationOverview();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceInformationOverview');
-});
+  // === Work Orders Overview ===
+  await safeStep('gotoWorkOrdersOverview', async () => {
+    await helpdeskManagement.gotoWorkOrdersOverview();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersOverview');
+  });
+  await safeStep('gotoWorkOrders', async () => {
+    await helpdeskManagement.gotoWorkOrders();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrders');
+  });
+  await safeStep('clickRegisterWorkOrders', async () => {
+    await helpdeskManagement.clickRegisterWorkOrders();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrders');
+  });
+  await safeStep('clickCloseRegisterWorkOrders', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterWorkOrders');
+  });
 
-await safeStep('gotoServicePartners', async () => {
-  await helpdeskManagement.gotoServicePartners();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartners');
-});
+  // === Service Information Overview ===
+  await safeStep('gotoServiceInformationOverview', async () => {
+    await helpdeskManagement.gotoServiceInformationOverview();
+  });
 
-await safeStep('gotoSLAKPIDemands', async () => {
-  await helpdeskManagement.gotoSLAKPIDemands();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoSLAKPIDemands');
-  await helpdeskManagement.clickRegisterSLAKPIDemands();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSLAKPIDemands');
-});
+  await safeStep('gotoServicePartners', async () => {
+    await helpdeskManagement.gotoServicePartners();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoServicePartners');
+  });
 
-await safeStep('gotoSLAKPIDemandIncidentTypes', async () => {
-  await helpdeskManagement.gotoSLAKPIDemandIncidentTypes();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoSLAKPIDemandIncidentTypes');
-});
+  await safeStep('gotoSLAKPIDemands', async () => {
+    await helpdeskManagement.gotoSLAKPIDemands();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoSLAKPIDemands');
+  });
+  await safeStep('clickRegisterSLAKPIDemands', async () => {
+    await helpdeskManagement.clickRegisterSLAKPIDemands();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSLAKPIDemands');
+  });
+  await safeStep('clickCloseRegisterSLAKPIDemands', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterSLAKPIDemands');
+  });
 
-// Notifications and Reminders
-await safeStep('gotoNotificationsandReminders', async () => {
-  await helpdeskManagement.gotoNotificationsandReminders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoNotificationsandReminders');
-});
+  await safeStep('gotoSLAKPIDemandIncidentTypes', async () => {
+    await helpdeskManagement.gotoSLAKPIDemandIncidentTypes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoSLAKPIDemandIncidentTypes');
+  });
 
-await safeStep('gotoReminders', async () => {
-  await helpdeskManagement.gotoReminders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoReminders');
-  await helpdeskManagement.clickRegisterReminders();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReminders');
-});
+  // === Notifications and Reminders ===
+  await safeStep('gotoNotificationsandReminders', async () => {
+    await helpdeskManagement.gotoNotificationsandReminders();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoNotificationsandReminders');
+  });
+  await safeStep('gotoReminders', async () => {
+    await helpdeskManagement.gotoReminders();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoReminders');
+  });
+  await safeStep('clickRegisterReminders', async () => {
+    await helpdeskManagement.clickRegisterReminders();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReminders');
+  });
+  await safeStep('clickCloseRegisterReminders', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterReminders');
+  });
 
-// Data Setup
-await safeStep('gotoDataSetup', async () => {
-  await helpdeskManagement.gotoDataSetup();
-  //await waitForProcessingAndTakeScreenshot(page, env, 'gotoDataSetup');
-});
+  // === Data Setup ===
+  await safeStep('gotoDataSetup', async () => {
+    await helpdeskManagement.gotoDataSetup();
+  });
 
-await safeStep('gotoIncidentGroups', async () => {
-  await helpdeskManagement.gotoIncidentGroups();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentGroups');
-  await helpdeskManagement.clickRegisterIncidentGroups();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentGroups');
-});
+  await safeStep('gotoIncidentGroups', async () => {
+    await helpdeskManagement.gotoIncidentGroups();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentGroups');
+  });
+  await safeStep('clickRegisterIncidentGroups', async () => {
+    await helpdeskManagement.clickRegisterIncidentGroups();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentGroups');
+  });
+  await safeStep('clickCloseRegisterIncidentGroups', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterIncidentGroups');
+  });
 
-await safeStep('gotoIncidentTypes', async () => {
-  await helpdeskManagement.gotoIncidentTypes();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentTypes');
-  await helpdeskManagement.clickRegisterIncidentTypes();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentTypes');
-});
+  await safeStep('gotoIncidentTypes', async () => {
+    await helpdeskManagement.gotoIncidentTypes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentTypes');
+  });
+  await safeStep('clickRegisterIncidentTypes', async () => {
+    await helpdeskManagement.clickRegisterIncidentTypes();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentTypes');
+  });
+  await safeStep('clickCloseRegisterIncidentTypes', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterIncidentTypes');
+  });
 
-await safeStep('gotoTaskPriorities', async () => {
-  await helpdeskManagement.gotoTaskPriorities();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskPriorities');
-  await helpdeskManagement.clickRegisterTaskPriorities();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskPriorities');
-});
+  await safeStep('gotoTaskPriorities', async () => {
+    await helpdeskManagement.gotoTaskPriorities();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskPriorities');
+  });
+  await safeStep('clickRegisterTaskPriorities', async () => {
+    await helpdeskManagement.clickRegisterTaskPriorities();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskPriorities');
+  });
+  await safeStep('clickCloseRegisterTaskPriorities', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterTaskPriorities');
+  });
 
-await safeStep('gotoProfessions', async () => {
-  await helpdeskManagement.gotoProfessions();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoProfessions');
-  await helpdeskManagement.clickRegisterProfessions();
-  await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProfessions');
-});
+  await safeStep('gotoProfessions', async () => {
+    await helpdeskManagement.gotoProfessions();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoProfessions');
+  });
+  await safeStep('clickRegisterProfessions', async () => {
+    await helpdeskManagement.clickRegisterProfessions();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProfessions');
+  });
+  await safeStep('clickCloseRegisterProfessions', async () => {
+    await helpdeskManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickCloseRegisterProfessions');
+  });
 
-// Configuration
-await safeStep('gotoConfiguration', async () => {
-  await helpdeskManagement.gotoConfiguration();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
-});
-
-await safeStep('gotoAccessConfigurations', async () => {
-  await helpdeskManagement.gotoAccessConfigurations();
-  await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfigurations');
-});
-}
+  // === Configuration ===
+  await safeStep('gotoConfiguration', async () => {
+    await helpdeskManagement.gotoConfiguration();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoConfiguration');
+  });
+  await safeStep('gotoAccessConfigurations', async () => {
+    await helpdeskManagement.gotoAccessConfigurations();
+    await waitForProcessingAndTakeScreenshot(page, env, 'gotoAccessConfigurations');
+  });
+};
 
 // Main visual regression test
 test('Visual Regression Test - Helpdesk Management: Compare URL1 and URL2', async ({ page, context }) => {

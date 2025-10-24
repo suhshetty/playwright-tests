@@ -1,3 +1,4 @@
+// src/Pages/HelpdeskManagement.js
 const BasePage = require("./BasePage");
 const { expect } = require('@playwright/test');
 const { smartLocator } = require("../utils/smartLocator");
@@ -45,12 +46,14 @@ class HelpdeskManagement extends BasePage {
     this.TaskPriorities = "div[aria-label='Task priorities Process step item']";
     this.Professions = "div[aria-label='Professions Process step item']";
 
-     // Sub Types locators ( Sub module : Configuarion )
-     this.AccessConfiguraions = "div[aria-label='Access configurations Process step item']";
+    // Sub Types locators ( Sub module : Configuarion )
+    this.AccessConfiguraions = "div[aria-label='Access configurations Process step item']";
 
-     //Add new data locators
-    this.Add = "#newRecordButton"
-    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+    // Add / common action locators
+    this.Add = "#newRecordButton";
+    // self-healing close options (array)
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ];
+    this.Export = "button[aria-label='This action exports data - ExportData']";
   }
 
   async clickHelpdeskManagement() {
@@ -61,9 +64,9 @@ class HelpdeskManagement extends BasePage {
   }
 
   // Navigate to sub modules
-   async gotoSummary() {
-     await this.page.locator(this.Summary).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.Summary).click();
+  async gotoSummary() {
+    await this.page.locator(this.Summary).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.Summary).click();
   }
 
   async gotoIncidentsOverview() {
@@ -96,7 +99,7 @@ class HelpdeskManagement extends BasePage {
     await this.page.locator(this.Configuration).click();
   }
 
-  // Navigate to sub types ( Sub module : Summary)
+  // Sub-types (Summary)
   async gotoFailures() {
     await this.page.locator(this.Failures).waitFor({ state: 'visible', timeout: 5000 });
     await this.page.locator(this.Failures).click();
@@ -132,145 +135,125 @@ class HelpdeskManagement extends BasePage {
     await this.page.locator(this.AllIncidents).click();
   }
 
-   // Navigate to sub types ( Sub module : Work Orders)
-   async gotoWorkOrders() {
-     await this.page.locator(this.WorkOrders).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.WorkOrders).click();
-   }
-
-   // Navigate to sub types ( Sub module : Service Information Overview)
-   async gotoServicePartners() {
-     await this.page.locator(this.ServicePartners).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.ServicePartners).click();
-   }
-
-   async gotoSLAKPIDemands() {
-     await this.page.locator(this.SLAKPIDemands).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.SLAKPIDemands).click();
-   }
-
-   async gotoSLAKPIDemandIncidentTypes() {
-     await this.page.locator(this.SLAKPIDemandIncidentTypes).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.SLAKPIDemandIncidentTypes).click();
-   }
-
-    // Navigate to sub types ( Sub module : Notifications and Reminders)
-
-   async gotoReminders() {
-     await this.page.locator(this.Reminders).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.Reminders).click();
-   }
-
-   // Navigate to sub types ( Sub module : Data Setup )
-   async gotoIncidentGroups() {
-     await this.page.locator(this.IncidentGroups).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.IncidentGroups).click();
-   }
-
-   async gotoIncidentTypes() {
-     await this.page.locator(this.IncidentTypes).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.IncidentTypes).click();
-   }
-
-   async gotoTaskPriorities() {
-     await this.page.locator(this.TaskPriorities).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.TaskPriorities).click();
-   }
-
-   async gotoProfessions() {
-     await this.page.locator(this.Professions).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.Professions).click();
-   }
-
-   // Navigate to sub types ( Sub module : Configuarion)
-   async gotoAccessConfigurations() {
-     await this.page.locator(this.AccessConfiguraions).waitFor({ state: 'visible', timeout: 5000 });
-     await this.page.locator(this.AccessConfiguraions).click();
-   }
-
-    async clickRegisterFailures(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterIssues(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterConditionAssessmentType(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterReleaseItems(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterIncidentCategory1s(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterAllIncidents(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterWorkOrders(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterSLAKPIDemands(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterReminders(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterIncidentGroups(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterIncidentTypes(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterTaskPriorities(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-    async clickRegisterProfessions(){
-      await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
-    }
-
-        async clickClose(timeout = 5000) {
-      const locator = await smartLocator(this.page, this.Close, timeout);
-      await locator.click();
+  // Work Orders
+  async gotoWorkOrders() {
+    await this.page.locator(this.WorkOrders).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.WorkOrders).click();
   }
 
+  // Service Information Overview
+  async gotoServicePartners() {
+    await this.page.locator(this.ServicePartners).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.ServicePartners).click();
+  }
+
+  async gotoSLAKPIDemands() {
+    await this.page.locator(this.SLAKPIDemands).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.SLAKPIDemands).click();
+  }
+
+  async gotoSLAKPIDemandIncidentTypes() {
+    await this.page.locator(this.SLAKPIDemandIncidentTypes).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.SLAKPIDemandIncidentTypes).click();
+  }
+
+  // Notifications and Reminders
+  async gotoReminders() {
+    await this.page.locator(this.Reminders).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.Reminders).click();
+  }
+
+  // Data Setup
+  async gotoIncidentGroups() {
+    await this.page.locator(this.IncidentGroups).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.IncidentGroups).click();
+  }
+
+  async gotoIncidentTypes() {
+    await this.page.locator(this.IncidentTypes).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.IncidentTypes).click();
+  }
+
+  async gotoTaskPriorities() {
+    await this.page.locator(this.TaskPriorities).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.TaskPriorities).click();
+  }
+
+  async gotoProfessions() {
+    await this.page.locator(this.Professions).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.Professions).click();
+  }
+
+  // Configuration
+  async gotoAccessConfigurations() {
+    await this.page.locator(this.AccessConfiguraions).waitFor({ state: 'visible', timeout: 5000 });
+    await this.page.locator(this.AccessConfiguraions).click();
+  }
+
+  // Register (Add) helpers: click Add and then rely on clickClose() to close popups
+  async clickRegisterFailures() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterIssues() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterConditionAssessmentType() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterReleaseItems() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterIncidentCategory1s() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterAllIncidents() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterWorkOrders() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterSLAKPIDemands() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterReminders() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterIncidentGroups() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterIncidentTypes() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterTaskPriorities() {
+    await this.page.locator(this.Add).click();
+  }
+
+  async clickRegisterProfessions() {
+    await this.page.locator(this.Add).click();
+  }
+
+  // Export helper (simple)
+  async clickExport() {
+    await this.page.locator(this.Export).click();
+  }
+
+  // clickClose uses smartLocator to resolve the correct close selector (self-healing)
+  async clickClose(timeout = 5000) {
+    const locator = await smartLocator(this.page, this.Close, timeout);
+    await locator.click();
+    await this.page.waitForTimeout(300);
+  }
 }
 
 module.exports = HelpdeskManagement;
-
-
-
-
-
-
-
-
-
-
-
-
-
