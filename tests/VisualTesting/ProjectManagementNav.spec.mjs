@@ -1,4 +1,3 @@
-// File: ProjectManagementNav.spec.js
 import { test, expect } from '@playwright/test';
 import { loginAndInitialize } from '../src/testSetup.js';
 import {
@@ -58,8 +57,12 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoMaintenanceIncidents', async () => {
     await projectManagement.gotoMaintenanceIncidents();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncidents');
-    await projectManagement.clickRegisterMaintenanceIncidents();
+
+    // click add -> screenshot -> close -> screenshot
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterMaintenanceIncidents');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterMaintenanceIncidents_close');
   });
 
   // === Projects Overview ===
@@ -71,22 +74,31 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoProjects', async () => {
     await projectManagement.gotoProjects();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjects');
-    await projectManagement.clickRegisterProjects();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjects');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjects_close');
   });
 
   await safeStep('gotoAnnualBudgetsForProjects', async () => {
     await projectManagement.gotoAnnualBudgetsForProjects();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAnnualBudgetsForProjects');
-    await projectManagement.clickRegisterAnnualBudgetsForProjects();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualBudgetsForProjects');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAnnualBudgetsForProjects_close');
   });
 
   await safeStep('gotoTaskPlanning', async () => {
     await projectManagement.gotoTaskPlanning();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskPlanning');
-    await projectManagement.clickRegisterTaskPlanning();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskPlanning');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskPlanning_close');
   });
 
   await safeStep('gotoTaskManagement', async () => {
@@ -102,15 +114,21 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoWorkOrders', async () => {
     await projectManagement.gotoWorkOrders();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrders');
-    await projectManagement.clickRegisterWorkOrders();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrders');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrders_close');
   });
 
   await safeStep('gotoInspections', async () => {
     await projectManagement.gotoInspections();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInspections');
-    await projectManagement.clickRegisterInspections();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterInspections');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterInspections_close');
   });
 
   await safeStep('gotoCheckItems', async () => {
@@ -145,14 +163,17 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectContractsOverview');
   });
 
-  await safeStep('gotoProjectContracts', async () => { // Fixed: was gotoProjectContrcats
+  await safeStep('gotoProjectContracts', async () => {
     await projectManagement.gotoProjectContracts();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectContracts');
-    await projectManagement.clickRegisterProjectContracts();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectContracts');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectContracts_close');
   });
 
-  await safeStep('gotoProjectContractPayments', async () => { // Fixed: was gotoProjectContrcatPayments
+  await safeStep('gotoProjectContractPayments', async () => {
     await projectManagement.gotoProjectContractPayments();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectContractPayments');
   });
@@ -171,8 +192,11 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoWorkOrderCosts', async () => {
     await projectManagement.gotoWorkOrderCosts();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderCosts');
-    await projectManagement.clickRegisterWorkOrderCosts();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrderCosts');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrderCosts_close');
   });
 
   await safeStep('gotoTimeRegistration', async () => {
@@ -183,8 +207,11 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoProjectWorkOrderMaterials', async () => {
     await projectManagement.gotoProjectWorkOrderMaterials();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectWorkOrderMaterials');
-    await projectManagement.clickRegisterProjectWorkOrderMaterials();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectWorkOrderMaterials');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectWorkOrderMaterials_close');
   });
 
   await safeStep('gotoTransactions', async () => {
@@ -209,7 +236,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   // === Standard Tasks Overview ===
-  await safeStep('gotoStandardTasksOverview', async () => { // Fixed: was gotoStandardsTasksOverview
+  await safeStep('gotoStandardTasksOverview', async () => {
     await projectManagement.gotoStandardTasksOverview();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardTasksOverview');
   });
@@ -217,8 +244,11 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoProjectStandardTasks', async () => {
     await projectManagement.gotoProjectStandardTasks();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectStandardTasks');
-    await projectManagement.clickRegisterProjectStandardTasks();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectStandardTasks');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectStandardTasks_close');
   });
 
   // === Data Setup ===
@@ -230,15 +260,21 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   await safeStep('gotoProjectGroups', async () => {
     await projectManagement.gotoProjectGroups();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProjectGroups');
-    await projectManagement.clickRegisterProjectGroups();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectGroups');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProjectGroups_close');
   });
 
-  await safeStep('gotoTaskSets', async () => { // Fixed: was gotoTasksSets
+  await safeStep('gotoTaskSets', async () => {
     await projectManagement.gotoTaskSets();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskSets');
-    await projectManagement.clickRegisterTaskSets();
+
+    await projectManagement.clickElement(projectManagement.Add);
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskSets');
+    await projectManagement.clickClose();
+    await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskSets_close');
   });
 
   // === Configuration ===
