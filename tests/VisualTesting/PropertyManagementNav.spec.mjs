@@ -163,7 +163,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoHousingsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose());
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingsCloseClicked');
   });
 
@@ -173,7 +173,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoHousingsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingsCloseClicked2');
   });
 
@@ -188,7 +188,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoBuildingSpacesCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpacesCloseClicked');
   });
 
@@ -213,7 +213,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCapacityObjectsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCapacityObjectsCloseClicked');
   });
 
@@ -223,7 +223,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCapacityObjectsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCapacityObjectsCloseClicked2');
   });
 
@@ -243,7 +243,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLocationCostDivisionCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocationCostDivisionCloseClicked');
   });
 
@@ -253,7 +253,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLocationCostDivisionCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLocationCostDivisionCloseClicked2');
   });
 
@@ -268,7 +268,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderPayersCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderPayersCloseClicked');
   });
 
@@ -278,7 +278,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoWorkOrderPayersCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderPayersCloseClicked2');
   });
 
@@ -293,7 +293,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPublishedPriceListsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPublishedPriceListsCloseClicked');
   });
 
@@ -303,7 +303,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPublishedPriceListsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPublishedPriceListsCloseClicked2');
   });
 
@@ -324,7 +324,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoHeadLeaseContractsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHeadLeaseContractsCloseClicked');
   });
 
@@ -334,7 +334,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoHeadLeaseContractsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHeadLeaseContractsCloseClicked2');
   });
 
@@ -349,7 +349,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractsCloseClicked');
   });
 
@@ -359,7 +359,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractsCloseClicked2');
   });
 
@@ -374,7 +374,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSubLeaseContractsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSubLeaseContractsCloseClicked');
   });
 
@@ -384,7 +384,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSubLeaseContractsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSubLeaseContractsCloseClicked2');
   });
 
@@ -399,7 +399,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractRemindersCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractRemindersCloseClicked');
   });
 
@@ -414,7 +414,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractRenegotiationsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractRenegotiationsCloseClicked');
   });
 
@@ -424,7 +424,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractRenegotiationsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractRenegotiationsCloseClicked2');
   });
 
@@ -439,7 +439,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractUtilizationsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractUtilizationsCloseClicked');
   });
 
@@ -449,7 +449,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractUtilizationsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractUtilizationsCloseClicked2');
   });
 
@@ -464,7 +464,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSiteLeasesCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSiteLeasesCloseClicked');
   });
 
@@ -474,7 +474,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSiteLeasesCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSiteLeasesCloseClicked2');
   });
 
@@ -500,7 +500,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractPaymentsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractPaymentsCloseClicked');
   });
 
@@ -510,7 +510,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractPaymentsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractPaymentsCloseClicked2');
   });
 
@@ -525,7 +525,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractCustomerRevenuesCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractCustomerRevenuesCloseClicked');
   });
 
@@ -535,7 +535,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseContractCustomerRevenuesCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseContractCustomerRevenuesCloseClicked2');
   });
 
@@ -550,7 +550,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCostDistributionAgreementsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostDistributionAgreementsCloseClicked');
   });
 
@@ -560,7 +560,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCostDistributionAgreementsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostDistributionAgreementsCloseClicked2');
   });
 
@@ -575,7 +575,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoCostDistributionAgreementGroupsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCostDistributionAgreementGroupsCloseClicked');
   });
 
@@ -590,7 +590,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoProductsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductsCloseClicked');
   });
 
@@ -600,7 +600,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoProductsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductsCloseClicked2');
   });
 
@@ -615,7 +615,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInvoiceBasisLCFCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisLCFCloseClicked');
   });
 
@@ -625,7 +625,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInvoiceBasisLCFCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisLCFCloseClicked2');
   });
 
@@ -646,7 +646,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPurchaseContractsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractsCloseClicked');
   });
 
@@ -656,7 +656,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPurchaseContractsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractsCloseClicked2');
   });
 
@@ -671,7 +671,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPurchaseContractRemindersCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractRemindersCloseClicked');
   });
 
@@ -686,7 +686,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPurchaseContractPaymentItemsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPurchaseContractPaymentItemsCloseClicked');
   });
 
@@ -701,7 +701,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInvoiceBasisPCOCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisPCOCloseClicked');
   });
 
@@ -711,7 +711,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoInvoiceBasisPCOCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInvoiceBasisPCOCloseClicked2');
   });
 
@@ -732,7 +732,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseHolderOrganisationsCloseClicked', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseHolderOrganisationsCloseClicked');
   });
 
@@ -742,7 +742,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoLeaseHolderOrganisationsCloseClicked2', async () => {
-    await propertyManagement.clickElement(propertyManagement.Close);
+    await propertyManagement.clickElement(propertyManagement.clickClose);
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseHolderOrganisationsCloseClicked2');
   });
 
@@ -758,7 +758,7 @@ await safeStep('gotoResidentsAddClicked', async () => {
 });
 
 await safeStep('gotoResidentsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoResidentsCloseClicked');
 });
 
@@ -768,7 +768,7 @@ await safeStep('gotoResidentsExportClicked', async () => {
 });
 
 await safeStep('gotoResidentsCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoResidentsCloseClicked2');
 });
 
@@ -783,7 +783,7 @@ await safeStep('gotoOrganicVatDeclarationsExportClicked', async () => {
 });
 
 await safeStep('gotoOrganicVatDeclarationsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoOrganicVatDeclarationsCloseClicked');
 });
 
@@ -798,7 +798,7 @@ await safeStep('gotoCompaniesAddClicked', async () => {
 });
 
 await safeStep('gotoCompaniesCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoCompaniesCloseClicked');
 });
 
@@ -813,7 +813,7 @@ await safeStep('gotoPersonsUsersAddClicked', async () => {
 });
 
 await safeStep('gotoPersonsUsersCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonsUsersCloseClicked');
 });
 
@@ -823,7 +823,7 @@ await safeStep('gotoPersonsUsersExportClicked', async () => {
 });
 
 await safeStep('gotoPersonsUsersCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPersonsUsersCloseClicked2');
 });
 
@@ -838,7 +838,7 @@ await safeStep('gotoFailuresAddClicked', async () => {
 });
 
 await safeStep('gotoFailuresCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFailuresCloseClicked');
 });
 
@@ -848,7 +848,7 @@ await safeStep('gotoFailuresExportClicked', async () => {
 });
 
 await safeStep('gotoFailuresCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoFailuresCloseClicked2');
 });
 
@@ -869,7 +869,7 @@ await safeStep('gotoLeaseApplicationsAddClicked', async () => {
 });
 
 await safeStep('gotoLeaseApplicationsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseApplicationsCloseClicked');
 });
 
@@ -879,7 +879,7 @@ await safeStep('gotoLeaseApplicationsExportClicked', async () => {
 });
 
 await safeStep('gotoLeaseApplicationsCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoLeaseApplicationsCloseClicked2');
 });
 
@@ -894,7 +894,7 @@ await safeStep('gotoOpportunitiesAddClicked', async () => {
 });
 
 await safeStep('gotoOpportunitiesCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoOpportunitiesCloseClicked');
 });
 
@@ -904,7 +904,7 @@ await safeStep('gotoOpportunitiesExportClicked', async () => {
 });
 
 await safeStep('gotoOpportunitiesCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoOpportunitiesCloseClicked2');
 });
 
@@ -919,7 +919,7 @@ await safeStep('gotoOpportunityCommentsExportClicked', async () => {
 });
 
 await safeStep('gotoOpportunityCommentsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoOpportunityCommentsCloseClicked');
 });
 
@@ -940,7 +940,7 @@ await safeStep('gotoWorkOrdersAddClicked', async () => {
 });
 
 await safeStep('gotoWorkOrdersCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersCloseClicked');
 });
 
@@ -950,7 +950,7 @@ await safeStep('gotoWorkOrdersExportClicked', async () => {
 });
 
 await safeStep('gotoWorkOrdersCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrdersCloseClicked2');
 });
 
@@ -965,7 +965,7 @@ await safeStep('gotoChecklistsExportClicked', async () => {
 });
 
 await safeStep('gotoChecklistsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoChecklistsCloseClicked');
 });
 
@@ -985,7 +985,7 @@ await safeStep('gotoCheckItemsExportClicked', async () => {
 });
 
 await safeStep('gotoCheckItemsCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoCheckItemsCloseClicked');
 });
 
@@ -1000,7 +1000,7 @@ await safeStep('gotoHousingWorkProcessRulesAddClicked', async () => {
 });
 
 await safeStep('gotoHousingWorkProcessRulesCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingWorkProcessRulesCloseClicked');
 });
 
@@ -1010,7 +1010,7 @@ await safeStep('gotoHousingWorkProcessRulesExportClicked', async () => {
 });
 
 await safeStep('gotoHousingWorkProcessRulesCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousingWorkProcessRulesCloseClicked2');
 });
 
@@ -1031,7 +1031,7 @@ await safeStep('gotoPriceIndexesAddClicked', async () => {
 });
 
 await safeStep('gotoPriceIndexesCloseClicked', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPriceIndexesCloseClicked');
 });
 
@@ -1041,7 +1041,7 @@ await safeStep('gotoPriceIndexesExportClicked', async () => {
 });
 
 await safeStep('gotoPriceIndexesCloseClicked2', async () => {
-  await propertyManagement.clickElement(propertyManagement.Close);
+  await propertyManagement.clickElement(propertyManagement.clickClose);
   await waitForProcessingAndTakeScreenshot(page, env, 'gotoPriceIndexesCloseClicked2');
 });
 

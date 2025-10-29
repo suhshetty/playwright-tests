@@ -89,7 +89,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('productDataCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'productDataCloseClicked');
   });
 
@@ -104,7 +104,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('productDataTaskCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'productDataTaskCloseClicked');
   });
 
@@ -119,7 +119,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('ProductDataComponentCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'ProductDataComponentCloseClicked');
   });
 
@@ -134,7 +134,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('productDataTechnicalInfoCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'productDataTechnicalInfoCloseClicked');
   });
 
@@ -149,7 +149,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('epdCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'epdCloseClicked');
   });
 
@@ -180,7 +180,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('functionalSystemCSSCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemCSSCloseClicked');
   });
 
@@ -195,7 +195,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('technicalSystemCSSCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'technicalSystemCSSCloseClicked');
   });
 
@@ -210,7 +210,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('componentsCSSCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'componentsCSSCloseClicked');
   });
 
@@ -225,7 +225,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('functionalSystemCloseClicked', async () => {
-    await digitalDelivery.clickElement(digitalDelivery.Close);
+    await digitalDelivery.clickClose();
     await waitForProcessingAndTakeScreenshot(page, env, 'functionalSystemCloseClicked');
   });
 

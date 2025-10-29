@@ -189,60 +189,61 @@ async clickHumanResources() {
 
     async clickRegisterCompanies(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+            await this.page.locator(this.clickClose()).click();
+
     }
 
     async clickRegisterWorkGroups(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterEmployees(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterPersonsUsers(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterVendorIssues(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterPersonPermits(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterOrganisationGroups(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterProfessions(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterPermits(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterEmployeeGroups(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterAvailabilityProfiles(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
-        async clickClose(timeout = 5000) {
+    async clickClose(timeout = 5000) {
       const locator = await smartLocator(this.page, this.Close, timeout);
       await locator.click();
   }

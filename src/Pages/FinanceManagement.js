@@ -364,130 +364,130 @@ class FinanceManagement extends BasePage {
 
     async clickRegisterWorkOrderCost(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterWorkOrderMaterials(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetFrames(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetFrameYears(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetForTargetAreas(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetForRegions(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetForPortfolios(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBudgetForObjects(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterAnnualMaintenanceBudgets(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFundings(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterTargetAreas(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFixedAssets(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFixedAssetGroups(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFixedAssetSubGroups(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterCompanies(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterBranches(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterAccounts(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterAccountKeys(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFinanceSubjects(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterCostCenters(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFinanceSections(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterPurposes(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFinanceProjects(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterProducts(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
     async clickRegisterFinanceDataSets(){
       await this.page.locator(this.Add).click();
-      await this.page.locator(this.Close).click();
+      await this.page.locator(this.clickClose()).click();
     }
 
-        async clickClose(timeout = 5000) {
+    async clickClose(timeout = 5000) {
       const locator = await smartLocator(this.page, this.Close, timeout);
       await locator.click();
   }

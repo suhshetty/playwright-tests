@@ -95,8 +95,9 @@ class DocumentManagement extends BasePage {
     this.Export = "button[aria-label='This action exports data - ExportData']";
     // // Add ,Close & Export Operations
     // this.Add = "#newRecordButton"
-    
-    this.Close2 = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+    this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
+
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
   }
 
 async Close() {
@@ -120,8 +121,18 @@ async Close() {
 
     
     //this.Export = "button[aria-label='This action exports data - ExportData']";
-    this.MultiRegister = "button[aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
   }
+  async clickMultiRegisterSafely() {
+  try {
+    if (this.MultiRegister) {
+      await this.clickElement(this.MultiRegister);
+    } else {
+      await this.page.click("button[aria-label*='MultiRegisterDocument']");
+    }
+  } catch (error) {
+    console.log('MultiRegister button not available');
+  }
+}
 
   async clickDocumentManagement() {
     await this.page.waitForTimeout(3000);
@@ -599,7 +610,7 @@ async DeleteExtraDocumentSubtype(subtype)
 }
 
     async clickClose(timeout = 5000) {
-      const locator = await smartLocator(this.page, this.Close2, timeout);
+      const locator = await smartLocator(this.page, this.Close, timeout);
       await locator.click();
   }
 

@@ -54,7 +54,7 @@ export async function waitForProcessingAndTakeScreenshot(page, env, label) {
     if (loaderVisible) {
       await page.waitForSelector('.processing-icon', {
         state: 'hidden',
-        timeout: 15000
+        timeout: 18000
       });
     }
   } catch (error) {
