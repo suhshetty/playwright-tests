@@ -453,122 +453,122 @@ class OperationAndMaintenance extends BasePage {
 
   async clickRegisterMaintenanceIncidents(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterPPMRegistration(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterFailures(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterIssues(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterIncidentCategory1s(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterAllIncidents(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterWorkOrders(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterWorkOrdersExternal(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterWorkOrderAssignedCosts(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterInspections(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterRecurringIncidents(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterServiceContracts(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterStandardTasks(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterStandardChecklists(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterStandardCheckpoints(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterCheckpointGroups(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterTargetAreas(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterScheduleTypes(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterTaskCategories(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterTaskClassifications(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterTaskSets(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterIncidentPriorities(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterTaskClassificationRelations(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
 async clickRegisterHealthSafetyEnvironmentItems(){
   await this.page.locator(this.Add).click();
-  await this.page.locator(this.Close).click();
+  //await this.clickClose();
 }
 
     async clickClose(timeout = 5000) {

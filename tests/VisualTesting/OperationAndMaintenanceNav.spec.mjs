@@ -56,6 +56,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncident');
     await operationAndMaintenance.clickRegisterMaintenanceIncidents();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterMaintenanceIncidents');
+    await operationAndMaintenance.clickClose();
   });
 
   // === Task Planning Overview ===
@@ -69,6 +70,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPPMRegistration');
     await operationAndMaintenance.clickRegisterPPMRegistration();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPPMRegistration');
+     await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoAnnualTaskBudgets', async () => {
@@ -133,6 +135,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFailure');
     await operationAndMaintenance.clickRegisterFailures();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFailures');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoIssues', async () => {
@@ -140,6 +143,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIssues');
     await operationAndMaintenance.clickRegisterIssues();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIssues');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoCheckItem', async () => {
@@ -157,6 +161,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentCategory1s');
     await operationAndMaintenance.clickRegisterIncidentCategory1s();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentCategory1s');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoIncidentCategory2s', async () => {
@@ -169,6 +174,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAllIncidents');
     await operationAndMaintenance.clickRegisterAllIncidents();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAllIncidents');
+    await operationAndMaintenance.clickClose();
   });
 
   // === Work Orders Overview ===
@@ -182,6 +188,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrder');
     await operationAndMaintenance.clickRegisterWorkOrders();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrders');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoWorkOrderExternal', async () => {
@@ -189,6 +196,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderExternal');
     await operationAndMaintenance.clickRegisterWorkOrdersExternal();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrdersExternal');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoWorkOrderAssignedCostWOO', async () => {
@@ -196,6 +204,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoWorkOrderAssignedCostWOO');
     await operationAndMaintenance.clickRegisterWorkOrderAssignedCosts();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterWorkOrderAssignedCosts');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoTimeRegistrationWOO', async () => {
@@ -208,6 +217,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoInspections');
     await operationAndMaintenance.clickRegisterInspections();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterInspections');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoReccuringIncidents', async () => {
@@ -215,6 +225,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoReccuringIncidents');
     await operationAndMaintenance.clickRegisterRecurringIncidents();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterRecurringIncidents');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoChecklists', async () => {
@@ -274,6 +285,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoServiceContract');
     await operationAndMaintenance.clickRegisterServiceContracts();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterServiceContracts');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoServiceContractReminder', async () => {
@@ -317,6 +329,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardTask');
     await operationAndMaintenance.clickRegisterStandardTasks();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterStandardTasks');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoStandardChecklistManagement', async () => {
@@ -334,6 +347,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardChecklist');
     await operationAndMaintenance.clickRegisterStandardChecklists();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterStandardChecklists');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoStandardCheckPoint', async () => {
@@ -341,6 +355,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardCheckPoint');
     await operationAndMaintenance.clickRegisterStandardCheckpoints();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterStandardCheckpoints');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoCheckpointGroups', async () => {
@@ -348,6 +363,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoCheckpointGroups');
     await operationAndMaintenance.clickRegisterCheckpointGroups();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterCheckpointGroups');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoPendingStandardTaskOnSite', async () => {
@@ -366,6 +382,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTargetArea');
     await operationAndMaintenance.clickRegisterTargetAreas();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTargetAreas');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoScheduleType', async () => {
@@ -373,6 +390,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoScheduleType');
     await operationAndMaintenance.clickRegisterScheduleTypes();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterScheduleTypes');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoTaskCategories', async () => {
@@ -380,6 +398,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskCategories');
     await operationAndMaintenance.clickRegisterTaskCategories();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskCategories');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoTaskSubcategories', async () => {
@@ -392,6 +411,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskClassification');
     await operationAndMaintenance.clickRegisterTaskClassifications();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskClassifications');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoTaskSet', async () => {
@@ -399,6 +419,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskSet');
     await operationAndMaintenance.clickRegisterTaskSets();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskSets');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoIncidentPriorities', async () => {
@@ -406,6 +427,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoIncidentPriorities');
     await operationAndMaintenance.clickRegisterIncidentPriorities();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterIncidentPriorities');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoTaskClassificationRelation', async () => {
@@ -413,6 +435,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTaskClassificationRelation');
     await operationAndMaintenance.clickRegisterTaskClassificationRelations();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTaskClassificationRelations');
+    await operationAndMaintenance.clickClose();
   });
 
   await safeStep('gotoHealthSafetyAndEnvironmentItems', async () => {
@@ -420,6 +443,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHealthSafetyAndEnvironmentItems');
     await operationAndMaintenance.clickRegisterHealthSafetyEnvironmentItems();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterHealthSafetyEnvironmentItems');
+    await operationAndMaintenance.clickClose();
   });
 
   // === Configuration ===
