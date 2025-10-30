@@ -53,6 +53,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRealProperties');
     await buildingArchive.clickRegisterRealProperties();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterRealProperties');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoPropertyValuationsBuildings', async () => {
@@ -60,6 +61,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPropertyValuationsBuildings');
     await buildingArchive.clickRegisterPropertyValuationBuildings();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPropertyValuationBuildings');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoPropertyValuationParts', async () => {
@@ -87,6 +89,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystemsCCS');
     await buildingArchive.clickRegisterFunctionalSystemsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterFunctionalSystemsCCS');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoTechnicalSystemsCCS', async () => {
@@ -94,6 +97,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemsCCS');
     await buildingArchive.clickRegisterTechnicalSystemsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTechnicalSystemsCCS');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoComponentsCCS', async () => {
@@ -101,6 +105,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoComponentsCCS');
     await buildingArchive.clickRegisterComponentsCCS();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterComponentsCCS');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoFunctionalSystems', async () => {
@@ -123,6 +128,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentationObjects');
     await buildingArchive.clickRegisterDocumentationObjects();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterDocumentationObjects');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoProductData', async () => {
@@ -130,6 +136,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoProductData');
     await buildingArchive.clickRegisterProductData();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterProductData');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoLocationProductData', async () => {

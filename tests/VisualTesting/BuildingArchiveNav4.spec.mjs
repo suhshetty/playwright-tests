@@ -52,6 +52,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoQRBarCodes');
     await buildingArchive.clickRegisterQRBarCodes();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterQRBarCodes');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoObjectInformation', async () => {
@@ -59,6 +60,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectInformation');
     await buildingArchive.clickRegisterObjectInformation();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterObjectInformation');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoTechnicalInformation', async () => {
@@ -66,6 +68,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalInformation');
     await buildingArchive.clickRegisterTechnicalInformation();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterTechnicalInformation');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoObjectColors', async () => {
@@ -78,6 +81,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoObjectExternalReferences');
     await buildingArchive.clickRegisterObjectExternalReferences();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterObjectExternalReferences');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoMaterials', async () => {
@@ -85,6 +89,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaterials');
     await buildingArchive.clickRegisterMaterials();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterMaterials');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoClassificationSystems', async () => {
@@ -107,6 +112,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStructureTemplates');
     await buildingArchive.clickRegisterStructureTemplates();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterStructureTemplates');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoObjectTypeThemes', async () => {
@@ -124,6 +130,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSfbStandard');
     await buildingArchive.clickRegisterSfBStandards();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSfBStandards');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoObjectTypes', async () => {

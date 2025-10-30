@@ -67,6 +67,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoReleaseItems');
     await buildingArchive.clickRegisterReleaseItems();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterReleaseItems');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoLocateDrawingIcons', async () => {
@@ -79,6 +80,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentLayouts');
     await buildingArchive.clickRegisterDocumentLayouts();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterDocumentLayouts');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoBimProcessing', async () => {

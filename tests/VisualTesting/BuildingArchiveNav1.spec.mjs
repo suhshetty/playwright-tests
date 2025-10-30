@@ -56,6 +56,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSites');
     await buildingArchive.clickRegisterSites();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterSites');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoPortfolioManagement', async () => {
@@ -68,6 +69,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPortfolios');
     await buildingArchive.clickRegisterPortfolios();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterPortfolios');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoLocationsOverview', async () => {
@@ -85,6 +87,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildings');
     await buildingArchive.clickRegisterBuildings();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBuildings');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoBuildingStairwells', async () => {
@@ -92,6 +95,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingStairwells');
     await buildingArchive.clickRegisterBuildingStairwells();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBuildingStairwells');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoBuildingFloors', async () => {
@@ -99,6 +103,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingFloors');
     await buildingArchive.clickRegisterBuildingFloors();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBuildingFloors');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoBuildingSpaces', async () => {
@@ -106,6 +111,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoBuildingSpaces');
     await buildingArchive.clickRegisterBuildingSpaces();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterBuildingSpaces');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoOpenAreas', async () => {
@@ -113,6 +119,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoOpenAreas');
     await buildingArchive.clickRegisterOpenAreas();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterOpenAreas');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoOpenAreaParts', async () => {
@@ -120,6 +127,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoOpenAreaParts');
     await buildingArchive.clickRegisterOpenAreaParts();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterOpenAreaParts');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoHousings', async () => {
@@ -127,6 +135,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoHousings');
     await buildingArchive.clickRegisterHousings();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterHousings');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoAddresses', async () => {
@@ -134,6 +143,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoAddresses');
     await buildingArchive.clickRegisterAddresses();
     await waitForProcessingAndTakeScreenshot(page, env, 'clickRegisterAddresses');
+    await buildingArchive.clickClose();
   });
 
   await safeStep('gotoGISPolygons', async () => {
