@@ -519,152 +519,152 @@ class BuildingArchive extends BasePage {
 
   async clickRegisterSites(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterPortfolios(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterBuildings(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterBuildingStairwells(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterBuildingFloors(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterBuildingSpaces(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterOpenAreas(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterOpenAreaParts(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterHousings(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterAddresses(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterRealProperties(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterPropertyValuationBuildings(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterRoads(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterFeederPillars(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterLightPoles(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterLuminaires(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterFunctionalSystemsCCS(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterTechnicalSystemsCCS(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterComponentsCCS(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterDocumentationObjects(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterProductData(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterReleaseItems(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterDocumentLayouts(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterQRBarCodes(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterObjectInformation(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterTechnicalInformation(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterObjectExternalReferences(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterMaterials(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterStructureTemplates(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
 
   async clickRegisterSfBStandards(){
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+    await this.page.locator(this.clickClose());
   }
   async registerNewSite(siteName) {
     await this.page.locator(this.newSiteBtn).waitFor({ state: 'visible', timeout: 5000 });
@@ -704,5 +704,6 @@ async registerNewBuilding(siteName, buildingName) {
   }
 
 }
+
 
 module.exports = BuildingArchive;

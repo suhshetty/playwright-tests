@@ -1,6 +1,6 @@
-const BasePage = require("./BasePage");
+const BasePage = require('./BasePage');
 const { expect } = require('@playwright/test');
-const { smartLocator } = require("../utils/smartLocator");
+const { smartLocator } = require('../utils/smartLocator');
 
 class SpaceManagement extends BasePage {
   constructor(page) {
@@ -34,45 +34,24 @@ class SpaceManagement extends BasePage {
     // Sub Types locators ( Sub module : Key Management )
     this.KeyToLock = "div[aria-label='Key to locks Process step item']";
 
-    //Sub Types locators ( Sub module : Configuration Maintenance incidents)
+    // Sub Types locators ( Sub module : Configuration )
     this.AccessConfiguration = "div[aria-label='Access configurations Process step item']";
 
     // Sub Types locators ( Sub module : Test ÞT )
     this.WorkOrderHours = "div[aria-label='Work order hours Process step item']";
 
-    //Add new data locators
-    //this.newBuildingSpaceBtn = "//button[@aria-label='Register new building space']";
-    // this.SiteDropDown = "//span[@aria-label='select2-MainManFilter_TFGroundID-container']";
-    // this.spaceDropDownArrow = "(//span[@class ='select2-selection__arrow'])[3]";
-    // this.SiteDropDownTextBox = "//input[@class='select2-search__field' and @placeholder='Nothing selected']";
-    //this.newDrawingBtn = "//button[@aria-label='This action registers documents based on selected files - MultiRegisterDocument']";
-   // this.newSpaceManagementScenarios = "//button[@aria-label='Register new space management scenario']";
-   // this.newKeyToLocks = "//button[@aria-label='Register new key to lock (Standard) - Standard']";
-   // this.newWorkOrderHours = "//button[@aria-label='Register my hours - RegisterMyHours']";
-    this.Add = "#newRecordButton"
-    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ]
+    // Add new data locators
+    this.Add = "#newRecordButton";
+    
+    // Universal Design Close Implementation
+    this.Close = [ "i[title='Close window (alt+x)']", "//i[@title='Close window ()']" ];
   }
 
-async Close() {
-  await this.page.waitForTimeout(1000);
-  for (let i = 0; i < this.CloseButton.length; i++) {
-    try {
-      await this.page.waitForTimeout(1000);
-
-      const closeButton = this.page.locator(this.CloseButton[i]);
-      if (await closeButton.isVisible()) {
-        //console.log("Found visible close button at index ${i}");
-        await closeButton.click();
-        await this.page.waitForTimeout(1000);
-        return;
-      }
-    } catch (error) {
-      console.log(`⏭️ Close button at index ${i} failed: ${error.message}`);
-      continue;
-    }
+  // Universal Design Close Method
+  async clickClose(timeout = 5000) {
+    const locator = await smartLocator(this.page, this.Close, timeout);
+    await locator.click();
   }
-}
-
 
   async clickSpaceManagement() {
     await this.page.waitForTimeout(3000);
@@ -147,10 +126,9 @@ async Close() {
 
   async clickRegisterNewBuildingSpace(){
     await this.page.locator(this.Add).click();
-await this.Close();
+    await this.clickClose();
   }
-
-  // async clickRegisterDrawings(){
+    // async clickRegisterDrawings(){
   //   await this.page.locator(this.SiteDropDown).waitFor({ state: 'visible', timeout: 10000 });
   //   await this.page.locator(this.SiteDropDown).click();
   //   await this.page.waitForTimeout(2000);
@@ -166,24 +144,18 @@ await this.Close();
 
   async clickRegisterSpaceManagementScenario(){
     await this.page.locator(this.Add).click();
-await this.Close();
-
+    await this.clickClose();
   }
 
   async clickRegisterKeyToLocks(){
     await this.page.locator(this.Add).click();
-await this.Close();
+    await this.clickClose();
   }
 
   async clickRegisterWorkOrderHours(){
     await this.page.locator(this.Add).click();
-await this.Close();
+    await this.clickClose();
   }
-
-
-  }
-
-
+}
 
 module.exports = SpaceManagement;
-

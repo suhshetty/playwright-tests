@@ -154,52 +154,52 @@ async clickAssetManagement() {
 
   async clickRegisterEquipment() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterPhones() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterTechnicalInformation() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterVehicles() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterArtifacts() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterArtists() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterEquipmentGroups() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterEquipmentTypes() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterProductTypes() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
   async clickRegisterServicePartnerGlobals() {
     await this.page.locator(this.Add).click();
-    await this.page.locator(this.Close).click();
+          await this.page.locator(this.clickClose()).click();
   }
 
       async clickClose(timeout = 5000) {

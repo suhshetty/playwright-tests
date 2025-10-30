@@ -88,7 +88,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPPMRegistrationCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPPMRegistrationCloseClicked');
   });
 
@@ -98,7 +98,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPPMRegistrationCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPPMRegistrationCloseClicked2');
   });
 
@@ -113,7 +113,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoRecurringIncidentCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRecurringIncidentCloseClicked');
   });
 
@@ -123,7 +123,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoRecurringIncidentCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoRecurringIncidentCloseClicked2');
   });
 
@@ -144,7 +144,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMaintenanceIncidentSubTypeCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncidentSubTypeCloseClicked');
   });
 
@@ -154,7 +154,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoMaintenanceIncidentSubTypeCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoMaintenanceIncidentSubTypeCloseClicked2');
   });
 
@@ -175,7 +175,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionAssessmentSubTypeCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentSubTypeCloseClicked');
   });
 
@@ -185,7 +185,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionAssessmentSubTypeCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentSubTypeCloseClicked2');
   });
 
@@ -200,7 +200,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionRegistrationCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionRegistrationCloseClicked');
   });
 
@@ -215,7 +215,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionCloseClicked');
   });
 
@@ -225,7 +225,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionCloseClicked2');
   });
 
@@ -240,7 +240,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoFunctionalSystemCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoFunctionalSystemCloseClicked');
   });
 
@@ -255,7 +255,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoTechnicalSystemCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoTechnicalSystemCloseClicked');
   });
 
@@ -270,7 +270,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSensorCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSensorCloseClicked');
   });
 
@@ -280,7 +280,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoSensorCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoSensorCloseClicked2');
   });
 
@@ -301,7 +301,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionAssessmentTypeCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentTypeCloseClicked');
   });
 
@@ -311,7 +311,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoConditionAssessmentTypeCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoConditionAssessmentTypeCloseClicked2');
   });
 
@@ -326,7 +326,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoStandardConditionCloseClicked', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardConditionCloseClicked');
   });
 
@@ -336,7 +336,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoStandardConditionCloseClicked2', async () => {
-    await conditionAssessmentAndMaintenanceNeeds.clickElement(conditionAssessmentAndMaintenanceNeeds.Close);
+    await conditionAssessmentAndMaintenanceNeeds.clickClose(); // ✅ Direct method call
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoStandardConditionCloseClicked2');
   });
 

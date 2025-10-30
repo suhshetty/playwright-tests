@@ -143,7 +143,7 @@ class ConditionAssessmentAndMaintenanceNeeds extends BasePage {
         await this.page.locator(this.AccessConfiguration).click();
     }
 
-        async clickClose(timeout = 5000) {
+    async clickClose(timeout = 5000) {
       const locator = await smartLocator(this.page, this.Close, timeout);
       await locator.click();
   }

@@ -91,12 +91,13 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoPicturesSiteSelected', async () => {
-    await documentManagement.selectDropdown('site', 'ICECONSULT DANMARK ApS');
+    await documentManagement.selectDropdown('site', 'Activity Center');
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPicturesSiteSelected');
   });
 
   await safeStep('gotoPicturesMultiRegisterClicked', async () => {
-    await documentManagement.clickElement(documentManagement.MultiRegister);
+    await page.waitForTimeout(2000);
+  await documentManagement.clickMultiRegisterSafely();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoPicturesMultiRegisterClicked');
   });
 
@@ -122,7 +123,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDrawingsMultiRegisterClicked', async () => {
-    await documentManagement.clickElement(documentManagement.MultiRegister);
+  await documentManagement.clickMultiRegisterSafely();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDrawingsMultiRegisterClicked');
   });
 
@@ -148,7 +149,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentsMultiRegisterClicked', async () => {
-    await documentManagement.clickElement(documentManagement.MultiRegister);
+  await documentManagement.clickMultiRegisterSafely();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentsMultiRegisterClicked');
   });
 
@@ -174,7 +175,7 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
   });
 
   await safeStep('gotoDocumentStackMultiRegisterClicked', async () => {
-    await documentManagement.clickElement(documentManagement.MultiRegister);
+  await documentManagement.clickMultiRegisterSafely();
     await waitForProcessingAndTakeScreenshot(page, env, 'gotoDocumentStackMultiRegisterClicked');
   });
 
