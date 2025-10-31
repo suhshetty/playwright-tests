@@ -1,4 +1,4 @@
-name: Visual Regression - VisualTestingg
+name: Visual Regression - VisualTesting
 
 on:
   # Run manually or nightly at 12 AM IST (IST = UTC+5:30 → 18:30 UTC)
