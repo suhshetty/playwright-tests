@@ -1,15 +1,22 @@
 name: Visual Regression - VisualTesting
 
 on:
-  # Run manually or nightly at 12 AM IST (IST = UTC+5:30 → 18:30 UTC)
-  schedule:
-    - cron: "30 18 * * *"
+  # Run when code is pushed to main (immediate), or manually, or nightly at 12 AM IST
+  push:
+    branches:
+      - main
   workflow_dispatch:
+  schedule:
+    - cron: "30 18 * * *" # 12:00 AM IST (UTC+5:30) -> 18:30 UTC previous day
+
+# Ensure only one run at a time; cancel older queued/running runs when a new one starts
+concurrency:
+  group: visual-testing-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   visual-tests:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -27,6 +34,12 @@ jobs:
 
       - name: Clean old diffs
         run: rm -rf screenshots/diffs/* || true
+
+      - name: Debug - print cwd and list VisualTesting folder
+        run: |
+          pwd
+          ls -la tests || true
+          ls -la tests/VisualTesting || true
 
       - name: Run Visual Regression Tests
         run: npx playwright test tests/VisualTesting --reporter=list
