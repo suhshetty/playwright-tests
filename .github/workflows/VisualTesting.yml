@@ -1,56 +1,57 @@
-name: Visual Regression - Run VisualTesting Folder
+name: Visual Regression - VisualTesting Folder
 
-# Triggers:
-#  - nightly at 12:00 AM IST  (IST = UTC+5:30 -> 12:00 IST = 18:30 UTC previous day)
-#  - manual trigger from Actions UI
 on:
+  # nightly at 12:00 AM IST (IST = UTC+5:30 => 12:00 IST = 18:30 UTC previous day)
   schedule:
     - cron: '30 18 * * *'
   workflow_dispatch:
 
 jobs:
-  # Job: list files in tests/VisualTesting and produce a JSON array output for the matrix
   list-visual-files:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.create-matrix.outputs.result }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create matrix (list test files)
+      - name: Create matrix from tests/VisualTesting (git-tracked files only)
         id: create-matrix
         uses: actions/github-script@v6
         with:
           script: |
             const { execSync } = require('child_process');
-
-            // List files in tests/VisualTesting with common extensions used in your repo.
-            // Adjust the glob pattern if your filenames/extensions differ.
-            const cmd = `bash -lc "ls -1 tests/VisualTesting/*.mjs tests/VisualTesting/*.js 2>/dev/null || true"`;
-            const out = execSync(cmd, { encoding: 'utf8' }).trim()
+            // List only files tracked by git in tests/VisualTesting with typical extensions.
+            // Adjust extensions if you have other ones.
+            const cmd = `bash -lc "git ls-files 'tests/VisualTesting/*.{mjs,js,ts}'"`;
+            const out = execSync(cmd, { encoding: 'utf8' })
               .split(/\r?\n/)
               .map(s => s.trim())
               .filter(Boolean);
 
-            // Return as JSON array (string). Step output will be available as steps.create-matrix.outputs.result
+            if (out.length === 0) {
+              core.info('No files found in tests/VisualTesting');
+            } else {
+              core.info(`Found ${out.length} files in tests/VisualTesting`);
+              out.forEach(f => core.info(f));
+            }
+
             return JSON.stringify(out);
 
-  # Job: run each file in the matrix (one job per test file)
   run-visual-tests:
     needs: list-visual-files
     runs-on: ubuntu-latest
-
-    # Build matrix from the JSON array produced by the previous job.
-    # If the array is empty this matrix will be empty and the job will be skipped automatically.
     strategy:
       fail-fast: false
       matrix:
         file: ${{ fromJson(needs.list-visual-files.outputs.matrix) }}
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Show which file this job will run
+        run: echo "Matrix file: ${{ matrix.file }}"
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -63,36 +64,33 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Ensure diffs folder exists
+        run: mkdir -p screenshots/diffs
+
       - name: Run Playwright for matrix file
-        # matrix.file contains the path for the single test file this job should run.
-        # Adjust your playwright command if you use a different test runner config or flags.
         run: |
           echo "Running visual tests for: ${{ matrix.file }}"
-          # ensure the screenshots/diffs folder exists for this job (optional)
-          mkdir -p screenshots/diffs
-          # Run only the specific file (keep exit code behavior default so failures fail the job)
+          # Run the single spec file explicitly
           npx playwright test "${{ matrix.file }}" --reporter=list
 
-      - name: Upload Visual Report (per-job)
+      - name: Upload Visual Report (per-file)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-report-${{ matrix.file }}
-          # If your playwright report path differs, adjust this path
           path: playwright-report/
 
-      - name: Upload Screenshot Diffs (per-job)
+      - name: Upload Screenshot Diffs (per-file)
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: visual-diffs-${{ matrix.file }}
           path: screenshots/diffs/
 
-  # Optional aggregated artifact job (runs after all matrix jobs complete)
-  aggregate-artifacts:
+  aggregate:
     needs: run-visual-tests
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Create placeholder summary
-        run: echo "All visual test matrix jobs finished. Check per-file artifacts for details."
+      - name: Summary note
+        run: echo "All VisualTesting matrix jobs completed. Check per-file artifacts for reports and diffs."
