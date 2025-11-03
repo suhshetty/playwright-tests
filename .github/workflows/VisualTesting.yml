@@ -1,4 +1,4 @@
-name: Visual Regression - VisualTesting (matrix + artifacts, stable)
+name: Visual Regression - VisualTesting
 
 on:
   push:
@@ -6,73 +6,15 @@ on:
       - '**'
   workflow_dispatch:
   schedule:
-    - cron: '30 18 * * *' # nightly 12:00 AM IST
-
-concurrency:
-  group: visual-testing-${{ github.ref }}
-  cancel-in-progress: true
+    - cron: '30 18 * * *' # Run nightly at 12 AM IST (18:30 UTC)
 
 jobs:
-  list-files:
-    name: Prepare matrix
+  visual-tests:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.create-matrix.outputs.matrix }}
-    steps:
-      - name: Checkout (full)
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Create matrix JSON array of files
-        id: create-matrix
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const { execSync } = require('child_process');
-            let out = '';
-            try {
-              out = execSync("bash -lc \"git ls-files 'tests/VisualTesting/*.mjs'\"", { encoding: 'utf8' }).trim();
-            } catch (e) {
-              out = '';
-            }
-            const files = out ? out.split(/\r?\n/).map(s => s.trim()).filter(Boolean) : [];
-            // Return JSON array string
-            return JSON.stringify(files);
-
-  run-spec:
-    name: Run Visual Spec: ${{ matrix.file }}
-    needs: list-files
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        file: ${{ fromJson(needs.list-files.outputs.matrix) }}
-    timeout-minutes: 90
-    env:
-      SRC_SCREENSHOT_DIR: screenshots
-      ARTIFACT_BASE: artifacts
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Show runner & workspace (quick debug)
-        run: |
-          echo "Actor: $GITHUB_ACTOR"
-          echo "Ref: $GITHUB_REF"
-          uname -a || true
-          pwd
-        shell: bash
-
-      - name: Prepare spec vars
-        run: |
-          SPEC_FILE="${{ matrix.file }}"
-          SPEC_NAME="$(basename "$SPEC_FILE" .mjs)"
-          echo "SPEC_FILE=$SPEC_FILE" > spec.env
-          echo "SPEC_NAME=$SPEC_NAME" >> spec.env
-          echo "Prepared spec: $SPEC_FILE => $SPEC_NAME"
-        shell: bash
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -85,66 +27,24 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Debug - list visual folder and spec
-        run: |
-          source spec.env
-          echo "Listing tests/VisualTesting"
-          ls -la tests/VisualTesting || true
-          echo "Will run spec: $SPEC_FILE"
-        shell: bash
+      - name: Debug - list VisualTesting files
+        run: ls -la tests/VisualTesting
 
-      - name: Run the exact Playwright spec
+      - name: Run all Visual Regression Tests in parallel
         run: |
-          source spec.env
-          npx playwright test "$SPEC_FILE" --reporter=list
-        shell: bash
+          echo "Starting all VisualTesting specs..."
+          npx playwright test tests/VisualTesting --reporter=list
 
-      - name: Ensure artifact folders
-        run: |
-          source spec.env
-          mkdir -p "$ARTIFACT_BASE/screenshots/$SPEC_NAME"
-          mkdir -p "$ARTIFACT_BASE/diffs/$SPEC_NAME"
-        shell: bash
-
-      - name: Collect screenshots into artifact folder
-        run: |
-          source spec.env
-          if [ -d "$SRC_SCREENSHOT_DIR" ]; then
-            cp -r "$SRC_SCREENSHOT_DIR"/. "$ARTIFACT_BASE/screenshots/$SPEC_NAME/" || true
-          else
-            echo "No screenshots found at $SRC_SCREENSHOT_DIR"
-          fi
-        shell: bash
-
-      - name: Collect diffs into artifact folder
-        run: |
-          source spec.env
-          if [ -d "$SRC_SCREENSHOT_DIR/diffs" ]; then
-            cp -r "$SRC_SCREENSHOT_DIR/diffs"/. "$ARTIFACT_BASE/diffs/$SPEC_NAME/" || true
-          else
-            echo "No diffs found at $SRC_SCREENSHOT_DIR/diffs"
-          fi
-        shell: bash
-
-      - name: Upload screenshots artifact (per-spec)
+      - name: Upload All Screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-screenshots-${{ matrix.file }}
-          path: artifacts/screenshots/${{ matrix.file && (matrix.file | split('/')[-1] ) || '' }}  # fallback safe path
+          name: all-screenshots
+          path: screenshots/
 
-      - name: Upload diffs artifact (per-spec)
+      - name: Upload All Diff Images
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-diffs-${{ matrix.file }}
-          path: artifacts/diffs/${{ matrix.file && (matrix.file | split('/')[-1] ) || '' }}
-
-  final-summary:
-    name: Final summary
-    needs: run-spec
-    runs-on: ubuntu-latest
-    if: always()
-    steps:
-      - name: Done
-        run: echo "All visual spec jobs completed. Check Artifacts for per-spec screenshots and diffs."
+          name: all-diffs
+          path: screenshots/diffs/
