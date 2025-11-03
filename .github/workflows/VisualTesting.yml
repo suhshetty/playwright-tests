@@ -9,9 +9,31 @@ on:
     - cron: '30 18 * * *' # Run nightly at 12 AM IST (18:30 UTC)
 
 jobs:
-  visual-tests:
+  # Step 1: List all VisualTesting spec files
+  list-visual-files:
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
+      - name: Find all spec files under tests/VisualTesting
+        id: set-matrix
+        run: |
+          files=$(find tests/VisualTesting -name "*.spec.mjs" | jq -R -s -c 'split("\n")[:-1] | map({file: .})')
+          echo "matrix=$files" >> $GITHUB_OUTPUT
+
+  # Step 2: Run all spec files in parallel using the matrix
+  run-visual-tests:
+    needs: list-visual-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.list-visual-files.outputs.matrix) }}
+
+    name: Run ${{ matrix.file }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,7 +41,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 20
 
       - name: Install dependencies
         run: npm ci
@@ -27,26 +49,21 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Debug - list VisualTesting files
-        run: ls -la tests/VisualTesting
-
-      - name: Run all Visual Regression Tests in parallel
+      - name: Run Visual Regression Test
         run: |
-          echo "Starting all VisualTesting specs in parallel..."
-          CPU_COUNT=$(nproc)
-          echo "Detected $CPU_COUNT CPU cores, running with same number of workers"
-          npx playwright test tests/VisualTesting --reporter=list --workers=$CPU_COUNT
+          echo "Running ${{ matrix.file }}"
+          npx playwright test "${{ matrix.file }}" --reporter=list --workers=2 --fully-parallel
 
-      - name: Upload All Screenshots
+      - name: Upload Screenshots
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-screenshots
+          name: screenshots-${{ matrix.file }}
           path: screenshots/
 
-      - name: Upload All Diff Images
+      - name: Upload Diff Images
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: all-diffs
+          name: diffs-${{ matrix.file }}
           path: screenshots/diffs/
