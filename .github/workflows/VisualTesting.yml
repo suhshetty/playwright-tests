@@ -17,14 +17,14 @@ jobs:
     name: Prepare matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.create-matrix.outputs.result }}
+      matrix: ${{ steps.create-matrix.outputs.matrix }}
     steps:
       - name: Checkout (full)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Create matrix JSON from tests/VisualTesting/*.mjs
+      - name: Create matrix (include array) from tests/VisualTesting/*.mjs
         id: create-matrix
         uses: actions/github-script@v6
         with:
@@ -32,27 +32,29 @@ jobs:
             const { execSync } = require('child_process');
             const path = require('path');
 
-            // list git-tracked .mjs files under tests/VisualTesting
             let out = '';
             try {
-              out = execSync("bash -lc \"git ls-files 'tests/VisualTesting/*.mjs'\"",{ encoding: 'utf8' }).trim();
-            } catch(e) {
+              // list git-tracked .mjs files under tests/VisualTesting
+              out = execSync("bash -lc \"git ls-files 'tests/VisualTesting/*.mjs'\"", { encoding: 'utf8' }).trim();
+            } catch (e) {
               out = '';
             }
 
             const files = out ? out.split(/\r?\n/).map(s => s.trim()).filter(Boolean) : [];
-            const items = files.map(f => ({ file: f, name: path.basename(f, '.mjs') }));
-            // return JSON array string (github-script maps return -> steps.create-matrix.outputs.result)
-            return JSON.stringify(items);
+            const include = files.map(f => ({ file: f, name: path.basename(f, '.mjs') }));
+
+            // Return JSON object with include array (stringified)
+            return JSON.stringify({ include });
 
   run-spec:
-    name: Run Visual Spec ${{ matrix.spec.name }}
+    name: Run Visual Spec: ${{ matrix.spec.name }}
     needs: list-files
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      # use the include array produced by list-files
       matrix:
-        spec: ${{ fromJson(needs.list-files.outputs.matrix) }}
+        spec: ${{ fromJson(needs.list-files.outputs.matrix).include }}
     timeout-minutes: 90
 
     env:
@@ -74,7 +76,7 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Make per-spec artifact directories
+      - name: Prepare per-spec artifact directories
         run: |
           SPEC_FILE="${{ matrix.spec.file }}"
           SPEC_NAME="${{ matrix.spec.name }}"
@@ -84,26 +86,23 @@ jobs:
           mkdir -p "$ARTIFACT_BASE/diffs/$SPEC_NAME"
         shell: bash
 
-      - name: Debug - show which spec will run
+      - name: Debug - which spec will run
         run: |
           source spec.env
           echo "Running spec file: $SPEC_FILE"
           ls -la "$(dirname "$SPEC_FILE")" || true
         shell: bash
 
-      - name: Run the single Playwright spec (exact file path)
+      - name: Run the exact Playwright spec
         run: |
           source spec.env
-          # run the exact file to avoid ambiguous matches
           npx playwright test "$SPEC_FILE" --reporter=list
         shell: bash
 
       - name: Collect screenshots into artifact folder
         run: |
           source spec.env
-          SPEC_NAME="$SPEC_NAME"
           if [ -d "$SRC_SCREENSHOT_DIR" ]; then
-            # copy everything from screenshots/ into per-spec folder
             cp -r "$SRC_SCREENSHOT_DIR"/. "artifacts/screenshots/$SPEC_NAME/" || true
           else
             echo "No screenshots folder ($SRC_SCREENSHOT_DIR) found"
@@ -113,7 +112,6 @@ jobs:
       - name: Collect diffs into artifact folder
         run: |
           source spec.env
-          SPEC_NAME="$SPEC_NAME"
           if [ -d "$SRC_SCREENSHOT_DIR/diffs" ]; then
             cp -r "$SRC_SCREENSHOT_DIR/diffs"/. "artifacts/diffs/$SPEC_NAME/" || true
           else
