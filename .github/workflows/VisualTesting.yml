@@ -32,8 +32,10 @@ jobs:
 
       - name: Run all Visual Regression Tests in parallel
         run: |
-          echo "Starting all VisualTesting specs..."
-          npx playwright test tests/VisualTesting --reporter=list
+          echo "Starting all VisualTesting specs in parallel..."
+          CPU_COUNT=$(nproc)
+          echo "Detected $CPU_COUNT CPU cores, running with same number of workers"
+          npx playwright test tests/VisualTesting --reporter=list --workers=$CPU_COUNT
 
       - name: Upload All Screenshots
         if: always()
