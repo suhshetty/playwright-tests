@@ -1,13 +1,12 @@
 name: Visual Regression - VisualTesting (matrix + artifacts)
 
 on:
-  # run on every push, manual, nightly
   push:
     branches:
       - '**'
   workflow_dispatch:
   schedule:
-    - cron: '30 18 * * *' # 12:00 AM IST
+    - cron: '30 18 * * *' # nightly 12:00 AM IST
 
 concurrency:
   group: visual-testing-${{ github.ref }}
@@ -18,43 +17,46 @@ jobs:
     name: Prepare matrix
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.make-matrix.outputs.matrix }}
+      matrix: ${{ steps.create-matrix.outputs.result }}
     steps:
       - name: Checkout (full)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Build matrix from tests/VisualTesting (*.mjs)
-        id: make-matrix
-        run: |
-          # list git-tracked .mjs files under tests/VisualTesting
-          files=$(git ls-files 'tests/VisualTesting/*.mjs' | sort)
-          echo "Found files:"
-          echo "$files"
-          if [ -z "$files" ]; then
-            echo "matrix=[]" >> $GITHUB_OUTPUT
-            exit 0
-          fi
+      - name: Create matrix JSON from tests/VisualTesting/*.mjs
+        id: create-matrix
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { execSync } = require('child_process');
+            const path = require('path');
 
-          # build JSON array
-          json=$(printf '%s\n' "$files" | jq -R . | jq -s .)
-          echo "matrix=$json" >> $GITHUB_OUTPUT
+            // list git-tracked .mjs files under tests/VisualTesting
+            let out = '';
+            try {
+              out = execSync("bash -lc \"git ls-files 'tests/VisualTesting/*.mjs'\"",{ encoding: 'utf8' }).trim();
+            } catch(e) {
+              out = '';
+            }
+
+            const files = out ? out.split(/\r?\n/).map(s => s.trim()).filter(Boolean) : [];
+            const items = files.map(f => ({ file: f, name: path.basename(f, '.mjs') }));
+            // return JSON array string (github-script maps return -> steps.create-matrix.outputs.result)
+            return JSON.stringify(items);
 
   run-spec:
-    name: Run Visual Spec: ${{ matrix.file }}
+    name: Run Visual Spec ${{ matrix.spec.name }}
     needs: list-files
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        file: ${{ fromJson(needs.list-files.outputs.matrix) }}
-    timeout-minutes: 60
+        spec: ${{ fromJson(needs.list-files.outputs.matrix) }}
+    timeout-minutes: 90
 
     env:
-      # Source path where your tests write screenshots (adjust if different)
       SRC_SCREENSHOT_DIR: screenshots
-      # Destination base inside the workspace for per-spec artifacts
       ARTIFACT_BASE: artifacts
 
     steps:
@@ -64,7 +66,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
 
       - name: Install dependencies
         run: npm ci
@@ -72,54 +74,50 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Ensure artifact folders exist
+      - name: Make per-spec artifact directories
         run: |
-          # spec basename (no path, no extension) used to separate artifacts per spec
-          spec_file="${{ matrix.file }}"
-          spec_base="$(basename "$spec_file" .mjs)"
-          echo "SPEC_FILE=$spec_file" | tee spec.env
-          echo "SPEC_BASE=$spec_base" | tee -a spec.env
-          mkdir -p "$ARTIFACT_BASE/screenshots/$spec_base"
-          mkdir -p "$ARTIFACT_BASE/diffs/$spec_base"
-          cat spec.env
+          SPEC_FILE="${{ matrix.spec.file }}"
+          SPEC_NAME="${{ matrix.spec.name }}"
+          echo "SPEC_FILE=$SPEC_FILE" > spec.env
+          echo "SPEC_NAME=$SPEC_NAME" >> spec.env
+          mkdir -p "$ARTIFACT_BASE/screenshots/$SPEC_NAME"
+          mkdir -p "$ARTIFACT_BASE/diffs/$SPEC_NAME"
         shell: bash
 
-      - name: Run single spec (exact path)
+      - name: Debug - show which spec will run
         run: |
           source spec.env
-          echo "Running spec: $SPEC_FILE"
-          # Run the exact spec file. Adjust flags as needed (e.g., for timeout/retries).
-          # Playwright will create playwright-report/ and your test code should create screenshots/.
+          echo "Running spec file: $SPEC_FILE"
+          ls -la "$(dirname "$SPEC_FILE")" || true
+        shell: bash
+
+      - name: Run the single Playwright spec (exact file path)
+        run: |
+          source spec.env
+          # run the exact file to avoid ambiguous matches
           npx playwright test "$SPEC_FILE" --reporter=list
         shell: bash
 
       - name: Collect screenshots into artifact folder
         run: |
           source spec.env
-          SPEC_SCREENSHOT_DIR="$SRC_SCREENSHOT_DIR"
-          DEST="$ARTIFACT_BASE/screenshots/$SPEC_BASE"
-          echo "Collecting screenshots from $SPEC_SCREENSHOT_DIR into $DEST"
-          # If screenshots are created at different nested paths, copy everything under screenshots/
-          if [ -d "$SPEC_SCREENSHOT_DIR" ]; then
-            # copy only files that belong to this spec if your test framework writes per-spec subfolders.
-            # For safety, we copy entire screenshots folder contents into the per-spec folder.
-            cp -r "$SPEC_SCREENSHOT_DIR"/. "$DEST"/ || true
+          SPEC_NAME="$SPEC_NAME"
+          if [ -d "$SRC_SCREENSHOT_DIR" ]; then
+            # copy everything from screenshots/ into per-spec folder
+            cp -r "$SRC_SCREENSHOT_DIR"/. "artifacts/screenshots/$SPEC_NAME/" || true
           else
-            echo "No screenshots found at $SPEC_SCREENSHOT_DIR"
+            echo "No screenshots folder ($SRC_SCREENSHOT_DIR) found"
           fi
         shell: bash
 
       - name: Collect diffs into artifact folder
         run: |
           source spec.env
-          # we assume diffs (if produced by your visual compare) are in screenshots/diffs/
-          SRC_DIFFS_DIR="$SRC_SCREENSHOT_DIR/diffs"
-          DEST="$ARTIFACT_BASE/diffs/$SPEC_BASE"
-          echo "Collecting diffs from $SRC_DIFFS_DIR into $DEST"
-          if [ -d "$SRC_DIFFS_DIR" ]; then
-            cp -r "$SRC_DIFFS_DIR"/. "$DEST"/ || true
+          SPEC_NAME="$SPEC_NAME"
+          if [ -d "$SRC_SCREENSHOT_DIR/diffs" ]; then
+            cp -r "$SRC_SCREENSHOT_DIR/diffs"/. "artifacts/diffs/$SPEC_NAME/" || true
           else
-            echo "No diffs found at $SRC_DIFFS_DIR"
+            echo "No diffs folder ($SRC_SCREENSHOT_DIR/diffs) found"
           fi
         shell: bash
 
@@ -127,15 +125,15 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-screenshots-${{ matrix.file }}
-          path: artifacts/screenshots/${{ basename(matrix.file, '.mjs') }}/*
+          name: visual-screenshots-${{ matrix.spec.name }}
+          path: artifacts/screenshots/${{ matrix.spec.name }}
 
       - name: Upload diffs artifact (per-spec)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: visual-diffs-${{ matrix.file }}
-          path: artifacts/diffs/${{ basename(matrix.file, '.mjs') }}/*
+          name: visual-diffs-${{ matrix.spec.name }}
+          path: artifacts/diffs/${{ matrix.spec.name }}
 
   final-summary:
     name: Final summary
@@ -143,6 +141,5 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: Print artifacts info
-        run: |
-          echo "All matrix jobs finished (or were skipped). Check per-spec artifacts in the run's Artifacts list."
+      - name: Done
+        run: echo "All visual spec jobs completed (or were skipped). Check Artifacts for screenshots/diffs."
