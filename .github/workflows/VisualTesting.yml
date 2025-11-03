@@ -49,21 +49,55 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Visual Regression Test
+      - name: Run Visual Regression Test (Parallel inside job)
         run: |
           echo "Running ${{ matrix.file }}"
-          npx playwright test "${{ matrix.file }}" --reporter=list --workers=2 --fully-parallel
+          # Run each spec once only (disable retries) but allow parallel execution within the job.
+          npx playwright test "${{ matrix.file }}" --reporter=list --retries=0 --workers=2 --fully-parallel
 
-      - name: Upload Screenshots
+      - name: Prepare per-spec artifact folder
+        id: shortname
+        run: |
+          # create a safe short name (no slashes) for this spec
+          short=$(basename "${{ matrix.file }}" .spec.mjs)
+          echo "shortname=$short" >> $GITHUB_OUTPUT
+
+          # prepare target folders inside the workspace
+          target="artifacts/${short}"
+          echo "target=$target" >> $GITHUB_OUTPUT
+          mkdir -p "${target}/url1" "${target}/url2" "${target}/diffs" || true
+
+          # copy screenshots into the per-spec folder; tolerate missing folders
+          if [ -d "screenshots/url1" ]; then
+            cp -r screenshots/url1/* "${target}/url1/" || true
+          fi
+          if [ -d "screenshots/url2" ]; then
+            cp -r screenshots/url2/* "${target}/url2/" || true
+          fi
+          if [ -d "screenshots/diffs" ]; then
+            cp -r screenshots/diffs/* "${target}/diffs/" || true
+          fi
+
+          # also copy full test-results and playwright-report for debugging (optional)
+          if [ -d "test-results" ]; then
+            mkdir -p "${target}/test-results"
+            cp -r test-results/* "${target}/test-results/" || true
+          fi
+          if [ -d "playwright-report" ]; then
+            mkdir -p "${target}/playwright-report"
+            cp -r playwright-report/* "${target}/playwright-report/" || true
+          fi
+
+      - name: Upload per-spec screenshots + diffs as single artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: screenshots-${{ matrix.file }}
+          name: visual-${{ steps.shortname.outputs.shortname }}
+          path: artifacts/${{ steps.shortname.outputs.shortname }}/
+
+      - name: (Optional) Upload raw screenshots folder for legacy consumers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-screenshots-${{ steps.shortname.outputs.shortname }}
           path: screenshots/
-
-      - name: Upload Diff Images
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: diffs-${{ matrix.file }}
-          path: screenshots/diffs/
