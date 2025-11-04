@@ -6,7 +6,7 @@ import {
   safeStep,
   waitForProcessingAndTakeScreenshot,
   compareAllScreenshots
-} from '../../src/utils/visualUtils.noMasking.mjs';
+} from '../../src/utils/visualUtils.withMasking.mjs';
 
 // Initialize environment and clear screenshots
 initializeVisualTestEnv();
