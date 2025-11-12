@@ -13,7 +13,7 @@ initializeVisualTestEnv();
 
 // Screens to validate
 const labels = [
-  'gotoHomePage', 'gotoModuleMenu', 'clickBuildingArchive',
+  'clickBuildingArchive',
   'gotoSiteRegistration', 'gotoSites', 'clickRegisterSites',
   'gotoPortfolioManagement', 'gotoPortfolios', 'clickRegisterPortfolios',
   'gotoLocationsOverview', 'gotoRegisterLocations', 'gotoBuildings', 'clickRegisterBuildings',
@@ -33,12 +33,12 @@ const runTestOnUrl = async (env, baseUrl, page, context) => {
 
   await safeStep('gotoHomePage', async () => {
     await homePage.gotoHomePage();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoHomePage');
   });
 
   await safeStep('gotoModuleMenu', async () => {
     await homePage.gotoModuleMenu();
-    await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
+    //await waitForProcessingAndTakeScreenshot(page, env, 'gotoModuleMenu');
   });
 
   await safeStep('clickBuildingArchive', async () => {

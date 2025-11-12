@@ -6,14 +6,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "devDependencies": {
-    "@playwright/test": "^1.54.1",
-    "@types/node": "^22.15.21"
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^22.15.21",
+    "dotenv": "^17.2.3"
   },
   "dependencies": {
-    "dotenv": "^17.2.0",
     "exceljs": "^4.4.0",
     "pixelmatch": "^7.1.0"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "description": ""
 }
