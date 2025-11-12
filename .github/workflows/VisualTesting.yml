@@ -1,0 +1,113 @@
+name: Visual Regression - VisualTesting
+
+on:
+  push:
+    branches:
+      - '**'
+  workflow_dispatch:
+  schedule:
+    - cron: '30 18 * * *' # Run nightly at 12 AM IST (18:30 UTC)
+
+jobs:
+  # Step 1: List all VisualTesting spec files
+  list-visual-files:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Find all spec files under tests/VisualTesting
+        id: set-matrix
+        run: |
+          files=$(find tests/VisualTesting -name "*.spec.mjs" | jq -R -s -c 'split("\n")[:-1] | map({file: .})')
+          echo "matrix=$files" >> $GITHUB_OUTPUT
+
+  # Step 2: Run all spec files in parallel using matrix
+  run-visual-tests:
+    needs: list-visual-files
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.list-visual-files.outputs.matrix) }}
+
+    name: Run ${{ matrix.file }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      - name: Run Visual Regression Test (Parallel inside job)
+        run: |
+          echo "Running ${{ matrix.file }}"
+          # run once (no retries) but still allow parallel workers inside the job
+          npx playwright test "${{ matrix.file }}" --reporter=list --retries=0 --workers=2 --fully-parallel
+        # don't stop the workflow if this step fails; we still want to collect screenshots/diffs
+        continue-on-error: true
+
+      - name: Prepare per-spec artifact folder (always)
+        id: prepare
+        if: always()
+        run: |
+          # safe short name without path or extension
+          short=$(basename "${{ matrix.file }}" .spec.mjs)
+          echo "shortname=$short" >> $GITHUB_OUTPUT
+
+          # target artifact root for this job
+          target="artifacts/${short}"
+          echo "target=${target}" >> $GITHUB_OUTPUT
+
+          # create subfolders
+          mkdir -p "${target}/url1" "${target}/url2" "${target}/diffs" "${target}/test-results" "${target}/playwright-report"
+
+          # copy screenshots if present (tolerate missing)
+          if [ -d "screenshots/url1" ]; then
+            cp -r screenshots/url1/* "${target}/url1/" || true
+          fi
+          if [ -d "screenshots/url2" ]; then
+            cp -r screenshots/url2/* "${target}/url2/" || true
+          fi
+          if [ -d "screenshots/diffs" ]; then
+            cp -r screenshots/diffs/* "${target}/diffs/" || true
+          fi
+
+          # copy test-results and report if present
+          if [ -d "test-results" ]; then
+            cp -r test-results/* "${target}/test-results/" || true
+          fi
+          if [ -d "playwright-report" ]; then
+            cp -r playwright-report/* "${target}/playwright-report/" || true
+          fi
+
+          # ensure artifact is not empty: create an index file if nothing was copied
+          if [ -z "$(ls -A "${target}")" ]; then
+            echo "No screenshots produced for ${short} at $(date -u)" > "${target}/.index.txt"
+          fi
+
+      - name: Upload per-spec artifact (screenshots + diffs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          # artifact name must be unique across the whole workflow run — include run id + job name
+          name: visual-${{ steps.prepare.outputs.shortname }}-${{ github.run_id }}-${{ github.job }}
+          path: artifacts/${{ steps.prepare.outputs.shortname }}/
+
+      # Optional: upload raw screenshots too but with unique artifact name
+      - name: Upload raw screenshots (optional)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-screenshots-${{ steps.prepare.outputs.shortname }}-${{ github.run_id }}-${{ github.job }}
+          path: screenshots/
