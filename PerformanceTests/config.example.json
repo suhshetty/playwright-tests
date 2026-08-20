@@ -1,0 +1,8 @@
+{
+  "_comment": "Per-customer test config. Copy this file to config.json and fill it in. config.json is gitignored so real passwords are not committed. Values here are overridable per-run with -e (e.g. -e BASE_URL=...). Names (siteName, municipalityName) are resolved to ids at runtime, so you never enter database ids.",
+  "baseUrl": "https://kommune.mainmanager.is",
+  "username": "your-username",
+  "password": "your-password",
+  "siteName": "Absalonsgade 16",
+  "municipalityName": "Albertslund"
+}
