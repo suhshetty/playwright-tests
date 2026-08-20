@@ -74,7 +74,7 @@ export const options = __ENV.VUS
             // Read steady-state numbers from the soak, not the whole-run averages.
             // Measured on bygst: 50 VU stable, 100 VU degraded but usable, 250 VU past
             // capacity — see PerformanceTests/reports/scenario2/ for the run history.
-            { duration: '10m', target: 250 },  { duration: '5m', target: 100 },  // ramp to 100, then soak
+            { duration: '5m', target: 250 },  { duration: '5m', target: 250 },  // ramp to 250 over 5m, then soak 5m
           ],
           gracefulRampDown: '30s',
         },
