@@ -55,7 +55,10 @@ echo ""
 #
 # NOTE the ${ARR[@]+"${ARR[@]}"} idiom: "${ARR[@]-}" expands an EMPTY array to one
 # empty-string argument, which k6 reads as a second script path and refuses.
+# The live dashboard listens on a port (default 5665). Two runs at once need different
+# ports or the second dies at startup; sanity-all.sh sets one per customer.
 K6_WEB_DASHBOARD=true \
+K6_WEB_DASHBOARD_PORT="${K6_WEB_DASHBOARD_PORT:-5665}" \
 K6_WEB_DASHBOARD_EXPORT="$DIR/dashboard.html" \
   k6 run -e REPORT_DIR="$DIR" -e BASE_URL="$BASE_URL" \
     ${ARGS[@]+"${ARGS[@]}"} "$SCRIPT" 2>&1 | tee "$DIR/console.log"

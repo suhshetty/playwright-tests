@@ -9,3 +9,4 @@ config-*.json
 
 # 46 MB raw k6 export from an early DevCore run; too big for git, kept on the author's disk only.
 devcore/reports/scenario1/summary.json
+sanity-runs/
