@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report — CORE</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report — MainManager CORE</h1>
+<p style="font-size:12px;color:#515b72">Target: https://kommunedevcore.mainmanager.is</p>
+<div class="cards">
+ <div class="card"><div class="n fail">10960/10964</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">22298</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n pass">0.02%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n pass">0.06%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n fail">4</div><div class="l">server API errors</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="fail">FAIL</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="pass">PASS</td></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="fail">FAIL</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="fail">FAIL</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="pass">PASS</td></tr></table>
+
+<h2>Server API errors observed</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Every endpoint this scenario calls, with the status codes actually returned this run.
+ Unlike the bygst report, these are <b>counted in</b> the <i>http failed</i> figure above and
+ not held out of the SLA: on this tenant the filter endpoints work correctly, so there is no
+ known-broken endpoint to exclude — and during a capacity test, excluding errors would hide
+ the finding. <b>Total failed requests: 4.</b>
+</p>
+<table><tr><th>Endpoint</th><th>Status</th><th>Occurrences</th><th>Nature</th></tr><tr><td>MMV2Logout/Logout</td><td class="fail">0 &times;2</td><td>2</td><td>No response — the connection was refused, reset, or timed out before the server answered. Under load this means the web tier stopped accepting connections.</td></tr><tr><td>POST / (authenticate)</td><td class="fail">0 &times;1</td><td>1</td><td>No response — the connection was refused, reset, or timed out before the server answered. Under load this means the web tier stopped accepting connections.</td></tr><tr><td>restapi/Graphical/BuildGraphicalModal</td><td class="fail">0 &times;1</td><td>1</td><td>No response — the connection was refused, reset, or timed out before the server answered. Under load this means the web tier stopped accepting connections.</td></tr></table>
+<p style="font-size:12px;color:#15803d;margin:8px 0 0">Zero errors on: GET / (login page), restapi/Internal/KeepAlive, MMLayoutReadOnly/BuildMainMenu, MMLayoutReadOnly/GetUnreadCount, MMLayoutReadOnly/GetMenuItemSteps, MMLayoutReadOnly/GetMenuItemProcessItems, MMLayoutReadOnly/saveToggleValue, MMLayout/InitMainLayout, MMLayoutReadOnly/LoadMMFilterControl, MMLayoutReadOnly/BuildLayout, restapi/List/GetMMListHeaders, restapi/List/GetMMList, restapi/List/ComboboxData, MMLayout/LoadMMModalControl, MMLayoutReadOnly/GetChildCount, restapi/Graphical/GetLayerPoints, MMLayout/RefreshMainManFilter, MMLayout/RefreshDataFilter, MMLayout/EmptyDataFilter, MMLayoutReadOnly/BuildMyPage, MMLayoutReadOnly/InitPortalAggregate, MMLayoutReadOnly/SelectSnapshotFromMyPage, restapi/Graphical/Tree, MMLayoutReadOnly/PopulateTreeActionMenu, (unclassified).</p>
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>group_duration</td><td>25.57 s</td><td>13.37 s</td><td>95.53 s</td><td>176.13 s</td></tr><tr><td>http_req_blocked</td><td>6 ms</td><td>0 ms</td><td>0 ms</td><td>1.58 s</td></tr><tr><td>http_req_connecting</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>1.03 s</td></tr><tr><td>http_req_duration</td><td>4.65 s</td><td>1.74 s</td><td>20.54 s</td><td>59.99 s</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>4.64 s</td><td>1.74 s</td><td>20.46 s</td><td>59.72 s</td></tr><tr><td>http_req_receiving</td><td>518 ms</td><td>5 ms</td><td>2.55 s</td><td>38.26 s</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>78 ms</td></tr><tr><td>http_req_tls_handshaking</td><td>6 ms</td><td>0 ms</td><td>0 ms</td><td>1.33 s</td></tr><tr><td>http_req_waiting</td><td>4.13 s</td><td>1.53 s</td><td>19.25 s</td><td>59.99 s</td></tr><tr><td>iteration_duration</td><td>115.23 s</td><td>88.68 s</td><td>279.61 s</td><td>335.18 s</td></tr><tr><td>step_filter_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_landing_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_login_auth_duration</td><td>6.92 s</td><td>3.89 s</td><td>25.61 s</td><td>59.99 s</td></tr><tr><td>step_login_duration</td><td>24.92 s</td><td>15.75 s</td><td>90.48 s</td><td>143.18 s</td></tr><tr><td>step_logout_duration</td><td>8.33 s</td><td>3.38 s</td><td>33.30 s</td><td>59.99 s</td></tr><tr><td>step_navigate_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_open_record_duration</td><td>28.93 s</td><td>17.21 s</td><td>96.32 s</td><td>145.98 s</td></tr><tr><td>step_tree_load_duration</td><td>34.86 s</td><td>23.24 s</td><td>122.86 s</td><td>176.14 s</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager-core.js. Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

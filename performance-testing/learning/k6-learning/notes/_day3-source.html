@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Day 3 - The k6 Script Lifecycle</title>
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-size: 24pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; }
+  h2 { font-size: 16pt; color: #0b3d6b; margin-top: 26px; border-bottom: 1px solid #c9d6e2; padding-bottom: 3px; }
+  h3 { font-size: 13pt; color: #1f5c99; margin-top: 18px; }
+  p, li { font-size: 11pt; }
+  li { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 6px 8px; text-align: left; font-size: 10.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 6px 8px; font-size: 10.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 10pt; background-color: #f4f6f8; border-left: 4px solid #1f5c99;
+        padding: 9px 12px; margin: 9px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 10pt; background-color: #eef2f6; padding: 1px 4px; }
+  .key { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 9px 12px; margin: 12px 0; }
+  .warn { background-color: #fdeeee; border-left: 4px solid #c62828; padding: 9px 12px; margin: 12px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 9px 12px; margin: 12px 0; }
+  .sub { color: #5a6b7a; font-size: 10pt; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Day 3 &ndash; The k6 Script Lifecycle</h1>
+<p class="sub">Learning notes &middot; Scripts: day3-lifecycle.js, day3-journey.js</p>
+
+<h2>1. The four stages &ndash; and how often each runs</h2>
+<table>
+  <tr><th style="width:20%">Stage</th><th style="width:40%">Where it lives</th><th>How often it runs</th></tr>
+  <tr><td><b>1. init</b></td><td>Top level of the file, outside any function</td><td><b>Once per context</b> &mdash; more times than you have VUs</td></tr>
+  <tr><td><b>2. setup</b></td><td><code>export function setup()</code></td><td><b>Exactly once</b> for the whole test</td></tr>
+  <tr><td><b>3. VU code</b></td><td><code>export default function ()</code></td><td><b>Every iteration</b> &mdash; potentially thousands of times</td></tr>
+  <tr><td><b>4. teardown</b></td><td><code>export function teardown()</code></td><td><b>Exactly once</b>, at the very end</td></tr>
+</table>
+<p>With 10 VUs and 24 iterations each:</p>
+<pre>init      -&gt;  ~12 times   (unpredictable - see section 3)
+setup     -&gt;    1 time
+default   -&gt;  240 times   &lt;-- anything expensive here is multiplied by 240
+teardown  -&gt;    1 time</pre>
+
+<h2>2. Why this is the highest-stakes concept so far</h2>
+<div class="warn">
+<b>Putting the right code in the wrong stage is the number one way people break their own load test.</b>
+<br><br>
+Real example from the MainManager framework: login was inside the VU function, so <b>every iteration logged in again</b>.
+<br>
+Symptoms: 80%+ <code>http_req_failed</code>, "login page 200" failing ~98%, an absurd iteration count.
+<br>
+Fix: <code>ensureSession()</code> &mdash; log in once and reuse the session.
+<br><br>
+The load test was not measuring the product; it was hammering the login door.
+</div>
+<div class="key">
+<b>The rule that prevents it.</b> Ask of every line: <i>&ldquo;should a real user do this ONCE, or EVERY time?&rdquo;</i>
+<br>Once &rarr; <code>setup()</code>. Every time &rarr; VU code.
+</div>
+
+<h2>3. The surprise: init ran 6 times, not 2</h2>
+<p>Test script: <code>vus: 2</code>, one <code>console.log('&gt;&gt;&gt; INIT')</code> at the top level. Predicted 2 prints. Actual output showed 6.</p>
+<pre>[0000] INIT   &lt;-- 1: k6 loads the script to discover `options` and the exported functions
+[0000] INIT   &lt;-- 2: a context for setup() to run in
+[0000] INIT   &lt;-- 3: VU 1's own context
+[0000] INIT   &lt;-- 4: VU 2's own context
+[0011] INIT   &lt;-- 5: a context for teardown() to run in
+[0011] INIT   &lt;-- 6: one more at shutdown</pre>
+<p>k6 needs a fresh JavaScript environment for <b>every context</b> it creates &mdash; not only VUs, but also the one that reads your options and the ones that run <code>setup()</code> and <code>teardown()</code>.</p>
+<div class="key">
+<b>Do not memorise 6.</b> Memorise the rule: <b>init runs an unpredictable number of times, always more than your VU count &mdash; so it must be cheap and free of side effects.</b>
+</div>
+
+<h3>What belongs where</h3>
+<table>
+  <tr><th style="width:50%">Belongs in init</th><th>Never in init</th></tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>import</code> statements</li>
+        <li><code>open()</code> to read a CSV or file &mdash; <b>only legal here</b></li>
+        <li>Building a <code>SharedArray</code></li>
+        <li>Constants and configuration</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>HTTP requests (k6 forbids them here)</li>
+        <li>Creating records, writing files</li>
+        <li>Anything slow</li>
+        <li>Anything that must happen exactly once</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<div class="warn">
+<b>Proof of the danger, from the real output:</b> two <code>INIT</code> lines appeared at <b>[0011]</b> &mdash; eleven seconds in, AFTER the test body had finished. If init code created a database record you would now have <b>6 records</b>, two of them created after the test ended. If it logged in, that is 6 unwanted logins.
+</div>
+
+<h2>4. The other trap the output revealed: __ITER is per-VU</h2>
+<pre>&gt;&gt;&gt; VU 1 iteration 0        &gt;&gt;&gt; VU 2 iteration 0
+&gt;&gt;&gt; VU 1 iteration 1        &gt;&gt;&gt; VU 2 iteration 1
+...
+&gt;&gt;&gt; VU 1 iteration 7        &gt;&gt;&gt; VU 2 iteration 7</pre>
+<p>Both VUs counted 0 to 7 independently. <b>There is no global iteration counter.</b></p>
+<p>This directly affects the Day 2 script:</p>
+<pre>if (__ITER % 10 === 0) { /* the slow request */ }</pre>
+<ul>
+  <li>At <b>1 VU</b> it fired on iterations 0, 10, 20 &mdash; exactly 1 in 10, as designed.</li>
+  <li>At <b>50 VUs</b> all 50 VUs would fire it simultaneously on their own iteration 0, then together again on iteration 10.</li>
+  <li>Result: <b>synchronised bursts</b>, not a steady 10% trickle. The script worked only because it used 1 VU.</li>
+</ul>
+<p class="sub">Genuine randomness needs Math.random(), or separate scenarios in the config.</p>
+
+<h2>5. The setup() data channel</h2>
+<pre>export function setup() {
+  return { token: 'fake-token-123' };   // &lt;-- returned here
+}
+
+export default function (data) {        // &lt;-- arrives here every iteration
+  ... data.token ...
+}
+
+export function teardown(data) {        // &lt;-- and here too
+}</pre>
+<p>Confirmed live &mdash; the teardown log printed <code>token was fake-token-123</code>. The full path works: <code>setup()</code> &rarr; every iteration &rarr; <code>teardown()</code>.</p>
+<ul>
+  <li>This is the official channel for <b>&ldquo;do the expensive thing once, share the result&rdquo;</b>: fetch an auth token, create test records, look up IDs.</li>
+  <li><b>Constraint:</b> the data is <b>copied</b> to each VU, not shared. A VU can read it but cannot write back in a way other VUs can see. VUs are isolated by design.</li>
+</ul>
+
+<h2>6. Multi-request iterations</h2>
+<p>Every earlier script made one request per iteration, so <code>iterations</code> and <code>http_reqs</code> were identical. A 3-request journey breaks that:</p>
+<pre>iterations ..........: 8      0.252139/s
+http_reqs ...........: 24     0.756417/s
+iteration_duration ..: med=3.88s
+
+8 iterations x 3 requests = 24 http_reqs      confirmed</pre>
+
+<h3>Two throughputs now exist &ndash; always say which one you mean</h3>
+<pre>0.252 journeys/sec    &lt;-- iterations/s
+0.756 requests/sec    &lt;-- http_reqs/s</pre>
+<p>Same test. Quote the wrong one and you misstate your load by 3x.</p>
+
+<h2>7. The blended-metric problem</h2>
+<p>A 3-endpoint journey produced ONE latency metric:</p>
+<pre>http_req_duration: min=238ms  med=272ms  p95=331ms  max=336ms</pre>
+<ul>
+  <li>These are <b>not</b> a fast path plus a tail &mdash; they are three different endpoints averaged together.</li>
+  <li><code>p95 = 331ms</code> is almost certainly the <b>slowest endpoint's normal speed</b>, not a tail.</li>
+  <li><code>avg (284) &gt; med (272)</code> fires the tail alarm, but the cause is an uneven <b>mix</b>, not slow requests.</li>
+  <li><b>The summary cannot tell you WHICH endpoint is slow</b>, so nothing can be fixed and no SLA can be set.</li>
+</ul>
+<p><b>The fix &ndash; tags</b> (full lesson later):</p>
+<pre>http.get('https://quickpizza.grafana.com/',           { tags: { name: 'homepage' } });
+http.get('https://quickpizza.grafana.com/api/quotes', { tags: { name: 'quotes' } });
+http.get('https://quickpizza.grafana.com/api/names',  { tags: { name: 'names' } });
+
+=&gt;  http_req_duration{name:homepage} .. p95=331ms   &lt;-- the slow one
+    http_req_duration{name:quotes} .... p95=245ms
+    http_req_duration{name:names} ..... p95=250ms</pre>
+<div class="key"><b>Principle:</b> one number per <b>thing you care about</b>. A metric blended across different operations is unactionable no matter how many percentiles you print.</div>
+
+<h2>8. The broken-script signature &ndash; memorise this</h2>
+<p>A missing <code>import http from 'k6/http';</code> produced <code>ReferenceError: http is not defined</code>, and this summary:</p>
+<pre>iteration_duration ..: avg=16.02us           &lt;-- MICROSECONDS
+iterations ..........: 6882  4803/s          &lt;-- 4,803 per second
+data_sent ...........: 0 B                   &lt;-- nothing was ever sent
+http_req_* ..........: (completely absent)   &lt;-- no HTTP metrics at all</pre>
+<p>The script threw on the first line, so each iteration ended in microseconds and k6 span the loop 6,882 times in 1.4 seconds.</p>
+<table>
+  <tr><th style="width:34%">Signal</th><th style="width:30%">Healthy</th><th>Broken</th></tr>
+  <tr><td><code>iteration_duration</code></td><td>seconds</td><td><b>microseconds</b></td></tr>
+  <tr><td><code>iterations/s</code></td><td>single or double digits</td><td><b>thousands</b></td></tr>
+  <tr><td><code>data_sent</code></td><td>some bytes</td><td><b>0 B</b></td></tr>
+  <tr><td><code>http_req_*</code></td><td>present</td><td><b>missing entirely</b></td></tr>
+</table>
+<div class="warn">
+<b>This is the same signature as the MainManager 250-VU collapse</b> ("8842 tight-loop iterations, 60% http_failed").
+<br><br>
+An absurd iteration count with a microsecond <code>iteration_duration</code> never means great performance &mdash; it means <b>the script is failing fast</b>.
+<br><br>
+<b>Reflex:</b> if <code>iterations</code> looks impossibly high, do not read the latency numbers at all. Scroll up and find the error.
+</div>
+
+<h3>Classifying k6 failures at a glance</h3>
+<table>
+  <tr><th style="width:34%">Error</th><th>Cause</th></tr>
+  <tr><td><code>moduleSpecifier couldn't be found</code></td><td>Wrong path <b>or</b> the file does not exist. Check both.</td></tr>
+  <tr><td><code>ReferenceError: X is not defined</code></td><td>Missing <code>import</code>. Produces the tight-loop signature above.</td></tr>
+  <tr><td>Error naming a line number</td><td>Syntax problem in the script.</td></tr>
+  <tr><td>Errors appearing after VU startup</td><td>Runtime problem &mdash; the script parsed but failed while running.</td></tr>
+</table>
+
+<h2>9. The sizing workflow &ndash; closing the loop</h2>
+<p><b>Question:</b> how do we know a request takes 0.25s? <b>Answer: we do not. We measure it.</b></p>
+<pre>1. Write the script
+2. Run it at 1 VU for 30s          &lt;-- the smoke test
+3. Read iteration_duration (med)   &lt;-- your one input; ignore the parts
+4. Do the sizing maths
+5. Run the real load test
+6. Compare predicted vs actual throughput</pre>
+<div class="key">
+Use <b>med</b>, not <b>avg</b> &mdash; avg is skewed by one slow iteration; med gives the typical journey.
+<br>
+Measure at <b>1 VU on an idle server</b>. Measuring under load gives an inflated figure that the load itself caused.
+</div>
+
+<h3>Worked example with real measured numbers</h3>
+<pre>measured:   iteration_duration med = 2.55s, 2 requests per iteration
+
+1. throughput   =  1 VU / 2.55s        =  0.392 journeys/s   (k6: 0.383)
+                                       =  0.78 req/s         (k6: 0.766)
+2. iterations   =  30s / 2.55s         =  11.7 -&gt; 12          (k6: 12)
+3. http_reqs    =  12 x 2              =  24                  (k6: 24)
+4. VUs for 20 req/s:
+      20 req/s / 2 requests per journey  =  10 journeys/s
+      10 x 2.55s                         =  ~26 VUs</pre>
+
+<h3>Which of the four do you actually calculate by hand?</h3>
+<table>
+  <tr><th style="width:44%">Calculation</th><th style="width:26%">k6 reports it?</th><th>Manual?</th></tr>
+  <tr><td>Throughput</td><td>Yes</td><td>No</td></tr>
+  <tr><td>Total iterations</td><td>Yes</td><td>No</td></tr>
+  <tr><td>Total requests</td><td>Yes</td><td>No</td></tr>
+  <tr><td><b>VUs to reach a target</b></td><td><b>Never</b></td><td><b>Yes</b></td></tr>
+</table>
+<p>k6 only reports what already happened. &ldquo;How many VUs do I configure?&rdquo; must be answered <b>before</b> the run, so only that one is genuinely manual. The other three are useful as a <b>sanity check</b>:</p>
+<table>
+  <tr><th style="width:40%">Predicted vs actual</th><th>Meaning</th></tr>
+  <tr><td>Roughly equal</td><td>Test behaved as designed</td></tr>
+  <tr><td>Far fewer iterations</td><td><b>The server slowed down &mdash; that is a finding</b></td></tr>
+  <tr><td>Absurdly more</td><td>Script is erroring in a tight loop</td></tr>
+</table>
+
+<h3>The unit-conversion trap</h3>
+<pre>journeys/s  =  requests/s  /  requests per iteration        &lt;-- DO THIS FIRST
+VUs         =  journeys/s  x  iteration_duration</pre>
+<p>Example: 10 APIs per journey, 4s journey, target 20 req/s.</p>
+<pre>correct:   20 / 10 = 2 journeys/s;  2 x 4 = 8 VUs
+skipped:   20 x 4              = 80 VUs      &lt;-- 10x too much load</pre>
+
+<h2>10. Where the target comes from</h2>
+<p>A made-up target produces a made-up verdict. Real sources:</p>
+<table>
+  <tr><th style="width:34%">Source</th><th>How you get the number</th></tr>
+  <tr><td><b>Production logs / APM</b></td><td>Best. Count requests during peak hour, divide by 3600.</td></tr>
+  <tr><td>Business requirement</td><td>&ldquo;must support 500 concurrent users at month-end&rdquo;</td></tr>
+  <tr><td>Existing SLA</td><td>Already agreed with the customer</td></tr>
+  <tr><td>Growth projection</td><td>Today's peak x expected growth</td></tr>
+</table>
+
+<h3>The caveat to state out loud when reporting</h3>
+<p>The VU count came from an <b>idle-server</b> measurement. Under real load journeys get slower, so a run sized for 20 req/s may only achieve 15.</p>
+<div class="good"><b>That is not a mistake &mdash; that is the finding.</b> The system could not sustain the target.</div>
+<table>
+  <tr><th style="width:34%">Approach</th><th>Behaviour</th></tr>
+  <tr><td>Fixed VUs (<code>constant-vus</code>)</td><td>Load falls as the server slows. Report the shortfall as evidence.</td></tr>
+  <tr><td><b>Arrival rate</b> (<code>constant-arrival-rate</code>)</td><td>k6 forces the target rate regardless, adding VUs as needed. Closer to real traffic &mdash; use this for capacity work.</td></tr>
+</table>
+
+<h2>11. Day 3 cheat sheet</h2>
+<table>
+  <tr><th style="width:44%">Situation</th><th>What to do / remember</th></tr>
+  <tr><td>Deciding where code goes</td><td>&ldquo;Once or every time?&rdquo; Once &rarr; <code>setup()</code>. Every time &rarr; VU code.</td></tr>
+  <tr><td>Something must happen exactly once</td><td><code>setup()</code>, never init &mdash; init runs many times.</td></tr>
+  <tr><td>Reading a CSV or data file</td><td><code>open()</code> in init. It is illegal anywhere else.</td></tr>
+  <tr><td>Using <code>__ITER</code> for conditional logic</td><td>Remember it is per-VU. Multiple VUs will synchronise.</td></tr>
+  <tr><td>Sharing an auth token across VUs</td><td>Return it from <code>setup()</code>. Data is copied, not shared.</td></tr>
+  <tr><td>Quoting throughput</td><td>State whether it is journeys/s or requests/s.</td></tr>
+  <tr><td>One latency figure for many endpoints</td><td>Meaningless. Add tags.</td></tr>
+  <tr><td>Iteration count looks impossibly high</td><td>Script is failing fast. Find the error; ignore the metrics.</td></tr>
+  <tr><td>Need to size a load test</td><td>Smoke at 1 VU, read <code>iteration_duration</code> med, convert the target to journeys/s, multiply.</td></tr>
+  <tr><td>Achieved less throughput than planned</td><td>Report it &mdash; the system could not keep up.</td></tr>
+</table>
+
+<h2>12. Next &ndash; Day 4</h2>
+<ul>
+  <li><code>check()</code> &mdash; verifying the response was actually correct, not just HTTP-successful.</li>
+  <li><code>thresholds</code> &mdash; turning measurements into automatic pass/fail gates.</li>
+  <li>Making a test genuinely fail, and understanding why <code>http_req_failed: 0%</code> is not proof of anything.</li>
+</ul>
+
+</body>
+</html>

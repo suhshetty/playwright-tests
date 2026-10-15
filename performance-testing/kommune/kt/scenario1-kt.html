@@ -1,0 +1,1740 @@
+<title>Performance Testing From Scratch</title>
+<style>
+  :root {
+    --bg: #fbfaf8; --surface: #ffffff; --fg: #22201d; --muted: #6c655c;
+    --rule: #e2ddd5; --rule-soft: #efebe4;
+    --accent: #9a3412; --accent-soft: #fdf2ec;
+    --keep: #15803d; --keep-bg: #e9f5ed;
+    --drop: #857c72; --drop-bg: #f1eee9;
+    --warn: #b45309; --warn-bg: #fdf4e3;
+    --code-bg: #f4f1ec; --dt-head: #efebe4;
+    --font-display: "Newsreader", Georgia, serif;
+    --font-body: "Source Sans 3", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg:#1a1816; --surface:#232020; --fg:#ece7e0; --muted:#a39a8e;
+      --rule:#3a3531; --rule-soft:#2d2926;
+      --accent:#f0875a; --accent-soft:#2e221c;
+      --keep:#5fc27e; --keep-bg:#1c2b21;
+      --drop:#8c8378; --drop-bg:#272421;
+      --warn:#e0a243; --warn-bg:#2f2718;
+      --code-bg:#2a2624; --dt-head:#2d2927;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg:#1a1816; --surface:#232020; --fg:#ece7e0; --muted:#a39a8e;
+    --rule:#3a3531; --rule-soft:#2d2926;
+    --accent:#f0875a; --accent-soft:#2e221c;
+    --keep:#5fc27e; --keep-bg:#1c2b21;
+    --drop:#8c8378; --drop-bg:#272421;
+    --warn:#e0a243; --warn-bg:#2f2718;
+    --code-bg:#2a2624; --dt-head:#2d2927;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--fg); font-family: var(--font-body);
+    font-size: 16px; line-height: 1.65; margin: 0; padding: 0 16px 80px;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; }
+  .col { max-width: 700px; }
+
+  header.masthead { border-bottom: 2px solid var(--fg); padding: 44px 0 26px; }
+  .kicker { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 10px; }
+  h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(32px, 6vw, 52px); line-height: 1.05; margin: 0 0 16px; letter-spacing: -0.015em; text-wrap: balance; }
+  .standfirst { font-size: 18.5px; color: var(--muted); max-width: 660px; margin: 0; }
+  .meta { margin-top: 22px; font-size: 13px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 24px; font-variant-numeric: tabular-nums; }
+  .meta b { color: var(--fg); font-weight: 650; }
+
+  .part { margin: 76px 0 0; padding: 26px 0 0; border-top: 3px double var(--fg); }
+  .part .plabel { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .part h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(27px, 4.5vw, 38px); margin: 6px 0 10px; line-height: 1.15; }
+  .part .psub { color: var(--muted); font-size: 17px; margin: 0; max-width: 680px; }
+
+  h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(21px, 3vw, 27px); margin: 46px 0 8px; line-height: 1.2; padding-top: 20px; border-top: 1px solid var(--rule); text-wrap: balance; }
+  h4 { font-family: var(--font-body); font-weight: 650; font-size: 15.5px; margin: 28px 0 7px; }
+  p { margin: 0 0 15px; }
+  ul, ol { margin: 0 0 16px; padding-left: 22px; }
+  li { margin-bottom: 7px; }
+  strong { font-weight: 650; }
+  a { color: var(--accent); }
+  .lede { font-size: 17.5px; }
+  kbd { font-family: var(--font-mono); font-size: 12px; border: 1px solid var(--rule); border-bottom-width: 2px; border-radius: 3px; padding: 1px 5px; background: var(--surface); }
+
+  figure { margin: 24px 0 10px; }
+  figure img { max-width: 100%; display: block; border: 1px solid var(--rule); border-radius: 3px; background: var(--surface); }
+  figcaption { font-size: 13.5px; color: var(--muted); margin-top: 10px; padding-left: 12px; border-left: 2px solid var(--accent); max-width: 760px; }
+
+  .scroll { overflow-x: auto; margin: 16px 0 8px; -webkit-overflow-scrolling: touch; }
+  .hint { font-size: 12px; color: var(--muted); margin: 0 0 20px; font-style: italic; }
+
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { text-align: left; padding: 8px 14px 8px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  th { font-size: 10.5px; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); font-weight: 700; border-bottom: 1.5px solid var(--fg); white-space: nowrap; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td code { font-size: 12.5px; background: none; padding: 0; }
+
+  table.net { min-width: 880px; }
+  table.net th { background: var(--dt-head); padding: 7px 12px; }
+  table.net td { padding: 9px 12px 9px 0; }
+  table.net td:first-child, table.net th:first-child { padding-left: 12px; }
+  table.net tr.keep { background: var(--keep-bg); }
+  table.net tr.drop { background: var(--drop-bg); color: var(--muted); }
+  table.net tr.flag { background: var(--warn-bg); }
+  table.net .ep { font-family: var(--font-mono); font-size: 12.5px; word-break: break-word; }
+  .why { font-size: 12.5px; line-height: 1.5; }
+
+  .v { display: inline-block; font-size: 10.5px; font-weight: 800; letter-spacing: .07em; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+  .v.k { background: var(--keep); color: var(--bg); }
+  .v.d { background: var(--drop); color: var(--bg); }
+  .v.w { background: var(--warn); color: var(--bg); }
+
+  .st { font-variant-numeric: tabular-nums; font-weight: 650; }
+  .st.bad { color: var(--warn); }
+
+  pre { background: var(--code-bg); border: 1px solid var(--rule); border-radius: 4px; padding: 14px 16px; overflow-x: auto; margin: 14px 0 20px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; }
+  code { font-family: var(--font-mono); font-size: 13px; background: var(--code-bg); padding: 1px 5px; border-radius: 3px; }
+  pre code { background: none; padding: 0; font-size: inherit; }
+  .cmt { color: var(--muted); }
+  .hl { color: var(--accent); font-weight: 700; }
+
+  blockquote { border-left: 3px solid var(--rule); margin: 0 0 18px; padding-left: 16px; color: var(--muted); font-size: 14.5px; }
+
+  .note { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 15px 19px; margin: 22px 0; border-radius: 0 4px 4px 0; font-size: 15px; }
+  .note p:last-child { margin-bottom: 0; }
+  .note pre:last-child { margin-bottom: 0; }
+  .note .lbl { display: block; font-size: 10.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--accent); font-weight: 800; margin-bottom: 7px; }
+  .note.caution { border-left-color: var(--warn); background: var(--warn-bg); }
+  .note.caution .lbl { color: var(--warn); }
+
+  .step-head { display: flex; align-items: baseline; gap: 13px; flex-wrap: wrap; margin: 64px 0 2px; padding-top: 24px; border-top: 2px solid var(--fg); }
+  .step-n { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--bg); background: var(--accent); padding: 4px 10px; border-radius: 3px; letter-spacing: .04em; }
+  .step-head h3 { margin: 0; padding: 0; border: 0; font-size: clamp(22px, 3.2vw, 29px); }
+  .step-sub { font-size: 14.5px; color: var(--muted); margin: 10px 0 0; }
+  .tally { font-family: var(--font-mono); font-size: 12.5px; color: var(--muted); margin: 16px 0 6px; padding: 9px 13px; background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; display: inline-block; }
+  .tally b { color: var(--fg); }
+
+  .toc { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 20px 24px; margin: 30px 0 0; }
+  .toc h4 { margin: 0 0 12px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+  .toc ol { margin: 0; padding-left: 20px; font-size: 14.5px; }
+  .toc > ol > li { margin-bottom: 9px; }
+  .toc a { text-decoration: none; font-weight: 650; }
+  .toc a:hover { text-decoration: underline; }
+  .toc ul { list-style: none; padding-left: 0; margin: 4px 0 0; font-size: 13.5px; color: var(--muted); }
+  .toc ul li { margin-bottom: 2px; }
+
+  footer { margin-top: 72px; padding-top: 22px; border-top: 2px solid var(--fg); font-size: 13px; color: var(--muted); }
+
+
+  .codewrap { position: relative; }
+  .codewrap pre { max-height: 640px; overflow: auto; }
+  .copybtn {
+    position: absolute; top: 8px; right: 10px; z-index: 2;
+    font-family: var(--font-body); font-size: 11.5px; font-weight: 650;
+    letter-spacing: .03em; padding: 5px 11px; border-radius: 4px;
+    border: 1px solid var(--rule); background: var(--surface); color: var(--fg);
+    cursor: pointer;
+  }
+  .copybtn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+
+  @media (max-width: 560px) { .meta { flex-direction: column; gap: 3px; } body { font-size: 15.5px; } }
+</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,500&family=Source+Sans+3:wght@400;600;650;700;800&family=JetBrains+Mono:wght@400;700&display=swap">
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="col">
+    <div class="kicker">Knowledge Transfer &middot; EG MainManager</div>
+    <h1>Performance Testing, From the Very Beginning</h1>
+    <p class="standfirst">Every API call in Scenario&nbsp;1, captured live on kommune, with a decision recorded against each one: does it go in the load test, or not &mdash; and why. Written for someone who has never done performance testing, and ending with <a href="#full">the complete script</a>, ready to copy into one file and run.</p>
+    <div class="meta">
+      <span><b>Environment</b> kommune.mainmanager.is</span>
+      <span><b>Scenario</b> 1 &mdash; My page</span>
+      <span><b>Captured</b> 11&ndash;12 Oct 2026</span>
+      <span><b>Tool</b> k6</span>
+    </div>
+  </div>
+
+  <div class="toc col">
+    <h4>What is in this document</h4>
+    <ol>
+      <li><a href="#p1">Foundations</a>
+        <ul><li>What a load test actually is &middot; why we work in HTTP &middot; reading the Network panel</li></ul></li>
+      <li><a href="#p2">Finding the APIs</a>
+        <ul><li>The capture method &middot; the keep-or-drop rules &middot; server-issued tokens</li></ul></li>
+      <li><a href="#p3">Scenario 1, call by call</a>
+        <ul><li>Six steps &middot; every request &middot; a verdict on each one</li></ul></li>
+      <li><a href="#p4">Asserting, running, and reading the report</a>
+        <ul><li><a href="#full">The complete runnable file</a> &mdash; copy it into one file and execute it</li></ul></li>
+      <li><a href="#p5">Your turn &mdash; the checklist</a></li>
+    </ol>
+  </div>
+</header>
+
+<!-- ============================ PART 1 ============================ -->
+<div class="part col" id="p1">
+  <div class="plabel">Part One</div>
+  <h2>Foundations</h2>
+  <p class="psub">If you have never done this before, start here. Nothing in this part assumes any prior knowledge.</p>
+</div>
+
+<div class="col">
+
+<h3>What a load test actually is</h3>
+
+<p class="lede">A load test does not open a browser. It sends the same HTTP requests a browser would send, from many simulated users at once, and measures what comes back.</p>
+
+<p>That one sentence explains almost every decision in this document. Unpacking it:</p>
+
+<p>When you click something in MainManager, your browser sends a handful of small messages to the server &mdash; "give me the work order list", "remember which tab is open". Each one is an <strong>HTTP request</strong>. The server does the work, usually a database query, and sends back an <strong>HTTP response</strong>. The browser then draws the result on screen.</p>
+
+<p>The drawing happens on <em>your</em> computer and costs the server nothing. The requests are what the server has to handle. So when we want to know "can the server cope with 250 people using this at once?", we do not need 250 browsers. We need something that can send 250 users' worth of requests. That tool is <strong>k6</strong>.</p>
+
+<p>k6 runs a small JavaScript program. Each simulated user &mdash; k6 calls them <strong>VUs</strong>, virtual users &mdash; runs that program over and over. One pass through the program is an <strong>iteration</strong>.</p>
+
+<div class="note">
+  <span class="lbl">The consequence</span>
+  <p>Because k6 does not render pages, it has no idea what a click "means". It sends only what you tell it to send. So the whole job becomes: <strong>find out exactly which requests the browser sends, then replay them faithfully.</strong> Replay the wrong ones and the test still runs, still passes, and still produces a convincing report &mdash; measuring something that never happens in real use.</p>
+</div>
+
+<h3>Why not run 250 real browsers instead?</h3>
+
+<p>You could, and for a handful of users it works. It does not scale: a real Chrome instance needs roughly 300&ndash;700&nbsp;MB of memory and a CPU core's worth of work. 250 of them needs a small server farm, and most of that hardware goes on rendering pixels nobody looks at.</p>
+
+<p>k6 sends the same requests using a few hundred kilobytes per VU, so 250 VUs run comfortably on one laptop. That is the trade: you give up "it looks right on screen" and you gain "I can actually produce the load".</p>
+
+<p>It also makes the measurement cleaner. If a browser-based test is slow, you cannot easily tell whether the <em>server</em> was slow or the <em>browser</em> was busy painting. With k6 there is no painting, so what you measure is server time plus network time, and nothing else.</p>
+
+<h3>Reading the Network panel</h3>
+
+<p>Everything we need comes from one place: the browser's <strong>Network</strong> panel. Press <kbd>F12</kbd> in Chrome, click the <strong>Network</strong> tab, and do something in the app. Every request appears as a row.</p>
+
+<p>The columns, and what each is worth to us:</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Column</th><th>What it is</th><th>Why we care</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Name</strong></td><td>The endpoint, e.g. <code>GetMMList</code></td><td>This is the API name. It is what we write into the k6 script.</td></tr>
+    <tr><td><strong>Status</strong></td><td>HTTP code: 200 = OK, 403 = forbidden, 500 = server error</td><td>Useful, but <strong>not sufficient</strong>. A 200 can still contain an empty grid. This is the single biggest trap in the discipline, and Part 4 is largely about it.</td></tr>
+    <tr><td><strong>Type</strong> / <strong>Initiator</strong></td><td>Whether it is an API call (<code>xhr</code>/<code>fetch</code>), a stylesheet, a script, an image</td><td>The main sorting key for keep-or-drop.</td></tr>
+    <tr><td><strong>Size</strong></td><td>Bytes over the wire. "(from disk cache)" means nothing was transferred</td><td>Big responses are where the server spends effort. Cached ones cost the server nothing &mdash; a strong signal to drop.</td></tr>
+    <tr><td><strong>Time</strong></td><td>How long the request took</td><td>Points you at the calls that will break first under load.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Three settings to turn on before you capture anything:</p>
+
+<ul>
+  <li><strong>Preserve log</strong> (shown as "Keep log" in some versions) &mdash; otherwise the list is wiped the moment the page navigates, and you lose the login requests, which are the ones you most need.</li>
+  <li><strong>Disable cache</strong> &mdash; so you see what a first-time visitor actually downloads rather than what your warm browser skips.</li>
+  <li>The <strong>Fetch/XHR</strong> filter &mdash; click it to hide images, CSS and fonts and show only API calls. Capture once with it off to see the full picture, then switch it on to work.</li>
+</ul>
+
+<div class="note caution">
+  <span class="lbl">One warning about the counter at the bottom</span>
+  <p>The panel shows something like <code>19 / 44 requests &nbsp; 54.9 kB / 5,587 kB transferred</code>. The first number in each pair is what survives your filter; the second is the true total. The two are usually very far apart, and a beginner reading only the filtered one will badly underestimate what a page does. Always glance at both.</p>
+</div>
+
+</div>
+
+<!-- ============================ PART 2 ============================ -->
+<div class="part col" id="p2">
+  <div class="plabel">Part Two</div>
+  <h2>Finding the APIs</h2>
+  <p class="psub">The question everybody asks first: how do you know which API is being called, and how do you choose between them?</p>
+</div>
+
+<div class="col">
+
+<h3>We do not guess. We record.</h3>
+
+<p>Not one endpoint in our scripts was guessed, read out of source code, or taken from documentation. Every single one was observed in a real browser session against the real environment, and the observation was written into the script's header comment with the date it was captured.</p>
+
+<p>The method is three steps:</p>
+
+<ol>
+  <li>Open the app, open the Network panel, turn on Preserve log.</li>
+  <li>Perform <strong>one</strong> step of the manual test case by hand &mdash; one click.</li>
+  <li>Read off every row that appeared, and write them down with their request bodies.</li>
+</ol>
+
+<p>Then clear the log and do the next click. One click at a time is what makes the list unambiguous. If you click four things and then look, you cannot tell which call belonged to which action.</p>
+
+<h4>A more repeatable version of the same thing</h4>
+
+<p>The Network panel is ideal for looking. For <em>copying out</em> exact request bodies it is tedious. This recorder, pasted into the Console once, captures everything the page sends from that moment on. It is how every table in Part&nbsp;3 was produced:</p>
+
+<pre><code><span class="cmt">// Wrap XMLHttpRequest so every call the page makes is recorded.</span>
+window.__net = [];
+const ox = XMLHttpRequest.prototype.open, os = XMLHttpRequest.prototype.send;
+XMLHttpRequest.prototype.open = function (m, u) {
+  this.__m = m; this.__u = u; return ox.apply(this, arguments);
+};
+XMLHttpRequest.prototype.send = function (b) {
+  const t0 = performance.now();
+  const rec = { m: this.__m, u: String(this.__u), req: b,
+                st: null, ms: null, bytes: null, res: null };
+  this.addEventListener('load', function () {
+    rec.st    = this.status;
+    rec.ms    = Math.round(performance.now() - t0);
+    rec.bytes = this.responseText.length;
+    rec.res   = this.responseText.slice(0, 300);   <span class="cmt">// keep the start of the response</span>
+  });
+  window.__net.push(rec);
+  return os.apply(this, arguments);
+};
+
+<span class="cmt">// Before each step:</span>  window.__net = []; performance.clearResourceTimings();
+<span class="cmt">// After each step:</span>   copy(window.__net)   <span class="cmt">// puts it on your clipboard</span></code></pre>
+
+<p>It captures the two things the Network panel makes you click around for: the <strong>request body</strong> and the <strong>start of the response</strong>. Both turn out to matter enormously.</p>
+
+<p>To see the dropped items too &mdash; images, CSS, fonts &mdash; add the browser's own resource timeline, which is the same data the Network panel draws:</p>
+
+<pre><code>performance.getEntriesByType('resource')
+  .map(e =&gt; ({ name: e.name, type: e.initiatorType,
+               ms: Math.round(e.duration),
+               transferred: e.transferSize,    <span class="cmt">// ~0 means it came from cache</span>
+               actualSize:  e.decodedBodySize }));</code></pre>
+
+<h3>The keep-or-drop rules</h3>
+
+<p>A single click can fire anything from zero to twenty-five requests. Here is the rule applied to each one, in order.</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Ask</th><th>If yes</th><th>Reasoning</th></tr></thead>
+  <tbody>
+    <tr><td><strong>1.</strong> Is it a static file &mdash; image, CSS, JS, font?</td><td><span class="v d">DROP</span></td><td>The browser caches these. A real user downloads them once on their first visit of the day and then never again. Replaying them every iteration means measuring a file server that is not under test, and inflating the throughput numbers into fiction.</td></tr>
+    <tr><td><strong>2.</strong> Is it analytics, telemetry, or a third-party domain?</td><td><span class="v d">DROP</span></td><td>Not the customer's system. We are not here to load-test somebody else's.</td></tr>
+    <tr><td><strong>3.</strong> Is it a background channel or keep-alive that runs on a timer rather than on the click?</td><td><span class="v d">DROP</span></td><td>Not part of the user journey. Include it only if the test is specifically about it.</td></tr>
+    <tr><td><strong>4.</strong> Does the server have to query the database or build something to answer it?</td><td><span class="v k">KEEP</span></td><td>This is the server doing work. This is the entire point of the exercise.</td></tr>
+    <tr><td><strong>5.</strong> Is it a page the server renders (<code>.aspx</code>)?</td><td><span class="v k">KEEP</span></td><td>Rendering an ASP.NET page is real server work, and the login page in particular hands us a token we need.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note">
+  <span class="lbl">The rule that overrides the others</span>
+  <p><strong>If a request was not observed in the browser, it does not go in the script. If it was observed and rule 4 applies, it goes in &mdash; even when it looks pointless.</strong></p>
+  <p>Scenario 1 fires three calls to <code>saveToggleValue</code> whose entire response is the eight characters <code>{"d":null}</code>. They look like noise. They are not: the server uses them to record which grid is currently active, and <em>filters silently stop working without them</em>. We learned that the hard way. Judging a call by how important it looks is how you end up with a test that passes and proves nothing.</p>
+</div>
+
+<h3>Server-issued tokens: the thing that catches everyone</h3>
+
+<p>Some requests carry a value that the <strong>server generated earlier in the same session</strong> and expects back. Three of them appear in MainManager:</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Token</th><th>Issued by</th><th>Used by</th><th>If you invent one</th></tr></thead>
+  <tbody>
+    <tr><td><code>__VIEWSTATE</code></td><td>The login page HTML</td><td>The login POST</td><td>Login fails. Loudly &mdash; the good case.</td></tr>
+    <tr><td><code>UniqueString</code></td><td><code>InitMainLayout</code></td><td>Every grid and filter call</td><td><strong>The server answers 200</strong> and holds no layout against it. Filters bind to nothing. The grid reloads unfiltered. Every check passes.</td></tr>
+    <tr><td><code>Checksum</code></td><td><code>BuildMyPage</code>, one per widget</td><td><code>InitPortalAggregate</code></td><td>HTTP 500.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>Read the <code>UniqueString</code> row again, because it is the most dangerous failure mode here. For a long time our library invented its own <code>UniqueString</code> instead of reading the one the server sent. Every request returned 200. Every assertion passed. Every report looked healthy. And every filter was a no-op.</p>
+
+<p>We proved it by sending both values in the same session against the same filter:</p>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>UniqueString</th><th class="num">Rows after filtering</th><th>Verdict</th></tr></thead>
+  <tbody>
+    <tr><td>Invented by the script</td><td class="num">2,554</td><td>Unfiltered &mdash; the filter did nothing</td></tr>
+    <tr><td>Read from the <code>InitMainLayout</code> response</td><td class="num">3</td><td>Correct &mdash; matches what the browser shows</td></tr>
+  </tbody>
+</table>
+</div>
+
+<p>So: <strong>always read the response, not just the status code.</strong> Whenever a request contains an id, a key, a token or a checksum, find out where that value came from. If the server minted it, your script must capture and resend it.</p>
+
+</div>
+
+<!-- ============================ PART 3 ============================ -->
+<div class="part col" id="p3">
+  <div class="plabel">Part Three</div>
+  <h2>Scenario 1, call by call</h2>
+  <p class="psub">Six steps, as a manual tester performs them. Every request that fired, what it was, whether it went into the script, and why.</p>
+</div>
+
+<div class="col">
+
+<p>Scenario 1 mirrors one real user journey:</p>
+
+<ol>
+  <li>Log in</li>
+  <li>Open the <strong>My page</strong> module from the navigation menu</li>
+  <li>Open the <strong>My page</strong> tab &mdash; the dashboard with the counter widgets</li>
+  <li>Click the widget <strong>"Unfinished work orders on my organisation"</strong>, which opens the Work order grid</li>
+  <li>Go back to My page</li>
+  <li>Log out</li>
+</ol>
+
+<p>Everything below was captured on <strong>kommune.mainmanager.is</strong> on 11&ndash;12 October 2026, signed in as a standard user. The timings come from a single-user session: they show the <em>shape</em> of the journey, not a performance baseline.</p>
+
+</div>
+
+<!-- ---------- STEP 1 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 1</span><h3>Log in</h3></div>
+  <p class="step-sub">The tester opens the login URL, types a username and password, and presses Login.</p>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt-01-login-page.png" alt="The kommune login page">
+  <figcaption>The kommune login page. An old-style ASP.NET WebForms page: the HTML carries a large hidden field called <code>__VIEWSTATE</code> that must be sent back with the credentials.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<h4>1a. Loading the login page &mdash; 30 requests</h4>
+<p>Before the tester has typed anything, simply opening the URL pulls <strong>30 requests</strong>. This is the clearest possible illustration of the keep-or-drop rules, so here is the complete list, grouped by type:</p>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>Request</th><th>Type</th><th class="num">Time</th><th class="num">Transferred</th><th class="num">Actual size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep">
+      <td class="ep"><b>MMV2Login.aspx</b></td><td>document</td><td class="num">1,560 ms</td><td class="num">7.6 KB</td><td class="num">7.6 KB</td>
+      <td><span class="v k">KEEP</span></td><td class="why">The server renders this page, and its HTML contains the <code>__VIEWSTATE</code> token we must echo back. Without this GET there is no login.</td>
+    </tr>
+    <tr class="drop">
+      <td class="ep">7 stylesheets &mdash; <code>components.min.css</code> (600 KB), <code>bootstrap.min.css</code>, <code>all.min.css</code>, <code>plugins.min.css</code>, <code>login.css</code>, <code>custom.css</code>, <code>bootstrap-switch.min.css</code></td>
+      <td>link</td><td class="num">235&ndash;260 ms</td><td class="num">2.1 KB</td><td class="num">930 KB</td>
+      <td><span class="v d">DROP</span></td><td class="why">Rule 1. Note the gap: 930&nbsp;KB of CSS, 2&nbsp;KB actually transferred &mdash; the browser already had them.</td>
+    </tr>
+    <tr class="drop">
+      <td class="ep">16 scripts &mdash; <code>jquery-3.7.1.min.js</code>, <code>bootstrap.min.js</code>, <code>jquery.validate.min.js</code>, <code>2FA.js</code>, <code>app.min.js</code>, 2&times; <code>WebResource.axd</code> and nine more</td>
+      <td>script</td><td class="num">4&ndash;755 ms</td><td class="num">4.2 KB</td><td class="num">268 KB</td>
+      <td><span class="v d">DROP</span></td><td class="why">Rule 1. These run in the browser; the server only serves the files.</td>
+    </tr>
+    <tr class="drop">
+      <td class="ep">4 images &mdash; <code>bg1.jpg</code>, <code>bg2.jpg</code>, <code>bg3.jpg</code>, <code>orn_logo.png</code></td>
+      <td>img</td><td class="num">255&ndash;486 ms</td><td class="num">1.2 KB</td><td class="num">2,710 KB</td>
+      <td><span class="v d">DROP</span></td><td class="why">Rule 1, and the most extreme case: <strong>2.7&nbsp;MB</strong> of background photographs for a login screen. Replaying these would dominate the test and measure nothing but file serving.</td>
+    </tr>
+    <tr class="drop">
+      <td class="ep"><b>restapi/internal/GetLoginPageLogo</b><br><span class="cmt">?LoginPageID=6</span></td>
+      <td>xhr</td><td class="num">313 ms</td><td class="num">23.9 KB</td><td class="num">38 KB</td>
+      <td><span class="v d">DROP</span></td><td class="why">A genuine judgement call &mdash; it <em>is</em> an API call. But it returns the customer's branding image, it is identical for every user, and it is cached. No database work. Rule 1 in spirit.</td>
+    </tr>
+    <tr class="drop">
+      <td class="ep"><b>restapi/internal/GetLoginPagePictures</b><br><span class="cmt">?LoginPageID=6</span></td>
+      <td>xhr</td><td class="num">331 ms</td><td class="num">0.3 KB</td><td class="num">0 B</td>
+      <td><span class="v d">DROP</span></td><td class="why">Same reasoning, and it returns an empty body here anyway.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<p class="hint">Scroll the table sideways if your screen is narrow.</p>
+
+<div class="col">
+<div class="tally">Login page &rarr; <b>30</b> requests &middot; <b>1</b> kept &middot; <b>29</b> dropped &middot; 3,950&nbsp;KB of content, <b>32&nbsp;KB</b> actually over the wire</div>
+
+<div class="note">
+  <span class="lbl">Why that last number is the whole argument</span>
+  <p>The login page is nearly four megabytes of content. On a warm browser only <strong>32&nbsp;KB</strong> crosses the network, because everything else is cached. If k6 downloaded all 30 files on every iteration it would generate well over a hundred times the real network traffic and spend its time measuring a static file server instead of the application. That is why the rule is "drop static assets" &mdash; and why k6 deliberately does not behave like a browser.</p>
+</div>
+
+<h4>1b. Submitting the credentials</h4>
+<p>Pressing Login posts the form, the server redirects, and the application shell loads. Below are the application calls that resulted &mdash; 18 of them, plus 13 further static files dropped without comment.</p>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>#</th><th>Request</th><th>Request body</th><th class="num">Status</th><th class="num">Time</th><th class="num">Size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep"><td class="num">&mdash;</td><td class="ep">POST <b>MMV2Login.aspx</b></td><td class="why"><code>__VIEWSTATE</code>, <code>__VIEWSTATEGENERATOR</code>, <code>__EVENTVALIDATION</code>, username, password</td><td class="num st">302</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td><span class="v k">KEEP</span></td><td class="why">The authentication itself.</td></tr>
+    <tr class="keep"><td class="num">&mdash;</td><td class="ep">GET <b>MMV2Content.aspx</b><br><span class="cmt">following the redirect</span></td><td class="why">&mdash;</td><td class="num st">200</td><td class="num">3,855 ms</td><td class="num">10.5 KB</td><td><span class="v k">KEEP</span></td><td class="why">The post-login page render &mdash; and how we <em>verify</em> the login worked. See the code below.</td></tr>
+    <tr class="drop"><td class="num">1</td><td class="ep"><b>MMLayoutReadOnly.asmx/IsNewUser</b></td><td class="why"><code>{}</code></td><td class="num st">200</td><td class="num">425 ms</td><td class="num">11 B</td><td><span class="v d">DROP</span></td><td class="why">An 11-byte flag deciding whether to show a welcome tour. Negligible server cost; omitted deliberately.</td></tr>
+    <tr class="drop"><td class="num">2</td><td class="ep"><b>restapi/internal/GetHeaderLogo</b></td><td class="why"><code>?ReportSettingsID=6</code></td><td class="num st">200</td><td class="num">342 ms</td><td class="num">2 B</td><td><span class="v d">DROP</span></td><td class="why">Branding again. Rule 1.</td></tr>
+    <tr class="drop"><td class="num">3</td><td class="ep"><b>restapi/Internal/KeepAlive</b></td><td class="why">&mdash;</td><td class="num st">200</td><td class="num">316 ms</td><td class="num">4 B</td><td><span class="v d">DROP</span></td><td class="why">Rule 3 &mdash; a session heartbeat on a timer, not a user action.</td></tr>
+    <tr class="keep"><td class="num">4</td><td class="ep"><b>MMLayoutReadOnly.asmx/BuildMainMenu</b></td><td class="why"><code>{}</code></td><td class="num st">200</td><td class="num">606 ms</td><td class="num">26 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. The server builds this user's entire navigation menu from their permissions &mdash; real work, 26&nbsp;KB of result.</td></tr>
+    <tr class="keep"><td class="num">5</td><td class="ep"><b>MMLayoutReadOnly.asmx/GetUnreadCount</b></td><td class="why"><code>{}</code></td><td class="num st">200</td><td class="num">389 ms</td><td class="num">171 B</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4 &mdash; a database count for the notification badge. Small response, real query.</td></tr>
+    <tr class="drop"><td class="num">6</td><td class="ep"><b>signalr/negotiate</b></td><td class="why"><code>?clientProtocol=2.1&amp;user=suhsh&amp;connectionData=[notificationcenterhub]</code></td><td class="num st">200</td><td class="num">244 ms</td><td class="num">392 B</td><td><span class="v d">DROP</span></td><td class="why">Rule 3. Opens the live-notification push channel &mdash; a long-lived connection, not a request the user waits on. k6 does not model it.</td></tr>
+    <tr class="drop"><td class="num">7</td><td class="ep"><b>signalr/start</b></td><td class="why"><code>?transport=serverSentEvents&amp;connectionToken=&hellip;</code></td><td class="num st">200</td><td class="num">240 ms</td><td class="num">25 B</td><td><span class="v d">DROP</span></td><td class="why">The same channel. Worth knowing it exists &mdash; if we ever load-test notifications, it becomes the subject.</td></tr>
+    <tr class="flag"><td class="num">8&ndash;18</td><td class="ep"><b>GetMenuItemSteps</b>, <b>GetMenuItemProcessItems</b>, 3&times; <b>saveToggleValue</b>, <b>InitMainLayout</b>, 2&times; <b>LoadMMFilterControl</b>, <b>BuildLayout</b>, <b>GetMMListHeaders</b>, <b>GetMMList</b></td><td class="why">The restored module &mdash; see the note below</td><td class="num st">200</td><td class="num">4,961 ms<br><span class="cmt">combined</span></td><td class="num">942 KB</td><td><span class="v w">NOT REPLAYED</span></td><td class="why">All "keep"-class calls, but not part of Scenario&nbsp;1's login step. Read the note &mdash; this is a deliberate, documented simplification, not an oversight.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt2-01-after-login.png" alt="The application immediately after login, with the Work order grid restored">
+  <figcaption>Straight after login the app has restored the module this account last had open &mdash; here the Work order grid, already showing <strong>1 to 100 of 464</strong>. Nobody asked for it. That is the eleven extra calls in the row above.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<div class="note caution">
+  <span class="lbl">An honest gap, stated plainly</span>
+  <p>MainManager restores the module the account last viewed, so a real login triggers a <em>full grid load</em> &mdash; about five seconds of server work and 942&nbsp;KB &mdash; before the user does anything at all.</p>
+  <p>Scenario&nbsp;1 does <strong>not</strong> replay that. Its login step sends the page GET, the credential POST, <code>BuildMainMenu</code> and <code>GetUnreadCount</code>; step 2 then navigates to My page explicitly. We chose this because the restored module depends on per-account state: replaying it would make every run depend on whatever somebody last clicked, and the measurement would not be reproducible.</p>
+  <p>The cost of that choice: <strong>Scenario 1 understates the server work of a login by roughly one grid load.</strong> The shared library has a <code>loadLandingModule()</code> helper for scenarios that want it. Know this when you read the numbers, and do not let anyone describe the script as a pixel-perfect replica. It is a deliberate model, and the deliberate parts are written down.</p>
+</div>
+
+<h4>The code</h4>
+<pre><code><span class="cmt">// In the scenario file &mdash; the whole of step 1:</span>
+if (!login({ username: USERNAME, password: PASSWORD })) {
+  sleep(randomIntBetween(20, 40));   <span class="cmt">// see the note below</span>
+  return;
+}
+sleep(randomIntBetween(1, 3));       <span class="cmt">// think time</span></code></pre>
+
+<p>And what <code>login()</code> does, from the shared library:</p>
+
+<pre><code><span class="cmt">// 1. GET the login page &mdash; we need its body, so don't discard it</span>
+const page = GET(`${APP}/MMV2Login.aspx`, { responseType: 'text' });
+check(page, { 'login page 200': (r) =&gt; r.status === 200 });
+
+<span class="cmt">// 2. Pull the three hidden WebForms tokens out of the HTML</span>
+const viewstate = extractField(page.body, '__VIEWSTATE');
+const vsgen     = extractField(page.body, '__VIEWSTATEGENERATOR');
+const eventval  = extractField(page.body, '__EVENTVALIDATION');
+
+<span class="cmt">// 3. POST them back together with the credentials</span>
+const res = POST(`${APP}/MMV2Login.aspx`, {
+  '__EVENTTARGET': '', '__EVENTARGUMENT': '',
+  '__VIEWSTATE': viewstate, '__VIEWSTATEGENERATOR': vsgen,
+  '__EVENTVALIDATION': eventval,
+  'lgnUserLogin$UserName': user.username,
+  'lgnUserLogin$Password': user.password,
+  'lgnUserLogin$Login': 'Login',
+}, { redirects: 0 });        <span class="cmt">// follow the redirect ourselves, to time it separately</span>
+
+<span class="cmt">// 4. Follow the redirect to the content page</span>
+<span class="cmt">// 5. Did it work? NOT by status code &mdash; a failed login also returns 200.</span>
+success = check(landing, {
+  'logged in (on Content page)': (r) =&gt; r.url.includes('MMV2Content.aspx'),
+  'login not bounced back':      (r) =&gt; !r.url.includes('MMV2Login.aspx'),
+});
+
+<span class="cmt">// 6. The two shell calls</span>
+POST(`${APP}/services/MMLayoutReadOnly.asmx/BuildMainMenu`,  '{}', ajaxJson());
+POST(`${APP}/services/MMLayoutReadOnly.asmx/GetUnreadCount`, '{}', ajaxJson());</code></pre>
+
+<div class="note">
+  <span class="lbl">Two things in that code worth stopping on</span>
+  <p><strong>Step 5 checks the URL, not the status.</strong> A rejected login in WebForms re-renders the login page and returns <code>200 OK</code>. Assert on the status code and every failed login counts as a success. We assert that we <em>landed on the content page</em>.</p>
+  <p><strong>The 20&ndash;40 second pause on failure is not tidiness.</strong> A failed login ends the iteration in a fraction of a second and k6 immediately starts another. Without the pause each VU retries several times per second and the test floods a struggling login endpoint into total collapse &mdash; on one tenant this produced a 65&ndash;69% login failure rate that was entirely self-inflicted. You stop measuring the system and start measuring your own test.</p>
+</div>
+</div>
+
+<!-- ---------- STEP 2 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 2</span><h3>Open the My page module</h3></div>
+  <p class="step-sub">The tester clicks the module name at top-left to open the navigation menu, then clicks "My page".</p>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt2-02-nav-menu-open.png" alt="The navigation menu open, listing all modules">
+  <figcaption>The navigation menu, open. <strong>This fired zero HTTP requests.</strong> The whole menu was already downloaded by <code>BuildMainMenu</code> during login, so opening it is pure JavaScript.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<div class="note">
+  <span class="lbl">How we knew to skip it</span>
+  <p>The manual test case says "click the navigation menu, then click My page" &mdash; two actions. A naive script would try to model both. We cleared the recorder, opened the menu, and dumped it: <code>0</code> requests. So the script models the menu opening as nothing at all, and the code carries a comment saying why.</p>
+  <p><strong>This is the cheapest and most common finding: user actions that cost the server nothing.</strong> You only learn which ones they are by capturing them one at a time.</p>
+</div>
+
+<h4>Then the actual click &mdash; 12 requests, every one an API call</h4>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>#</th><th>Request</th><th>Request body</th><th class="num">Status</th><th class="num">Time</th><th class="num">Size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep"><td class="num">1</td><td class="ep"><b>saveToggleValue</b></td><td class="why"><code>{"MySection":"ActiveDataStateV2","MyKey":"ActiveNavigationItem","Value":"MyPage"}</code></td><td class="num st">200</td><td class="num">269 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">Records server-side which module is active. Tiny, and essential &mdash; see the box after this table.</td></tr>
+    <tr class="keep"><td class="num">2</td><td class="ep"><b>GetMenuItemSteps</b></td><td class="why"><code>{"Tag":"MyPage"}</code></td><td class="num st">200</td><td class="num">297 ms</td><td class="num">8.2 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. Asks the server what tabs this module has for this user.</td></tr>
+    <tr class="keep"><td class="num">3</td><td class="ep"><b>GetMenuItemProcessItems</b></td><td class="why"><code>{"Parent":"MyPage","Tag":"Shortcuts"}</code></td><td class="num st">200</td><td class="num">257 ms</td><td class="num">5.9 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. The sub-tabs within that tab.</td></tr>
+    <tr class="keep"><td class="num">4</td><td class="ep"><b>GetMenuItemProcessItems</b> <span class="cmt">(again, identical)</span></td><td class="why"><code>{"Parent":"MyPage","Tag":"Shortcuts"}</code></td><td class="num st">200</td><td class="num">247 ms</td><td class="num">5.9 KB</td><td><span class="v k">KEEP</span></td><td class="why">The same call twice, ten milliseconds apart. It looks like a front-end bug &mdash; and probably is &mdash; but <strong>we replay it</strong>, because the server really does get asked twice in production. Fixing the application's inefficiency is not the load test's job; reproducing it is.</td></tr>
+    <tr class="keep"><td class="num">5</td><td class="ep"><b>saveToggleValue</b></td><td class="why"><code>{&hellip;,"MyKey":"ActiveNavigationItem","Value":"MyPage"}</code></td><td class="num st">200</td><td class="num">249 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">Active module.</td></tr>
+    <tr class="keep"><td class="num">6</td><td class="ep"><b>saveToggleValue</b></td><td class="why"><code>{&hellip;,"MyKey":"ActiveNavigationStepMyPage","Value":"Shortcuts"}</code></td><td class="num st">200</td><td class="num">248 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">Active tab.</td></tr>
+    <tr class="keep"><td class="num">7</td><td class="ep"><b>saveToggleValue</b></td><td class="why"><code>{&hellip;,"MyKey":"ActiveNavigationStepItemMyPage.Shortcuts","Value":"DashboardHelper"}</code></td><td class="num st">200</td><td class="num">827 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">Active sub-tab. Note it took 827&nbsp;ms to return eight bytes &mdash; these are not free.</td></tr>
+    <tr class="keep"><td class="num">8</td><td class="ep"><b>MMLayout.asmx/InitMainLayout</b></td><td class="why"><code>{"UniqueString":"","MenuItemKey":"DashboardHelper","SummaryID":0,"MenuItemID":0,"MenuItemTypeID":7,"ProcessTag":"MyPage","ProcessStepTag":"Shortcuts","SnapshotID":0}</code></td><td class="num st">200</td><td class="num">588 ms</td><td class="num">2.6 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4, and <strong>this is where the server issues the <code>UniqueString</code></strong>. We send an empty one and read the real one out of the response.</td></tr>
+    <tr class="keep"><td class="num">9</td><td class="ep"><b>LoadMMFilterControl</b></td><td class="why"><code>{tag: 'DashboardHelper', type: '2'}</code></td><td class="num st">200</td><td class="num">261 ms</td><td class="num">60 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. Builds the right-hand filter panel &mdash; 60&nbsp;KB of generated markup for a panel the user may never open.</td></tr>
+    <tr class="keep"><td class="num">10</td><td class="ep"><b>BuildLayout</b></td><td class="why">A large JSON layout container, echoed back to the server</td><td class="num st">200</td><td class="num">242 ms</td><td class="num">7.9 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. This one sends <em>more</em> than it receives &mdash; worth remembering when judging bandwidth.</td></tr>
+    <tr class="keep"><td class="num">11</td><td class="ep">GET <b>restapi/List/GetMMListHeaders</b></td><td class="why"><code>?DataPath=DashboardHelper$1$0&amp;UniqueString=b793&hellip;&amp;Gantt=False</code></td><td class="num st">200</td><td class="num">258 ms</td><td class="num">892 B</td><td><span class="v k">KEEP</span></td><td class="why">The grid's column definitions. <strong>Carries the UniqueString from call 8.</strong></td></tr>
+    <tr class="keep"><td class="num">12</td><td class="ep">POST <b>restapi/List/GetMMList</b></td><td class="why">A long DataTables form payload: column definitions, paging, ordering</td><td class="num st">200</td><td class="num">633 ms</td><td class="num">238 B</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4 &mdash; the grid query itself. Normally the heaviest call in any step; small here only because this particular grid is empty.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<div class="tally">My page click &rarr; <b>12</b> requests &middot; <b>12</b> kept &middot; <b>0</b> dropped &middot; no static files at all</div>
+
+<div class="note">
+  <span class="lbl">The three saveToggleValue calls</span>
+  <p>Calls 5, 6 and 7 each return the eight characters <code>{"d":null}</code>. Every instinct says skip them.</p>
+  <p><strong>Do not.</strong> They tell the server which module, tab and sub-tab are active for this session. MainManager's filter endpoints are session-scoped &mdash; they apply to whatever the server believes is the active grid. Omit these and the filter calls still return <code>200 OK</code>, but they bind to nothing and the grid reloads completely unfiltered. Silently. This cost us real time to find, which is why the library's comment on these lines reads "<em>NOT incidental (the old comment here claimed they were)</em>".</p>
+</div>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt2-03-mypage.png" alt="The My page module open">
+  <figcaption>The result of those twelve calls.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<h4>The code</h4>
+<pre><code><span class="cmt">// Step 2: navigation menu -&gt; My page. Opening the menu itself is client-side</span>
+<span class="cmt">// and fires no HTTP, so this is just the module switch + dashboard load.</span>
+openMyPage('2. Navigation -&gt; My page module');
+sleep(randomIntBetween(1, 3));</code></pre>
+
+<p>All twelve calls live inside the shared <code>openMyPage()</code> helper, so the scenario file stays readable. Here is its core, with the captured values visible:</p>
+
+<pre><code>POST(`${APP}/services/MMLayoutReadOnly.asmx/GetMenuItemSteps`,
+  JSON.stringify({ Tag: 'MyPage' }), j);
+
+<span class="cmt">// Persist the ACTIVE navigation state server-side. NOT incidental: BuildMyPage</span>
+<span class="cmt">// only returns the dashboard widgets when MyPage / MainSummary-&lt;id&gt; is the active</span>
+<span class="cmt">// nav item + step. Omitting these makes REPEAT navigations return an empty</span>
+<span class="cmt">// dashboard (0 widgets). Bodies captured live.</span>
+const sum = `MainSummary-${MYPAGE_SUMMARY_ID}`;
+POST(&hellip;/saveToggleValue, JSON.stringify({ MySection: 'ActiveDataStateV2',
+  MyKey: 'ActiveNavigationItem', Value: 'MyPage' }), j);
+POST(&hellip;/saveToggleValue, JSON.stringify({ MySection: 'ActiveDataStateV2',
+  MyKey: `ActiveNavigationStepMyPage`, Value: sum }), j);
+POST(&hellip;/saveToggleValue, JSON.stringify({ MySection: 'ActiveDataStateV2',
+  MyKey: `ActiveNavigationStepItemMyPage.${sum}`, Value: sum }), j);
+
+POST(`${APP}/services/MMLayout.asmx/InitMainLayout`, JSON.stringify({
+  UniqueString: '', MenuItemKey: sum, SummaryID: MYPAGE_SUMMARY_ID,
+  MenuItemID: 0, MenuItemTypeID: 2, ProcessTag: 'MyPage',
+  ProcessStepTag: sum, SnapshotID: 0,
+}), j);</code></pre>
+
+<p>Compare that <code>InitMainLayout</code> body with row 8 of the table above. It is the same object, field for field. <strong>That is what "captured, not guessed" means in practice.</strong></p>
+</div>
+
+<!-- ---------- STEP 3 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 3</span><h3>Open the My page tab</h3></div>
+  <p class="step-sub">The tester clicks the "My page" tab, which draws the dashboard of counter widgets.</p>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt2-04-mypage-dashboard.png" alt="The My page dashboard with counter widgets">
+  <figcaption>The dashboard. Every tile is a number the server had to compute. Count the tiles &mdash; that count is about to appear exactly in the network log.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<p>This is the most interesting step in the scenario: one click produces <strong>24 requests</strong>, and 18 of them are the same endpoint fired in parallel.</p>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>#</th><th>Request</th><th>Request body</th><th class="num">Status</th><th class="num">Time</th><th class="num">Size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep"><td class="num">1&ndash;3</td><td class="ep">3&times; <b>saveToggleValue</b></td><td class="why"><code>ActiveNavigationItem: MyPage</code><br><code>ActiveNavigationStepMyPage: MainSummary-2147483643</code><br><code>ActiveNavigationStepItemMyPage.MainSummary-2147483643: MainSummary-2147483643</code></td><td class="num st">200</td><td class="num">~276 ms<br>each</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">As before. Note the id <code>2147483643</code> &mdash; that is the My page summary id, read straight off the wire and written into the library as a constant.</td></tr>
+    <tr class="keep"><td class="num">4</td><td class="ep"><b>InitMainLayout</b></td><td class="why"><code>{"UniqueString":"","MenuItemKey":"MainSummary-2147483643","SummaryID":2147483643,"MenuItemID":0,"MenuItemTypeID":2,"ProcessTag":"MyPage","ProcessStepTag":"MainSummary-2147483643","SnapshotID":0}</code></td><td class="num st">200</td><td class="num">742 ms</td><td class="num">2.7 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4.</td></tr>
+    <tr class="keep"><td class="num">5</td><td class="ep"><b>MMLayoutReadOnly.asmx/BuildMyPage</b></td><td class="why"><code>{"MainSummaryID":2147483643,"FilterValues":""}</code></td><td class="num st">200</td><td class="num"><strong>3,958 ms</strong></td><td class="num">35.7 KB</td><td><span class="v k">KEEP</span></td><td class="why"><strong>The dashboard build, and the slowest single call in the scenario.</strong> Returns the widget layout as HTML &mdash; and, crucially, the <code>Checksum</code> for every widget. Everything below depends on reading this response.</td></tr>
+    <tr class="flag"><td class="num">6</td><td class="ep">POST <b>restapi/List/GetMMList</b></td><td class="why"><code>draw=2&amp;columns[0][data]=0&amp;&hellip;</code></td><td class="num st bad">403</td><td class="num">3,929 ms</td><td class="num">0 B</td><td><span class="v d">DROP</span></td><td class="why"><strong>A real product race condition.</strong> The grid from the previous sub-tab fires its reload after the layout has already changed underneath it, so the server rejects it. The user sees a "DataTables warning &mdash; Ajax error" pop-up. A genuine defect worth raising, but not part of the journey, so not in the script.</td></tr>
+    <tr class="keep"><td class="num">7&ndash;24</td><td class="ep"><b>18&times; MMLayoutReadonly.asmx/InitPortalAggregate</b><br><span class="cmt">fired in parallel</span></td><td class="why"><code>{"PortalKey":"Snapshot-4390","MainModuleID":883,"ExcludeLocation":false,"Checksum":"lf6VxRunmSpf8IiIv+A8wdj9VcrPNTtXZQVyDa/1Gzg="}</code><br>&hellip; and seventeen more, one per widget, each with its own key and checksum</td><td class="num st">200</td><td class="num">672&ndash;2,373 ms<br><span class="cmt">each, concurrent</span></td><td class="num">233&ndash;264 B<br>each</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4, eighteen times over. Each is a separate aggregate query: tiny responses, substantial database work. <strong>This is the real cost of the dashboard.</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<div class="tally">My page tab &rarr; <b>24</b> requests &middot; <b>23</b> kept &middot; <b>1</b> dropped (the 403 race)</div>
+
+<p>The eighteen widget keys, in the order they fired:</p>
+<pre><code>Snapshot-4390  Snapshot-4394  Snapshot-4393  Snapshot-4392  Snapshot-4391
+Snapshot-4385  Snapshot-4388  Snapshot-4389  Snapshot-3225  Snapshot-4273
+<span class="hl">Snapshot-4270</span>  Snapshot-4282  Snapshot-4281  Snapshot-4264  Snapshot-4275
+Snapshot-4280  Snapshot-4279  Snapshot-3226</code></pre>
+
+<p>Note <strong>Snapshot-4270</strong>. Hold on to it &mdash; it reappears in Step 4, and that connection is the answer to "how do we pick the right API".</p>
+
+<h4>How the script handles eighteen widgets without hardcoding eighteen widgets</h4>
+
+<p>A naive script would paste all eighteen keys and checksums into the code. That breaks the first time a customer adds a tile, and it is useless on any other tenant. Instead the library <strong>parses them out of the <code>BuildMyPage</code> response</strong>:</p>
+
+<pre><code>const built = POST(`${APP}/services/MMLayoutReadOnly.asmx/BuildMyPage`,
+  JSON.stringify({ MainSummaryID: MYPAGE_SUMMARY_ID, FilterValues: '' }), ajaxJsonText());
+
+check(built, {
+  'BuildMyPage 200':             (r) =&gt; r.status === 200,
+  'BuildMyPage no server error': (r) =&gt; bodyOk(r),   <span class="cmt">// catch 200-with-error-payload</span>
+});
+
+<span class="cmt">// Each widget renders a script call. Full signature, read off the live page:</span>
+<span class="cmt">//   initPortalAggregate(containerid, portalkey, mainmoduleid, excludelocation,</span>
+<span class="cmt">//                       countersteps, checksum)</span>
+<span class="cmt">//   initPortalAggregate('PortalAggregateInfo4390','Snapshot-4390',883,false,1,'lf6V...=')</span>
+const html = built.json('d') || '';
+const re = /initPortalAggregate\(\s*'[^']*'\s*,\s*'([^']+)'\s*,\s*(\d+)\s*,\s*(true|false)\s*,\s*\d+\s*,\s*'([^']*)'/g;
+const widgets = [];
+let m;
+while ((m = re.exec(html)) !== null) {
+  widgets.push({ key: m[1], moduleId: parseInt(m[2], 10),
+                 exclude: m[3] === 'true', checksum: m[4] });
+}
+
+check(widgets, { 'dashboard has widgets': (w) =&gt; w.length &gt; 0 });
+
+<span class="cmt">// A real browser fires these CONCURRENTLY, so we batch them rather than looping</span>
+<span class="cmt">// serially &mdash; both more realistic and the correct concurrent server load.</span>
+const reqs = widgets.map((w) =&gt; ({
+  method: 'POST',
+  url: `${APP}/services/MMLayoutReadonly.asmx/InitPortalAggregate`,
+  body: JSON.stringify({ PortalKey: w.key, MainModuleID: w.moduleId,
+                         ExcludeLocation: w.exclude, Checksum: w.checksum }),
+}));
+http.batch(reqs);</code></pre>
+
+<div class="note caution">
+  <span class="lbl">A bug worth learning from</span>
+  <p>That regular expression originally captured only arguments 2 and 3 &mdash; the key and the module id &mdash; and not the <code>checksum</code> at the end. <code>InitPortalAggregate</code> returns <strong>HTTP 500</strong> without a valid checksum.</p>
+  <p>So on every run of Scenario 1, all eighteen widget calls failed, and the check named "all dashboard widgets loaded" sat at 0%. <strong>The dashboard load was being measured as an error path rather than as a dashboard load</strong> &mdash; for weeks. Precisely the same class of mistake as the invented <code>UniqueString</code>: a token the server handed us that we were not handing back.</p>
+  <p>Note <code>http.batch</code> as well. Sending eighteen requests one after another would be wrong twice over: it is not what the browser does, and it would spread the database work across eighteen seconds instead of hitting the server with all of it at once &mdash; which is exactly the stress we are trying to measure.</p>
+</div>
+
+<h4>The code</h4>
+<pre><code><span class="cmt">// Step 3: the My page tab &mdash; reloads the dashboard counter widgets.</span>
+openMyPageTab('3. My page tab');
+sleep(randomIntBetween(1, 3));</code></pre>
+</div>
+
+<!-- ---------- STEP 4 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 4</span><h3>Click the dashboard widget</h3></div>
+  <p class="step-sub">The tester clicks the tile reading "Unfinished work orders on my organisation &mdash; 464". The Work order grid opens, scoped to that widget.</p>
+</div>
+
+<div class="col">
+<p class="lede">This step contains the single best answer to "how do we know which API to call". So before the table, the story.</p>
+
+<p>The widget is a saved view with an id. Clicking it sends one small call first:</p>
+
+<pre><code>POST /mmv2/services/MMLayoutReadOnly.asmx/SelectSnapshotFromMyPage
+     {"SnapshotID": <span class="hl">4270</span>}</code></pre>
+
+<p>That is <code>Snapshot-4270</code> from the dashboard list in Step 3. And the server's reply tells us everything we need:</p>
+
+<pre><code>{"d":{"__type":"Iceconsult.MainTools.xMMMenuItem",
+      <span class="hl">"Caption":"Work orders"</span>,
+      "Level":3,
+      "Type":1,
+      "MMProcess":0,
+      <span class="hl">"Key":"Request"</span>,
+      <span class="hl">"Path":"Helpdesk.Request.Request"</span>,
+      "ParentPath":"Helpdesk.Request",
+      "ParentKey":"Request",
+      <span class="hl">"GrandParentKey":"Helpdesk"</span>, &hellip; }}</code></pre>
+
+<div class="note">
+  <span class="lbl">This is the answer</span>
+  <p>We did not have to work out that widget 4270 means the Work order grid, that its internal data tag is <code>Request</code>, or that it lives under the <strong>Helpdesk</strong> module rather than Operation&nbsp;and&nbsp;maintenance where you would reasonably expect to find work orders.</p>
+  <p><strong>The server told us.</strong> <code>Caption: "Work orders"</code>, <code>Key: "Request"</code>, <code>Path: "Helpdesk.Request.Request"</code> &mdash; the complete navigation path, handed over in reply to a nineteen-byte request.</p>
+  <p>The general lesson: <strong>when you are stuck on which endpoint or which id to use, read the responses.</strong> Applications constantly describe themselves in their own replies. It is faster than reading source code, and it is correct for the environment you are actually testing rather than for whatever happens to be on <code>main</code>.</p>
+</div>
+
+<p>And indeed, after this call the breadcrumb at the top of the screen changes to <strong>Helpdesk / service management</strong> &mdash; which is also why the k6 checks for this step are named "Helpdesk headers loaded" and "Helpdesk grid loaded" rather than anything containing "work order".</p>
+
+<h4>The fourteen requests, in order</h4>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>#</th><th>Request</th><th>Request body</th><th class="num">Status</th><th class="num">Time</th><th class="num">Size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep"><td class="num">1</td><td class="ep"><b>SelectSnapshotFromMyPage</b></td><td class="why"><code>{"SnapshotID":4270}</code></td><td class="num st">200</td><td class="num">396 ms</td><td class="num">1.2 KB</td><td><span class="v k">KEEP</span></td><td class="why">Tells the server which saved view was clicked, so the grid that follows is scoped to it. Skip it and you load the <em>unfiltered</em> Work order grid &mdash; a completely different query, and a much heavier one.</td></tr>
+    <tr class="keep"><td class="num">2</td><td class="ep"><b>saveToggleValue</b></td><td class="why"><code>{&hellip;,"MyKey":"ActiveNavigationItem","Value":"Helpdesk"}</code></td><td class="num st">200</td><td class="num">282 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">Note the value: <code>Helpdesk</code>, exactly as the snapshot response predicted.</td></tr>
+    <tr class="keep"><td class="num">3</td><td class="ep"><b>GetMenuItemSteps</b></td><td class="why"><code>{"Tag":"Helpdesk"}</code></td><td class="num st">200</td><td class="num">288 ms</td><td class="num">36.9 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. A big one &mdash; the Helpdesk module has many tabs.</td></tr>
+    <tr class="keep"><td class="num">4&ndash;5</td><td class="ep">2&times; <b>GetMenuItemProcessItems</b></td><td class="why"><code>{"Parent":"Helpdesk","Tag":"Request"}</code></td><td class="num st">200</td><td class="num">301 / 267 ms</td><td class="num">1.3 KB</td><td><span class="v k">KEEP</span></td><td class="why">Duplicated again, as in Step 2. Replayed as observed.</td></tr>
+    <tr class="keep"><td class="num">6&ndash;8</td><td class="ep">3&times; <b>saveToggleValue</b></td><td class="why"><code>ActiveNavigationItem: Helpdesk</code><br><code>ActiveNavigationStepHelpdesk: Request</code><br><code>ActiveNavigationStepItemHelpdesk.Request: Request</code></td><td class="num st">200</td><td class="num">261&ndash;403 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">The active-state trio again.</td></tr>
+    <tr class="keep"><td class="num">9</td><td class="ep"><b>InitMainLayout</b></td><td class="why"><code>{"UniqueString":"","MenuItemKey":"Request","SummaryID":0,<span class="hl">"MenuItemID":1143</span>,"MenuItemTypeID":1,"ProcessTag":"Helpdesk","ProcessStepTag":"Request","SnapshotID":0}</code></td><td class="num st">200</td><td class="num"><strong>2,662 ms</strong></td><td class="num">7.7 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4. <strong>This is where <code>MENUITEM_WORKORDERS = 1143</code> in the script comes from</strong> &mdash; read off the wire, never guessed. It also issues the <code>UniqueString</code> that calls 13 and 14 carry.</td></tr>
+    <tr class="keep"><td class="num">10</td><td class="ep"><b>LoadMMFilterControl</b> <span class="cmt">(type 3)</span></td><td class="why"><code>{tag: 'Request', type: '3'}</code></td><td class="num st">200</td><td class="num">292 ms</td><td class="num">40.6 KB</td><td><span class="v k">KEEP</span></td><td class="why">The top filter bar (Region / Portfolio / Site / Object). <strong>We used to send only type 2.</strong> Without type 3 the top filter is never instantiated server-side, so filter calls return 200 and bind to nothing. Another silent failure.</td></tr>
+    <tr class="keep"><td class="num">11</td><td class="ep"><b>LoadMMFilterControl</b> <span class="cmt">(type 2)</span></td><td class="why"><code>{tag: 'Request', type: '2'}</code></td><td class="num st">200</td><td class="num">375 ms</td><td class="num"><strong>214 KB</strong></td><td><span class="v k">KEEP</span></td><td class="why">The right-hand filter panel: 214&nbsp;KB of generated markup, every time the grid opens, whether or not the user touches a filter. A legitimate performance finding in its own right.</td></tr>
+    <tr class="keep"><td class="num">12</td><td class="ep"><b>BuildLayout</b></td><td class="why">The full layout container JSON</td><td class="num st">200</td><td class="num">258 ms</td><td class="num">13.2 KB</td><td><span class="v k">KEEP</span></td><td class="why">Rule 4.</td></tr>
+    <tr class="keep"><td class="num">13</td><td class="ep">GET <b>restapi/List/GetMMListHeaders</b></td><td class="why"><code>?DataPath=Request$1$0&amp;UniqueString=5875623603fb49609b1c7b63aba48e86&amp;Gantt=False&amp;PopupSQLListIndex=0&amp;_=&hellip;</code></td><td class="num st">200</td><td class="num">1,535 ms</td><td class="num">4.0 KB</td><td><span class="v k">KEEP</span></td><td class="why">Column definitions. <strong>This is the URL that needs a metric tag</strong> &mdash; see the warning below.</td></tr>
+    <tr class="keep"><td class="num">14</td><td class="ep">POST <b>restapi/List/GetMMList</b></td><td class="why">DataTables form payload</td><td class="num st">200</td><td class="num"><strong>2,790 ms</strong></td><td class="num"><strong>588 KB</strong></td><td><span class="v k">KEEP</span></td><td class="why"><strong>The heaviest call in the entire scenario.</strong> 588&nbsp;KB and nearly three seconds for one page of a grid. This is what fails first under load, and watching it is most of the value of the test.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<div class="tally">Widget click &rarr; <b>14</b> requests &middot; <b>14</b> kept &middot; <b>0</b> dropped</div>
+</div>
+
+<div class="scroll">
+<figure>
+  <img src="kt2-05-workorder-grid.png" alt="The Work order grid showing 1 to 100 of 464">
+  <figcaption>The result: <strong>1 to 100 of 464</strong>. The same 464 the widget showed. That agreement is not decoration &mdash; it is how you confirm the snapshot scope actually applied rather than the grid loading unfiltered.</figcaption>
+</figure>
+</div>
+
+<div class="col">
+<h4>What the big response actually contains</h4>
+<p>The start of the <code>GetMMList</code> body, which is exactly what the k6 assertion reads:</p>
+
+<pre><code>{"draw":1,
+ <span class="hl">"recordsTotal":464</span>,
+ <span class="hl">"recordsFiltered":464</span>,
+ "columnSums":[{"Key":"AssignedCost","Value":"432.500"},
+               {"Key":"ActualCost","Value":"53.100"}],
+ "data":[[83493,{"Text":null,"ToolTip":null,"Icon":0, &hellip;</code></pre>
+
+<p><code>recordsTotal: 464</code> matches the screen exactly, and <code>83493</code> is the first row's id. Both are things a status check would never have looked at.</p>
+
+<h4>The code</h4>
+<pre><code><span class="cmt">// Step 4: click "Unfinished work orders on my organisation".</span>
+<span class="cmt">// SelectSnapshotFromMyPage tells the server which saved snapshot was clicked,</span>
+<span class="cmt">// THEN the Work order grid loads scoped to it. Captured live: snapshot 4270</span>
+<span class="cmt">// -&gt; Helpdesk / Request / DataPath Request$1$0.</span>
+const wo = openModule(WORKORDERS,
+  `4. Widget (snapshot ${WIDGET_SNAPSHOT_ID}) -&gt; Work order grid`,
+  widgetTrend, OPTS);
+
+<span class="cmt">// Assert the grid actually returned rows. Without this the step "passes" on an</span>
+<span class="cmt">// empty grid &mdash; exactly how the broken auth-once scenarios went unnoticed for weeks.</span>
+const woId = firstId(wo.listText, 'Request');
+check(null, { 'Work order grid returned rows': () =&gt; woId !== null });</code></pre>
+
+<p>And the constants at the top of the scenario file &mdash; every one of them a value from the tables above:</p>
+
+<pre><code><span class="cmt">// Per-TENANT values, captured live (see header). Declared explicitly rather</span>
+<span class="cmt">// than inherited, and overridable per run.</span>
+const WIDGET_SNAPSHOT_ID = parseInt(__ENV.WIDGET_SNAPSHOT_ID || '<span class="hl">4270</span>', 10);
+const WORKORDERS = Object.assign({}, MODULES.WorkOrders,
+  { menuItemId: parseInt(__ENV.MENUITEM_WORKORDERS || '<span class="hl">1143</span>', 10) });
+
+const OPTS = { keepList: true, serverUniqueString: true, snapshotId: WIDGET_SNAPSHOT_ID };</code></pre>
+
+<p>The header comment above them explains why they are spelled out even though they happen to match the library defaults:</p>
+
+<blockquote>They are still declared explicitly below and are <code>-e</code> overridable: they are per-TENANT data, and assuming a default matches is how the scenario 2 Buildings grid ended up 403ing for an afternoon.</blockquote>
+
+<div class="note caution">
+  <span class="lbl">Metric cardinality &mdash; a trap specific to k6</span>
+  <p>Look at the <code>GetMMListHeaders</code> URL in row 13. It contains a <code>UniqueString</code> that is different every single time, plus a timestamp cache-buster.</p>
+  <p>k6 groups its measurements by URL. With a URL that never repeats, <strong>every request becomes its own metric series</strong>. One of our runs sailed past k6's 100,000-series limit; k6 began warning about memory and started delaying its own requests &mdash; at which point the test was measuring the load generator rather than the server. It also makes per-endpoint latency unreadable, because no two requests ever land in the same bucket.</p>
+  <p>The fix is one line, and every dynamic URL needs it:</p>
+  <pre><code>GET(url, Object.assign({}, j, { tags: { name: 'restapi/List/GetMMListHeaders' } }));</code></pre>
+</div>
+</div>
+
+<!-- ---------- STEP 5 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 5</span><h3>Back to My page</h3></div>
+  <p class="step-sub">The tester opens the navigation menu again and returns to My page.</p>
+</div>
+
+<div class="col">
+<p>Twenty-five requests &mdash; the menu resolution from Step 2, then the complete dashboard rebuild from Step 3.</p>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>#</th><th>Request</th><th class="num">Status</th><th class="num">Time</th><th class="num">Size</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="keep"><td class="num">1</td><td class="ep"><b>saveToggleValue</b> <span class="cmt">ActiveNavigationItem: MyPage</span></td><td class="num st">200</td><td class="num">250 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">&nbsp;</td></tr>
+    <tr class="keep"><td class="num">2</td><td class="ep"><b>GetMenuItemSteps</b> <span class="cmt">{"Tag":"MyPage"}</span></td><td class="num st">200</td><td class="num">249 ms</td><td class="num">8.2 KB</td><td><span class="v k">KEEP</span></td><td class="why">&nbsp;</td></tr>
+    <tr class="keep"><td class="num">3&ndash;5</td><td class="ep">3&times; <b>saveToggleValue</b></td><td class="num st">200</td><td class="num">~240 ms</td><td class="num">8 B</td><td><span class="v k">KEEP</span></td><td class="why">&nbsp;</td></tr>
+    <tr class="keep"><td class="num">6</td><td class="ep"><b>InitMainLayout</b> <span class="cmt">MainSummary-2147483643</span></td><td class="num st">200</td><td class="num">430 ms</td><td class="num">2.7 KB</td><td><span class="v k">KEEP</span></td><td class="why">&nbsp;</td></tr>
+    <tr class="keep"><td class="num">7</td><td class="ep"><b>BuildMyPage</b></td><td class="num st">200</td><td class="num"><strong>332 ms</strong></td><td class="num">35.7 KB</td><td><span class="v k">KEEP</span></td><td class="why">The same call that took <strong>3,958 ms</strong> in Step 3 now takes 332 ms &mdash; <strong>twelve times faster</strong>. See the note below.</td></tr>
+    <tr class="keep"><td class="num">8&ndash;25</td><td class="ep">18&times; <b>InitPortalAggregate</b> <span class="cmt">(parallel, same keys and checksums as Step 3)</span></td><td class="num st">200</td><td class="num">672&ndash;1,941 ms</td><td class="num">233&ndash;264 B</td><td><span class="v k">KEEP</span></td><td class="why">Every widget recomputed from scratch. Note these did <em>not</em> get faster &mdash; they are live aggregate queries.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<div class="tally">Back to My page &rarr; <b>25</b> requests &middot; <b>25</b> kept &middot; <b>0</b> dropped</div>
+
+<div class="note">
+  <span class="lbl">Why 3,958 ms became 332 ms, and what to do about it</span>
+  <p>The second <code>BuildMyPage</code> was twelve times faster than the first. Something &mdash; a query plan, a compiled template, a warmed cache &mdash; was reused.</p>
+  <p>This is why <strong>the first few minutes of a load test are not trustworthy</strong>, and why our profile ramps to the target over five minutes rather than arriving at once. It is also why you should never compare a number from a cold run against a number from a warm one and call it a regression.</p>
+  <p>It cuts the other way too: the eighteen widget calls did <em>not</em> speed up, because each is a live aggregate over real data. When one call gets dramatically faster and its neighbours do not, that tells you something real about where the time goes.</p>
+</div>
+</div>
+
+<!-- ---------- STEP 6 ---------- -->
+<div class="col">
+  <div class="step-head"><span class="step-n">STEP 6</span><h3>Log out</h3></div>
+  <p class="step-sub">The tester opens the user menu and clicks Logout.</p>
+</div>
+
+<div class="scroll">
+<table class="net">
+  <thead><tr><th>Request</th><th class="num">Status</th><th>Result</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr class="drop"><td class="ep">Opening the user-settings dropdown</td><td class="num st">&mdash;</td><td>0 requests</td><td><span class="v d">DROP</span></td><td class="why">Client-side, like the navigation menu. Captured and confirmed.</td></tr>
+    <tr class="keep"><td class="ep">GET <b>MMV2Logout.aspx</b><br><span class="cmt">the link's href is literally this</span></td><td class="num st">302</td><td>Redirects to <code>MMV2Login.aspx</code></td><td><span class="v k">KEEP</span></td><td class="why">Rule 5. Ends the session server-side.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<pre><code><span class="cmt">// Step 6: Logout, then the gap before the next login.</span>
+logout();
+sleep(ITER_DELAY);   <span class="cmt">// fixed 10 seconds</span></code></pre>
+
+<p>And the library:</p>
+<pre><code>const res = GET(`${APP}/MMV2Logout.aspx`);
+ok = check(res, {
+  'logged out (back on login)': (r) =&gt; r.url.includes('MMV2Login.aspx') || r.status === 200,
+});</code></pre>
+
+<div class="note">
+  <span class="lbl">Why we log in and out on every single iteration</span>
+  <p>It looks wasteful. Why not log in once per virtual user and reuse the session?</p>
+  <p>Because <strong>k6 clears each VU's cookie jar between iterations.</strong> A script that logs in once and carries on sends every later request with no session cookie &mdash; and this server answers those with <code>200 OK</code> and an empty result set. Every check passes. The test measures nothing, convincingly, forever.</p>
+  <p>We have scenarios that still carry that bug, and the library's own comment says so. Scenario&nbsp;1 therefore uses the <em>journey</em> model: a full login and logout each time. It matches the manual test case, which ends with "Click logout", and it is the only model the tool actually supports here.</p>
+  <p>The ten-second gap between iterations was requested by a customer for their tenant and has been applied to every scenario since, so that login rates stay comparable across environments.</p>
+</div>
+</div>
+
+<!-- ---------- SUMMARY ---------- -->
+<div class="col">
+<h3>The whole journey on one page</h3>
+</div>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Step</th><th>User action</th><th class="num">Requests</th><th class="num">Kept</th><th class="num">Dropped</th><th>Heaviest call</th></tr></thead>
+  <tbody>
+    <tr><td>1a</td><td>Open the login URL</td><td class="num">30</td><td class="num">1</td><td class="num">29</td><td>the page itself, 1,560 ms</td></tr>
+    <tr><td>1b</td><td>Press Login</td><td class="num">31</td><td class="num">4</td><td class="num">27<span class="cmt"> (11 not replayed)</span></td><td><code>BuildMainMenu</code>, 26 KB</td></tr>
+    <tr><td>&mdash;</td><td>Open the navigation menu</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td>&mdash;</td></tr>
+    <tr><td>2</td><td>Click My page</td><td class="num">12</td><td class="num">12</td><td class="num">0</td><td><code>InitMainLayout</code>, 588 ms</td></tr>
+    <tr><td>3</td><td>Click the My page tab</td><td class="num">24</td><td class="num">23</td><td class="num">1</td><td><code>BuildMyPage</code>, 3,958 ms</td></tr>
+    <tr><td>4</td><td>Click the widget</td><td class="num">14</td><td class="num">14</td><td class="num">0</td><td><code>GetMMList</code>, 588 KB / 2,790 ms</td></tr>
+    <tr><td>5</td><td>Back to My page</td><td class="num">25</td><td class="num">25</td><td class="num">0</td><td>18&times; <code>InitPortalAggregate</code></td></tr>
+    <tr><td>6</td><td>Log out</td><td class="num">1</td><td class="num">1</td><td class="num">0</td><td>&mdash;</td></tr>
+    <tr style="border-top:2px solid var(--fg)"><td><strong>Total</strong></td><td>One iteration</td><td class="num"><strong>137</strong></td><td class="num"><strong>80</strong></td><td class="num"><strong>57</strong></td><td>&nbsp;</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="col">
+<p class="hint">Static files are counted once each where they appear; in a warm browser almost all of them come from cache.</p>
+</div>
+
+<!-- ============================ PART 4 ============================ -->
+<div class="part col" id="p4">
+  <div class="plabel">Part Four</div>
+  <h2>Asserting, running, reading the report</h2>
+  <p class="psub">A script that sends the right requests is only half the job. The other half is knowing whether the answers were any good.</p>
+</div>
+
+<div class="col">
+
+<h3>Check the data, not the status code</h3>
+
+<p class="lede">This is the single most important lesson in this document.</p>
+
+<p>A grid that returns <code>HTTP 200</code> with zero rows is indistinguishable from a working one if you only look at the status. We have had tests reporting 100% success that were validating nothing whatsoever: filters that returned the same row count before and after being applied, grids that came back empty because the session cookie was missing.</p>
+
+<pre><code><span class="cmt">// NOT ENOUGH &mdash; this passes on a completely empty grid:</span>
+check(res, { 'grid loaded': (r) =&gt; r.status === 200 });
+
+<span class="cmt">// WHAT WE DO &mdash; fails unless a real row id can be read out of the response:</span>
+const woId = firstId(wo.listText, 'Request');
+check(null, { 'Work order grid returned rows': () =&gt; woId !== null });</code></pre>
+
+<p>And <code>firstId</code> is simply:</p>
+
+<pre><code>function firstId(listText, dataTag) {
+  const m = (listText || '').match(new RegExp(dataTag + '\\$1\\$(\\d+)'));
+  return m ? m[1] : null;
+}</code></pre>
+
+<p>Reading a response body means keeping it, which costs memory &mdash; so the library keeps bodies only for the calls that are actually asserted on (<code>opts.keepList</code>) and discards the rest.</p>
+
+<div class="note">
+  <span class="lbl">How to tell whether your own assertion is real</span>
+  <p>Break it on purpose. Set the expected minimum to something impossible &mdash; <code>minRows: 99999</code> &mdash; and run the smoke test. If the check still passes, it was never checking anything. We found a whole scenario this way: its filter steps asserted only HTTP 200 during load runs, because the row parsing sat behind a verbose flag that load runs never set.</p>
+  <p>An assertion you have never seen fail is not an assertion. It is decoration.</p>
+</div>
+
+<h3 id="full">The complete, runnable file</h3>
+
+<p class="lede">Copy everything in the box below into a new file called <code>scenario1-standalone.js</code>, anywhere on your machine, and run it. It needs no other file.</p>
+
+<p>Two things to know before you do:</p>
+
+<ul>
+  <li><strong>The password is not in the file, and must never be.</strong> It is passed on the command line with <code>-e MM_PASSWORD=</code>, which is what keeps this file safe to paste into a document, a ticket or a chat. The file refuses to start without it.</li>
+  <li><strong>This is the KT edition.</strong> For real runs use the repository version, <code>PerformanceTests/scenario1-mypage-kommune.js</code>, which shares its helpers with five other scenarios and writes proper report folders. This standalone file inlines only what Scenario&nbsp;1 needs, so you can read it top to bottom in one sitting.</li>
+</ul>
+
+<h4>Run it</h4>
+
+<pre><code><span class="cmt"># Smoke test: one user, 90 seconds, row counts printed</span>
+k6 run -e BASE_URL=https://kommune.mainmanager.is        -e MM_USERNAME=&lt;your user&gt; -e MM_PASSWORD=&lt;your password&gt;        -e VUS=1 -e DURATION=90s -e VERIFY=true        scenario1-standalone.js
+
+<span class="cmt"># Small load test: 25 users, five minutes</span>
+k6 run -e BASE_URL=https://kommune.mainmanager.is        -e MM_USERNAME=&lt;your user&gt; -e MM_PASSWORD=&lt;your password&gt;        -e VUS=25 -e DURATION=5m        scenario1-standalone.js
+
+<span class="cmt"># Leave VUS off and it uses the staged ramp written into the file:</span>
+<span class="cmt"># 5m ramp to 250 VUs, then 5m hold.</span></code></pre>
+
+<h4>What a good smoke test looks like</h4>
+
+<p>This is the real output from running the file below against kommune, from an empty directory with no repository files present:</p>
+
+<pre><code>     &#9608; 4. Widget (snapshot 4270) -&gt; Work order grid
+       <span style="color:var(--keep)">&#10003; Helpdesk headers loaded</span>
+       <span style="color:var(--keep)">&#10003; Helpdesk grid loaded</span>
+
+   <span style="color:var(--keep)">&#10003;</span> business_errors ....: 0.00%    0 out of 18
+     checks .............: <span class="hl">100.00%  57 out of 57</span>
+   <span style="color:var(--keep)">&#10003;</span> http_req_failed ....: 0.00%    0 out of 261
+     http_reqs ..........: 261
+     iterations .........: 2
+
+[VERIFY] vu=1 iter=0 dashboard widgets=<span class="hl">18</span> allOk=true
+[VERIFY] vu=1 iter=0 openModule(Request) status=200 recordsTotal=<span class="hl">469</span> recordsFiltered=469
+[VERIFY] vu=1 iter=0 workOrderRow=83596</code></pre>
+
+<div class="note">
+  <span class="lbl">Read those VERIFY lines, they are the point of the smoke test</span>
+  <p><code>dashboard widgets=18</code> matches the eighteen tiles counted in Step&nbsp;3. <code>recordsTotal=469</code> is a real row count, and <code>workOrderRow=83596</code> a real record id &mdash; so the grid genuinely returned data rather than an empty 200.</p>
+  <p>Part&nbsp;3 of this document recorded <strong>464</strong> rows when it was captured on 11 October; this run says <strong>469</strong>. That is not a discrepancy to chase &mdash; five work orders were created in the meantime. A live environment moves, which is exactly why you compare the smoke test against <em>what the browser shows you today</em> rather than against a number in a document.</p>
+</div>
+
+<div class="note caution">
+  <span class="lbl">One threshold was crossed, and it is a real finding</span>
+  <p>The run above reported <code>step_widget_drilldown_duration</code> p95 of <strong>14.38s</strong> against a 5s target. That is the widget-to-grid step &mdash; the one containing the 588&nbsp;KB <code>GetMMList</code> call. With a single user and no load.</p>
+  <p>k6 exits with code <strong>99</strong> when a threshold is crossed. That means "SLA breached", not "the test is broken": the run was valid and the report is complete. Do not wire CI to treat 99 as a tooling failure.</p>
+</div>
+
+<h4>The file &mdash; 576 lines</h4>
+
+<div class="codewrap">
+  <button class="copybtn" id="copyAll" type="button">Copy to clipboard</button>
+  <pre id="fullsrc"><code>/* ===========================================================================
+ * SCENARIO 1 — STANDALONE / KT EDITION
+ * ===========================================================================
+ * Login -&gt; My page -&gt; "Unfinished work orders on my organisation" widget
+ *       -&gt; Work order grid -&gt; back to My page -&gt; Logout
+ *
+ * This ONE file needs no other file. Save it anywhere and run:
+ *
+ *   k6 run -e BASE_URL=https://kommune.mainmanager.is \
+ *          -e MM_USERNAME=&lt;your user&gt; -e MM_PASSWORD=&lt;your password&gt; \
+ *          -e VUS=1 -e DURATION=90s -e VERIFY=true \
+ *          scenario1-standalone.js
+ *
+ * NEVER put the password in this file. It is passed with -e so the file stays
+ * safe to paste into a document, a ticket or a chat.
+ *
+ * The production version of this scenario lives in the repository and shares
+ * ~1,200 lines of helpers with five other scenarios:
+ *     PerformanceTests/scenario1-mypage-kommune.js  +  lib/mainmanager.js
+ * This file inlines only the parts Scenario 1 uses, so it can be read top to
+ * bottom in one sitting. Use the repository version for real runs.
+ *
+ * Every endpoint, id and payload below was captured live in a browser on
+ * kommune.mainmanager.is. Nothing here is guessed.
+ * =========================================================================== */
+
+import http from 'k6/http';
+import { check, group, sleep } from 'k6';
+import { Trend, Rate } from 'k6/metrics';
+import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
+
+/* ---------------------------------------------------------------------------
+ * 1. CONFIGURATION — everything tenant-specific, in one place
+ * ------------------------------------------------------------------------ */
+
+const BASE_URL = __ENV.BASE_URL || 'https://kommune.mainmanager.is';
+const APP      = `${BASE_URL}/mmv2`;
+
+// NOTE the MM_ prefix. On Windows, USERNAME is a built-in OS environment variable
+// that k6 inherits into __ENV — using it would silently pick up your Windows login.
+const USERNAME = __ENV.MM_USERNAME || '';
+const PASSWORD = __ENV.MM_PASSWORD || '';
+
+if (!USERNAME || !PASSWORD) {
+  throw new Error('Pass -e MM_USERNAME=&lt;user&gt; -e MM_PASSWORD=&lt;password&gt;');
+}
+
+// The "My page" dashboard tab id. 2147483643 = int.MaxValue - 4, a product sentinel
+// meaning "the My Page dashboard". Confirmed in BuildMainMenu. Expected to be the
+// same on every tenant, but overridable as a safety valve.
+const MYPAGE_SUMMARY_ID = parseInt(__ENV.MYPAGE_SUMMARY_ID || '2147483643', 10);
+
+// The "Unfinished work orders on my organisation" widget = saved snapshot 4270.
+// Snapshot ids are per-tenant DATA (somebody's saved view), so always re-capture
+// on a new environment.
+const WIDGET_SNAPSHOT_ID = parseInt(__ENV.WIDGET_SNAPSHOT_ID || '4270', 10);
+
+// The Work order grid, reached by clicking that widget. Captured live:
+// SelectSnapshotFromMyPage(4270) replies Path "Helpdesk.Request.Request",
+// and InitMainLayout then carries MenuItemID 1143.
+const WORKORDERS = {
+  processTag:     'Helpdesk',
+  processStepTag: 'Request',
+  dataTag:        'Request',
+  dataCaption:    'Work order',
+  dataPath:       'Request$1$0',
+  menuItemId:     parseInt(__ENV.MENUITEM_WORKORDERS || '1143', 10),
+  menuItemType:   1,
+  pageSize:       100,         // what the real UI requests for this grid
+};
+
+// Fixed gap between iterations. Requested by a customer and kept on every scenario
+// since, so login rates stay comparable across environments.
+const ITER_DELAY = parseInt(__ENV.ITER_DELAY || '10', 10);
+
+// -e VERIFY=true prints the real row counts so you can compare them against the
+// browser. Use it for smoke tests, never for load runs (keeping bodies costs memory).
+const VERIFY = !!__ENV.VERIFY;
+
+/* ---------------------------------------------------------------------------
+ * 2. LOAD PROFILE AND SLA
+ *    -e VUS=n gives a flat run; without it, the staged ramp below.
+ * ------------------------------------------------------------------------ */
+
+function p95(envKey, defMs) { return [`p(95)&lt;${parseInt(__ENV[envKey] || defMs, 10)}`]; }
+
+const thresholds = {
+  http_req_failed:                [`rate&lt;${parseFloat(__ENV.MAX_FAIL_RATE || '0.01')}`],
+  business_errors:                [`rate&lt;${parseFloat(__ENV.MAX_FAIL_RATE || '0.01')}`],
+  http_req_duration:              p95('SLA_HTTP_P95',    3000),
+  step_login_duration:            p95('SLA_LOGIN_P95',  10000),
+  step_navigate_duration:         p95('SLA_NAV_P95',     5000),
+  step_mypage_tab_duration:       p95('SLA_MYPAGE_P95',  5000),
+  step_widget_drilldown_duration: p95('SLA_WIDGET_P95',  5000),
+  step_logout_duration:           p95('SLA_LOGOUT_P95',  2000),
+};
+
+export const options = __ENV.VUS
+  ? {
+      discardResponseBodies: true,
+      thresholds: thresholds,
+      vus: parseInt(__ENV.VUS, 10),
+      duration: __ENV.DURATION || '1m',
+    }
+  : {
+      discardResponseBodies: true,
+      thresholds: thresholds,
+      stages: [
+        // Gradual on purpose: arriving at the target all at once distorts the login
+        // measurement and can tip the environment into 503 load-shedding.
+        { duration: '5m', target: 250 },
+        { duration: '5m', target: 250 },
+      ],
+      gracefulRampDown: '30s',
+    };
+
+/* ---------------------------------------------------------------------------
+ * 3. METRICS — one trend per step, so the report says WHICH part is slow
+ * ------------------------------------------------------------------------ */
+
+const loginTrend       = new Trend('step_login_duration', true);
+const loginAuthTrend   = new Trend('step_login_auth_duration', true);    // the credential POST alone
+const loginRenderTrend = new Trend('step_login_render_duration', true);  // the post-login page render alone
+const navigateTrend    = new Trend('step_navigate_duration', true);
+const dashboardTrend   = new Trend('step_mypage_tab_duration', true);
+const widgetTrend      = new Trend('step_widget_drilldown_duration', true);
+const logoutTrend      = new Trend('step_logout_duration', true);
+const errorRate        = new Rate('business_errors');
+
+/* ---------------------------------------------------------------------------
+ * 4. LOW-LEVEL HELPERS
+ * ------------------------------------------------------------------------ */
+
+// Header sets, matching what the real client sends.
+function ajaxJson() {
+  return { headers: {
+    'Content-Type':     'application/json; charset=UTF-8',
+    'Accept':           'application/json, text/javascript, */*; q=0.01',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Referer':          `${APP}/MMV2Content.aspx`,
+  } };
+}
+function ajaxForm() {
+  return { headers: {
+    'Content-Type':     'application/x-www-form-urlencoded; charset=UTF-8',
+    'Accept':           'application/json, text/javascript, */*; q=0.01',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Referer':          `${APP}/MMV2Content.aspx`,
+  } };
+}
+// Bare GET headers — no Content-Type, mirroring jQuery on a body-less GET.
+function ajaxGet() {
+  return { headers: {
+    'Accept':           'application/json, text/javascript, */*; q=0.01',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Referer':          `${APP}/MMV2Content.aspx`,
+  } };
+}
+// Keep the response body (they are discarded globally) where we need to parse it.
+function ajaxJsonText() { return Object.assign({ responseType: 'text' }, ajaxJson()); }
+
+// A 32-char hex id. Used ONLY as a fallback; see the UniqueString note in openModule.
+function uniqueString() {
+  let s = '';
+  for (let i = 0; i &lt; 32; i++) s += Math.floor(Math.random() * 16).toString(16);
+  return s;
+}
+
+// Pull a hidden ASP.NET WebForms field out of the login page HTML.
+function extractField(html, name) {
+  const m = new RegExp(`id="${name}"[^&gt;]*value="([^"]*)"`).exec(html);
+  return m ? m[1] : '';
+}
+
+// These endpoints can return HTTP 200 carrying a .NET error payload. A status-only
+// check misses those completely, so look for the signatures.
+function bodyOk(res) {
+  const b = res &amp;&amp; res.body;
+  if (!b || typeof b !== 'string') return true;
+  return b.indexOf('"ExceptionType"') === -1
+      &amp;&amp; b.indexOf('"StackTrace"') === -1
+      &amp;&amp; b.indexOf('StackTraceString') === -1
+      &amp;&amp; b.indexOf('Server Error in') === -1;
+}
+
+// -e DEBUG=true logs any non-2xx/3xx response. Zero overhead when off.
+const DEBUG   = __ENV.DEBUG === 'true';
+const SLOW_MS = parseInt(__ENV.SLOW_MS || '3000', 10);
+function tap(res) {
+  if (DEBUG) {
+    if (res.status &lt; 200 || res.status &gt;= 400) {
+      const body = (typeof res.body === 'string') ? res.body.replace(/\s+/g, ' ').slice(0, 300) : '';
+      console.error(`[HTTP ${res.status}] ${res.request.method} ${res.request.url}${body ? ' :: ' + body : ''}`);
+    } else if (res.timings.duration &gt; SLOW_MS) {
+      console.error(`[SLOW ${Math.round(res.timings.duration)}ms] ${res.request.method} ${res.request.url}`);
+    }
+  }
+  return res;
+}
+function GET(url, params)        { return tap(http.get(url, params)); }
+function POST(url, body, params) { return tap(http.post(url, body, params)); }
+
+// Persist a bit of active-navigation state server-side. Looks trivial, is not —
+// see the comment in openModule().
+function saveToggle(section, key, value) {
+  return POST(`${APP}/services/MMLayoutReadOnly.asmx/saveToggleValue`,
+    JSON.stringify({ MySection: section, MyKey: key, Value: String(value) }), ajaxJson());
+}
+
+// Print the real row counts under -e VERIFY=true, so you can compare with the browser.
+function verifyRows(label, res) {
+  if (!VERIFY) return;
+  const b   = (res &amp;&amp; typeof res.body === 'string') ? res.body : '';
+  const tot = (b.match(/"recordsTotal":(\d+)/) || [])[1];
+  const flt = (b.match(/"recordsFiltered":(\d+)/) || [])[1];
+  console.log(`[VERIFY] vu=${__VU} iter=${__ITER} ${label} status=${res &amp;&amp; res.status} recordsTotal=${tot} recordsFiltered=${flt}`);
+}
+
+// The layout container the browser echoes back to BuildLayout. Captured live.
+function buildLayoutBody(mod, us, snapshotId) {
+  return JSON.stringify({
+    MMMainLayoutContainer: {
+      __type: 'Iceconsult.MainTools.MMMainLayoutContainer',
+      GraphicalNavigation: { Visible: false, GISActive: false, BIMActive: false, SVGActive: false, BaseInfoActive: false, SupportsGraphical: true },
+      DataSummary: { SummaryMenuItems: null, Active: true, SelectedSummaryKey: '', ListModeMenuItems: null, ActiveListModeKey: null, ActiveListViewNavigationKey: 1 },
+      LocationFilter: { FilterMenuItems: null, Active: true, ReloadFilter: false, ActiveFilterKey: '' },
+      DataFilter: { FilterMenuItems: null, Active: true, FilterEmpty: true, ActiveFilterKey: null, FilterSupportsMainMan: true },
+      ActiveDataCaption:    mod.dataCaption,
+      ActiveDataTag:        mod.dataTag,
+      ActiveProcessStepTag: mod.processStepTag,
+      ActiveProcessTag:     mod.processTag,
+      DataPath:             mod.dataPath,
+      UniqueString:         us,
+      ViewKey:              'UseDefaultViewKey',
+      MenuItemType:         mod.menuItemType,
+      MainSummaryID:        0,
+      MMMenuItemID:         mod.menuItemId,
+      ShowCalendar: false, ShowGantt: false, ShowCardLayout: false,
+      FromSnapShot: !!snapshotId, ActiveSnapshotID: snapshotId || 0, ActiveSnapshotName: '',
+      ShowSnapshotButton: true, CustomMainModuleID: 0, ErrorMessage: null, FilterPinned: false,
+    },
+  });
+}
+
+// The DataTables form payload for the grid query. The page size MUST match what the
+// real UI requests for that grid (it varies per module — Work orders is 100).
+function getMMListBody(mod, us) {
+  const len = parseInt(__ENV.GRID_PAGE || mod.pageSize || 100, 10);
+  return `draw=1&amp;start=0&amp;length=${len}&amp;search%5Bvalue%5D=&amp;search%5Bregex%5D=false` +
+         `&amp;DataPath=${encodeURIComponent(mod.dataPath)}&amp;UniqueString=${us}` +
+         `&amp;Gantt=False&amp;PopupSQLListIndex=0&amp;GroupBy=&amp;ExtraParams=&amp;IsSublist=False`;
+}
+
+/* ---------------------------------------------------------------------------
+ * 5. STEP 1 — LOGIN
+ * ------------------------------------------------------------------------ */
+
+function login() {
+  let success = false;
+  group('1. Login', function () {
+    const t0 = Date.now();
+
+    // Need the body for the hidden WebForms fields, so opt back in to keeping it.
+    const page = GET(`${APP}/MMV2Login.aspx`, { responseType: 'text' });
+    check(page, { 'login page 200': (r) =&gt; r.status === 200 });
+
+    const viewstate = extractField(page.body, '__VIEWSTATE');
+    const vsgen     = extractField(page.body, '__VIEWSTATEGENERATOR');
+    const eventval  = extractField(page.body, '__EVENTVALIDATION');
+    if (!viewstate) { errorRate.add(1); loginTrend.add(Date.now() - t0); return; }
+
+    const tAuth = Date.now();
+    const res = POST(`${APP}/MMV2Login.aspx`, {
+      '__EVENTTARGET': '', '__EVENTARGUMENT': '',
+      '__VIEWSTATE': viewstate, '__VIEWSTATEGENERATOR': vsgen, '__EVENTVALIDATION': eventval,
+      'lgnUserLogin$UserName': USERNAME,
+      'lgnUserLogin$Password': PASSWORD,
+      'lgnUserLogin$Login':    'Login',
+    }, { redirects: 0 });          // follow the redirect ourselves, to time it separately
+    loginAuthTrend.add(Date.now() - tAuth);
+
+    let landing = res;
+    if (res.status &gt;= 300 &amp;&amp; res.status &lt; 400 &amp;&amp; res.headers['Location']) {
+      const loc = res.headers['Location'];
+      const url = loc.indexOf('http') === 0 ? loc
+                : loc.indexOf('/') === 0 ? `${BASE_URL}${loc}` : `${APP}/${loc}`;
+      const tRender = Date.now();
+      landing = GET(url);
+      loginRenderTrend.add(Date.now() - tRender);
+    }
+
+    // Did it work? NOT by status code — a REJECTED login also returns 200, because
+    // WebForms simply re-renders the login page. Assert on where we landed.
+    success = check(landing, {
+      'logged in (on Content page)': (r) =&gt; r.url.includes('MMV2Content.aspx'),
+      'login not bounced back':      (r) =&gt; !r.url.includes('MMV2Login.aspx'),
+    });
+    if (!success) { errorRate.add(1); loginTrend.add(Date.now() - t0); return; }
+
+    // The two shell calls the app fires once the content page loads.
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/BuildMainMenu`,  '{}', ajaxJson());
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/GetUnreadCount`, '{}', ajaxJson());
+
+    errorRate.add(false);
+    loginTrend.add(Date.now() - t0);
+  });
+  return success;
+}
+
+/* ---------------------------------------------------------------------------
+ * 6. STEPS 2 AND 5 — OPEN THE "MY PAGE" MODULE
+ * ------------------------------------------------------------------------ */
+
+function openMyPage(groupName) {
+  let ok = false;
+  group(groupName || 'Open My Page module', function () {
+    const t0 = Date.now();
+    const j  = ajaxJson();
+
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/GetMenuItemSteps`,
+      JSON.stringify({ Tag: 'MyPage' }), j);
+
+    // Persist the ACTIVE navigation state server-side. NOT incidental: BuildMyPage
+    // only returns the dashboard widgets when MyPage / MainSummary-&lt;id&gt; is the active
+    // nav item + step. Omitting these makes REPEAT navigations return an empty
+    // dashboard (0 widgets). Bodies captured live.
+    const sum = `MainSummary-${MYPAGE_SUMMARY_ID}`;
+    saveToggle('ActiveDataStateV2', 'ActiveNavigationItem', 'MyPage');
+    saveToggle('ActiveDataStateV2', `ActiveNavigationStepMyPage`, sum);
+    saveToggle('ActiveDataStateV2', `ActiveNavigationStepItemMyPage.${sum}`, sum);
+
+    POST(`${APP}/services/MMLayout.asmx/InitMainLayout`, JSON.stringify({
+      UniqueString: '', MenuItemKey: sum, SummaryID: MYPAGE_SUMMARY_ID,
+      MenuItemID: 0, MenuItemTypeID: 2, ProcessTag: 'MyPage',
+      ProcessStepTag: sum, SnapshotID: 0,
+    }), j);
+
+    ok = loadMyPageDashboard();
+    navigateTrend.add(Date.now() - t0);
+  });
+  return ok;
+}
+
+/* ---------------------------------------------------------------------------
+ * 7. STEP 3 — CLICK THE "MY PAGE" TAB (reload the dashboard widgets)
+ * ------------------------------------------------------------------------ */
+
+function openMyPageTab(groupName) {
+  let ok = false;
+  group(groupName || 'My page tab', function () {
+    const t0 = Date.now();
+    ok = loadMyPageDashboard();
+    dashboardTrend.add(Date.now() - t0);
+  });
+  return ok;
+}
+
+// The dashboard load shared by both My Page steps:
+//   BuildMyPage (returns the widget list as HTML) -&gt; InitPortalAggregate per widget.
+// Widget keys are PARSED from the BuildMyPage response, so this adapts to whatever
+// dashboard the customer has configured. No hardcoded widget keys.
+function loadMyPageDashboard() {
+  const j = ajaxJson();
+
+  const built = POST(`${APP}/services/MMLayoutReadOnly.asmx/BuildMyPage`,
+    JSON.stringify({ MainSummaryID: MYPAGE_SUMMARY_ID, FilterValues: '' }), ajaxJsonText());
+  let ok = check(built, {
+    'BuildMyPage 200':             (r) =&gt; r.status === 200,
+    'BuildMyPage no server error': (r) =&gt; bodyOk(r),   // catch 200-with-error-payload
+  });
+
+  // Each widget renders a script call. Full signature, read off the live page:
+  //   initPortalAggregate(containerid, portalkey, mainmoduleid, excludelocation,
+  //                       countersteps, checksum)
+  //   initPortalAggregate('PortalAggregateInfo4390','Snapshot-4390',883,false,1,'lf6V...=')
+  //
+  // The CHECKSUM is server-issued and MANDATORY: InitPortalAggregate answers HTTP 500
+  // without it. An earlier version of this regex captured only args 2 and 3, so every
+  // widget call failed and the dashboard load was measured as an error path for weeks.
+  const html = built.json('d') || '';
+  const re = /initPortalAggregate\(\s*'[^']*'\s*,\s*'([^']+)'\s*,\s*(\d+)\s*,\s*(true|false)\s*,\s*\d+\s*,\s*'([^']*)'/g;
+  const widgets = [];
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    widgets.push({ key: m[1], moduleId: parseInt(m[2], 10), exclude: m[3] === 'true', checksum: m[4] });
+  }
+
+  ok = check(widgets, { 'dashboard has widgets': (w) =&gt; w.length &gt; 0 }) &amp;&amp; ok;
+
+  // A real browser fires these CONCURRENTLY, so batch them rather than looping
+  // serially — both more realistic and the correct concurrent server load.
+  if (widgets.length) {
+    const reqs = widgets.map((w) =&gt; ({
+      method: 'POST',
+      url: `${APP}/services/MMLayoutReadonly.asmx/InitPortalAggregate`,
+      body: JSON.stringify({
+        PortalKey: w.key, MainModuleID: w.moduleId,
+        ExcludeLocation: w.exclude, Checksum: w.checksum,
+      }),
+      params: j,
+    }));
+    const responses = http.batch(reqs);
+    const allOk = responses.every((r) =&gt; r.status === 200);
+    ok = check(null, { 'all dashboard widgets loaded (200)': () =&gt; allOk }) &amp;&amp; ok;
+    if (VERIFY) console.log(`[VERIFY] vu=${__VU} iter=${__ITER} dashboard widgets=${widgets.length} allOk=${allOk}`);
+  }
+
+  errorRate.add(!ok);
+  return ok;
+}
+
+/* ---------------------------------------------------------------------------
+ * 8. STEP 4 — CLICK THE WIDGET, LOAD THE WORK ORDER GRID
+ * ------------------------------------------------------------------------ */
+
+function openModule(mod, groupName, trend, opts) {
+  opts = opts || {};
+  let ok = false, us = '', listText = '';
+  group(groupName || `Open ${mod.processTag}`, function () {
+    const t0 = Date.now();
+    us = uniqueString();
+    const j = ajaxJson();
+
+    // Drill-down from a My Page dashboard widget: tell the server which saved
+    // snapshot was clicked BEFORE loading its grid. The response names the target
+    // module — Caption "Work orders", Key "Request", Path "Helpdesk.Request.Request".
+    if (opts.snapshotId) {
+      POST(`${APP}/services/MMLayoutReadOnly.asmx/SelectSnapshotFromMyPage`,
+        JSON.stringify({ SnapshotID: opts.snapshotId }), j);
+    }
+
+    // Menu resolution.
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/GetMenuItemSteps`,
+      JSON.stringify({ Tag: mod.processTag }), j);
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/GetMenuItemProcessItems`,
+      JSON.stringify({ Parent: mod.processTag, Tag: mod.processStepTag }), j);
+
+    // Persist the ACTIVE navigation state. These are NOT incidental. The browser
+    // fires exactly these three between GetMenuItemProcessItems and InitMainLayout,
+    // and they are what tells the server which grid is active. The filter endpoints
+    // are SESSION-scoped — they apply to that active data state — so without these
+    // a filter call returns 200 but filters nothing, and the grid reloads unfiltered.
+    saveToggle('ActiveDataStateV2', 'ActiveNavigationItem', mod.processTag);
+    saveToggle('ActiveDataStateV2', `ActiveNavigationStep${mod.processTag}`, mod.processStepTag);
+    saveToggle('ActiveDataStateV2', `ActiveNavigationStepItem${mod.processTag}.${mod.processStepTag}`, mod.dataTag);
+
+    // Layout init.
+    //
+    // The server ISSUES a UniqueString here and returns it in the response; the grid
+    // and every filter call downstream are keyed on it. Inventing one locally is
+    // accepted by the server (200) but it has no layout against it — so filters bind
+    // to nothing and the grid always reloads UNFILTERED. Proven by sending both in the
+    // same session: invented -&gt; 2554 rows after filtering, server-issued -&gt; 3 rows,
+    // which is what the browser shows.
+    const initRes = POST(`${APP}/services/MMLayout.asmx/InitMainLayout`, JSON.stringify({
+      UniqueString: '', MenuItemKey: mod.dataTag, SummaryID: 0,
+      MenuItemID: mod.menuItemId, MenuItemTypeID: mod.menuItemType,
+      ProcessTag: mod.processTag, ProcessStepTag: mod.processStepTag, SnapshotID: 0,
+    }), opts.serverUniqueString ? ajaxJsonText() : j);
+    if (opts.serverUniqueString) {
+      const mm = String(initRes.body || '').match(/"UniqueString"\s*:\s*"([0-9a-fA-F]{16,40})"/);
+      if (mm) us = mm[1];
+      else if (VERIFY) console.log(`[VERIFY] vu=${__VU} InitMainLayout(${mod.dataTag}) issued NO UniqueString`);
+    }
+
+    // BOTH filter controls, in the browser's order:
+    //   type '3' = the top MainManFilter bar (Region/Portfolio/Site/Object)
+    //   type '2' = the right-hand data-filter panel
+    // Sending only type 2 leaves the top filter uninstantiated server-side, so
+    // RefreshMainManFilter is accepted (200) but binds to nothing.
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/LoadMMFilterControl`,
+      JSON.stringify({ tag: mod.dataTag, type: '3' }), j);
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/LoadMMFilterControl`,
+      JSON.stringify({ tag: mod.dataTag, type: '2' }), j);
+    POST(`${APP}/services/MMLayoutReadOnly.asmx/BuildLayout`,
+      buildLayoutBody(mod, us, opts.snapshotId), j);
+
+    // Grid: headers, then data (the heaviest call in the scenario).
+    //
+    // tags.name collapses this into ONE metric series. Without it every request is its
+    // own series, because the URL carries a per-call UniqueString and a cache-buster —
+    // which once pushed a run past k6's 100k time-series limit. k6 then warns about
+    // memory and can start delaying its own requests, i.e. measuring the generator.
+    const headers = GET(
+      `${APP}/restapi/List/GetMMListHeaders?DataPath=${encodeURIComponent(mod.dataPath)}` +
+      `&amp;UniqueString=${us}&amp;Gantt=False&amp;PopupSQLListIndex=0&amp;_=${Date.now()}`,
+      Object.assign({}, ajaxGet(), { tags: { name: 'restapi/List/GetMMListHeaders' } }));
+
+    const listParams = (opts.keepList || VERIFY)
+      ? Object.assign({ responseType: 'text' }, ajaxForm())
+      : ajaxForm();
+    const list = POST(`${APP}/restapi/List/GetMMList`, getMMListBody(mod, us), listParams);
+    if (opts.keepList) listText = (typeof list.body === 'string') ? list.body : '';
+    verifyRows(`openModule(${mod.dataTag})`, list);
+
+    ok = check(null, {
+      [`${mod.processTag} headers loaded`]: () =&gt; headers.status === 200,
+      [`${mod.processTag} grid loaded`]:    () =&gt; list.status === 200,
+    });
+    errorRate.add(!ok);
+    (trend || navigateTrend).add(Date.now() - t0);
+  });
+  return opts.keepList ? { ok: ok, us: us, listText: listText } : ok;
+}
+
+/* ---------------------------------------------------------------------------
+ * 9. STEP 6 — LOGOUT
+ * ------------------------------------------------------------------------ */
+
+function logout() {
+  let ok = false;
+  group('Logout', function () {
+    const t0 = Date.now();
+    const res = GET(`${APP}/MMV2Logout.aspx`);
+    ok = check(res, {
+      'logged out (back on login)': (r) =&gt; r.url.includes('MMV2Login.aspx') || r.status === 200,
+    });
+    errorRate.add(!ok);
+    logoutTrend.add(Date.now() - t0);
+  });
+  return ok;
+}
+
+/* ---------------------------------------------------------------------------
+ * 10. THE JOURNEY — the six manual test steps, in order
+ * ------------------------------------------------------------------------ */
+
+// Pull the first record id out of a grid response, to prove it returned real rows.
+function firstId(listText, dataTag) {
+  const m = (listText || '').match(new RegExp(dataTag + '\\$1\\$(\\d+)'));
+  return m ? m[1] : null;
+}
+
+const OPTS = { keepList: true, serverUniqueString: true, snapshotId: WIDGET_SNAPSHOT_ID };
+
+export default function () {
+  // Step 1: LOGIN. The backoff is REQUIRED, not tidiness. A failed login ends the
+  // iteration in a fraction of a second and k6 immediately starts another, so each VU
+  // would retry several times per second and flood a struggling login endpoint into
+  // collapse. On one tenant that produced a 65-69% failure rate that we caused ourselves.
+  if (!login()) {
+    sleep(randomIntBetween(20, 40));
+    return;
+  }
+  sleep(randomIntBetween(1, 3));
+
+  // Step 2: navigation menu -&gt; My page. Opening the menu itself is client-side and
+  // fires no HTTP (captured and confirmed), so this is just the module switch + load.
+  openMyPage('2. Navigation -&gt; My page module');
+  sleep(randomIntBetween(1, 3));
+
+  // Step 3: the My page tab — reloads the dashboard counter widgets.
+  openMyPageTab('3. My page tab');
+  sleep(randomIntBetween(1, 3));
+
+  // Step 4: click "Unfinished work orders on my organisation".
+  const wo = openModule(WORKORDERS,
+    `4. Widget (snapshot ${WIDGET_SNAPSHOT_ID}) -&gt; Work order grid`,
+    widgetTrend, OPTS);
+
+  // Assert the grid actually returned ROWS. Without this the step "passes" on an
+  // empty grid, which is exactly how broken scenarios went unnoticed for weeks.
+  const woId = firstId(wo.listText, 'Request');
+  check(null, { 'Work order grid returned rows': () =&gt; woId !== null });
+  if (VERIFY) console.log(`[VERIFY] vu=${__VU} iter=${__ITER} workOrderRow=${woId}`);
+  sleep(randomIntBetween(1, 3));
+
+  // Step 5: back to My page.
+  openMyPage('5. Navigation -&gt; My page module');
+  sleep(randomIntBetween(1, 3));
+
+  // Step 6: Logout, then the gap before the next login.
+  logout();
+  sleep(ITER_DELAY);
+}
+</code></pre>
+</div>
+
+<script>
+  (function () {
+    var btn = document.getElementById('copyAll');
+    var pre = document.getElementById('fullsrc');
+    if (!btn || !pre) return;
+    btn.addEventListener('click', function () {
+      var text = pre.innerText;
+      var done = function () {
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = 'Copy to clipboard'; }, 1800);
+      };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { btn.textContent = 'Select the text and copy'; });
+          return;
+        }
+      } catch (e) { /* fall through */ }
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        document.execCommand('copy'); document.body.removeChild(ta); done();
+      } catch (e2) { btn.textContent = 'Select the text and copy'; }
+    });
+  })();
+</script>
+
+<h3>Running the repository version</h3>
+
+<h3>Running it</h3>
+
+<p>Use the runner script rather than calling <code>k6</code> directly. It passes <code>BASE_URL</code> (without it the shared library falls back to <code>config.json</code>, which targets a different customer), creates a numbered report folder, and turns on the dashboard export:</p>
+
+<pre><code><span class="cmt"># 1. SMOKE TEST FIRST. Always. One user, short, with row counts printed.</span>
+bash PerformanceTests/run-scenario1-kommune.sh -e VUS=1 -e DURATION=90s -e VERIFY=true
+
+<span class="cmt"># 2. A small load test &mdash; 25 users, flat, five minutes</span>
+bash PerformanceTests/run-scenario1-kommune.sh -e VUS=25 -e DURATION=5m
+
+<span class="cmt"># 3. The full profile written into the file: ramp to 250 over 5m, then hold</span>
+bash PerformanceTests/run-scenario1-kommune.sh</code></pre>
+
+<p>Never skip step 1. With <code>-e VERIFY=true</code> the script prints the row count it actually received, and you compare it against what the browser shows. Browser says 464 and the smoke test says 464: the script is doing what a user does. If it says 0, or 2,554, you have found a problem before wasting an hour of load.</p>
+
+<div class="note caution">
+  <span class="lbl">Two things that bite if you bypass the runner</span>
+  <p><strong>Always run from the repository root.</strong> The report paths inside the script are relative to it. Run <code>k6</code> from inside <code>PerformanceTests/</code> and the test itself works perfectly, then fails at the very end with <code>could not open 'PerformanceTests/summary-latest.html'</code> &mdash; and you lose the report you just spent ten minutes producing.</p>
+  <p><strong>k6 exits 99 when a threshold is crossed.</strong> That is a <em>result</em>, not a tooling failure: the reports are complete and the run was valid. The runner script catches this deliberately so that <code>set -e</code> does not abort before it prints where the files landed. If you wire these into CI, treat 99 as "SLA breached", not "the test broke".</p>
+</div>
+
+<p>The load profile lives in the scenario file:</p>
+
+<pre><code>stages: [
+  { duration: '5m', target: 250 },   <span class="cmt">// ramp up over five minutes</span>
+  { duration: '5m', target: 250 },   <span class="cmt">// then hold</span>
+],</code></pre>
+
+<div class="note">
+  <span class="lbl">Why ramp rather than start at 250</span>
+  <p>The file's own comment: "<em>Gradual on purpose: arriving at the target at once distorts the login measurement and can tip the environment into 503 load-shedding.</em>" Dropping 250 simultaneous logins on a cold application measures the thundering herd you just created, not the system's capacity.</p>
+</div>
+
+<h3>Reading the report</h3>
+
+<p>Each run writes three files into its own numbered folder under <code>PerformanceTests/reports/</code>:</p>
+
+<ul>
+  <li><code>summary.html</code> &mdash; the readable report. Open this first.</li>
+  <li><code>dashboard.html</code> &mdash; charts across the duration of the run.</li>
+  <li><code>summary.json</code> &mdash; the raw numbers, for comparing runs.</li>
+</ul>
+
+<div class="scroll">
+<table>
+  <thead><tr><th>Metric</th><th>What it means</th><th>What to watch for</th></tr></thead>
+  <tbody>
+    <tr><td><code>checks</code></td><td>Share of assertions that passed</td><td>The headline health figure. Read the <em>named</em> failures underneath it, not just the percentage.</td></tr>
+    <tr><td><code>http_req_failed</code></td><td>Share of requests that errored or timed out</td><td>Connection refusals show up here. 0% across a full hour is the result you want to be able to quote.</td></tr>
+    <tr><td><code>business_errors</code></td><td>Our own counter: a step did not do what it should</td><td>Can be non-zero while <code>http_req_failed</code> is 0% &mdash; that is the "200 with no data" case, and the whole reason the counter exists.</td></tr>
+    <tr><td><code>http_req_duration</code> p95</td><td>95% of requests finished faster than this</td><td>Use p95, not the average. A single 60-second timeout barely moves a mean.</td></tr>
+    <tr><td><code>step_*_duration</code></td><td>Per-step timings (login, navigate, filter, logout)</td><td>Tells you <em>which part of the journey</em> is slow, which is usually more actionable than the overall figure.</td></tr>
+    <tr><td><code>iterations</code></td><td>Completed journeys</td><td><strong>Always read this before comparing pass rates.</strong> See below.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<div class="note caution">
+  <span class="lbl">Two traps that will fool you, from real runs</span>
+  <p><strong>A high pass rate on few iterations is not good news.</strong> One of our environments showed 94% of checks passing across 199 iterations; another showed 63% across 1,288. The first was not healthier. It was so slow that hardly any journeys finished, and the few that did happened to succeed. A pass rate without its iteration count is close to meaningless.</p>
+  <p><strong>A falling p95 can mean things got worse.</strong> A refused connection comes back almost instantly, which drags the percentile <em>down</em>. A fast p95 sitting next to a high failure rate means most requests were rejected quickly, not served quickly. Always read the two together.</p>
+</div>
+
+</div>
+
+<!-- ============================ PART 5 ============================ -->
+<div class="part col" id="p5">
+  <div class="plabel">Part Five</div>
+  <h2>Your turn</h2>
+  <p class="psub">The checklist for building a scenario of your own.</p>
+</div>
+
+<div class="col">
+
+<ol>
+  <li><strong>Read the manual test case</strong> and write down the user actions, one line each.</li>
+  <li><strong>Open the app and the Network panel.</strong> Turn on Preserve log and Disable cache. Paste in the recorder from Part 2 if you want the request bodies.</li>
+  <li><strong>Perform one action. Capture. Clear. Next action.</strong> One at a time, always.</li>
+  <li><strong>Write down every request</strong> &mdash; method, URL, body, status, time, size. Include the ones you intend to drop, so the decision is on the record.</li>
+  <li><strong>Apply the five keep-or-drop rules</strong> to each one, and note the reason beside it.</li>
+  <li><strong>Read the responses.</strong> Find the ids, keys, tokens and checksums. Anything the server minted must be captured and resent &mdash; never invented.</li>
+  <li><strong>Write the script</strong> using the shared library helpers. Put the capture date in the header comment, along with every value you took off the wire.</li>
+  <li><strong>Add a content assertion to every step that returns data.</strong> Not a status check.</li>
+  <li><strong>Break each assertion on purpose</strong> and confirm it fails.</li>
+  <li><strong>Smoke test at 1 VU with <code>-e VERIFY=true</code></strong> and compare the row counts against the browser, screen by screen.</li>
+  <li><strong>Only then run it at load.</strong></li>
+</ol>
+
+<h3>If you remember five things</h3>
+
+<ol>
+  <li><strong>Capture, never guess.</strong> Every endpoint, id and payload in our scripts was observed in a live browser session, and the script records when.</li>
+  <li><strong>Read the responses, not just the statuses.</strong> That is where the module mappings, the row counts and the server-issued tokens live.</li>
+  <li><strong>A 200 is not a pass.</strong> Assert on content. An assertion you have never seen fail is decoration.</li>
+  <li><strong>Small calls are not optional.</strong> Three eight-byte <code>saveToggleValue</code> calls are the difference between a filtered grid and a silently unfiltered one.</li>
+  <li><strong>Read the iteration count before the pass rate</strong>, and the failure rate before the p95.</li>
+</ol>
+
+</div>
+
+<footer class="col">
+  <p><strong>Scenario 1 &mdash; kommune.</strong> Script: <code>PerformanceTests/scenario1-mypage-kommune.js</code> &middot; Shared library: <code>PerformanceTests/lib/mainmanager.js</code> &middot; Runner: <code>PerformanceTests/run-scenario1-kommune.sh</code> &middot; Reports: <code>PerformanceTests/reports/scenario1-kommune/</code></p>
+  <p>All screenshots, request lists, payloads and timings in this document were captured live on kommune.mainmanager.is (version 20.26.1) on 11&ndash;12 October 2026, signed in as a standard user. Timings come from a single-user session and describe the shape of the journey, not a performance baseline. Code excerpts are quoted verbatim from the repository.</p>
+</footer>
+
+</div>

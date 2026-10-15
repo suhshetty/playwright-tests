@@ -1,0 +1,11 @@
+# Real credentials — every customer folder has a committed config.example.json instead.
+config.json
+config-*.json
+!config.example.json
+**/data/users.csv
+
+# Office lock files
+~$*
+
+# 46 MB raw k6 export from an early DevCore run; too big for git, kept on the author's disk only.
+devcore/reports/scenario1/summary.json

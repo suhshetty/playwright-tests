@@ -1,0 +1,494 @@
+{
+  "metrics": {
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.12659994144341968,
+        "min": 0,
+        "med": 0,
+        "max": 36.9318,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2624.829454466402,
+        "min": 433.3984,
+        "med": 2726.4903,
+        "max": 8264.7148,
+        "p(90)": 4831.005620000002,
+        "p(95)": 5414.46102
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 356.1059,
+        "max": 3612.5603,
+        "p(90)": 775.1275,
+        "p(95)": 936.4584,
+        "avg": 457.1131961059882,
+        "min": 192.1031
+      }
+    },
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0.5404,
+        "p(95)": 0.67885,
+        "avg": 0.1809212853169372,
+        "min": 0,
+        "med": 0,
+        "max": 21.7883
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 3542,
+        "fails": 0
+      }
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 1265
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 2,
+        "min": 2,
+        "max": 25
+      }
+    },
+    "step_filter_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 1270.2292490118577,
+        "min": 840,
+        "med": 1215,
+        "max": 2838,
+        "p(90)": 1588.4000000000003,
+        "p(95)": 1970.799999999998
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "step_navigate_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 4592.482213438735,
+        "min": 3270,
+        "med": 4629,
+        "max": 7610,
+        "p(90)": 5597.2,
+        "p(95)": 5951.199999999995
+      }
+    },
+    "iteration_duration": {
+      "contains": "time",
+      "values": {
+        "med": 30904.3338,
+        "max": 41746.6294,
+        "p(90)": 35255.74128,
+        "p(95)": 36364.23884,
+        "avg": 31207.932431620557,
+        "min": 25305.3296
+      },
+      "type": "trend"
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 3072,
+        "max": 5394,
+        "p(90)": 4048.800000000001,
+        "p(95)": 4433.6,
+        "avg": 3139.3596837944665,
+        "min": 2203
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 368.9643,
+        "max": 3612.5603,
+        "p(90)": 845.5841,
+        "p(95)": 984.8539499999999,
+        "avg": 481.6425865612636,
+        "min": 192.6109
+      }
+    },
+    "step_login_duration": {
+      "values": {
+        "avg": 3490.9486166007905,
+        "min": 2272,
+        "med": 3092,
+        "max": 8265,
+        "p(90)": 4546.600000000002,
+        "p(95)": 6953.4
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 643406769,
+        "rate": 1965378.2433914242
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 8390578,
+        "rate": 25630.223748358992
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 984.8539499999999,
+        "avg": 481.6425865612636,
+        "min": 192.6109,
+        "med": 368.9643,
+        "max": 3612.5603,
+        "p(90)": 845.5841
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_blocked": {
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 2.6649375494071146,
+        "min": 0,
+        "med": 0,
+        "max": 907.9785,
+        "p(90)": 0
+      },
+      "type": "trend"
+    },
+    "http_req_tls_handshaking": {
+      "values": {
+        "avg": 1.72668418972332,
+        "min": 0,
+        "med": 0,
+        "max": 654.8072,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 3613,
+        "p(90)": 1551.4,
+        "p(95)": 2357.3999999999996,
+        "avg": 1157.7588932806325,
+        "min": 802,
+        "med": 991
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 6831
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 20.866269096722572,
+        "count": 6831
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 253,
+        "rate": 0.7728247813600952
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "min": 25,
+        "max": 25,
+        "value": 25
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 63.6008,
+        "p(95)": 131.45080000000002,
+        "avg": 24.34846916996044,
+        "min": 0,
+        "med": 3.9678,
+        "max": 1260.4017
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 631.395256916996,
+        "min": 433,
+        "med": 639,
+        "max": 1200,
+        "p(90)": 768.6,
+        "p(95)": 819.4
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    }
+  },
+  "root_group": {
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 253,
+              "fails": 0,
+              "name": "login page 200",
+              "path": "::1. Login::login page 200"
+            },
+            {
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 253,
+              "fails": 0
+            },
+            {
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 253,
+              "fails": 0
+            }
+          ],
+        "name": "1. Login"
+      },
+      {
+        "name": "2. Helpdesk -> Incidents overview -> All incidents",
+        "path": "::2. Helpdesk -> Incidents overview -> All incidents",
+        "id": "cacdf179dcbec2b6620746d588238c84",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Helpdesk UniqueString issued",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk UniqueString issued",
+              "id": "a2f75e13a9c0332db7fa3a13e8b7f3e9",
+              "passes": 253,
+              "fails": 0
+            },
+            {
+              "id": "a35c1f4fdeb82e77273be990389bd3ae",
+              "passes": 253,
+              "fails": 0,
+              "name": "Helpdesk layout built",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk layout built"
+            },
+            {
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk headers loaded",
+              "id": "23e117a670ce1ee8cc77ce446f7a32c9",
+              "passes": 253,
+              "fails": 0,
+              "name": "Helpdesk headers loaded"
+            },
+            {
+              "passes": 253,
+              "fails": 0,
+              "name": "Helpdesk grid loaded",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk grid loaded",
+              "id": "1f4349ac651a8e8f8117d36b5fc92856"
+            },
+            {
+              "name": "Incident grid returned data",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Incident grid returned data",
+              "id": "c58549841a788d2694253b12b262b340",
+              "passes": 253,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "3. Clear filter (X)",
+        "path": "::3. Clear filter (X)",
+        "id": "11e1d076edcc1dbede80e69c4abf0ec4",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Incident grid reloaded after filter clear",
+              "path": "::3. Clear filter (X)::Incident grid reloaded after filter clear",
+              "id": "93603d8f86a185f1cf769e543e35476e",
+              "passes": 253,
+              "fails": 0
+            },
+            {
+              "passes": 253,
+              "fails": 0,
+              "name": "Incident filter clear returned a grid",
+              "path": "::3. Clear filter (X)::Incident filter clear returned a grid",
+              "id": "afc0252e7bc13d0b1a30b4a68748dde4"
+            }
+          ]
+      },
+      {
+        "id": "0c2deedef0a7e31d109e39b89f4b5d13",
+        "groups": [],
+        "checks": [
+            {
+              "id": "6296d74646930fdb22a05a59b1dacf7b",
+              "passes": 253,
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::4. Open incident -> popup::modal loaded (200)"
+            },
+            {
+              "name": "modal no server error",
+              "path": "::4. Open incident -> popup::modal no server error",
+              "id": "f7a4e084cdc1c28bf2bb5ba149996314",
+              "passes": 253,
+              "fails": 0
+            }
+          ],
+        "name": "4. Open incident -> popup",
+        "path": "::4. Open incident -> popup"
+      },
+      {
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 253,
+              "fails": 0,
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)"
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "path": "::Incidents grid returned rows",
+        "id": "0cc29733ed221f65a27dd09be2ef25fb",
+        "passes": 253,
+        "fails": 0,
+        "name": "Incidents grid returned rows"
+      }
+    ],
+    "name": "",
+    "path": ""
+  },
+  "options": {
+    "summaryTimeUnit": "",
+    "noColor": false,
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ]
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 327370.4546
+  }
+}

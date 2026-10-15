@@ -1,0 +1,210 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #fff; color: #1f2328; width: 1500px; padding: 34px 40px 40px;
+  }
+  h1 { font-size: 31px; font-weight: 700; letter-spacing: -0.4px; }
+  .sub { font-size: 16.5px; color: #636c76; margin: 8px 0 30px; }
+  .sub b { color: #1f2328; }
+
+  .flow { display: flex; gap: 34px; }
+  .main { width: 880px; flex: none; }
+  .side { flex: 1; }
+
+  .q {
+    border: 2.5px solid #1f2328; border-radius: 9px;
+    padding: 17px 22px; background: #fff;
+  }
+  .q .n {
+    display: inline-block; width: 30px; height: 30px; line-height: 30px;
+    text-align: center; background: #1f2328; color: #fff;
+    border-radius: 50%; font-weight: 800; font-size: 16px; margin-right: 13px;
+  }
+  .q .t { font-size: 21px; font-weight: 700; vertical-align: 2px; }
+  .q .h { font-size: 15px; color: #636c76; margin: 11px 0 0 43px; line-height: 1.5; }
+  .q .h code {
+    font-family: ui-monospace, Consolas, monospace; font-size: 14px;
+    background: #f0f1f3; padding: 1.5px 6px; border-radius: 3px;
+  }
+
+  .row { display: flex; align-items: stretch; gap: 20px; margin: 13px 0; }
+  .yes {
+    flex: none; width: 310px; border-radius: 9px; padding: 14px 20px;
+    background: #fdecea; border: 2px solid #d93025; color: #b31412;
+  }
+  .yes .lab { font-size: 19px; font-weight: 800; letter-spacing: .4px; }
+  .yes .ex { font-size: 14px; margin-top: 7px; line-height: 1.55; color: #a3160f; }
+  .yes .ex code {
+    font-family: ui-monospace, Consolas, monospace; font-size: 13px;
+    background: #fadbd7; padding: 1.5px 5px; border-radius: 3px;
+  }
+  .arrowy {
+    flex: none; align-self: center; font-size: 15px; font-weight: 800;
+    color: #d93025; white-space: nowrap;
+  }
+  .spacer { flex: 1; }
+
+  .down {
+    margin: 0 0 0 55px; width: 3px; height: 26px; background: #1f2328;
+    position: relative;
+  }
+  .down::after {
+    content: ''; position: absolute; bottom: -1px; left: -6px;
+    border-left: 7.5px solid transparent; border-right: 7.5px solid transparent;
+    border-top: 11px solid #1f2328;
+  }
+  .down .no {
+    position: absolute; left: 16px; top: 2px; font-size: 14px;
+    font-weight: 800; color: #1f2328;
+  }
+
+  .keep {
+    margin-top: 14px; border-radius: 9px; padding: 20px 24px;
+    background: #e6f4ea; border: 2.5px solid #137333;
+  }
+  .keep .lab { font-size: 25px; font-weight: 800; color: #0d652d; letter-spacing: .4px; }
+  .keep .ex { font-size: 15px; color: #11633a; margin-top: 9px; line-height: 1.6; }
+  .keep .ex code {
+    font-family: ui-monospace, Consolas, monospace; font-size: 14px;
+    background: #cfe9d8; padding: 1.5px 6px; border-radius: 3px;
+  }
+
+  .card {
+    border: 2px solid #e1e4e8; border-radius: 9px; padding: 19px 22px; margin-bottom: 19px;
+  }
+  .card h3 { font-size: 16.5px; font-weight: 700; margin-bottom: 11px; }
+  .card p { font-size: 14.5px; color: #4a5056; line-height: 1.62; }
+  .card p + p { margin-top: 10px; }
+  .card code {
+    font-family: ui-monospace, Consolas, monospace; font-size: 13.5px;
+    background: #f0f1f3; padding: 1.5px 6px; border-radius: 3px;
+  }
+  .card.stuck { border-color: #f0a202; background: #fffaf0; }
+  .card.stuck h3 { color: #a35c00; }
+  .card.proof { border-color: #137333; background: #f2faf5; }
+  .card.proof h3 { color: #0d652d; }
+  .card.proof pre {
+    font-family: ui-monospace, Consolas, monospace; font-size: 13px;
+    background: #fff; border: 1px solid #cfe9d8; border-radius: 5px;
+    padding: 11px 13px; margin-top: 10px; line-height: 1.65; color: #11633a;
+  }
+  .card.proof b { color: #0d652d; }
+
+  .tally {
+    margin-top: 26px; padding: 17px 24px; border-radius: 9px;
+    background: #1f2328; color: #fff; display: flex; align-items: center; gap: 30px;
+  }
+  .tally .big { font-size: 38px; font-weight: 800; line-height: 1; }
+  .tally .l { font-size: 15px; line-height: 1.45; opacity: .85; }
+  .tally .note { margin-left: auto; font-size: 15px; opacity: .8; text-align: right; line-height: 1.5; }
+</style></head><body>
+
+<h1>Which requests go into the load test?</h1>
+<p class="sub">Open <b>DevTools &rarr; Network</b>, do <b>one</b> click, then ask these three questions about every row. In order. Stop at the first YES.</p>
+
+<div class="flow">
+<div class="main">
+
+  <div class="q">
+    <span class="n">1</span><span class="t">Does the <b>Size</b> column say <code>(memory cache)</code> or <code>(disk cache)</code>?</span>
+    <div class="h">The browser answered it by itself. The server never even heard about it.</div>
+  </div>
+  <div class="row">
+    <div class="yes">
+      <div class="lab">YES &rarr; DROP</div>
+      <div class="ex">Images, fonts, CSS, JavaScript.<br>This removes about <b>80%</b> of the list.</div>
+    </div>
+    <div class="arrowy">&#9664;&mdash;&mdash;&mdash;&mdash;</div>
+    <div class="spacer"></div>
+  </div>
+  <div class="down"><span class="no">NO</span></div>
+
+  <div class="q">
+    <span class="n">2</span><span class="t">Did it fire <b>because of my click</b>?</span>
+    <div class="h">Or does it run on a timer / stay open in the background regardless?</div>
+  </div>
+  <div class="row">
+    <div class="yes">
+      <div class="lab">NO &rarr; DROP</div>
+      <div class="ex">
+        <code>KeepAlive</code> &mdash; a heartbeat on a timer<br>
+        <code>connect?transport=serverSentEvents</code><br>
+        <b>Tell:</b> a huge number in the Time column (2.7 min). Not slow &mdash; held open.
+      </div>
+    </div>
+    <div class="arrowy">&#9664;&mdash;&mdash;&mdash;&mdash;</div>
+    <div class="spacer"></div>
+  </div>
+  <div class="down"><span class="no">YES</span></div>
+
+  <div class="q">
+    <span class="n">3</span><span class="t">Does the server have to <b>look something up or build something</b>?</span>
+    <div class="h">Or is it just handing back a fixed file / a tiny flag?</div>
+  </div>
+  <div class="row">
+    <div class="yes">
+      <div class="lab">NO &rarr; DROP</div>
+      <div class="ex">
+        <code>GetHeaderLogo</code> &mdash; the same logo for everyone<br>
+        <code>IsNewUser</code> &mdash; 11 bytes, a yes/no flag
+      </div>
+    </div>
+    <div class="arrowy">&#9664;&mdash;&mdash;&mdash;&mdash;</div>
+    <div class="spacer"></div>
+  </div>
+  <div class="down"><span class="no">YES</span></div>
+
+  <div class="keep">
+    <div class="lab">KEEP IT &mdash; put it in the script</div>
+    <div class="ex">
+      <code>BuildMainMenu</code> builds the menu from this user's permissions &middot;
+      <code>GetUnreadCount</code> counts rows in a database &middot;
+      <code>GetMMList</code> runs the grid query
+    </div>
+  </div>
+
+</div>
+
+<div class="side">
+
+  <div class="card stuck">
+    <h3>&#9888;&nbsp; Stuck on one? Use this test</h3>
+    <p><b>Imagine deleting it. Does the <i>next</i> request still work?</b></p>
+    <p>If no &rarr; <b>KEEP</b>, however pointless it looks.</p>
+    <p>Three calls to <code>saveToggleValue</code> return 8 bytes of <code>{"d":null}</code>. Every instinct says drop them. But they tell the server which screen is open &mdash; without them the next call returns an <b>empty</b> page and the filters quietly stop working.</p>
+    <p>Small does not mean unimportant.</p>
+  </div>
+
+  <div class="card">
+    <h3>&#128161;&nbsp; Two settings first</h3>
+    <p><b>Preserve log</b> &mdash; or the list is wiped the moment the page navigates, and you lose the login requests.</p>
+    <p><b>Ctrl+click</b> the <code>Doc</code> and <code>Fetch/XHR</code> buttons to select both. <code>Fetch/XHR</code> alone hides the <code>.aspx</code> pages.</p>
+  </div>
+
+  <div class="card proof">
+    <h3>&#10003;&nbsp; How you know you got it right</h3>
+    <p>Not from the list &mdash; from the <b>numbers</b>. Run the script and compare against what the browser shows you.</p>
+    <pre>[VERIFY] widgets=<b>18</b>
+[VERIFY] recordsTotal=<b>469</b></pre>
+    <p>The dashboard has 18 tiles. The widget reads 469. The script sees 18 and 469.</p>
+    <p>Drop something that mattered and these come back <b>empty or wrong</b>. That is the real check.</p>
+  </div>
+
+</div>
+</div>
+
+<div class="tally">
+  <div class="big">6</div>
+  <div class="l">kept<br>from login</div>
+  <div class="big" style="opacity:.55">50</div>
+  <div class="l">dropped</div>
+  <div class="note">
+    Capture <b>everything</b>, then decide.<br>
+    Deciding what to record before you look is how you miss the ones that matter.
+  </div>
+</div>
+
+</body></html>

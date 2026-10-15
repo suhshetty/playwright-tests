@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n fail">6733/7052</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">21125</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n fail">3.55%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n fail">6.59%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">80</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="pass">PASS</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="pass">PASS</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="pass">PASS</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr></table>
+
+<h2>Known server-side issues (excluded from SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints with a previously documented server-side failure. Their requests are excluded from the <i>http failed</i>
+ SLA above so it reflects the operations that work. Only endpoints that actually failed this run are listed, with
+ <b>measured</b> counts and <b>observed</b> HTTP status codes — the status column reports what the server returned in
+ this run, not what was expected. Where the observed code differs from the documented one, the documented diagnosis
+ does not apply. <b>Total occurrences this run: 80.</b>
+</p>
+<table><tr><th>Endpoint</th><th>Status</th><th>Occurrences</th><th>Nature</th></tr><tr><td>restapi/Internal/IsShortcut</td><td class="fail">503 &times;38</td><td>38</td><td><b>Not the documented failure.</b> Observed HTTP 503 this run, not 500 — so the documented diagnosis below does not apply. <span style="color:#888">(Documented issue, not seen this run: MainManager server bug — NullReferenceException in InternalController.IsShortcut. <b>Report to dev team.</b>)</span></td></tr><tr><td>MMLayout.asmx/RefreshMainManFilter</td><td class="fail">503 &times;11</td><td>11</td><td><b>Not the documented failure.</b> Observed HTTP 503 this run, not 400 — so the documented diagnosis below does not apply. <span style="color:#888">(Documented issue, not seen this run: Location (Site) filter apply — server rejects the headless call (needs filter session state the browser establishes). Verified live: the byte-identical payload returns 200 in a real browser.)</span></td></tr><tr><td>MMLayout.asmx/RefreshDataFilter</td><td class="fail">503 &times;13<br>other &times;1</td><td>14</td><td><b>Not the documented failure.</b> Observed HTTP 503 / HTTP other this run, not 400 — so the documented diagnosis below does not apply. <span style="color:#888">(Documented issue, not seen this run: Data (Municipality) filter apply — same root cause as RefreshMainManFilter.)</span></td></tr><tr><td>MMLayout.asmx/EmptyDataFilter</td><td class="fail">503 &times;16<br>other &times;1</td><td>17</td><td><b>Not the documented failure.</b> Observed HTTP 503 / HTTP other this run, not 400 — so the documented diagnosis below does not apply. <span style="color:#888">(Documented issue, not seen this run: Clear filter — same root cause.)</span></td></tr></table>
+
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>iteration_duration</td><td>50.78 s</td><td>54.14 s</td><td>70.51 s</td><td>81.99 s</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>601 ms</td><td>425 ms</td><td>1.58 s</td><td>13.58 s</td></tr><tr><td>group_duration</td><td>3.18 s</td><td>2.81 s</td><td>7.56 s</td><td>17.03 s</td></tr><tr><td>step_landing_duration</td><td>5.01 s</td><td>4.81 s</td><td>7.53 s</td><td>10.25 s</td></tr><tr><td>http_req_waiting</td><td>583 ms</td><td>402 ms</td><td>1.56 s</td><td>13.58 s</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>14 ms</td></tr><tr><td>step_filter_duration</td><td>1.28 s</td><td>1.08 s</td><td>2.46 s</td><td>4.15 s</td></tr><tr><td>http_req_receiving</td><td>7 ms</td><td>0 ms</td><td>27 ms</td><td>475 ms</td></tr><tr><td>http_req_duration</td><td>590 ms</td><td>412 ms</td><td>1.57 s</td><td>13.58 s</td></tr><tr><td>step_logout_duration</td><td>821 ms</td><td>672 ms</td><td>1.99 s</td><td>4.93 s</td></tr><tr><td>step_login_duration</td><td>3.90 s</td><td>3.95 s</td><td>8.10 s</td><td>17.03 s</td></tr><tr><td>step_open_record_duration</td><td>3.97 s</td><td>3.69 s</td><td>6.62 s</td><td>10.29 s</td></tr><tr><td>http_req_connecting</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>5 ms</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_login_render_duration</td><td>1.76 s</td><td>1.41 s</td><td>3.38 s</td><td>5.09 s</td></tr><tr><td>http_req_blocked</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>719 ms</td></tr><tr><td>step_navigate_duration</td><td>5.37 s</td><td>5.42 s</td><td>9.41 s</td><td>12.35 s</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_tls_handshaking</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>713 ms</td></tr><tr><td>step_login_auth_duration</td><td>1.60 s</td><td>1.35 s</td><td>3.08 s</td><td>4.90 s</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

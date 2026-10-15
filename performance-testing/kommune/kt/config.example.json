@@ -1,0 +1,6 @@
+{
+  "_comment": "Copy to performance-testing/kommune/config-kommune.json and fill in. That path is gitignored; this template is not, so never put a real password here.",
+  "baseUrl": "https://kommune.mainmanager.is",
+  "username": "YOUR_USERNAME",
+  "password": "YOUR_PASSWORD"
+}

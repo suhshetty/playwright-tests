@@ -1,0 +1,753 @@
+{
+  "root_group": {
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 75,
+              "fails": 76
+            },
+            {
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 75,
+              "fails": 0
+            },
+            {
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 75,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "OperationAndMaintenance headers loaded",
+              "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance headers loaded",
+              "id": "8b3f21d97ca0377e68f47fd9ffaaea5f",
+              "passes": 75,
+              "fails": 0
+            },
+            {
+              "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance grid loaded",
+              "id": "045930b1d2326d70e8753afbec673b6e",
+              "passes": 75,
+              "fails": 0,
+              "name": "OperationAndMaintenance grid loaded"
+            }
+          ],
+        "name": "2. O&M -> Work order overview -> Work orders",
+        "path": "::2. O&M -> Work order overview -> Work orders",
+        "id": "3e49167d6f29eb2a372624a847fb329a"
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "grid reloaded after filter clear",
+              "path": "::3. Clear filter (X)::grid reloaded after filter clear",
+              "id": "fa2d357c56b77455e5704afd6bdcbc70",
+              "passes": 75,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "filter clear returned a grid",
+              "path": "::3. Clear filter (X)::filter clear returned a grid",
+              "id": "9878b57e7b0a53095cccd834284a2f47",
+              "passes": 75
+            },
+            {
+              "name": "filter clear kept >= 1 rows",
+              "path": "::3. Clear filter (X)::filter clear kept >= 1 rows",
+              "id": "0916242ca53fa784ee2e0c8b5dca11a6",
+              "passes": 64,
+              "fails": 11
+            }
+          ],
+        "name": "3. Clear filter (X)",
+        "path": "::3. Clear filter (X)",
+        "id": "11e1d076edcc1dbede80e69c4abf0ec4"
+      },
+      {
+        "name": "4. Open work order -> popup",
+        "path": "::4. Open work order -> popup",
+        "id": "0d2f347851d38c5a1359fe41f5b8555a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::4. Open work order -> popup::modal loaded (200)",
+              "id": "fa7ad1d236c18292646f2714559a7a50",
+              "passes": 75,
+              "fails": 0
+            },
+            {
+              "passes": 75,
+              "fails": 0,
+              "name": "modal no server error",
+              "path": "::4. Open work order -> popup::modal no server error",
+              "id": "45ac48602f5612a58b78d8526c4a3ee1"
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "fails": 3,
+            "name": "grid reloaded after site filter (GroundID=57988)",
+            "path": "::6. Site filter -> Aktivitetscenter (57988)::grid reloaded after site filter (GroundID=57988)",
+            "id": "baa8988f96c712ea5a6c300f9abd3547",
+            "passes": 72
+          },
+          {
+            "name": "site filter (GroundID=57988) returned a grid",
+            "path": "::6. Site filter -> Aktivitetscenter (57988)::site filter (GroundID=57988) returned a grid",
+            "id": "eeb7f2bdeae9c7564f5090afb36980e5",
+            "passes": 72,
+            "fails": 3
+          }
+        ],
+        "name": "6. Site filter -> Aktivitetscenter (57988)",
+        "path": "::6. Site filter -> Aktivitetscenter (57988)",
+        "id": "5707112d9f9248e10897585acc93266d",
+        "groups": []
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "fails": 7,
+              "name": "grid reloaded after site filter (GroundID=0)",
+              "path": "::7. Clear site filter (Show all sites)::grid reloaded after site filter (GroundID=0)",
+              "id": "605caf12f2b345f54cb9c02688ca2767",
+              "passes": 68
+            },
+            {
+              "id": "dec06da96eecff313cc3f72e53ea65b6",
+              "passes": 68,
+              "fails": 7,
+              "name": "site filter (GroundID=0) returned a grid",
+              "path": "::7. Clear site filter (Show all sites)::site filter (GroundID=0) returned a grid"
+            },
+            {
+              "name": "site filter (GroundID=0) kept >= 1 rows",
+              "path": "::7. Clear site filter (Show all sites)::site filter (GroundID=0) kept >= 1 rows",
+              "id": "a0c7cba148e23cf94b5f99d2a01f0d2f",
+              "passes": 68,
+              "fails": 7
+            }
+          ],
+        "name": "7. Clear site filter (Show all sites)",
+        "path": "::7. Clear site filter (Show all sites)",
+        "id": "6664cdfaa8b0263f7e10eda45bcf3ca6"
+      },
+      {
+        "name": "9. Pin filter",
+        "path": "::9. Pin filter",
+        "id": "312faa1699c83badc4fe90e0c48d2a2c",
+        "groups": [],
+        "checks": [
+            {
+              "name": "grid reloaded after pin filter reflow",
+              "path": "::9. Pin filter::grid reloaded after pin filter reflow",
+              "id": "1c58babbfd2a5284dfecf2024ed82c3b",
+              "passes": 61,
+              "fails": 14
+            },
+            {
+              "name": "pin filter reflow returned a grid",
+              "path": "::9. Pin filter::pin filter reflow returned a grid",
+              "id": "3658df7e3f9fe50dcef99e7d173c771f",
+              "passes": 61,
+              "fails": 14
+            },
+            {
+              "fails": 14,
+              "name": "pin filter reflow kept >= 1 rows",
+              "path": "::9. Pin filter::pin filter reflow kept >= 1 rows",
+              "id": "592ae835747b9c1ccc65d625e09cf107",
+              "passes": 61
+            }
+          ]
+      },
+      {
+        "name": "10. Status -> Select all",
+        "path": "::10. Status -> Select all",
+        "id": "993f16bbac540eb4a46ba0311b353642",
+        "groups": [],
+        "checks": [
+            {
+              "id": "f705e7431397f7e00da8d9b7e2bb44e6",
+              "passes": 59,
+              "fails": 16,
+              "name": "grid reloaded after status filter (3,6,5,2,9,14,1)",
+              "path": "::10. Status -> Select all::grid reloaded after status filter (3,6,5,2,9,14,1)"
+            },
+            {
+              "passes": 59,
+              "fails": 16,
+              "name": "status filter (3,6,5,2,9,14,1) returned a grid",
+              "path": "::10. Status -> Select all::status filter (3,6,5,2,9,14,1) returned a grid",
+              "id": "6379ee6e6fbf3061e7af05f683ff4197"
+            },
+            {
+              "path": "::10. Status -> Select all::status filter (3,6,5,2,9,14,1) kept >= 1 rows",
+              "id": "ed07a5995fc86449b3775738ff8510f5",
+              "passes": 59,
+              "fails": 16,
+              "name": "status filter (3,6,5,2,9,14,1) kept >= 1 rows"
+            }
+          ]
+      },
+      {
+        "id": "565c60a2f5a6920eb6ce57860b68f9fe",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 18,
+              "name": "grid reloaded after status filter (none)",
+              "path": "::11. Status -> Deselect all::grid reloaded after status filter (none)",
+              "id": "e378a16f17690e62c0d5395e0d11b865",
+              "passes": 57
+            },
+            {
+              "fails": 18,
+              "name": "status filter (none) returned a grid",
+              "path": "::11. Status -> Deselect all::status filter (none) returned a grid",
+              "id": "6279437d863f610d863d6e9dce5b4be4",
+              "passes": 57
+            },
+            {
+              "path": "::11. Status -> Deselect all::status filter (none) kept >= 1 rows",
+              "id": "1e7a691986c76959bedc222d7eb40347",
+              "passes": 57,
+              "fails": 18,
+              "name": "status filter (none) kept >= 1 rows"
+            }
+          ],
+        "name": "11. Status -> Deselect all",
+        "path": "::11. Status -> Deselect all"
+      },
+      {
+        "name": "11. Status -> Is open (14)",
+        "path": "::11. Status -> Is open (14)",
+        "id": "58b9f27efcd34382cd7d49c2fac42ae5",
+        "groups": [],
+        "checks": [
+            {
+              "name": "grid reloaded after status filter (14)",
+              "path": "::11. Status -> Is open (14)::grid reloaded after status filter (14)",
+              "id": "9a80a174dfc2c15eed6dce48388fbfda",
+              "passes": 53,
+              "fails": 22
+            },
+            {
+              "id": "485d136f95fb0e51658d60940f7ed623",
+              "passes": 53,
+              "fails": 22,
+              "name": "status filter (14) returned a grid",
+              "path": "::11. Status -> Is open (14)::status filter (14) returned a grid"
+            },
+            {
+              "name": "status filter (14) kept >= 1 rows",
+              "path": "::11. Status -> Is open (14)::status filter (14) kept >= 1 rows",
+              "id": "6a27d0908b0b484a0a10f6ab89cbbefd",
+              "passes": 53,
+              "fails": 22
+            }
+          ]
+      },
+      {
+        "name": "12. Clear filter (X)",
+        "path": "::12. Clear filter (X)",
+        "id": "65e686059122cb10e5a4e4ec46a9bad2",
+        "groups": [],
+        "checks": [
+            {
+              "id": "b85a7bd46f3d41bcdde1b7ea0693ccc9",
+              "passes": 51,
+              "fails": 24,
+              "name": "grid reloaded after filter clear",
+              "path": "::12. Clear filter (X)::grid reloaded after filter clear"
+            },
+            {
+              "passes": 51,
+              "fails": 24,
+              "name": "filter clear returned a grid",
+              "path": "::12. Clear filter (X)::filter clear returned a grid",
+              "id": "f3d6e1402709ff028aa160267b8b896a"
+            },
+            {
+              "name": "filter clear kept >= 1 rows",
+              "path": "::12. Clear filter (X)::filter clear kept >= 1 rows",
+              "id": "73e8133764e7a45dfe0a7425b04b6ef4",
+              "passes": 51,
+              "fails": 24
+            }
+          ]
+      },
+      {
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 51,
+              "fails": 24
+            }
+          ],
+        "name": "Logout",
+        "path": "::Logout"
+      }
+    ],
+    "checks": [
+      {
+        "name": "work order grid returned rows",
+        "path": "::work order grid returned rows",
+        "id": "b964ac157b51e598413ade90faddc6ba",
+        "passes": 64,
+        "fails": 11
+      },
+      {
+        "name": "work order id readable from grid",
+        "path": "::work order id readable from grid",
+        "id": "d2a3f6ebe7102b046222620bb3ececf5",
+        "passes": 75,
+        "fails": 0
+      },
+      {
+        "name": "site filter changed the grid",
+        "path": "::site filter changed the grid",
+        "id": "5344c3b102e94b87ec23d562edd5192a",
+        "passes": 68,
+        "fails": 0
+      }
+    ],
+    "name": "",
+    "path": ""
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 330003.0609
+  },
+  "metrics": {
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.2685666442727575,
+        "min": 0,
+        "med": 0,
+        "max": 12.5309,
+        "p(90)": 0.67904,
+        "p(95)": 0.9668999999999995
+      }
+    },
+    "group_duration": {
+      "values": {
+        "med": 1870.50865,
+        "max": 19164.7372,
+        "p(90)": 8501.058850000001,
+        "p(95)": 10284.0364,
+        "avg": 3188.8830823770495,
+        "min": 191.8848
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 25,
+        "min": 25,
+        "max": 25
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2977,
+        "rate": 9.021128446145271
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 415339614,
+        "rate": 1258593.2168849166
+      }
+    },
+    "business_errors": {
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      },
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.22028688524590165,
+        "passes": 215,
+        "fails": 761
+      }
+    },
+    "step_login_auth_duration": {
+      "values": {
+        "p(90)": 2801.600000000002,
+        "p(95)": 3237.5,
+        "avg": 1763.1466666666668,
+        "min": 879,
+        "med": 1493,
+        "max": 5144
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_login_render_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 2784.5066666666667,
+        "min": 1302,
+        "med": 2251,
+        "max": 6727,
+        "p(90)": 4678.2,
+        "p(95)": 4882.9
+      },
+      "type": "trend"
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 394,
+        "med": 1821,
+        "max": 5642,
+        "p(90)": 2935.8,
+        "p(95)": 3438.7999999999993,
+        "avg": 1893.1657142857143
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 7.7478,
+        "max": 1562.5602,
+        "p(90)": 127.50732,
+        "p(95)": 180.64737999999997,
+        "avg": 42.14696358750421,
+        "min": 0
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "values": {
+        "max": 11403.5722,
+        "p(90)": 2192.0731,
+        "p(95)": 2895.2939,
+        "avg": 1118.007093011956,
+        "min": 190.3147,
+        "med": 818.5992000000001
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 148,
+        "rate": 0.4484806886226067
+      }
+    },
+    "step_navigate_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 588,
+        "med": 4247.5,
+        "max": 15051,
+        "p(90)": 12758.6,
+        "p(95)": 13820.15,
+        "avg": 5802.626666666667
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "step_landing_duration": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting": {
+      "contains": "time",
+      "values": {
+        "min": 190.3147,
+        "med": 687.9092,
+        "max": 11384.4701,
+        "p(90)": 1993.60248,
+        "p(95)": 2717.5867,
+        "avg": 995.4190888814229
+      },
+      "type": "trend"
+    },
+    "http_req_duration": {
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 2095.01796,
+        "p(95)": 2832.64214,
+        "avg": 1037.834619113199,
+        "min": 190.3147,
+        "med": 710.7151,
+        "max": 11403.5722
+      }
+    },
+    "http_req_tls_handshaking": {
+      "contains": "time",
+      "values": {
+        "avg": 4.402408632851865,
+        "min": 0,
+        "med": 0,
+        "max": 1287.9569,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend"
+    },
+    "http_req_failed": {
+      "contains": "default",
+      "values": {
+        "rate": 0.10110849848841115,
+        "passes": 301,
+        "fails": 2676
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      },
+      "type": "rate"
+    },
+    "step_login_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 192,
+        "med": 1898,
+        "max": 19165,
+        "p(90)": 9452,
+        "p(95)": 14212.5,
+        "avg": 4036.046357615894
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": false
+        }
+      }
+    },
+    "step_mypage_tab_duration": {
+      "contains": "time",
+      "values": {
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 20327.9387,
+        "med": 59569.5693,
+        "max": 95497.1308,
+        "p(90)": 80324.38152000001,
+        "p(95)": 86677.3411,
+        "avg": 52890.98035945947
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.8354333715158457,
+        "passes": 2188,
+        "fails": 431
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 791.8,
+        "avg": 541.48,
+        "min": 202,
+        "med": 543,
+        "max": 1251,
+        "p(90)": 748.4000000000001
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 42.3772,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.30496610681894526,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "step_open_record_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 7973.2,
+        "min": 4905,
+        "med": 8004,
+        "max": 12142,
+        "p(90)": 10135.400000000003,
+        "p(95)": 10906.3
+      }
+    },
+    "data_sent": {
+      "contains": "data",
+      "values": {
+        "count": 2495848,
+        "rate": 7563.105606333484
+      },
+      "type": "counter"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 6.642340040309037,
+        "min": 0,
+        "med": 0,
+        "max": 1551.8811,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "step_tree_load_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 3,
+        "min": 3,
+        "max": 25
+      }
+    }
+  }
+}

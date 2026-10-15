@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Days 1-5 in 13 Diagrams</title>
+<style>
+  @page { margin: 1.3cm; }
+  body { font-family: Calibri, sans-serif; font-size: 10.5pt; line-height: 1.35; color: #1a1a1a; }
+  h1 { font-size: 20pt; color: #0b3d6b; margin: 0 0 2px 0; border-bottom: 2.5px solid #0b3d6b; padding-bottom: 4px; }
+  h2 { font-size: 13pt; color: #0b3d6b; margin: 20px 0 4px 0; }
+  p { font-size: 10.5pt; margin: 4px 0 6px 0; }
+  pre { font-family: Consolas, 'Courier New', monospace; font-size: 9pt; background-color: #f4f6f8;
+        border-left: 3px solid #1f5c99; padding: 8px 11px; margin: 6px 0 10px 0; white-space: pre; line-height: 1.25; }
+  code { font-family: Consolas, monospace; font-size: 9.5pt; background-color: #eef2f6; padding: 1px 3px; }
+  .cap { color: #1f5c99; font-size: 10pt; font-weight: bold; margin: 6px 0 2px 0; }
+  .box { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 6px 10px; margin: 6px 0 10px 0; font-size: 10pt; }
+  .sub { color: #5a6b7a; font-size: 9pt; font-style: italic; margin: 0 0 10px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 4px 0 10px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 4px 7px; text-align: left; font-size: 10pt; }
+  td { border: 1px solid #b8c6d4; padding: 4px 7px; font-size: 10pt; vertical-align: top; }
+</style>
+</head>
+<body>
+
+<h1>Days 1&ndash;5 in 13 Diagrams</h1>
+<p class="sub">The mechanics behind the summary poster &middot; k6 performance testing</p>
+
+<h2>1. Reading a result &mdash; the funnel</h2>
+<p>Four numbers give you a verdict. Stop as soon as you have one.</p>
+<pre>   START
+     |
+     v
+  +----------------------------+
+  | 1  http_req_failed         |---- high? --&gt; STOP. Nothing else matters.
+  +------------+---------------+
+               v
+  +----------------------------+
+  | 2  http_req_duration  p95  |  "how slow is it?"
+  +------------+---------------+
+               v
+  +----------------------------+
+  | 3  http_req_waiting   p95  |  "whose fault is it?"
+  +------------+---------------+
+               v
+  +----------------------------+
+  | 4  http_reqs  /s           |  "at what load did I prove this?"
+  +------------+---------------+
+               v
+           VERDICT</pre>
+
+<h2>2. Whose fault? &mdash; compare two bars</h2>
+<p>The single most valuable diagnostic on this page.</p>
+<pre>CASE A - the SERVER is slow
+  duration   ####################  8.25s
+  waiting    ###################   8.24s   &lt;-- same length
+                                            =&gt; REAL FINDING. Escalate.
+
+CASE B - YOUR MACHINE is slow        (the real 250-VU MainManager run)
+  duration   ####################  44s
+  waiting    #                     0.5s    &lt;-- tiny!
+  receiving  ###################   42s     &lt;-- the gap lives HERE
+                                            =&gt; YOUR RIG. Do not blame the product.</pre>
+<div class="box">Same total <code>duration</code>, opposite conclusion. Reporting Case B as a product defect would have blamed the wrong team.</div>
+
+<h2>3. Where each statistic sits on the curve</h2>
+<pre> requests
+    |      _____
+    |    _#######_
+    |   ###########_
+    |  ###############__
+    | ####################________________
+    +--+----+---+-------------+---------+--&gt;  response time
+      min  med  avg          p95       max
+            |    |            |
+            |    |            +-- REPORT THIS
+            |    +-- pulled right by the tail -&gt; describes nobody
+            +-- the typical user
+
+     avg &gt; med   =&gt;   a tail EXISTS   =&gt;   go look at p95 / p99</pre>
+
+<h2>4. Why a percentile can miss a problem</h2>
+<pre> sorted fastest ---------------------------------------------&gt; slowest
+ [######################################---------]
+  1                                    95 96    100
+                                        ^         ^
+                                       p95       max
+
+  p95 catches problems bigger than  5%
+  p99 catches problems bigger than  1%
+
+  Only 5 of 100 slow?  -&gt;  p95 reads "fine". ONLY p99 finds it.</pre>
+
+<h2>5. Bimodal &mdash; when a percentile invents a number</h2>
+<pre> requests
+    |  ____                                      __
+    | ######                                    ####
+    |########                                  ######
+    +---+-----------------+--------------------+---&gt;  response time
+      250ms            p90 = 2.65s           8.25s
+    FAST PATH              ^                SLOW PATH
+      (90%)          NOTHING HERE!            (10%)
+
+  p90 landed in the GAP -&gt; a value NO request took
+  =&gt; Report the two groups: "90% at 0.25s, 10% at 8s"</pre>
+
+<h2>6. Sizing &mdash; Little's Law, both directions</h2>
+<pre>        ==========================================
+          VUs  =  throughput  x  iteration_duration
+        ==========================================
+
+  PLANNING (solve for VUs)          READING (solve for throughput)
+  ------------------------          ------------------------------
+  target      20 req/s              measured   5 VUs, 2.5s iteration
+    / 2 requests per journey           throughput = 5 / 2.5
+    = 10 journeys/s   &lt;-- THE TRAP               = 2 journeys/s
+    x 2.5s
+    = 25 VUs
+
+  Where 2.5s comes from:  1-VU SMOKE TEST -&gt; iteration_duration (med, not avg)</pre>
+<div class="box"><b>The trap:</b> convert requests/s to journeys/s BEFORE multiplying. Skip it and you size the test 2x or 10x wrong.</div>
+
+<h2>7. A ramp is half a hold</h2>
+<pre>   RAMPED                                 HELD
+ VUs                                    VUs
+  5|      +-----------+                  5|--------------------
+   |     /|           |\                  |
+   |    / |   RECT     | \                |    RECTANGLE only
+  0|  /TRI|           |TRI\              0|
+   +-------------------------&gt;             +--------------------&gt;
+   0   10s         30s    40s              0                  40s
+
+  area = 25 + 100 + 25 = 150             area = 5 x 40 = 200
+  iterations = 150 / 1.25 = 120          iterations = 200 / 1.25 = 160
+
+  total iterations = AREA under the VU curve / iteration_duration</pre>
+
+<h2>8. Report the plateau, not the average</h2>
+<pre> req/s
+  4|        +-----------+       &lt;-- 4.07 /s  = the REAL test load   [correct]
+   |       /             \
+  3| - - - - - - - - - - - - -  &lt;-- 3.06 /s  = the run AVERAGE      [misleading]
+   |     /                 \
+  0|   /                     \
+   +-------------------------------&gt;
+     ramp      plateau      ramp</pre>
+<div class="box">A summary cannot show you where the plateau was &mdash; you have to calculate it, or graph it. This is one of the main reasons for the Grafana week.</div>
+
+<h2>9. Trusting your own results &mdash; the gates</h2>
+<pre>                Your test run
+                      |
+                      v
+    +---------------------------------+
+    |  http_req_failed = 0%           |  YES "HTTP worked"
+    |                                 |  NO  "the app worked"
+    +----------------+----------------+
+                     v
+    +---------------------------------+
+    |  check() = 100%                 |  YES "the app did the right thing"
+    |                                 |  NO  it does NOT fail the build
+    +----------------+----------------+
+                     v
+    +---------------------------------+
+    |  threshold                      |  &lt;-- THE ONLY thing that sets exit 99
+    +----------------+----------------+
+                     v
+              CI:  green / red
+
+   default [tick]  =  "the scenario finished"   -- NOT a pass</pre>
+
+<h2>10. Script structure &mdash; when each part runs</h2>
+<pre> TIME ------------------------------------------------------------&gt;
+
+ init        #  #  #  #                                #  #
+             +-- MANY times. Cheap. No side effects. No HTTP. --+
+
+ setup()        #
+                +-- ONCE. Tokens, test data, expensive setup.
+
+ VU code           ############################
+                   +-- EVERY iteration. x thousands.
+
+ teardown()                                           #
+                                                      +-- ONCE. Cleanup.
+
+   Ask of every line:  "ONCE, or EVERY TIME?"
+   Wrong answer  =&gt;  the login-flood bug</pre>
+
+<h2>11. Closed vs open, in one picture</h2>
+<pre>        CLOSED (you fix VUs)           OPEN (you fix the rate)
+        --------------------           -----------------------
+        server slows   |               server slows   |
+        VUs wait longer v              k6 hires MORE VUs
+        load DROPS     vv              load HOLDS     ==
+        (dishonest)                    cannot keep up? -&gt; dropped_iterations
+
+        measured: 0.467 req/s          measured: 4.13 req/s  (8.8x)</pre>
+
+<h2>12. Requests to users &mdash; the conversion that changes the story</h2>
+<pre>   10% of REQUESTS are slow
+            |
+            |   a session makes 10 requests
+            v
+   chance of escaping all of them = 0.9^10 = 0.35
+            |
+            v
+   65% of USERS hit at least one stall
+   -----------------------------------
+   "10% of requests"  = technical fact
+   "65% of users"     = business impact   &lt;-- report THIS</pre>
+<table>
+  <tr><th style="width:44%">Requests per session</th><th>Users who hit at least one slow request</th></tr>
+  <tr><td>1</td><td>10%</td></tr>
+  <tr><td>5</td><td>41%</td></tr>
+  <tr><td>10</td><td><b>65%</b></td></tr>
+  <tr><td>20</td><td><b>88%</b></td></tr>
+</table>
+
+<h2>13. Reporting &mdash; data into decision</h2>
+<pre>   RAW DATA                           THE REPORT
+ +---------------+
+ | p95 = 8.25s   |--+   +------------------------------------------+
+ | 10% slow      |  |   | 1  VERDICT   "failing our 3s target"     |
+ | endpoint X    |  +--&gt;| 2  NUMBER    "p95 = 8.25s vs 3s target"  |
+ | 4.13 req/s    |  |   | 3  HUMANS    "1 in 10 waits 8+ seconds"  |
+ | 0 http failed |  |   | 4  WHERE     "isolated to endpoint X"    |
+ +---------------+  +--&gt;| 5  THE ASK   "profile that call"         |
+                        +------------------------------------------+
+
+              Never lead with the good news.</pre>
+
+<h2>The 6 sentences that carry most of it</h2>
+<pre>1.  Open model = fixed load;  closed model = fixed workers.
+2.  VUs = throughput x iteration_duration.
+3.  Report p95, never avg.
+4.  duration ~ waiting -&gt; the product.  duration &gt;&gt; waiting -&gt; my rig.
+5.  Green status codes are not a passing test.
+6.  Checks + thresholds, or the report is decoration.</pre>
+
+</body>
+</html>

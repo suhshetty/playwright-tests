@@ -1,0 +1,5 @@
+{
+  "_comment": "Copy this file to config.json (same folder) and fill in. config.json is gitignored; this template is NOT, so never put a real password here.",
+  "username": "YOUR_USERNAME",
+  "password": "YOUR_PASSWORD"
+}

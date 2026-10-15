@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>k6 Summary - One Page Reference Card</title>
+<style>
+  @page { margin: 1.2cm; }
+  body { font-family: Calibri, sans-serif; font-size: 9.5pt; line-height: 1.25; color: #1a1a1a; }
+  h1 { font-size: 17pt; color: #0b3d6b; margin: 0 0 2px 0; border-bottom: 2.5px solid #0b3d6b; padding-bottom: 3px; }
+  h2 { font-size: 11.5pt; color: #0b3d6b; margin: 12px 0 4px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 3px 0 8px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 3px 6px; text-align: left; font-size: 9pt; }
+  td { border: 1px solid #b8c6d4; padding: 3px 6px; font-size: 9pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 8.5pt; background-color: #f4f6f8; border-left: 3px solid #1f5c99;
+        padding: 5px 8px; margin: 4px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 8.5pt; }
+  .t1 { background-color: #eef7ee !important; }
+  .box { background-color: #fff8e1; border-left: 3px solid #f0ad00; padding: 5px 8px; margin: 5px 0; font-size: 9pt; }
+  .sub { color: #5a6b7a; font-size: 8pt; font-style: italic; margin: 0 0 6px 0; }
+</style>
+</head>
+<body>
+
+<h1>k6 Summary &ndash; One Page Reference Card</h1>
+<p class="sub">Performance testing quick reference &middot; keep beside the terminal</p>
+
+<h2>THE TIMELINE &ndash; memorise this one sentence, derive the rest</h2>
+<pre>A request waits to start, connects, encrypts, sends, waits for the server, then downloads.
+
+blocked  &rarr;  connecting  &rarr;  tls_handshaking  &rarr;  sending  &rarr;  waiting  &rarr;  receiving
+|------------- setup (NOT in duration) -------------|  |------ http_req_duration ------|</pre>
+
+<h2>READING ORDER &ndash; four numbers give you a verdict</h2>
+<table>
+  <tr><th style="width:6%">#</th><th style="width:32%">Look at</th><th>Question it answers</th></tr>
+  <tr><td>1</td><td><code>http_req_failed</code></td><td>Did it even work? If high, nothing else matters.</td></tr>
+  <tr><td>2</td><td><code>http_req_duration</code> p95</td><td>Is it fast enough? (This is what you report.)</td></tr>
+  <tr><td>3</td><td><code>http_req_waiting</code> p95</td><td>Is the SERVER the cause &mdash; or my test rig?</td></tr>
+  <tr><td>4</td><td><code>http_reqs</code>/s</td><td>At what load did I prove this?</td></tr>
+</table>
+
+<h2>THE THREE REFLEX COMPARISONS</h2>
+<table>
+  <tr><th style="width:40%">If you see</th><th>Conclude</th></tr>
+  <tr><td><code>duration</code> approx equal to <code>waiting</code></td><td>The server is genuinely slow. <b>Real finding &mdash; escalate.</b></td></tr>
+  <tr><td><code>duration</code> much greater than <code>waiting</code></td><td>Check <code>receiving</code>. Probably <b>your load generator</b>, not the product.</td></tr>
+  <tr><td><code>avg</code> greater than <code>med</code></td><td><b>A tail exists.</b> Go look at p95, p99, max.</td></tr>
+</table>
+
+<h2>METRICS BY PRIORITY</h2>
+<table>
+  <tr><th style="width:26%">Metric</th><th style="width:12%">Tier</th><th>The one thing it tells you</th></tr>
+  <tr class="t1"><td><code>http_req_waiting</code></td><td><b>1</b></td><td>How slow the server really is (TTFB). The truest server measure.</td></tr>
+  <tr class="t1"><td><code>http_req_duration</code></td><td><b>1</b></td><td>Total request time = sending + waiting + receiving. What you report as latency.</td></tr>
+  <tr class="t1"><td><code>http_req_failed</code></td><td><b>1</b></td><td>Share of requests with a non-2xx/3xx status. NOT whether the business action worked.</td></tr>
+  <tr class="t1"><td><code>http_reqs</code></td><td><b>1</b></td><td>Total requests + per-second rate = <b>throughput</b>.</td></tr>
+  <tr class="t1"><td><code>iterations</code></td><td><b>1</b></td><td>Completed journeys, TOTAL across all VUs (not per VU).</td></tr>
+  <tr class="t1"><td><code>iteration_duration</code></td><td><b>1</b></td><td>One full journey incl. your sleep. Use for SIZING, never for server speed.</td></tr>
+  <tr><td><code>http_req_receiving</code></td><td>2</td><td>Body download time. High = big payloads or a strained generator.</td></tr>
+  <tr><td><code>http_req_blocked</code></td><td>2</td><td>Pre-request wait (DNS + connect + TLS + free-connection wait). Non-zero on MOST requests = connections not being reused.</td></tr>
+  <tr><td><code>{ expected_response:true }</code></td><td>2</td><td>Same duration metric, successful responses only. Use when failures exist &mdash; fast errors drag avg down and fake good latency.</td></tr>
+  <tr><td><code>http_req_connecting</code></td><td>3</td><td>TCP connect only. Mostly measures distance to the server.</td></tr>
+  <tr><td><code>http_req_tls_handshaking</code></td><td>3</td><td>HTTPS encryption setup. Expensive but paid once per connection.</td></tr>
+  <tr><td><code>http_req_sending</code></td><td>3</td><td>Pushing request bytes out. Negligible unless uploading.</td></tr>
+  <tr><td><code>data_received</code> / <code>data_sent</code></td><td>3</td><td>Total bytes + rate. Useful for spotting oversized payloads.</td></tr>
+  <tr><td><code>vus</code> / <code>vus_max</code></td><td>3</td><td>Active / allocated VUs. <code>vus</code> is a time SAMPLE, not a total &mdash; a low min just means VUs had finished.</td></tr>
+</table>
+
+<h2>STATISTICS &ndash; which number to trust</h2>
+<table>
+  <tr><th style="width:16%">Stat</th><th style="width:40%">Means</th><th>Use it for</th></tr>
+  <tr><td><code>min</code></td><td>Fastest single request</td><td>Best-case reference only.</td></tr>
+  <tr><td><code>med</code> (p50)</td><td>Middle value when sorted</td><td>The typical experience. Hides the tail completely.</td></tr>
+  <tr><td><code>avg</code></td><td>Sum &divide; count</td><td><b>Never report it.</b> Only useful compared against med to detect a tail.</td></tr>
+  <tr><td><code>p(95)</code></td><td>95% finished within this</td><td><b>The standard SLA target. This is what you report.</b></td></tr>
+  <tr><td><code>p(99)</code></td><td>99% finished within this</td><td>Catches problems affecting 1&ndash;5% of requests, which p95 misses.</td></tr>
+  <tr><td><code>max</code></td><td>Slowest single request</td><td>Context only. Too noisy to set a target against.</td></tr>
+</table>
+
+<div class="box">
+<b>A percentile is a POSITION, not a group:</b> <code>position = % &times; total requests</code>. p95 is the single value at the 95% mark &mdash; a boundary line, not the requests above it.
+<br>
+<b>So a percentile only sees a problem bigger than the slice above it:</b> p95 catches &gt;5% of requests; p99 catches &gt;1%. If exactly 5% are slow, <b>p95 misses them entirely</b>.
+<br>
+<b>Add p99 to any run:</b> <code>summaryTrendStats: ['min','med','avg','p(90)','p(95)','p(99)','max']</code>
+</div>
+
+<h2>SIZING &amp; LOAD</h2>
+<pre>throughput = VUs &divide; iteration_duration          total http_reqs = iterations x requests per iteration
+
+Verify two ways: throughput x duration should equal your iteration estimate.</pre>
+<table>
+  <tr><th style="width:40%">Trap</th><th>Reality</th></tr>
+  <tr><td>&ldquo;We tested with 100 users&rdquo;</td><td>Meaningless. Same 100 VUs = 3 or 400 req/s depending on think time. <b>Always state throughput.</b></td></tr>
+  <tr><td>More VUs must mean higher latency</td><td>No. Latency stays FLAT until a resource saturates, then climbs steeply at the &ldquo;knee&rdquo;.</td></tr>
+  <tr><td>Fixed VUs apply constant load</td><td>No. When the server slows, VUs wait longer and <b>load DROPS</b>. Closed-model trap &mdash; use arrival-rate executors for capacity tests.</td></tr>
+  <tr><td>Comparing against last week's baseline</td><td>Baselines drift ~4% for no reason. Re-measure in the same session.</td></tr>
+</table>
+
+<h2>REPORTING &ndash; the 5-part sentence</h2>
+<pre>1. Verdict vs target   2. p95 + the target   3. Impact in HUMANS   4. Which feature   5. The ask</pre>
+<table>
+  <tr><th style="width:34%">Rule</th><th>Detail</th></tr>
+  <tr><td>Never lead with good news</td><td>&ldquo;95% is fine&rdquo; makes the manager stop listening.</td></tr>
+  <tr><td>Convert requests to users</td><td><code>users affected = 1 - (1 - p)^requests per session</code>. 10% slow requests x 10-request session = <b>65% of users</b>.</td></tr>
+  <tr><td>Report the shape, not one number</td><td>p50 / p95 / p99 / max together tell a story a single figure cannot.</td></tr>
+  <tr><td>Bimodal data</td><td>If a percentile shows a value no request took, report the two groups: &ldquo;10% take 8s, 90% take 0.25s.&rdquo;</td></tr>
+</table>
+
+<h2>TRAPS THAT PRODUCE FALSE GREEN</h2>
+<table>
+  <tr><th style="width:34%">Trap</th><th>Why it fools you</th></tr>
+  <tr><td><code>http_req_failed: 0%</code></td><td>Only means status codes were 2xx/3xx. A 200 returning a login page or error body counts as SUCCESS. Use <code>check()</code> on the body.</td></tr>
+  <tr><td>Reporting <code>avg</code></td><td>Blends good and terrible into a number describing nobody. Hides the users who actually suffer.</td></tr>
+  <tr><td>Fast errors</td><td>Failures often return in milliseconds and pull <code>avg</code> down, making a broken system look fast. Read the <code>expected_response:true</code> row.</td></tr>
+  <tr><td>A summary table alone</td><td>Cannot distinguish random scatter from a mid-test cliff. Identical avg/p99/max, completely different problems. Use a time-series graph.</td></tr>
+</table>
+
+<h2>USEFUL FLAGS</h2>
+<pre>k6 run script.js                     run it
+k6 run --quiet script.js             suppress progress spam
+k6 run -e KEY=value script.js        pass a value, read as __ENV.KEY
+k6 run --http-debug=full script.js   dump full request/response (debugging)</pre>
+
+</body>
+</html>

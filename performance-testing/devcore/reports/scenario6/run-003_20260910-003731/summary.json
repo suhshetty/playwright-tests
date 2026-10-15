@@ -1,0 +1,819 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 4,
+              "fails": 0,
+              "name": "logged in (on Content page)"
+            },
+            {
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 4,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "name": "OperationAndMaintenance UniqueString issued",
+            "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance UniqueString issued",
+            "id": "471fe29e955908501a426ab3bd25d2e5",
+            "passes": 4,
+            "fails": 0
+          },
+          {
+            "name": "OperationAndMaintenance layout built",
+            "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance layout built",
+            "id": "66786008bd27e8818c31f3785ad3a3c2",
+            "passes": 4,
+            "fails": 0
+          },
+          {
+            "name": "OperationAndMaintenance headers loaded",
+            "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance headers loaded",
+            "id": "8b3f21d97ca0377e68f47fd9ffaaea5f",
+            "passes": 4,
+            "fails": 0
+          },
+          {
+            "name": "OperationAndMaintenance grid loaded",
+            "path": "::2. O&M -> Work order overview -> Work orders::OperationAndMaintenance grid loaded",
+            "id": "045930b1d2326d70e8753afbec673b6e",
+            "passes": 4,
+            "fails": 0
+          },
+          {
+            "name": "Request grid returned data",
+            "path": "::2. O&M -> Work order overview -> Work orders::Request grid returned data",
+            "id": "25b5f251c23396e5f046bf53a37cb0e1",
+            "passes": 4,
+            "fails": 0
+          },
+          {
+            "path": "::2. O&M -> Work order overview -> Work orders::Request grid has >= 1 rows",
+            "id": "adb52bb1157a2b8084bf8fd97cf99cf3",
+            "passes": 4,
+            "fails": 0,
+            "name": "Request grid has >= 1 rows"
+          }
+        ],
+        "name": "2. O&M -> Work order overview -> Work orders",
+        "path": "::2. O&M -> Work order overview -> Work orders",
+        "id": "3e49167d6f29eb2a372624a847fb329a",
+        "groups": []
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "id": "675458058b6178b79b7769a8dd17c964",
+              "passes": 4,
+              "fails": 0,
+              "name": "Request grid reloaded after filter clear",
+              "path": "::3. Clear filter (X)::Request grid reloaded after filter clear"
+            },
+            {
+              "path": "::3. Clear filter (X)::Request filter clear returned a grid",
+              "id": "35b146941bb8e84307288075b35d3607",
+              "passes": 4,
+              "fails": 0,
+              "name": "Request filter clear returned a grid"
+            },
+            {
+              "name": "Request filter clear restored >= 1 rows",
+              "path": "::3. Clear filter (X)::Request filter clear restored >= 1 rows",
+              "id": "390fd190bded27e2b33cd7f70763a750",
+              "passes": 4,
+              "fails": 0
+            }
+          ],
+        "name": "3. Clear filter (X)",
+        "path": "::3. Clear filter (X)",
+        "id": "11e1d076edcc1dbede80e69c4abf0ec4"
+      },
+      {
+        "id": "163c1d4ad9e9d51298b5bce89d266fc1",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 4,
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::4. Open work order::modal loaded (200)",
+              "id": "30fa46af9205bded09cce41cff295d10"
+            },
+            {
+              "path": "::4. Open work order::modal no server error",
+              "id": "7803745291e25c193e121ab9a7a57a0b",
+              "passes": 4,
+              "fails": 0,
+              "name": "modal no server error"
+            }
+          ],
+        "name": "4. Open work order",
+        "path": "::4. Open work order"
+      },
+      {
+        "path": "::6. Back to Work orders (site filter journey)",
+        "id": "dfc26ec2270d78207736f90c8532e5f7",
+        "groups": [],
+        "checks": [
+            {
+              "name": "OperationAndMaintenance UniqueString issued",
+              "path": "::6. Back to Work orders (site filter journey)::OperationAndMaintenance UniqueString issued",
+              "id": "bf0fd34339b379ee3c53db6a2861a199",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "OperationAndMaintenance layout built",
+              "path": "::6. Back to Work orders (site filter journey)::OperationAndMaintenance layout built",
+              "id": "11e8092dacf451553ae676508d31a1a6",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "OperationAndMaintenance headers loaded",
+              "path": "::6. Back to Work orders (site filter journey)::OperationAndMaintenance headers loaded",
+              "id": "c1c3a18426b7fe8a83818cf4f6de636f",
+              "passes": 4
+            },
+            {
+              "fails": 0,
+              "name": "OperationAndMaintenance grid loaded",
+              "path": "::6. Back to Work orders (site filter journey)::OperationAndMaintenance grid loaded",
+              "id": "9b919b8722608c370b4a65b8bf370d89",
+              "passes": 4
+            },
+            {
+              "name": "Request grid returned data",
+              "path": "::6. Back to Work orders (site filter journey)::Request grid returned data",
+              "id": "36c839a1171340b4f99d2bacdab6e3d2",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "Request grid has >= 1 rows",
+              "path": "::6. Back to Work orders (site filter journey)::Request grid has >= 1 rows",
+              "id": "8ebe5d50e498e450a4cdee6eace2e030",
+              "passes": 4
+            }
+          ],
+        "name": "6. Back to Work orders (site filter journey)"
+      },
+      {
+        "checks": [
+          {
+            "name": "resolved GroundID 'Aktivitetscenter'",
+            "path": "::Resolve site 'Aktivitetscenter'::resolved GroundID 'Aktivitetscenter'",
+            "id": "980e49415e5c2f60d2214188b160799f",
+            "passes": 1,
+            "fails": 0
+          }
+        ],
+        "name": "Resolve site 'Aktivitetscenter'",
+        "path": "::Resolve site 'Aktivitetscenter'",
+        "id": "6084766dfe2453b151d511e65c0d3dd6",
+        "groups": []
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "id": "db4b27eaa02ff2f754c07ebb52466c59",
+              "passes": 4,
+              "fails": 0,
+              "name": "Request grid reloaded after location filter",
+              "path": "::7. Site filter -> Aktivitetscenter::Request grid reloaded after location filter"
+            },
+            {
+              "fails": 0,
+              "name": "Request location filter returned a grid",
+              "path": "::7. Site filter -> Aktivitetscenter::Request location filter returned a grid",
+              "id": "58b18dc65608c89e703382b7bdb1e1b0",
+              "passes": 4
+            }
+          ],
+        "name": "7. Site filter -> Aktivitetscenter",
+        "path": "::7. Site filter -> Aktivitetscenter",
+        "id": "4b478e9845d0220e7b322003de0261bc"
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "path": "::8. Clear site filter (Show all sites)::Request grid reloaded after location filter",
+              "id": "675122139a01389d769b28a98620382d",
+              "passes": 4,
+              "fails": 0,
+              "name": "Request grid reloaded after location filter"
+            },
+            {
+              "passes": 4,
+              "fails": 0,
+              "name": "Request location filter returned a grid",
+              "path": "::8. Clear site filter (Show all sites)::Request location filter returned a grid",
+              "id": "f7c753f7379f56b9b71279f7409bb23d"
+            },
+            {
+              "name": "Request location filter kept >= 1 rows",
+              "path": "::8. Clear site filter (Show all sites)::Request location filter kept >= 1 rows",
+              "id": "607d3717fde5e05e2be9dc7d3c5ba850",
+              "passes": 4,
+              "fails": 0
+            }
+          ],
+        "name": "8. Clear site filter (Show all sites)",
+        "path": "::8. Clear site filter (Show all sites)",
+        "id": "08d854b3d0e4043a1de3d6aac7ca8fd0"
+      },
+      {
+        "id": "5a2cf2e2d10e2e4cfafb8859c50fa869",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 0,
+              "name": "OperationAndMaintenance UniqueString issued",
+              "path": "::9. Back to Work orders (status filter journey)::OperationAndMaintenance UniqueString issued",
+              "id": "d98df8c98677b2ec7c907c4554b7f61e",
+              "passes": 4
+            },
+            {
+              "name": "OperationAndMaintenance layout built",
+              "path": "::9. Back to Work orders (status filter journey)::OperationAndMaintenance layout built",
+              "id": "b2376f98ea5ca2f2fa864050b7cd7f5a",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "id": "112c51cce27b1969c00f9724aefa57d9",
+              "passes": 4,
+              "fails": 0,
+              "name": "OperationAndMaintenance headers loaded",
+              "path": "::9. Back to Work orders (status filter journey)::OperationAndMaintenance headers loaded"
+            },
+            {
+              "name": "OperationAndMaintenance grid loaded",
+              "path": "::9. Back to Work orders (status filter journey)::OperationAndMaintenance grid loaded",
+              "id": "4c4c2d02b5fcc6cbcc4ec5ba0a1ed9f0",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "Request grid returned data",
+              "path": "::9. Back to Work orders (status filter journey)::Request grid returned data",
+              "id": "769aaba473841804014567a2d8940bc4",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "Request grid has >= 1 rows",
+              "path": "::9. Back to Work orders (status filter journey)::Request grid has >= 1 rows",
+              "id": "b0c819b6f4069c56e92b0ae40b3e5ebc",
+              "passes": 4,
+              "fails": 0
+            }
+          ],
+        "name": "9. Back to Work orders (status filter journey)",
+        "path": "::9. Back to Work orders (status filter journey)"
+      },
+      {
+        "name": "11. Pin filter (grid reflow)",
+        "path": "::11. Pin filter (grid reflow)",
+        "id": "b90ccd6dfc7e2e9f2e063d73f22f58dd",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 4,
+              "fails": 0,
+              "name": "Request grid reloaded",
+              "path": "::11. Pin filter (grid reflow)::Request grid reloaded",
+              "id": "4794eb645ddbebe87ed2f92949ca8b31"
+            },
+            {
+              "name": "Request grid reload returned data",
+              "path": "::11. Pin filter (grid reflow)::Request grid reload returned data",
+              "id": "c9f8c598495bc7f2b1e753ec432cb71e",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "Request grid reload kept >= 1 rows",
+              "path": "::11. Pin filter (grid reflow)::Request grid reload kept >= 1 rows",
+              "id": "08997fce82726eeb76edafd9400b882d",
+              "passes": 4,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "path": "::12. Status filter -> Select all",
+        "id": "6ff8a94eac9b839dd329270281457b53",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Request grid reloaded after data filter",
+              "path": "::12. Status filter -> Select all::Request grid reloaded after data filter",
+              "id": "f894180f336b264bc4f04d0826b46105",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "Request data filter returned a grid",
+              "path": "::12. Status filter -> Select all::Request data filter returned a grid",
+              "id": "d48413b264241a69a7ba2d0a1056ff1b",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "name": "Request data filter kept >= 1 rows",
+              "path": "::12. Status filter -> Select all::Request data filter kept >= 1 rows",
+              "id": "7ce45ecb2dc563ac5b7b6deb364f137b",
+              "passes": 4,
+              "fails": 0
+            }
+          ],
+        "name": "12. Status filter -> Select all"
+      },
+      {
+        "path": "::13. Status filter -> Deselect all",
+        "id": "da2fcac771405231f6ff78288b0b504f",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Request grid reloaded after data filter",
+              "path": "::13. Status filter -> Deselect all::Request grid reloaded after data filter",
+              "id": "5f88a43ac7379f760747db2ed00cecb3",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "Request data filter returned a grid",
+              "path": "::13. Status filter -> Deselect all::Request data filter returned a grid",
+              "id": "7b00ee56ec7b0624d3a20bca77d5aa3d",
+              "passes": 4
+            },
+            {
+              "name": "Request data filter kept >= 1 rows",
+              "path": "::13. Status filter -> Deselect all::Request data filter kept >= 1 rows",
+              "id": "556d5fa9c76ae84bf3323589665132cf",
+              "passes": 4,
+              "fails": 0
+            }
+          ],
+        "name": "13. Status filter -> Deselect all"
+      },
+      {
+        "name": "13. Status filter -> Is open (14)",
+        "path": "::13. Status filter -> Is open (14)",
+        "id": "4d61c3bfff8db4bf0affed5e8a5aa851",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Request grid reloaded after data filter",
+              "path": "::13. Status filter -> Is open (14)::Request grid reloaded after data filter",
+              "id": "7e50f8fcb6d4f2571d76a1c4a48ad9e8",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "passes": 4,
+              "fails": 0,
+              "name": "Request data filter returned a grid",
+              "path": "::13. Status filter -> Is open (14)::Request data filter returned a grid",
+              "id": "fd0bc6fb42e91697897061d629ccbdd3"
+            },
+            {
+              "fails": 0,
+              "name": "Request data filter kept >= 1 rows",
+              "path": "::13. Status filter -> Is open (14)::Request data filter kept >= 1 rows",
+              "id": "1103addc4696b155a38ed78ac572c010",
+              "passes": 4
+            }
+          ]
+      },
+      {
+        "name": "14. Clear filter (X)",
+        "path": "::14. Clear filter (X)",
+        "id": "513f586802e8272ac3d42c26642d69ce",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Request grid reloaded after filter clear",
+              "path": "::14. Clear filter (X)::Request grid reloaded after filter clear",
+              "id": "59b5be29edbee294c202cc654a991dca",
+              "passes": 4,
+              "fails": 0
+            },
+            {
+              "passes": 4,
+              "fails": 0,
+              "name": "Request filter clear returned a grid",
+              "path": "::14. Clear filter (X)::Request filter clear returned a grid",
+              "id": "231dd17841f6080f8e4e2af8085e452f"
+            },
+            {
+              "fails": 0,
+              "name": "Request filter clear restored >= 1 rows",
+              "path": "::14. Clear filter (X)::Request filter clear restored >= 1 rows",
+              "id": "309c395486f5750c4c1aab65cb2262d0",
+              "passes": 4
+            }
+          ]
+      },
+      {
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 0,
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 3
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "name": "Work order grid returned rows",
+        "path": "::Work order grid returned rows",
+        "id": "ed62ab0e7e76d15c46dfd30cf3de18a3",
+        "passes": 4,
+        "fails": 0
+      }
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 230009.4703
+  },
+  "metrics": {
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 3779.155175,
+        "avg": 1674.7199000000005,
+        "min": 502.7174,
+        "med": 1029.8818,
+        "max": 4222.5163,
+        "p(90)": 3520.7731000000003
+      }
+    },
+    "iterations": {
+      "values": {
+        "count": 3,
+        "rate": 0.013042941214929618
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 232
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 59712.98703333334,
+        "min": 55264.0107,
+        "med": 61137.2993,
+        "max": 62737.6511,
+        "p(90)": 62417.580740000005,
+        "p(95)": 62577.615920000004
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "values": {
+        "p(95)": 732.6924999999997,
+        "avg": 401.153686637931,
+        "min": 223.2184,
+        "med": 307.23915,
+        "max": 1743.6852,
+        "p(90)": 649.7425200000001
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 345.2386,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 1.4880974137931036,
+        "min": 0
+      }
+    },
+    "http_req_duration": {
+      "contains": "time",
+      "values": {
+        "p(95)": 732.6924999999997,
+        "avg": 401.153686637931,
+        "min": 223.2184,
+        "med": 307.23915,
+        "max": 1743.6852,
+        "p(90)": 649.7425200000001
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 192,
+        "fails": 0,
+        "rate": 1
+      }
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 857.5,
+        "min": 824,
+        "med": 844.5,
+        "max": 917,
+        "p(90)": 899.3,
+        "p(95)": 908.15
+      }
+    },
+    "step_navigate_duration": {
+      "values": {
+        "min": 506,
+        "med": 3219,
+        "max": 4222,
+        "p(90)": 3875.2000000000003,
+        "p(95)": 4046.7999999999997,
+        "avg": 2645.235294117647
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 1.614555172413793,
+        "min": 0,
+        "med": 0,
+        "max": 374.4368,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 2.5334000000000003,
+        "max": 1440.2975,
+        "p(90)": 103.45602000000004,
+        "p(95)": 226.85721999999978,
+        "avg": 52.83695086206896
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 232,
+        "rate": 1.0086541206212238
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.343015948275862,
+        "min": 0,
+        "med": 0,
+        "max": 5.401,
+        "p(90)": 0.8193500000000001,
+        "p(95)": 1.10073
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 526,
+        "min": 503,
+        "med": 515,
+        "max": 560,
+        "p(90)": 551,
+        "p(95)": 555.5
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "data_received": {
+      "contains": "data",
+      "values": {
+        "count": 27187327,
+        "rate": 118200.90261735627
+      },
+      "type": "counter"
+    },
+    "step_login_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 2988.7,
+        "p(95)": 3017.35,
+        "avg": 2812.5,
+        "min": 2665,
+        "med": 2769.5,
+        "max": 3046
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.1213875,
+        "min": 0,
+        "med": 0,
+        "max": 28.1619,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 1383,
+        "max": 1704,
+        "p(90)": 1630.2,
+        "p(95)": 1667.1,
+        "avg": 1439.5,
+        "min": 1288
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 2624.999999999998,
+        "avg": 1079.9642857142858,
+        "min": 686,
+        "med": 861.5,
+        "max": 3146,
+        "p(90)": 1446.9000000000005
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 0,
+        "fails": 56,
+        "rate": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 332937,
+        "rate": 1447.492573091674
+      }
+    },
+    "http_req_waiting": {
+      "values": {
+        "p(95)": 607.557385,
+        "avg": 347.97371982758636,
+        "min": 220.0617,
+        "med": 303.26725,
+        "max": 1013.0705,
+        "p(90)": 516.78012
+      },
+      "type": "trend",
+      "contains": "time"
+    }
+  }
+}

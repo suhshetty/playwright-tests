@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n pass">18512/18512</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">54536</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n pass">0.00%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n pass">0.00%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">8256</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="pass">PASS</td></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="pass">PASS</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="pass">PASS</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="fail">FAIL</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="pass">PASS</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr></table>
+
+<h2>Known server-side issues (excluded from SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints with known, reproducible server errors that are <b>not capacity-related</b>. Their requests are excluded
+ from the <i>http failed</i> SLA above so it reflects the operations that work. Only issues that actually occurred this
+ run are listed (with real counts). <b>Total occurrences this run: 8256.</b>
+</p>
+<table><tr><th>Endpoint</th><th>Status</th><th>Occurrences</th><th>Nature</th></tr><tr><td>MMLayout.asmx/RefreshMainManFilter</td><td class="fail">400</td><td>4128</td><td>Location (Site) filter apply — server rejects the headless call (needs filter session state the browser establishes). Verified live: the byte-identical payload returns 200 in a real browser.</td></tr><tr><td>MMLayout.asmx/RefreshDataFilter</td><td class="fail">400</td><td>2064</td><td>Data (Municipality) filter apply — same root cause as RefreshMainManFilter.</td></tr><tr><td>MMLayout.asmx/EmptyDataFilter</td><td class="fail">400</td><td>2064</td><td>Clear filter — same root cause.</td></tr></table>
+<p style="font-size:12px;color:#15803d;margin:8px 0 0">Not observed this run (clean / appears resolved on this environment): restapi/Internal/IsShortcut.</p>
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_login_render_duration</td><td>9.20 s</td><td>8.89 s</td><td>12.23 s</td><td>13.01 s</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>365 ms</td><td>287 ms</td><td>922 ms</td><td>8.71 s</td></tr><tr><td>step_navigate_duration</td><td>2.70 s</td><td>2.22 s</td><td>8.82 s</td><td>21.50 s</td></tr><tr><td>http_req_connecting</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>31 ms</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>149 ms</td></tr><tr><td>step_filter_duration</td><td>564 ms</td><td>513 ms</td><td>798 ms</td><td>3.40 s</td></tr><tr><td>step_open_record_duration</td><td>3.04 s</td><td>2.83 s</td><td>4.92 s</td><td>6.06 s</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_blocked</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>824 ms</td></tr><tr><td>http_req_receiving</td><td>3 ms</td><td>0 ms</td><td>6 ms</td><td>1.28 s</td></tr><tr><td>http_req_waiting</td><td>361 ms</td><td>286 ms</td><td>889 ms</td><td>8.57 s</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_tls_handshaking</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>581 ms</td></tr><tr><td>step_login_duration</td><td>19.64 s</td><td>19.64 s</td><td>20.26 s</td><td>20.68 s</td></tr><tr><td>step_logout_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_landing_duration</td><td>3.20 s</td><td>3.12 s</td><td>3.93 s</td><td>4.01 s</td></tr><tr><td>http_req_duration</td><td>365 ms</td><td>287 ms</td><td>922 ms</td><td>8.71 s</td></tr><tr><td>group_duration</td><td>1.47 s</td><td>607 ms</td><td>2.69 s</td><td>21.50 s</td></tr><tr><td>step_login_auth_duration</td><td>5.54 s</td><td>6.19 s</td><td>8.11 s</td><td>8.71 s</td></tr><tr><td>iteration_duration</td><td>28.36 s</td><td>25.31 s</td><td>31.70 s</td><td>105.52 s</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n fail">84356/101165</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">271319</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n fail">9.46%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n fail">26.41%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">2671</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="fail">FAIL</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="fail">FAIL</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="fail">FAIL</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="fail">FAIL</td></tr></table>
+
+<h2>Server errors observed (excluded from the http-failed SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints that returned an error this run. These requests are held out of the <i>http failed</i> figure above so it
+ reflects the operations that work — they are listed here so nothing is hidden. Counts and status codes are measured
+ from this run. <b>Total: 2671.</b>
+</p>
+<table><tr><th>Endpoint</th><th>Status</th><th>Occurrences</th><th>Nature</th></tr><tr><td>MMLayout.asmx/RefreshMainManFilter</td><td class="fail">503 &times;1008<br>other &times;65</td><td>1073</td><td>Service Unavailable — the environment rejecting requests under load, typically across many endpoints at once. Observed HTTP other.</td></tr><tr><td>MMLayout.asmx/RefreshDataFilter</td><td class="fail">503 &times;754<br>other &times;11</td><td>765</td><td>Service Unavailable — the environment rejecting requests under load, typically across many endpoints at once. Observed HTTP other.</td></tr><tr><td>MMLayout.asmx/EmptyDataFilter</td><td class="fail">503 &times;827<br>other &times;6</td><td>833</td><td>Service Unavailable — the environment rejecting requests under load, typically across many endpoints at once. Observed HTTP other.</td></tr></table>
+
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>step_open_record_duration</td><td>11.39 s</td><td>10.77 s</td><td>21.13 s</td><td>70.41 s</td></tr><tr><td>step_logout_duration</td><td>1.15 s</td><td>732 ms</td><td>3.42 s</td><td>60.00 s</td></tr><tr><td>http_req_connecting</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>1.03 s</td></tr><tr><td>step_filter_duration</td><td>2.39 s</td><td>2.21 s</td><td>5.38 s</td><td>120.00 s</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>1.64 s</td><td>1.27 s</td><td>4.06 s</td><td>54.62 s</td></tr><tr><td>http_req_tls_handshaking</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>1.71 s</td></tr><tr><td>step_login_auth_duration</td><td>2.97 s</td><td>2.63 s</td><td>6.37 s</td><td>13.49 s</td></tr><tr><td>step_login_render_duration</td><td>4.30 s</td><td>3.73 s</td><td>9.53 s</td><td>28.06 s</td></tr><tr><td>http_req_waiting</td><td>1.39 s</td><td>1.06 s</td><td>3.60 s</td><td>60.00 s</td></tr><tr><td>http_req_duration</td><td>1.52 s</td><td>1.14 s</td><td>3.93 s</td><td>60.00 s</td></tr><tr><td>step_navigate_duration</td><td>15.76 s</td><td>15.58 s</td><td>29.46 s</td><td>76.94 s</td></tr><tr><td>iteration_duration</td><td>56.89 s</td><td>34.30 s</td><td>140.76 s</td><td>308.23 s</td></tr><tr><td>step_login_duration</td><td>3.85 s</td><td>298 ms</td><td>15.51 s</td><td>65.01 s</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>31 ms</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_receiving</td><td>129 ms</td><td>3 ms</td><td>459 ms</td><td>59.26 s</td></tr><tr><td>http_req_blocked</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>1.84 s</td></tr><tr><td>group_duration</td><td>6.86 s</td><td>3.32 s</td><td>21.78 s</td><td>120.00 s</td></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_landing_duration</td><td>11.17 s</td><td>10.14 s</td><td>19.75 s</td><td>47.41 s</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

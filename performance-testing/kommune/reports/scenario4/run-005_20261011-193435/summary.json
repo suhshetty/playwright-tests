@@ -1,0 +1,819 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "groups": [],
+        "checks": [
+            {
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 105,
+              "fails": 0,
+              "name": "login page 200"
+            },
+            {
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 105,
+              "fails": 0,
+              "name": "logged in (on Content page)"
+            },
+            {
+              "fails": 0,
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 105
+            }
+          ],
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d"
+      },
+      {
+        "name": "2. Property mgmt -> Lease contracts overview -> Head lease contracts",
+        "path": "::2. Property mgmt -> Lease contracts overview -> Head lease contracts",
+        "id": "7f4ee83c71899e66be1ed82436708e5c",
+        "groups": [],
+        "checks": [
+            {
+              "id": "d04ae8a8bb14fbe1d420042a0d7f8aa8",
+              "passes": 105,
+              "fails": 0,
+              "name": "PropertyManagement headers loaded",
+              "path": "::2. Property mgmt -> Lease contracts overview -> Head lease contracts::PropertyManagement headers loaded"
+            },
+            {
+              "name": "PropertyManagement grid loaded",
+              "path": "::2. Property mgmt -> Lease contracts overview -> Head lease contracts::PropertyManagement grid loaded",
+              "id": "9fdb96d8390758769c72db979dc54210",
+              "passes": 105,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "3. Open head lease contract",
+        "path": "::3. Open head lease contract",
+        "id": "cd471d3cd6b45c340855be2fc8ac36f3",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 105,
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::3. Open head lease contract::modal loaded (200)",
+              "id": "5dcb59336df46f3a5a3f43a32718b019"
+            },
+            {
+              "name": "modal no server error",
+              "path": "::3. Open head lease contract::modal no server error",
+              "id": "b09558dc98ec479d57cad6de54cc8ff5",
+              "passes": 105,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "4. Lease contracts",
+        "path": "::4. Lease contracts",
+        "id": "7af1c572631dbb1ca281549e493477f8",
+        "groups": [],
+        "checks": [
+            {
+              "name": "PropertyManagement headers loaded",
+              "path": "::4. Lease contracts::PropertyManagement headers loaded",
+              "id": "bbc994cc594cd0d3227b51478c7a7ecc",
+              "passes": 105,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "PropertyManagement grid loaded",
+              "path": "::4. Lease contracts::PropertyManagement grid loaded",
+              "id": "79d56fadc2c5400fe456a24fe03f34b8",
+              "passes": 105
+            }
+          ]
+      },
+      {
+        "name": "5. Open lease contract",
+        "path": "::5. Open lease contract",
+        "id": "f53c64f58abe93921cf4516116ab0c85",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::5. Open lease contract::modal loaded (200)",
+              "id": "f8405f49195303d4256ad12ac496b841",
+              "passes": 105,
+              "fails": 0
+            },
+            {
+              "name": "modal no server error",
+              "path": "::5. Open lease contract::modal no server error",
+              "id": "359eabbf5a4bd55beab059f9a084bdea",
+              "passes": 105,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "PropertyManagement headers loaded",
+              "path": "::6. Sub lease contracts::PropertyManagement headers loaded",
+              "id": "5a7163ab1fa0ada2108088c7143b5011",
+              "passes": 104,
+              "fails": 0
+            },
+            {
+              "name": "PropertyManagement grid loaded",
+              "path": "::6. Sub lease contracts::PropertyManagement grid loaded",
+              "id": "bbbf926652f9ef2e7074574dacdb0b1e",
+              "passes": 104,
+              "fails": 0
+            }
+          ],
+        "name": "6. Sub lease contracts",
+        "path": "::6. Sub lease contracts",
+        "id": "1e109373dbf8bd535efef0a93b9237f7"
+      },
+      {
+        "name": "7. Open sub lease contract",
+        "path": "::7. Open sub lease contract",
+        "id": "a282061c5a1d4e8ddff6d2010c43959f",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 104,
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::7. Open sub lease contract::modal loaded (200)",
+              "id": "7da0c9f179bc1a423d2b0f00a8fe60d4"
+            },
+            {
+              "passes": 104,
+              "fails": 0,
+              "name": "modal no server error",
+              "path": "::7. Open sub lease contract::modal no server error",
+              "id": "5e5be0eab21641f068a52f323c2cb1a6"
+            }
+          ]
+      },
+      {
+        "name": "8. Lease contract renegotiations",
+        "path": "::8. Lease contract renegotiations",
+        "id": "f0113e9ab5bc236c2f0273b546fe7495",
+        "groups": [],
+        "checks": [
+            {
+              "name": "PropertyManagement headers loaded",
+              "path": "::8. Lease contract renegotiations::PropertyManagement headers loaded",
+              "id": "2ed665fc91cd72ce2fac45f32dc27616",
+              "passes": 103,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "PropertyManagement grid loaded",
+              "path": "::8. Lease contract renegotiations::PropertyManagement grid loaded",
+              "id": "bb9cda2c27ee3a34e9a9253c5cb92dbf",
+              "passes": 103
+            }
+          ]
+      },
+      {
+        "name": "9. Open renegotiation",
+        "path": "::9. Open renegotiation",
+        "id": "6fbffcfb3ca14c1d4e85db1f7ecebad5",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::9. Open renegotiation::modal loaded (200)",
+              "id": "b5165b1f48dd67c54412fa1ab1b58353",
+              "passes": 103,
+              "fails": 0
+            },
+            {
+              "name": "modal no server error",
+              "path": "::9. Open renegotiation::modal no server error",
+              "id": "51cc86fab7229ab3ca1f4bc5cc34db46",
+              "passes": 103,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "path": "::10. Back to Head lease contracts",
+        "id": "c373135e7867c69cbefc462c840ca2ac",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 102,
+              "fails": 0,
+              "name": "PropertyManagement headers loaded",
+              "path": "::10. Back to Head lease contracts::PropertyManagement headers loaded",
+              "id": "c2f71e688a3c77d10a0937fb76686f9c"
+            },
+            {
+              "passes": 102,
+              "fails": 0,
+              "name": "PropertyManagement grid loaded",
+              "path": "::10. Back to Head lease contracts::PropertyManagement grid loaded",
+              "id": "b2f1eb47e9332b4de17f24c425df8707"
+            }
+          ],
+        "name": "10. Back to Head lease contracts"
+      },
+      {
+        "name": "11. Site filter -> Affaldscenter (58358)",
+        "path": "::11. Site filter -> Affaldscenter (58358)",
+        "id": "f5247fe7d9b2338b2d93050f8157cf4b",
+        "groups": [],
+        "checks": [
+            {
+              "id": "b102a05fb960709cb4ad4016cd0233a0",
+              "passes": 101,
+              "fails": 0,
+              "name": "grid reloaded after site filter (GroundID=58358)",
+              "path": "::11. Site filter -> Affaldscenter (58358)::grid reloaded after site filter (GroundID=58358)"
+            },
+            {
+              "name": "site filter (GroundID=58358) returned a grid",
+              "path": "::11. Site filter -> Affaldscenter (58358)::site filter (GroundID=58358) returned a grid",
+              "id": "88309d8c01ff291977563ff376abb0b1",
+              "passes": 101,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "id": "da13881cabeb35fda36859149493ae55",
+        "groups": [],
+        "checks": [
+            {
+              "name": "grid reloaded after site filter (GroundID=0)",
+              "path": "::12. Clear site filter (Show all sites)::grid reloaded after site filter (GroundID=0)",
+              "id": "53195f733ff0e981571b73b449f102ec",
+              "passes": 100,
+              "fails": 0
+            },
+            {
+              "name": "site filter (GroundID=0) returned a grid",
+              "path": "::12. Clear site filter (Show all sites)::site filter (GroundID=0) returned a grid",
+              "id": "9d8856c54dc20c3acd617d7b47d98952",
+              "passes": 100,
+              "fails": 0
+            },
+            {
+              "id": "23eb915ec77086c49d84c6c3a1714e47",
+              "passes": 100,
+              "fails": 0,
+              "name": "site filter (GroundID=0) kept >= 1 rows",
+              "path": "::12. Clear site filter (Show all sites)::site filter (GroundID=0) kept >= 1 rows"
+            }
+          ],
+        "name": "12. Clear site filter (Show all sites)",
+        "path": "::12. Clear site filter (Show all sites)"
+      },
+      {
+        "id": "6cfbe504afb277b2bbf6059fb42462e5",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::14. Payer filter -> MalerMestrene2 (50566)::grid reloaded after payer filter (50566)",
+              "id": "8538ea471efb4d40e6d57fc918e1f677",
+              "passes": 99,
+              "fails": 0,
+              "name": "grid reloaded after payer filter (50566)"
+            },
+            {
+              "fails": 0,
+              "name": "payer filter (50566) returned a grid",
+              "path": "::14. Payer filter -> MalerMestrene2 (50566)::payer filter (50566) returned a grid",
+              "id": "13867545f4909302569e173ccac81f0e",
+              "passes": 99
+            },
+            {
+              "name": "payer filter (50566) kept >= 1 rows",
+              "path": "::14. Payer filter -> MalerMestrene2 (50566)::payer filter (50566) kept >= 1 rows",
+              "id": "0ec203125e4ea3bb545974ae0586e0fc",
+              "passes": 99,
+              "fails": 0
+            }
+          ],
+        "name": "14. Payer filter -> MalerMestrene2 (50566)",
+        "path": "::14. Payer filter -> MalerMestrene2 (50566)"
+      },
+      {
+        "name": "15. Clear filter (X)",
+        "path": "::15. Clear filter (X)",
+        "id": "c72bde44131e24e4e97bfb922e050303",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 0,
+              "name": "grid reloaded after filter clear",
+              "path": "::15. Clear filter (X)::grid reloaded after filter clear",
+              "id": "8562232d01e4901d0be920bb9bb81ba2",
+              "passes": 99
+            },
+            {
+              "name": "filter clear returned a grid",
+              "path": "::15. Clear filter (X)::filter clear returned a grid",
+              "id": "a74d92f57552d02232389eed520c1315",
+              "passes": 99,
+              "fails": 0
+            },
+            {
+              "fails": 0,
+              "name": "filter clear kept >= 1 rows",
+              "path": "::15. Clear filter (X)::filter clear kept >= 1 rows",
+              "id": "968ed12a0277661742b8a7803703f400",
+              "passes": 99
+            }
+          ]
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 99,
+              "fails": 0
+            }
+          ],
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a"
+      }
+    ],
+    "checks": [
+      {
+        "name": "HeadLeaseContract grid returned rows",
+        "path": "::HeadLeaseContract grid returned rows",
+        "id": "b810ff7c02a518e8ba7333054f34826c",
+        "passes": 105,
+        "fails": 0
+      },
+      {
+        "name": "LeaseContract grid returned rows",
+        "path": "::LeaseContract grid returned rows",
+        "id": "ab36b8e60f10c269848fb16f590584df",
+        "passes": 105,
+        "fails": 0
+      },
+      {
+        "name": "SubLeaseContract grid returned rows",
+        "path": "::SubLeaseContract grid returned rows",
+        "id": "1553b51e90c67b9ae9cbb99df9fdc203",
+        "passes": 104,
+        "fails": 0
+      },
+      {
+        "path": "::LeaseContractRenegotiation grid returned rows",
+        "id": "14ab48102c698408be4be9dc0a02eca0",
+        "passes": 72,
+        "fails": 31,
+        "name": "LeaseContractRenegotiation grid returned rows"
+      },
+      {
+        "id": "121d6cc317874db9050b12f4e1699be6",
+        "passes": 101,
+        "fails": 0,
+        "name": "head lease baseline has rows",
+        "path": "::head lease baseline has rows"
+      },
+      {
+        "id": "5344c3b102e94b87ec23d562edd5192a",
+        "passes": 100,
+        "fails": 0,
+        "name": "site filter changed the grid",
+        "path": "::site filter changed the grid"
+      },
+      {
+        "passes": 99,
+        "fails": 0,
+        "name": "payer filter changed the grid",
+        "path": "::payer filter changed the grid",
+        "id": "8ec364d4897444d13254a5ed0c594b24"
+      }
+    ]
+  },
+  "options": {
+    "noColor": false,
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": ""
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 330004.1787
+  },
+  "metrics": {
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 360.8541,
+        "max": 10674.3041,
+        "p(90)": 663.1187599999998,
+        "p(95)": 816.3793000000007,
+        "avg": 445.07965885865167,
+        "min": 216.6251
+      }
+    },
+    "step_login_render_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 1680,
+        "max": 6083,
+        "p(90)": 3874.4,
+        "p(95)": 5537.5999999999985,
+        "avg": 2194.038095238095,
+        "min": 1215
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 5278.05355,
+        "avg": 2529.325340350879,
+        "min": 459.427,
+        "med": 1507.8808,
+        "max": 17100.7309,
+        "p(90)": 4803.1021
+      }
+    },
+    "step_logout_duration": {
+      "contains": "time",
+      "values": {
+        "p(90)": 741.6,
+        "p(95)": 747.1,
+        "avg": 635.030303030303,
+        "min": 460,
+        "med": 670,
+        "max": 1111
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_connecting": {
+      "values": {
+        "avg": 0.10184371339993109,
+        "min": 0,
+        "med": 0,
+        "max": 39.9337,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 528018715,
+        "rate": 1600036.4512960028
+      }
+    },
+    "business_errors": {
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 1539
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_blocked": {
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 2.2955336203926966,
+        "min": 0,
+        "med": 0,
+        "max": 1055.6649,
+        "p(90)": 0
+      },
+      "type": "trend"
+    },
+    "http_req_receiving": {
+      "values": {
+        "max": 4155.8134,
+        "p(90)": 49.49846,
+        "p(95)": 89.66062000000004,
+        "avg": 21.88995275002876,
+        "min": 0,
+        "med": 3.2249
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_navigate_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 4340.26204238921,
+        "min": 2765,
+        "med": 4344,
+        "max": 9157,
+        "p(90)": 5253.2,
+        "p(95)": 5512.199999999999
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.8284000000000001,
+        "avg": 0.2537738201860153,
+        "min": 0,
+        "med": 0,
+        "max": 9.5179,
+        "p(90)": 0.6119999999999999
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 7735.4842,
+        "p(90)": 618.9715,
+        "p(95)": 749.5666600000001,
+        "avg": 422.9359322884353,
+        "min": 212.0537,
+        "med": 348.6765
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 5007908,
+        "rate": 15175.286627362939
+      }
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 4631.799999999997,
+        "avg": 1873.695238095238,
+        "min": 877,
+        "med": 1199,
+        "max": 7739,
+        "p(90)": 3343.4000000000005
+      }
+    },
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 1989.0000000000005,
+        "p(95)": 2133.2,
+        "avg": 1445.6402877697842,
+        "min": 805,
+        "med": 1380,
+        "max": 2922
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 98,
+        "rate": 0.2969659365710329
+      }
+    },
+    "step_login_duration": {
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 2998,
+        "med": 4272,
+        "max": 12513,
+        "p(90)": 11252.6,
+        "p(95)": 11841.199999999999,
+        "avg": 5594.1238095238095
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 8709,
+        "rate": 0,
+        "passes": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "step_mypage_tab_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "values": {
+        "passes": 4068,
+        "fails": 31,
+        "rate": 0.9924371797999512
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 10674.3041,
+        "p(90)": 663.1187599999998,
+        "p(95)": 816.3793000000007,
+        "avg": 445.07965885865167,
+        "min": 216.6251,
+        "med": 360.8541
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 8709,
+        "rate": 26.39057491425638
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 25,
+        "min": 25,
+        "max": 25
+      }
+    },
+    "step_tree_load_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 783.5445,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 1.5095153404524053,
+        "min": 0
+      }
+    },
+    "vus": {
+      "values": {
+        "value": 7,
+        "min": 7,
+        "max": 25
+      },
+      "type": "gauge",
+      "contains": "default"
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 77765.1183,
+        "max": 101144.3312,
+        "p(90)": 85653.65718000001,
+        "p(95)": 86781.14301999999,
+        "avg": 78036.57712653058,
+        "min": 62041.3149
+      }
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 924,
+        "max": 17101,
+        "p(90)": 1090.4,
+        "p(95)": 1182.0999999999997,
+        "avg": 969.7794486215539,
+        "min": 640
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1104 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "checks": [
+          {
+            "passes": 310,
+            "fails": 33,
+            "name": "login page 200",
+            "path": "::1. Login::login page 200",
+            "id": "bdb402f87ce2f415dfa84dd5a9360ecb"
+          },
+          {
+            "name": "logged in (on Content page)",
+            "path": "::1. Login::logged in (on Content page)",
+            "id": "c857394326cefff9c7dfe9ebd0f2828b",
+            "passes": 288,
+            "fails": 22
+          },
+          {
+            "name": "login not bounced back",
+            "path": "::1. Login::login not bounced back",
+            "id": "04315cda8c906e87cc7f8d77a4325605",
+            "passes": 288,
+            "fails": 22
+          }
+        ],
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": []
+      },
+      {
+        "id": "1b79536bd4ea91dd062d96c9df7dc070",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 207,
+              "fails": 25,
+              "name": "BuildingArchive UniqueString issued",
+              "path": "::Landing (post-login module)::BuildingArchive UniqueString issued",
+              "id": "e0ecad38111c6895feaa97f91f4e7b14"
+            },
+            {
+              "passes": 199,
+              "fails": 33,
+              "name": "BuildingArchive layout built",
+              "path": "::Landing (post-login module)::BuildingArchive layout built",
+              "id": "f822c2ab4553ac4abaad99241b3f8071"
+            },
+            {
+              "fails": 35,
+              "name": "BuildingArchive headers loaded",
+              "path": "::Landing (post-login module)::BuildingArchive headers loaded",
+              "id": "a53c2e3d61b73cc24704ad243c00ced1",
+              "passes": 197
+            },
+            {
+              "name": "BuildingArchive grid loaded",
+              "path": "::Landing (post-login module)::BuildingArchive grid loaded",
+              "id": "5a26a2cdad26e0da384b24bd2501f00a",
+              "passes": 144,
+              "fails": 88
+            }
+          ],
+        "name": "Landing (post-login module)",
+        "path": "::Landing (post-login module)"
+      },
+      {
+        "path": "::2. Building archive -> Site register -> Sites",
+        "id": "30e772f3786422294fc74106f0f2ac0c",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive UniqueString issued",
+              "id": "60f14b94818ae8f67da754c9094a15a8",
+              "passes": 122,
+              "fails": 3,
+              "name": "BuildingArchive UniqueString issued"
+            },
+            {
+              "name": "BuildingArchive layout built",
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive layout built",
+              "id": "41238f95bb241ac19d8a3b5a272c450a",
+              "passes": 115,
+              "fails": 10
+            },
+            {
+              "id": "7470e80234338b18a6fa8965ff56e297",
+              "passes": 122,
+              "fails": 3,
+              "name": "BuildingArchive headers loaded",
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive headers loaded"
+            },
+            {
+              "fails": 18,
+              "name": "BuildingArchive grid loaded",
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive grid loaded",
+              "id": "cea162ba4a797a952275e3e928d3e5f3",
+              "passes": 107
+            }
+          ],
+        "name": "2. Building archive -> Site register -> Sites"
+      },
+      {
+        "name": "Resolve site 'AKTIVITETSHUSET'",
+        "path": "::Resolve site 'AKTIVITETSHUSET'",
+        "id": "89558f67a559d9f4ee02413570491394",
+        "groups": [],
+        "checks": [
+            {
+              "id": "5f1d1a575349560283ffec0ad525df47",
+              "passes": 99,
+              "fails": 16,
+              "name": "resolved GroundID 'AKTIVITETSHUSET'",
+              "path": "::Resolve site 'AKTIVITETSHUSET'::resolved GroundID 'AKTIVITETSHUSET'"
+            }
+          ]
+      },
+      {
+        "name": "5. Open site -> popup",
+        "path": "::5. Open site -> popup",
+        "id": "7df95975e8cbb530f01487e8939e9de7",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 84,
+              "fails": 6,
+              "name": "modal loaded (200)",
+              "path": "::5. Open site -> popup::modal loaded (200)",
+              "id": "5c6cd19881b02ca2beab1e088ed47a5e"
+            },
+            {
+              "name": "modal no server error",
+              "path": "::5. Open site -> popup::modal no server error",
+              "id": "c3c3620bd364b0cc63f1f114c4c5cdce",
+              "passes": 84,
+              "fails": 6
+            }
+          ]
+      },
+      {
+        "id": "4ea5289e3fff7aae924ea85d7fd2866c",
+        "groups": [],
+        "checks": [
+            {
+              "name": "BuildingArchive UniqueString issued",
+              "path": "::6. Locations overview -> Buildings::BuildingArchive UniqueString issued",
+              "id": "ecdd96e879a7e167efc802eea9736fd1",
+              "passes": 69,
+              "fails": 10
+            },
+            {
+              "fails": 11,
+              "name": "BuildingArchive layout built",
+              "path": "::6. Locations overview -> Buildings::BuildingArchive layout built",
+              "id": "49c859dbcc4080d4b06039c7977a02ff",
+              "passes": 68
+            },
+            {
+              "name": "BuildingArchive headers loaded",
+              "path": "::6. Locations overview -> Buildings::BuildingArchive headers loaded",
+              "id": "394a21715f96d6481e6589625b1d92a4",
+              "passes": 62,
+              "fails": 17
+            },
+            {
+              "path": "::6. Locations overview -> Buildings::BuildingArchive grid loaded",
+              "id": "ac45f5a2fbf4b6af76b80973ea2f39ae",
+              "passes": 52,
+              "fails": 27,
+              "name": "BuildingArchive grid loaded"
+            }
+          ],
+        "name": "6. Locations overview -> Buildings",
+        "path": "::6. Locations overview -> Buildings"
+      },
+      {
+        "checks": [
+          {
+            "name": "resolved MunicipalityID 'Aarhus'",
+            "path": "::Resolve MunicipalityID 'Aarhus'::resolved MunicipalityID 'Aarhus'",
+            "id": "c15eccfd477ddda23a941600aca8a1cd",
+            "passes": 45,
+            "fails": 6
+          }
+        ],
+        "name": "Resolve MunicipalityID 'Aarhus'",
+        "path": "::Resolve MunicipalityID 'Aarhus'",
+        "id": "446f20575864dd67d1b970e60cf4321f",
+        "groups": []
+      },
+      {
+        "name": "8. Open building -> popup",
+        "path": "::8. Open building -> popup",
+        "id": "c7550ac207613491a6fa1f6f1d9bbc0d",
+        "groups": [],
+        "checks": [
+            {
+              "id": "a275cd321bb19eaad45c699650728e65",
+              "passes": 37,
+              "fails": 3,
+              "name": "modal loaded (200)",
+              "path": "::8. Open building -> popup::modal loaded (200)"
+            },
+            {
+              "path": "::8. Open building -> popup::modal no server error",
+              "id": "d347095c7f24a5b1fc995cb4236c7526",
+              "passes": 37,
+              "fails": 3,
+              "name": "modal no server error"
+            }
+          ]
+      },
+      {
+        "path": "::9. Site filter -> AKTIVITETSHUSET",
+        "id": "176de34d02e790a7f5468192048e4f2e",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after location filter",
+              "path": "::9. Site filter -> AKTIVITETSHUSET::Building grid reloaded after location filter",
+              "id": "b22fae660f702e6e8dd68ea289efa74e",
+              "passes": 38,
+              "fails": 2
+            }
+          ],
+        "name": "9. Site filter -> AKTIVITETSHUSET"
+      },
+      {
+        "name": "10. Site filter -> Show all sites",
+        "path": "::10. Site filter -> Show all sites",
+        "id": "878dac10b7e97173a4c7e917a80cc321",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after location filter",
+              "path": "::10. Site filter -> Show all sites::Building grid reloaded after location filter",
+              "id": "16eb90039c601ffe3a0db180d1208486",
+              "passes": 35,
+              "fails": 5
+            }
+          ]
+      },
+      {
+        "name": "11. Data filter -> Municipality Aarhus",
+        "path": "::11. Data filter -> Municipality Aarhus",
+        "id": "1c5fa46b9dd92678c65c0abec2837ce0",
+        "groups": [],
+        "checks": [
+            {
+              "passes": 31,
+              "fails": 6,
+              "name": "Building grid reloaded after data filter",
+              "path": "::11. Data filter -> Municipality Aarhus::Building grid reloaded after data filter",
+              "id": "f38c499b070ca1eeeeecd0a3e0e09764"
+            }
+          ]
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "path": "::14. Clear data filter::Building grid reloaded after filter clear",
+              "id": "e0b80615a9bf318300076198c868a6f8",
+              "passes": 30,
+              "fails": 4,
+              "name": "Building grid reloaded after filter clear"
+            }
+          ],
+        "name": "14. Clear data filter",
+        "path": "::14. Clear data filter",
+        "id": "01441ec90355ecafcc9154600be4bd47"
+      },
+      {
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 39,
+              "fails": 19,
+              "name": "logged out (back on login)"
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "name": "Sites grid returned rows",
+        "path": "::Sites grid returned rows",
+        "id": "5247ff2fda40c084b433d48710bd8284",
+        "passes": 112,
+        "fails": 12
+      },
+      {
+        "path": "::Buildings grid returned rows",
+        "id": "7506e0a21878deecd8ff0a211e0537d4",
+        "passes": 51,
+        "fails": 0,
+        "name": "Buildings grid returned rows"
+      }
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "testRunDurationMs": 630016.6568,
+    "isStdOutTTY": false,
+    "isStdErrTTY": false
+  },
+  "metrics": {
+    "api_err_clearfilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 7,
+        "rate": 0.011110817348154913
+      }
+    },
+    "api_err_initlayout_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 37,
+        "rate": 0.058728605983104545
+      }
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 12913.564516129032,
+        "min": 1138,
+        "med": 7417.5,
+        "max": 60003,
+        "p(90)": 38572.00000000001,
+        "p(95)": 60001
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.8734717088427637,
+        "passes": 3072,
+        "fails": 445
+      }
+    },
+    "api_err_combobox_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3,
+        "rate": 0.004761778863494963
+      }
+    },
+    "api_err_loginsubmit": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      }
+    },
+    "api_err_mainmenu_401": {
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      },
+      "type": "counter"
+    },
+    "step_navigate_duration": {
+      "values": {
+        "avg": 67316.81081081081,
+        "min": 600,
+        "med": 27610.5,
+        "max": 281730,
+        "p(90)": 237894.50000000003,
+        "p(95)": 254556.45000000007
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "api_err_list_403": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 25,
+        "rate": 0.039681490529124695
+      }
+    },
+    "api_err_list_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 125,
+        "rate": 0.19840745264562346
+      }
+    },
+    "api_err_filterctrl": {
+      "contains": "default",
+      "values": {
+        "count": 192,
+        "rate": 0.30475384726367766
+      },
+      "type": "counter"
+    },
+    "api_err_mainmenu_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 20,
+        "rate": 0.031745192423299755
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 70093.03461548086,
+        "min": 600.5407,
+        "med": 36468.029,
+        "max": 282562.4304,
+        "p(90)": 223775.9266,
+        "p(95)": 238776.3406299999
+      }
+    },
+    "api_err_filterctrl_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.031745192423299755,
+        "count": 20
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 12714.735022764835,
+        "min": 203.0907,
+        "med": 3817.15505,
+        "max": 60031.8091,
+        "p(90)": 60000.83477,
+        "p(95)": 60001.211110000004
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 12168.570617132298,
+        "min": 200.0118,
+        "med": 3673.77365,
+        "max": 60031.8091,
+        "p(90)": 60000.56242,
+        "p(95)": 60001.109449999996
+      }
+    },
+    "api_err_toggle_401": {
+      "values": {
+        "count": 66,
+        "rate": 0.10475913499688919
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_logout": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 19,
+        "rate": 0.030157932802134767
+      }
+    },
+    "api_err_keepalive_0": {
+      "values": {
+        "count": 11,
+        "rate": 0.017459855832814866
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_reqs": {
+      "contains": "default",
+      "values": {
+        "count": 8948,
+        "rate": 14.20279909018431
+      },
+      "type": "counter"
+    },
+    "api_err_listheaders": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.12221899082970406,
+        "count": 77
+      }
+    },
+    "known_server_errors": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1277,
+        "rate": 2.0269305362276895
+      }
+    },
+    "api_err_menusteps": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.18253485643397357,
+        "count": 115
+      }
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 26591.1059602649,
+        "min": 1758,
+        "med": 12000,
+        "max": 120004,
+        "p(90)": 73031,
+        "p(95)": 96828
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_gismodal": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 17,
+        "rate": 0.02698341355980479
+      }
+    },
+    "api_err_menuitems_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 52,
+        "rate": 0.08253750030057935
+      }
+    },
+    "api_err_loginpage_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.05237956749844459,
+        "count": 33
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 6355.238493846955,
+        "min": 203.0907,
+        "med": 3102.9255,
+        "max": 59983.5431,
+        "p(90)": 14897.8143,
+        "p(95)": 24998.5875
+      }
+    },
+    "api_err_listheaders_403": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.02857067318096978
+      }
+    },
+    "api_err_buildlayout_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 11,
+        "rate": 0.017459855832814866
+      }
+    },
+    "api_err_gismodal_0": {
+      "values": {
+        "rate": 0.02698341355980479,
+        "count": 17
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_childcount_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 8,
+        "rate": 0.012698076969319901
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 250,
+        "min": 250,
+        "max": 250
+      }
+    },
+    "api_err_other_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      }
+    },
+    "api_err_modal_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 28,
+        "rate": 0.04444326939261965
+      }
+    },
+    "api_err_unread": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 59,
+        "rate": 0.09364831764873427
+      }
+    },
+    "api_err_sitefilter_0": {
+      "contains": "default",
+      "values": {
+        "count": 5,
+        "rate": 0.007936298105824939
+      },
+      "type": "counter"
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 26483.01724137931,
+        "min": 1378,
+        "med": 11183.5,
+        "max": 60003,
+        "p(90)": 60002,
+        "p(95)": 60002
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_unread_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.019047115453979854,
+        "count": 12
+      }
+    },
+    "api_err_buildlayout": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 73,
+        "rate": 0.1158699523450441
+      }
+    },
+    "api_err_menuitems_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      }
+    },
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 127674.33620689655,
+        "min": 5121,
+        "med": 121470,
+        "max": 282565,
+        "p(90)": 243684.2,
+        "p(95)": 269006.1
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_gislayers": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 31,
+        "rate": 0.04920504825611462
+      }
+    },
+    "iterations": {
+      "contains": "default",
+      "values": {
+        "count": 109,
+        "rate": 0.17301129870698365
+      },
+      "type": "counter"
+    },
+    "step_login_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 132018.6,
+        "p(95)": 166725.3,
+        "avg": 61142.78698224852,
+        "min": 3649,
+        "med": 50637.5,
+        "max": 200537
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": false
+        }
+      }
+    },
+    "vus": {
+      "contains": "default",
+      "values": {
+        "value": 239,
+        "min": 1,
+        "max": 250
+      },
+      "type": "gauge"
+    },
+    "api_err_initlayout": {
+      "contains": "default",
+      "values": {
+        "rate": 0.058728605983104545,
+        "count": 37
+      },
+      "type": "counter"
+    },
+    "api_err_mainmenu": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 42,
+        "rate": 0.06666490408892949
+      }
+    },
+    "api_err_list": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 150,
+        "rate": 0.23808894317474816
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.14271345552078676,
+        "passes": 1277,
+        "fails": 7671
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 971.3631,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 12.697324865891813,
+        "min": 0,
+        "med": 0
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 526950.6324,
+        "p(95)": 531751.78334,
+        "avg": 218859.45459541288,
+        "min": 80001.7495,
+        "med": 110194.9592,
+        "max": 581917.3636
+      }
+    },
+    "api_err_unread_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 47,
+        "rate": 0.07460120219475443
+      }
+    },
+    "api_err_menusteps_0": {
+      "contains": "default",
+      "values": {
+        "rate": 0.14761514476834386,
+        "count": 93
+      },
+      "type": "counter"
+    },
+    "api_err_buildlayout_0": {
+      "contains": "default",
+      "values": {
+        "count": 62,
+        "rate": 0.09841009651222923
+      },
+      "type": "counter"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0.06833675681716583,
+        "min": 0,
+        "med": 0,
+        "max": 23.5087,
+        "p(90)": 0
+      }
+    },
+    "api_err_loginpage": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 33,
+        "rate": 0.05237956749844459
+      }
+    },
+    "api_err_childcount": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 8,
+        "rate": 0.012698076969319901
+      }
+    },
+    "api_err_menuitems": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 74,
+        "rate": 0.11745721196620909
+      }
+    },
+    "api_err_combobox": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3,
+        "rate": 0.004761778863494963
+      }
+    },
+    "api_err_menusteps_401": {
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      },
+      "type": "counter"
+    },
+    "api_err_datafilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031745192423299753
+      }
+    },
+    "step_open_record_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 3418,
+        "med": 37418.5,
+        "max": 235684,
+        "p(90)": 164530.80000000005,
+        "p(95)": 217821.39999999997,
+        "avg": 68497.93076923076
+      }
+    },
+    "api_err_gislayers_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 31,
+        "rate": 0.04920504825611462
+      }
+    },
+    "api_err_keepalive": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 11,
+        "rate": 0.017459855832814866
+      }
+    },
+    "data_sent": {
+      "values": {
+        "count": 5847266,
+        "rate": 9281.129216010913
+      },
+      "type": "counter",
+      "contains": "data"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 95.43749000000008,
+        "p(95)": 1167.2525749999993,
+        "avg": 546.0110477983918,
+        "min": 0,
+        "med": 1.2061000000000002,
+        "max": 57243.4574
+      }
+    },
+    "api_err_toggle_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 184,
+        "rate": 0.29205577029435775
+      }
+    },
+    "api_err_datafilter_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031745192423299753
+      }
+    },
+    "api_err_modal": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 28,
+        "rate": 0.04444326939261965
+      }
+    },
+    "api_err_filterctrl_0": {
+      "values": {
+        "count": 172,
+        "rate": 0.2730086548403779
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_listheaders_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 59,
+        "rate": 0.09364831764873427
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 12.602882476531073,
+        "min": 0,
+        "med": 0,
+        "max": 799.4876,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "api_err_toggle": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 250,
+        "rate": 0.3968149052912469
+      }
+    },
+    "http_req_sending": {
+      "contains": "time",
+      "values": {
+        "max": 10.5742,
+        "p(90)": 0.53003,
+        "p(95)": 0.6509949999999999,
+        "avg": 0.15335783415288334,
+        "min": 0,
+        "med": 0
+      },
+      "type": "trend"
+    },
+    "api_err_clearfilter_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 7,
+        "rate": 0.011110817348154913
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 348369542,
+        "rate": 552952.9072603403
+      }
+    },
+    "api_err_sitefilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 5,
+        "rate": 0.007936298105824939
+      }
+    },
+    "api_err_other": {
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.2111024237685692,
+        "passes": 270,
+        "fails": 1009
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_loginsubmit_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 22,
+        "rate": 0.03491971166562973
+      }
+    },
+    "api_err_logout_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 19,
+        "rate": 0.030157932802134767
+      }
+    }
+  }
+}

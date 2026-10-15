@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>k6 + Grafana Performance Testing - 4 Week Syllabus &amp; Progress Tracker</title>
+<style>
+  @page { margin: 1.3cm; }
+  body { font-family: Calibri, sans-serif; font-size: 10.5pt; line-height: 1.35; color: #1a1a1a; }
+  h1 { font-size: 20pt; color: #0b3d6b; margin: 0 0 2px 0; border-bottom: 2.5px solid #0b3d6b; padding-bottom: 4px; }
+  h2 { font-size: 13.5pt; color: #0b3d6b; margin: 20px 0 5px 0; }
+  h3 { font-size: 11pt; color: #1f5c99; margin: 12px 0 4px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 4px 0 10px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 4px 6px; text-align: left; font-size: 9.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 4px 6px; font-size: 9.5pt; vertical-align: top; }
+  .done td { background-color: #eef7ee; }
+  .now td { background-color: #fff8e1; }
+  .ctr { text-align: center; }
+  pre { font-family: Consolas, monospace; font-size: 9pt; background-color: #f4f6f8; border-left: 3px solid #1f5c99;
+        padding: 6px 9px; margin: 5px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 9.5pt; background-color: #eef2f6; padding: 1px 3px; }
+  .box { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 6px 9px; margin: 8px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 6px 9px; margin: 8px 0; }
+  .sub { color: #5a6b7a; font-size: 9pt; font-style: italic; margin: 0 0 8px 0; }
+</style>
+</head>
+<body>
+
+<h1>k6 + Grafana Performance Testing</h1>
+<p class="sub">4-week syllabus, noob to pro &middot; progress tracker &middot; started 2026-07-30</p>
+
+<h2>How to use this tracker</h2>
+<table>
+  <tr><th style="width:22%">Column</th><th>What to put in it</th></tr>
+  <tr><td><b>Status</b></td><td>Tick when finished. Legend: <b>[ ]</b> not started &middot; <b>[~]</b> in progress &middot; <b>[X]</b> done</td></tr>
+  <tr><td><b>Date</b></td><td>The date you completed it &mdash; useful for spotting where you stalled</td></tr>
+  <tr><td><b>Notes</b></td><td>What broke, what surprised you, what to revisit</td></tr>
+</table>
+
+<h3>Mentor rules (non-negotiable)</h3>
+<ol>
+  <li>Learn a little &rarr; build immediately &rarr; break it &rarr; read the numbers &rarr; fix it.</li>
+  <li>Type every line yourself. No blind copy-paste.</li>
+  <li>Every day ends with a run whose output you can narrate.</li>
+  <li><b>A metric you cannot explain is a metric you do not own.</b></li>
+</ol>
+
+<h3>Environment</h3>
+<pre>k6 v0.55.2          on PATH
+Docker 29.6.2       for the Grafana + Prometheus stack (Week 3)
+Practice scripts    PerformanceTests\k6-learning\
+Day notes           PerformanceTests\k6-learning\notes\
+Public test target  quickpizza.grafana.com  (open: / , /api/quotes , /api/names
+                                             401:  /api/tools , /api/ratings , /api/doughs)</pre>
+
+<h2>Week 1 &mdash; Foundations</h2>
+<table>
+  <tr><th style="width:5%">Day</th><th style="width:47%">Topic</th><th style="width:10%" class="ctr">Status</th><th style="width:13%">Date</th><th>Notes</th></tr>
+  <tr class="done"><td>1</td><td>What perf testing is; test types (smoke/load/stress/spike/soak/breakpoint); the 4 questions every test answers</td><td class="ctr"><b>[X]</b></td><td>30 Jul</td><td>&nbsp;</td></tr>
+  <tr class="done"><td>2</td><td>Vocabulary: VU, iteration, throughput, latency, concurrency; why averages lie and percentiles rule</td><td class="ctr"><b>[X]</b></td><td>03 Aug</td><td>&nbsp;</td></tr>
+  <tr class="done"><td>3</td><td>Script lifecycle (init / setup / VU / teardown); first multi-step script; reading the summary</td><td class="ctr"><b>[X]</b></td><td>04 Aug</td><td>&nbsp;</td></tr>
+  <tr class="done"><td>4</td><td>Checks vs thresholds &mdash; functional truth vs pass/fail gates; making a test actually fail</td><td class="ctr"><b>[X]</b></td><td>04 Aug</td><td>&nbsp;</td></tr>
+  <tr class="now"><td>5</td><td>Load shapes: <code>vus</code>/<code>duration</code> vs <code>stages</code>; closed vs open model; the executors tour</td><td class="ctr"><b>[~]</b></td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>6</td><td>Think time &amp; pacing; Little's Law &mdash; sizing a test on purpose</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>7</td><td><b>Review</b> &mdash; write a 1-pager: &ldquo;what a perf test is and how to size one&rdquo;</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<h2>Week 2 &mdash; Writing real k6 tests</h2>
+<table>
+  <tr><th style="width:5%">Day</th><th style="width:47%">Topic</th><th style="width:10%" class="ctr">Status</th><th style="width:13%">Date</th><th>Notes</th></tr>
+  <tr><td>8</td><td>HTTP in depth: params, headers, <code>http.batch</code>, response handling, <code>discardResponseBodies</code></td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>9</td><td>Custom metrics: Trend / Counter / Rate / Gauge; per-step Trends</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>10</td><td>Groups, tags and naming &mdash; how you slice results later</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>11</td><td>Test data: <code>SharedArray</code>, CSV pools, <code>open()</code>, and the shared-account trap</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>12</td><td>Correlation &amp; dynamic state: tokens, session cookies, IDs scraped from responses</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>13</td><td>Auth patterns: journey (login every iteration) vs auth-once &mdash; when each is correct</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>14</td><td><b>Mini-project</b> &mdash; a clean 3-step scenario built from scratch</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<h2>Week 3 &mdash; Grafana &amp; observability</h2>
+<table>
+  <tr><th style="width:5%">Day</th><th style="width:47%">Topic</th><th style="width:10%" class="ctr">Status</th><th style="width:13%">Date</th><th>Notes</th></tr>
+  <tr><td>15</td><td>Where results go: stdout summary, JSON, <code>handleSummary</code>, built-in web dashboard</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>16</td><td>Stand up the stack: Docker Compose with Prometheus (remote-write) + Grafana</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>17</td><td>Stream live results: <code>-o experimental-prometheus-rw</code>; k6 Prometheus dashboards</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>18</td><td>Build your own dashboard: RPS, p95, error rate, VUs; PromQL basics for k6 metrics</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>19</td><td>Reading a run like a pro: <code>waiting</code> vs <code>receiving</code> vs <code>blocked</code>; server-bound vs generator-bound</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>20</td><td>Correlating client-side k6 with server-side signals (app logs, DB, infra)</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>21</td><td><b>Review</b> &mdash; dashboard a real <code>PerformanceTests/</code> run and narrate the story it tells</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<h2>Week 4 &mdash; Pro: modelling, capacity, reporting, CI</h2>
+<table>
+  <tr><th style="width:5%">Day</th><th style="width:47%">Topic</th><th style="width:10%" class="ctr">Status</th><th style="width:13%">Date</th><th>Notes</th></tr>
+  <tr><td>22</td><td>Workload modelling from production reality (traffic patterns, peak hour, user mix)</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>23</td><td>Capacity &amp; breakpoint testing: finding the knee, <code>abortOnFail</code>, safe ramps</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>24</td><td>Bottleneck triage: is it the app, the DB, the network, or my load generator?</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>25</td><td>Distributed / scaled load generation &amp; the limits of one box</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>26</td><td>Results analysis &amp; the manager-facing report (verdict first, evidence second)</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>27</td><td>CI/CD: perf tests in GitHub Actions, thresholds as gates, trend-over-time</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+  <tr><td>28</td><td><b>Capstone</b> &mdash; full MainManager scenario: model &rarr; run &rarr; dashboard &rarr; report &rarr; escalate</td><td class="ctr">[ ]</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+</table>
+
+<h2>Effort estimate</h2>
+<table>
+  <tr><th style="width:34%">Week</th><th style="width:22%">Hours</th><th>Notes</th></tr>
+  <tr><td>Week 1 &mdash; Foundations</td><td>~12 h</td><td>Concept-heavy, light scripting</td></tr>
+  <tr><td>Week 2 &mdash; Real tests</td><td>~16 h</td><td>Scripting-heavy</td></tr>
+  <tr><td>Week 3 &mdash; Grafana</td><td>~18 h</td><td>Setup-heavy (Docker, Prometheus, dashboards)</td></tr>
+  <tr><td>Week 4 &mdash; Pro</td><td>~20 h</td><td>Capstone alone is 4&ndash;6 h</td></tr>
+  <tr><td><b>Total</b></td><td><b>~66 h</b> (range 55&ndash;80)</td><td>At 2&ndash;3 focused hours/day</td></tr>
+</table>
+
+<h2>Gap coverage from the Udemy course review</h2>
+<p>The Udemy k6 course (44 lessons, ~7 h) covers the tool well but omits the following. Each gap is deliberately covered on a specific day here &mdash; use this as a cross-check.</p>
+<table>
+  <tr><th style="width:44%">Gap in the course</th><th style="width:14%" class="ctr">Covered on</th><th>Why it matters</th></tr>
+  <tr><td>No arrival-rate executors / open vs closed model</td><td class="ctr"><b>Day 5</b></td><td>The difference between honest and dishonest capacity numbers</td></tr>
+  <tr><td>Results analysis gets only ~10 minutes</td><td class="ctr"><b>Day 19</b></td><td>waiting vs receiving vs blocked is THE diagnostic skill</td></tr>
+  <tr><td>No test-data management / account pools</td><td class="ctr"><b>Day 11</b></td><td>A single shared account is what collapsed the 250-VU runs</td></tr>
+  <tr><td>No generator limits / distributed load</td><td class="ctr"><b>Day 25</b></td><td>One box could not drain 250 VUs &mdash; the biggest past finding</td></tr>
+  <tr><td>No breakpoint / capacity testing in practice</td><td class="ctr"><b>Day 23</b></td><td>Answers &ldquo;how many users can we support?&rdquo;</td></tr>
+  <tr><td>Grafana <b>Cloud</b> only, not self-hosted</td><td class="ctr"><b>Days 16&ndash;18</b></td><td>Customer pre-prods often cannot reach a vendor cloud</td></tr>
+  <tr><td>No workload modelling</td><td class="ctr"><b>Day 22</b></td><td>A made-up target produces a made-up verdict</td></tr>
+  <tr><td>No stakeholder reporting</td><td class="ctr"><b>Day 26</b></td><td>Turns technical results into decisions</td></tr>
+</table>
+<div class="box">
+<b>Recommended course usage:</b> skip/skim sections 1&ndash;3 (covered here in more depth), watch sections 4&ndash;5 for scripting reps,
+<b>watch sections 6&ndash;7 properly</b> (k6 browser + Web Vitals &mdash; genuinely additive, not covered in this syllabus),
+and watch sections 8&ndash;9 (Grafana Cloud, Jenkins CI).
+</div>
+
+<h2>Explicitly out of scope</h2>
+<p>Server-side root-cause analysis is <b>not</b> in this syllabus (~40 h of separate study):</p>
+<ul>
+  <li>SQL Server diagnostics &mdash; execution plans, wait stats, blocking chains, index tuning</li>
+  <li>IIS / ASP.NET performance counters &mdash; request queue, thread pool, GC</li>
+</ul>
+<div class="box">
+<b>Consequence to accept:</b> after these 28 days you will be able to say <i>&ldquo;I can show you WHERE it is slow, not WHY.&rdquo;</i>
+Root-causing the ~22 s login and the load-triggered <code>IsShortcut</code> 500s needs the server-side skills above.
+</div>
+
+<h2>Progress so far</h2>
+<pre>Days complete:  4 / 28   (14%)
+Hours spent:    ~7 h
+Remaining:      ~58 h</pre>
+
+<h3>What has already been proven with real data</h3>
+<table>
+  <tr><th style="width:34%">Skill</th><th>Evidence</th></tr>
+  <tr><td>Predicting a test's load before running it</td><td>Predicted 240 iterations, measured 239 (0.4% off)</td></tr>
+  <tr><td>Predicting a latency distribution</td><td>4/4 exact: med 256 ms, avg 1.11 s, p95 8.25 s, max 8.25 s</td></tr>
+  <tr><td>Predicting a ramped load (area under the VU curve)</td><td>Predicted ~120 iterations, measured 125</td></tr>
+  <tr><td>Spotting the closed-model trap</td><td>Throughput fell 0.774 &rarr; 0.467 req/s when the server slowed</td></tr>
+  <tr><td>Recognising a false-green report</td><td>Identified the <code>http_req_failed: 0%</code> trap in own framework</td></tr>
+  <tr><td>Recognising a broken script from its metrics</td><td>16 &micro;s iterations, 4803/s, 0 B sent, no http_req_* metrics</td></tr>
+</table>
+
+<h2>Reference material produced</h2>
+<table>
+  <tr><th style="width:46%">File (in <code>PerformanceTests\k6-learning\notes\</code>)</th><th>Contents</th></tr>
+  <tr><td><b>k6-Quick-Reference-Card.docx</b></td><td>Timeline sentence, 4-step reading order, 3 reflex comparisons, metrics by tier, false-green traps. <b>Keep this one open.</b></td></tr>
+  <tr><td><b>k6-Concept-Map-Diagrams.docx</b></td><td>10 diagrams: VU-as-worker, parallel timeline, number-flow chart, forward/backward sizing, the flat-then-knee curve</td></tr>
+  <tr><td>Day1-Performance-Testing-Foundations.docx</td><td>Test types, every metric explained, request lifecycle, percentiles</td></tr>
+  <tr><td>Day2-VUs-Throughput-Percentiles.docx</td><td>Throughput formula, why averages lie, bimodal data, requests vs users</td></tr>
+  <tr><td>Day3-Script-Lifecycle.docx</td><td>The 4 stages, init traps, broken-script signature, sizing workflow</td></tr>
+  <tr><td>Day4-Checks-vs-Thresholds.docx</td><td>The four-run demonstration, exit codes, abortOnFail, honesty rules</td></tr>
+</table>
+
+<h2>The five things to know cold</h2>
+<pre>1.  throughput = VUs / iteration_duration        (rearrange for sizing)
+2.  Report p95, never avg
+3.  duration ~ waiting?   -&gt; the server's fault, not yours
+4.  avg &gt; med?            -&gt; a tail exists
+5.  Checks AND thresholds, or the report is decoration</pre>
+
+</body>
+</html>

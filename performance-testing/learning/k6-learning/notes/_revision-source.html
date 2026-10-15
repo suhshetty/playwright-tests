@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Week 1 Revision Sheet - The 5 Gaps</title>
+<style>
+  @page { margin: 1.3cm; }
+  body { font-family: Calibri, sans-serif; font-size: 10.5pt; line-height: 1.35; color: #1a1a1a; }
+  h1 { font-size: 19pt; color: #0b3d6b; margin: 0 0 2px 0; border-bottom: 2.5px solid #0b3d6b; padding-bottom: 4px; }
+  h2 { font-size: 13pt; color: #0b3d6b; margin: 18px 0 4px 0; }
+  h3 { font-size: 11pt; color: #1f5c99; margin: 12px 0 3px 0; }
+  p, li { font-size: 10.5pt; }
+  li { margin-bottom: 4px; }
+  table { border-collapse: collapse; width: 100%; margin: 4px 0 9px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 4px 7px; text-align: left; font-size: 10pt; }
+  td { border: 1px solid #b8c6d4; padding: 4px 7px; font-size: 10pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 9.5pt; background-color: #f4f6f8; border-left: 3px solid #1f5c99;
+        padding: 7px 10px; margin: 5px 0 9px 0; white-space: pre; line-height: 1.28; }
+  code { font-family: Consolas, monospace; font-size: 9.5pt; background-color: #eef2f6; padding: 1px 3px; }
+  .hook { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 6px 10px; margin: 6px 0 9px 0; }
+  .ev { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 6px 10px; margin: 6px 0 9px 0; }
+  .sub { color: #5a6b7a; font-size: 9pt; font-style: italic; margin: 0 0 8px 0; }
+</style>
+</head>
+<body>
+
+<h1>Week 1 Revision Sheet &mdash; The 5 Gaps</h1>
+<p class="sub">Self-test score was 5/12. These are the ONLY five things that were wrong. Ignore the rest of the notes.</p>
+
+<table>
+  <tr><th style="width:50%">Already solid &mdash; do not re-read</th><th>The gaps &mdash; revise these</th></tr>
+  <tr><td>
+    Statistics (avg / med / p95 / p99)<br>
+    The duration / waiting / receiving split<br>
+    <code>http_req_failed</code> as a false-green trap<br>
+    3 of the 4 questions
+  </td><td>
+    <b>1. Open vs closed model</b> (wrong twice)<br>
+    <b>2. Sizing arithmetic</b><br>
+    <b>3. checks vs thresholds</b> &mdash; which fails the build<br>
+    <b>4. Lifecycle</b> &mdash; where code goes<br>
+    <b>5. Reporting structure</b>
+  </td></tr>
+</table>
+
+<h2>Gap 1 &mdash; Open vs closed model</h2>
+<div class="hook">
+<b>THE HOOK: the executor name tells you what is held constant.</b>
+<pre>constant-arrival-rate  -&gt;  the RATE is constant  -&gt;  LOAD is constant  -&gt;  OPEN
+constant-vus           -&gt;  the VUs are constant  -&gt;  load VARIES       -&gt;  CLOSED</pre>
+</div>
+<pre>OPEN    =  fixed load,     varying workers
+CLOSED  =  fixed workers,  varying load</pre>
+<div class="ev">
+<b>Your own measurements:</b>
+<pre>CLOSED: server slowed  -&gt;  0.774  -&gt;  0.467 req/s   (load FELL)
+OPEN:   server slowed  -&gt;  held at 4.13 req/s      (load HELD)</pre>
+</div>
+<table>
+  <tr><th style="width:30%">&nbsp;</th><th style="width:35%">CLOSED</th><th>OPEN</th></tr>
+  <tr><td>You set</td><td>number of VUs</td><td><b>rate</b> (req/s)</td></tr>
+  <tr><td>k6 varies</td><td>nothing</td><td><b>VU count</b></td></tr>
+  <tr><td>Load on the server</td><td><b>varies</b></td><td><b>constant</b></td></tr>
+  <tr><td>Executors</td><td><code>constant-vus</code>, <code>ramping-vus</code></td><td><code>constant-arrival-rate</code>, <code>ramping-arrival-rate</code></td></tr>
+  <tr><td><code>stages</code> target means</td><td>VU count</td><td><b>requests/sec</b></td></tr>
+  <tr><td>When the server slows</td><td>load <b>drops</b> (dishonest)</td><td>k6 <b>adds VUs</b>, load holds</td></tr>
+  <tr><td>Signal it cannot cope</td><td>none</td><td><b><code>dropped_iterations</code></b></td></tr>
+  <tr><td>Use when</td><td>concurrency is genuinely bounded (kiosks, agents, thread pools, smoke tests)</td><td>modelling open internet traffic; you have a req/s target</td></tr>
+</table>
+<pre>CLOSED:  "I have 10 users. Let's see how much they can get done."
+OPEN:    "5 requests must arrive every second. Whatever it takes."</pre>
+
+<h2>Gap 2 &mdash; Sizing, as two questions</h2>
+<div class="hook">
+<pre>Q1: How many JOURNEYS per second?  =  target req/s  /  requests per journey
+Q2: How long is one journey?       =  iteration_duration (med, from a 1-VU smoke test)
+
+              multiply them   -&gt;   VUs</pre>
+</div>
+<h3>Worked example</h3>
+<pre>Given:  4 requests per journey, iteration_duration med = 2s, target 40 req/s
+
+Step 1:  40 / 4  = 10 journeys/sec        &lt;-- the step everyone skips
+Step 2:  10 x 2  = 20 VUs
+
+preAllocatedVUs: 20        (the calculation)
+maxVUs:          60-100    (3-5x, headroom so k6 can compensate)</pre>
+<h3>Always check forwards</h3>
+<pre>20 VUs / 2s = 10 journeys/s  x 4 requests = 40 req/s      target met
+
+Forgot to divide by 4?  -&gt;  80 VUs  -&gt;  forward check gives 160 req/s  -&gt;  obviously wrong</pre>
+<table>
+  <tr><th style="width:44%">Rule</th><th>Why</th></tr>
+  <tr><td>Use <b>med</b>, not avg</td><td>avg is skewed by one slow iteration</td></tr>
+  <tr><td>Measure at <b>1 VU on an idle server</b></td><td>Measuring under load gives an inflated figure the load itself caused</td></tr>
+  <tr><td>Set <code>preAllocatedVUs</code> to the calculation</td><td>Under-provisioning causes start-up <code>dropped_iterations</code> that look like a server failure</td></tr>
+  <tr><td>Only this one calculation is manual</td><td>k6 reports iterations, requests and throughput itself</td></tr>
+</table>
+
+<h2>Gap 3 &mdash; checks vs thresholds</h2>
+<div class="hook">
+<pre>check()    -&gt;  DETECTS a problem   -&gt;  exit code stays 0
+threshold  -&gt;  DECIDES pass/fail   -&gt;  exit code 99</pre>
+A thermometer versus the fever limit that sends you home.
+</div>
+<div class="ev">
+<b>Your Day 4 proof &mdash; identical failure, opposite outcome:</b>
+<table>
+  <tr><th style="width:40%">Run</th><th style="width:24%">Checks</th><th>Exit code / CI</th></tr>
+  <tr><td>No threshold defined</td><td>75% (25% failing)</td><td><b>0 &mdash; green, broken code ships</b></td></tr>
+  <tr><td>Threshold <code>'checks': ['rate&gt;0.99']</code></td><td>75% (same failure)</td><td><b>99 &mdash; red, build blocked</b></td></tr>
+</table>
+</div>
+<pre>thresholds: {
+  'checks':            ['rate&gt;0.99'],     // rates are 0-1, not percentages
+  'http_req_duration': ['p(95)&lt;500'],
+  'http_req_failed':   ['rate&lt;0.01'],     // under 1%
+},</pre>
+<table>
+  <tr><th style="width:44%">Remember</th><th>Detail</th></tr>
+  <tr><td>A failing check does NOT abort the test</td><td>Deliberate &mdash; under load you want it to continue</td></tr>
+  <tr><td>CI reads only the exit code</td><td>It never reads your summary</td></tr>
+  <tr><td><code>default [tick]</code> is NOT a pass</td><td>It means &ldquo;the scenario finished&rdquo;. The verdict is the ERRO line + exit code.</td></tr>
+  <tr><td>Report <code>checks</code>, not <code>http_req_failed</code></td><td>checks = &ldquo;did the app work?&rdquo;; http_req_failed = &ldquo;did HTTP work?&rdquo;</td></tr>
+  <tr><td>A failed check may be YOUR bug</td><td>Prove it is the app before escalating</td></tr>
+</table>
+
+<h2>Gap 4 &mdash; Where code goes (lifecycle)</h2>
+<div class="hook">
+<b>Ask of every line: &ldquo;would a real user do this ONCE, or EVERY TIME?&rdquo;</b>
+</div>
+<table>
+  <tr><th style="width:22%">Stage</th><th style="width:22%">Runs</th><th>Put this here</th></tr>
+  <tr><td><b>init</b></td><td><b>MANY times</b> (6 observed with 2 VUs)</td><td><code>import</code>, constants, <code>open()</code> a CSV (only legal here), <code>SharedArray</code></td></tr>
+  <tr><td><b>setup()</b></td><td><b>ONCE</b> per test</td><td>Log in and return a token; create test data; look up IDs</td></tr>
+  <tr><td><b>VU code</b></td><td><b>EVERY iteration</b></td><td>The actual user journey, checks, think time</td></tr>
+  <tr><td><b>teardown()</b></td><td><b>ONCE</b> at the end</td><td>Clean-up</td></tr>
+</table>
+<pre>export function setup() {
+  const token = login();        // happens ONCE
+  return { token };
+}
+
+export default function (data) {
+  useSession(data.token);        // every VU receives a COPY
+}</pre>
+<table>
+  <tr><th style="width:30%">Never do this</th><th>Why</th></tr>
+  <tr><td>HTTP in init</td><td>Forbidden by k6, and init runs many times</td></tr>
+  <tr><td>Anything with side effects in init</td><td>6 contexts = 6 records created, some AFTER the test ends</td></tr>
+  <tr><td>Login in VU code</td><td><b>The login-flood bug</b> &mdash; 80%+ failures, the test hammers the login door instead of measuring the product</td></tr>
+  <tr><td><code>__ITER</code> to shape a workload</td><td>It is PER-VU and starts at 0, so every new VU repeats the branch. Use <code>Math.random()</code>.</td></tr>
+  <tr><td>A second <code>options</code> block inside a function</td><td><code>options</code> is top-level and declared ONCE</td></tr>
+</table>
+<p><b>Caveat on <code>setup()</code> data:</b> it is COPIED to each VU, not shared. A VU can read it but cannot write back in a way others see.</p>
+
+<h2>Gap 5 &mdash; The report, 5 slots</h2>
+<div class="hook">
+<pre>1. VERDICT   pass/fail vs the target        &lt;-- FIRST, always
+2. NUMBER    p95 + the target
+3. HUMANS    % of USERS affected (not requests)
+4. WHERE     which endpoint or feature
+5. ASK       what you want someone to do</pre>
+<b>Never lead with the good news.</b>
+</div>
+<h3>Before and after</h3>
+<pre>BAD:  "Performance was okay. Average response time was 1.2 seconds
+       and no requests failed."
+
+  "okay"               -&gt; vague, leads with good news
+  "average 1.2s"       -&gt; avg describes nobody, hides the tail
+  "no requests failed" -&gt; http_req_failed, the false-green metric
+  (missing)            -&gt; no target, no impact, no ask</pre>
+<pre>GOOD: "We're failing the 3-second target. p95 is 8.2 seconds - roughly
+       1 in 10 requests takes over 8s while the rest return in 0.25s,
+       so about 65% of user sessions hit at least one stall. It's
+       isolated to the work-order grid. I need a backend engineer to
+       profile that call."</pre>
+<h3>The requests-to-users conversion (slot 3)</h3>
+<pre>users affected  =  1 - (1 - p)^requests per session
+
+10% slow requests, 10-request session:   1 - 0.9^10  =  65% of users</pre>
+<table>
+  <tr><th style="width:44%">Requests per session</th><th>Users hitting at least one slow request</th></tr>
+  <tr><td>1</td><td>10%</td></tr>
+  <tr><td>5</td><td>41%</td></tr>
+  <tr><td>10</td><td><b>65%</b></td></tr>
+  <tr><td>20</td><td><b>88%</b></td></tr>
+</table>
+<p>&ldquo;x% of requests&rdquo; is a technical fact. <b>&ldquo;y% of users&rdquo; is the business impact</b> &mdash; always the bigger, more persuasive number.</p>
+
+<h2>Bonus &mdash; the question that was missed</h2>
+<pre>The 4 questions every performance test answers:
+
+1. Is it fast enough?             &lt;-- MISSED. The most common one by far.
+2. How much can it take?
+3. Does it stay healthy over time?
+4. Does it recover?</pre>
+<p>Say which one you are answering before writing a line of code. Most poor perf work skips this and produces a test that answers nothing.</p>
+
+<h2>How to revise this properly</h2>
+<ol>
+  <li><b>Read this sheet once.</b> Do not re-read the full day notes &mdash; those areas are already solid.</li>
+  <li><b>Wait a day. Then self-test without looking</b> using the questions below. Retrieval builds recall; re-reading does not.</li>
+  <li>Only re-open the sheet for whatever you get wrong.</li>
+</ol>
+
+<h3>Self-test (cover the answers)</h3>
+<table>
+  <tr><th style="width:56%">Question</th><th>Answer</th></tr>
+  <tr><td>Which model has constant load on the server?</td><td>OPEN</td></tr>
+  <tr><td>In <code>ramping-arrival-rate</code>, what does <code>target</code> mean?</td><td>requests/sec (NOT VUs)</td></tr>
+  <tr><td>6 requests per journey, 3s journey, target 60 req/s. VUs?</td><td>60/6 = 10 journeys/s; 10 x 3 = <b>30 VUs</b></td></tr>
+  <tr><td>Which one changes the exit code?</td><td>threshold</td></tr>
+  <tr><td>Where does a one-time login go?</td><td><code>setup()</code></td></tr>
+  <tr><td>Where must <code>open()</code> go?</td><td>init &mdash; the only legal place</td></tr>
+  <tr><td>What does <code>default [tick]</code> mean?</td><td>the scenario finished &mdash; NOT that the test passed</td></tr>
+  <tr><td>First thing in a report?</td><td>the verdict against the target</td></tr>
+  <tr><td>5% slow requests, 20-request session. Users affected?</td><td>1 - 0.95^20 = <b>~64%</b></td></tr>
+  <tr><td><code>dropped_iterations</code> appears &mdash; check what first?</td><td>your own <code>preAllocatedVUs</code>, not the server</td></tr>
+</table>
+
+</body>
+</html>

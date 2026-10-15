@@ -1,0 +1,662 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 250,
+              "fails": 0
+            },
+            {
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 250,
+              "fails": 0
+            },
+            {
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 250,
+              "fails": 0,
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back"
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "name": "MyPage headers loaded",
+            "path": "::Landing (post-login module)::MyPage headers loaded",
+            "id": "0704c4e1422715c868cf54ab24efec9b",
+            "passes": 250,
+            "fails": 0
+          },
+          {
+            "name": "MyPage grid loaded",
+            "path": "::Landing (post-login module)::MyPage grid loaded",
+            "id": "31717e1232e841a8d8b350a3e7af0850",
+            "passes": 250,
+            "fails": 0
+          }
+        ],
+        "name": "Landing (post-login module)",
+        "path": "::Landing (post-login module)",
+        "id": "1b79536bd4ea91dd062d96c9df7dc070",
+        "groups": []
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "BuildingArchive headers loaded",
+              "path": "::Resolve site 'Absalonsgade 16'::BuildingArchive headers loaded",
+              "id": "a22c4a1d395c16ff4fa53404d5f210a9",
+              "passes": 250,
+              "fails": 0
+            },
+            {
+              "name": "BuildingArchive grid loaded",
+              "path": "::Resolve site 'Absalonsgade 16'::BuildingArchive grid loaded",
+              "id": "188eeddc67a5960bf5a99dba5506c4db",
+              "passes": 250,
+              "fails": 0
+            }
+          ],
+        "name": "Resolve site 'Absalonsgade 16'",
+        "path": "::Resolve site 'Absalonsgade 16'",
+        "id": "259b8d59bf84b5d175c6c751a4776470"
+      },
+      {
+        "checks": [
+          {
+            "name": "BuildingArchive headers loaded",
+            "path": "::2. Building archive -> Site register -> Sites::BuildingArchive headers loaded",
+            "id": "7470e80234338b18a6fa8965ff56e297",
+            "passes": 3244,
+            "fails": 0
+          },
+          {
+            "name": "BuildingArchive grid loaded",
+            "path": "::2. Building archive -> Site register -> Sites::BuildingArchive grid loaded",
+            "id": "cea162ba4a797a952275e3e928d3e5f3",
+            "passes": 3244,
+            "fails": 0
+          }
+        ],
+        "name": "2. Building archive -> Site register -> Sites",
+        "path": "::2. Building archive -> Site register -> Sites",
+        "id": "30e772f3786422294fc74106f0f2ac0c",
+        "groups": []
+      },
+      {
+        "name": "5. Open site -> popup",
+        "path": "::5. Open site -> popup",
+        "id": "7df95975e8cbb530f01487e8939e9de7",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::5. Open site -> popup::modal loaded (200)",
+              "id": "5c6cd19881b02ca2beab1e088ed47a5e",
+              "passes": 250
+            },
+            {
+              "passes": 250,
+              "fails": 0,
+              "name": "modal no server error",
+              "path": "::5. Open site -> popup::modal no server error",
+              "id": "c3c3620bd364b0cc63f1f114c4c5cdce"
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "name": "BuildingArchive headers loaded",
+            "path": "::6. Locations overview -> Buildings::BuildingArchive headers loaded",
+            "id": "394a21715f96d6481e6589625b1d92a4",
+            "passes": 3243,
+            "fails": 0
+          },
+          {
+            "path": "::6. Locations overview -> Buildings::BuildingArchive grid loaded",
+            "id": "ac45f5a2fbf4b6af76b80973ea2f39ae",
+            "passes": 3243,
+            "fails": 0,
+            "name": "BuildingArchive grid loaded"
+          }
+        ],
+        "name": "6. Locations overview -> Buildings",
+        "path": "::6. Locations overview -> Buildings",
+        "id": "4ea5289e3fff7aae924ea85d7fd2866c",
+        "groups": []
+      },
+      {
+        "path": "::Resolve MunicipalityID 'Albertslund'",
+        "id": "9ca4859d3e20c50a8380b8cd6cf19e0d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "resolved MunicipalityID 'Albertslund'",
+              "path": "::Resolve MunicipalityID 'Albertslund'::resolved MunicipalityID 'Albertslund'",
+              "id": "357d36ac953a787d15a4e7edf0b0bf93",
+              "passes": 249,
+              "fails": 0
+            }
+          ],
+        "name": "Resolve MunicipalityID 'Albertslund'"
+      },
+      {
+        "name": "8. Open building -> popup",
+        "path": "::8. Open building -> popup",
+        "id": "c7550ac207613491a6fa1f6f1d9bbc0d",
+        "groups": [],
+        "checks": [
+            {
+              "fails": 0,
+              "name": "modal loaded (200)",
+              "path": "::8. Open building -> popup::modal loaded (200)",
+              "id": "a275cd321bb19eaad45c699650728e65",
+              "passes": 249
+            },
+            {
+              "id": "d347095c7f24a5b1fc995cb4236c7526",
+              "passes": 249,
+              "fails": 0,
+              "name": "modal no server error",
+              "path": "::8. Open building -> popup::modal no server error"
+            }
+          ]
+      },
+      {
+        "name": "9. Site filter -> Absalonsgade 16",
+        "path": "::9. Site filter -> Absalonsgade 16",
+        "id": "0048569a2d137ebe5749356d7a2f506e",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after location filter",
+              "path": "::9. Site filter -> Absalonsgade 16::Building grid reloaded after location filter",
+              "id": "45dc6456eac60aad00232bc9c54ceed1",
+              "passes": 3243,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "checks": [
+          {
+            "name": "Building grid reloaded after location filter",
+            "path": "::10. Site filter -> Show all sites::Building grid reloaded after location filter",
+            "id": "16eb90039c601ffe3a0db180d1208486",
+            "passes": 3243,
+            "fails": 0
+          }
+        ],
+        "name": "10. Site filter -> Show all sites",
+        "path": "::10. Site filter -> Show all sites",
+        "id": "878dac10b7e97173a4c7e917a80cc321",
+        "groups": []
+      },
+      {
+        "name": "11. Data filter -> Municipality Albertslund",
+        "path": "::11. Data filter -> Municipality Albertslund",
+        "id": "a02cb20a2c6b71747efb8007f1ac1f26",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after data filter",
+              "path": "::11. Data filter -> Municipality Albertslund::Building grid reloaded after data filter",
+              "id": "b68be43459fbb080ca07c91e481be10f",
+              "passes": 3243,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "path": "::14. Clear data filter",
+        "id": "01441ec90355ecafcc9154600be4bd47",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after filter clear",
+              "path": "::14. Clear data filter::Building grid reloaded after filter clear",
+              "id": "e0b80615a9bf318300076198c868a6f8",
+              "passes": 3243,
+              "fails": 0
+            }
+          ],
+        "name": "14. Clear data filter"
+      }
+    ],
+    "checks": []
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "testRunDurationMs": 630000.3009,
+    "isStdOutTTY": false,
+    "isStdErrTTY": false
+  },
+  "metrics": {
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 63312.2879,
+        "p(90)": 2469.5994600000004,
+        "p(95)": 2926.4165400000006,
+        "avg": 1267.534013828314,
+        "min": 336.6031,
+        "med": 621.1856
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 34362.7678,
+        "p(90)": 6.894280000000002,
+        "p(95)": 30.193679999999958,
+        "avg": 10.450901090861606
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 2,
+        "min": 2,
+        "max": 250
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 1584.2056,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 1.5123791657279726
+      }
+    },
+    "step_tree_load_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 36235.9415,
+        "p(90)": 356.3648000000002,
+        "p(95)": 483.93183999999997,
+        "avg": 312.9081003367418,
+        "min": 161.5565,
+        "med": 296.5242
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "step_navigate_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 2378.8336673346694,
+        "min": 434,
+        "med": 2385,
+        "max": 63312,
+        "p(90)": 2993,
+        "p(95)": 3621
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_failed": {
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 84337
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 1245.036,
+        "min": 991,
+        "med": 1154.5,
+        "max": 4081,
+        "p(90)": 1488.4,
+        "p(95)": 1598.7999999999993
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 27526.996186335575,
+        "min": 17354.5722,
+        "med": 26190.336349999998,
+        "max": 242232.3323,
+        "p(90)": 30596.49717,
+        "p(95)": 44998.291939999996
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 36235.9415,
+        "p(90)": 356.3648000000002,
+        "p(95)": 483.93183999999997,
+        "avg": 312.9081003367418,
+        "min": 161.5565,
+        "med": 296.5242
+      }
+    },
+    "iterations": {
+      "values": {
+        "count": 3242,
+        "rate": 5.146029288190139
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_tls_handshaking": {
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 1177.2196,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 1.4279203801415743
+      },
+      "type": "trend"
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 250,
+        "min": 250,
+        "max": 250
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.8013199999999997,
+        "avg": 0.26991277612435777,
+        "min": 0,
+        "med": 0,
+        "max": 101.3746,
+        "p(90)": 0.6221
+      }
+    },
+    "step_landing_duration": {
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 3018.2999999999997,
+        "avg": 2731.728,
+        "min": 1699,
+        "med": 2708,
+        "max": 12800,
+        "p(90)": 2927.3
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 598607082,
+        "rate": 950169.5176095114
+      }
+    },
+    "step_login_duration": {
+      "values": {
+        "p(95)": 5001.849999999999,
+        "avg": 4036.992,
+        "min": 2901,
+        "med": 3921,
+        "max": 10945,
+        "p(90)": 4598.099999999999
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 335.4415400000001,
+        "p(95)": 452.6191199999998,
+        "avg": 302.18728646975796,
+        "min": 158.7748,
+        "med": 295.259,
+        "max": 10495.9787
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 28943,
+        "fails": 0
+      }
+    },
+    "step_logout_duration": {
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 84337,
+        "rate": 133.86819003025656
+      }
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 595,
+        "max": 11511,
+        "p(90)": 686,
+        "p(95)": 829,
+        "avg": 588.1251927227876,
+        "min": 337
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "step_mypage_tab_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "rate": 47891.61045938796,
+        "count": 30171729
+      }
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 16088,
+        "p(90)": 1346.3999999999999,
+        "p(95)": 1806.2999999999986,
+        "avg": 1249.1743486973949,
+        "min": 781,
+        "med": 1045
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "known_server_errors": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 28.514272095326234,
+        "count": 17964
+      }
+    },
+    "step_login_render_duration": {
+      "values": {
+        "avg": 1241.18,
+        "min": 879,
+        "med": 1181.5,
+        "max": 6044,
+        "p(90)": 1408.1999999999998,
+        "p(95)": 1684.4499999999996
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.08243995992269108,
+        "min": 0,
+        "med": 0,
+        "max": 1033.813
+      }
+    }
+  }
+}

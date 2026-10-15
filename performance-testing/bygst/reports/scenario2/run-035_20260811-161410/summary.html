@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n fail">8534/8710</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">26284</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n fail">1.93%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n fail">2.30%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">131</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="pass">PASS</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="pass">PASS</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="pass">PASS</td></tr></table>
+
+<h2>Server errors observed (excluded from the http-failed SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints that returned an error this run. These requests are held out of the <i>http failed</i> figure above so it
+ reflects the operations that work — they are listed here so nothing is hidden. Counts and status codes are measured
+ from this run. <b>Total: 131.</b>
+</p>
+<table><tr><th>Endpoint</th><th>Status</th><th>Occurrences</th><th>Nature</th></tr><tr><td>restapi/Internal/IsShortcut</td><td class="fail">503 &times;31</td><td>31</td><td>Service Unavailable — the environment rejecting requests under load. Seen across multiple endpoints this run.</td></tr><tr><td>MMLayout.asmx/RefreshMainManFilter</td><td class="fail">400 &times;34<br>503 &times;8<br>other &times;1</td><td>43</td><td>Location (Site) filter apply — server rejects the headless call (needs filter session state the browser establishes). Verified live: the byte-identical payload returns 200 in a real browser.</td></tr><tr><td>MMLayout.asmx/RefreshDataFilter</td><td class="fail">400 &times;17<br>503 &times;9</td><td>26</td><td>Data (Municipality) filter apply — same root cause as RefreshMainManFilter.</td></tr><tr><td>MMLayout.asmx/EmptyDataFilter</td><td class="fail">400 &times;17<br>503 &times;14</td><td>31</td><td>Clear filter — same root cause.</td></tr></table>
+
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>group_duration</td><td>2.79 s</td><td>2.70 s</td><td>6.12 s</td><td>48.85 s</td></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>511 ms</td><td>366 ms</td><td>1.20 s</td><td>10.48 s</td></tr><tr><td>http_req_blocked</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>571 ms</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>6 ms</td></tr><tr><td>http_req_waiting</td><td>501 ms</td><td>353 ms</td><td>1.18 s</td><td>48.36 s</td></tr><tr><td>step_logout_duration</td><td>946 ms</td><td>634 ms</td><td>1.44 s</td><td>10.44 s</td></tr><tr><td>step_open_record_duration</td><td>3.25 s</td><td>3.01 s</td><td>5.13 s</td><td>7.62 s</td></tr><tr><td>step_login_auth_duration</td><td>1.37 s</td><td>1.24 s</td><td>2.08 s</td><td>4.62 s</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>iteration_duration</td><td>51.88 s</td><td>52.81 s</td><td>63.05 s</td><td>101.18 s</td></tr><tr><td>step_navigate_duration</td><td>4.89 s</td><td>4.80 s</td><td>8.13 s</td><td>21.60 s</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_landing_duration</td><td>4.23 s</td><td>4.11 s</td><td>6.05 s</td><td>8.52 s</td></tr><tr><td>http_req_connecting</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>3 ms</td></tr><tr><td>step_login_render_duration</td><td>1.49 s</td><td>1.31 s</td><td>2.48 s</td><td>6.55 s</td></tr><tr><td>http_req_duration</td><td>508 ms</td><td>360 ms</td><td>1.19 s</td><td>48.36 s</td></tr><tr><td>http_req_receiving</td><td>7 ms</td><td>1 ms</td><td>29 ms</td><td>3.07 s</td></tr><tr><td>http_req_tls_handshaking</td><td>1 ms</td><td>0 ms</td><td>0 ms</td><td>568 ms</td></tr><tr><td>step_login_duration</td><td>4.06 s</td><td>3.77 s</td><td>6.14 s</td><td>19.69 s</td></tr><tr><td>step_filter_duration</td><td>1.04 s</td><td>918 ms</td><td>1.74 s</td><td>48.85 s</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

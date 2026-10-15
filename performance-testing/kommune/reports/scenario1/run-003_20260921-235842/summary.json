@@ -1,0 +1,600 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 3,
+              "fails": 0
+            }
+          ],
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d"
+      },
+      {
+        "checks": [
+          {
+            "name": "BuildMyPage 200",
+            "path": "::2. Navigation -> My page module::BuildMyPage 200",
+            "id": "f1524a5d234bf38aa383efb14da48bba",
+            "passes": 3,
+            "fails": 0
+          },
+          {
+            "name": "BuildMyPage no server error",
+            "path": "::2. Navigation -> My page module::BuildMyPage no server error",
+            "id": "24623ad12e10dfba1185ea6223234f1b",
+            "passes": 3,
+            "fails": 0
+          },
+          {
+            "path": "::2. Navigation -> My page module::dashboard has widgets",
+            "id": "b104e7dd2378433b4c15321e54b51403",
+            "passes": 3,
+            "fails": 0,
+            "name": "dashboard has widgets"
+          },
+          {
+            "fails": 0,
+            "name": "all dashboard widgets loaded (200)",
+            "path": "::2. Navigation -> My page module::all dashboard widgets loaded (200)",
+            "id": "5ac0fb92cdd2f5d683972e39fddf9c4f",
+            "passes": 3
+          }
+        ],
+        "name": "2. Navigation -> My page module",
+        "path": "::2. Navigation -> My page module",
+        "id": "1db0cab98a27543c464cae591f85f615",
+        "groups": []
+      },
+      {
+        "checks": [
+          {
+            "name": "BuildMyPage 200",
+            "path": "::3. My page tab::BuildMyPage 200",
+            "id": "7f8feb8864bd4bb62bedc1373d408988",
+            "passes": 3,
+            "fails": 0
+          },
+          {
+            "name": "BuildMyPage no server error",
+            "path": "::3. My page tab::BuildMyPage no server error",
+            "id": "917211a1dfb8b585c90d02cc87225434",
+            "passes": 3,
+            "fails": 0
+          },
+          {
+            "id": "f4cea0a619552837ed23f51b9821f308",
+            "passes": 3,
+            "fails": 0,
+            "name": "dashboard has widgets",
+            "path": "::3. My page tab::dashboard has widgets"
+          },
+          {
+            "fails": 0,
+            "name": "all dashboard widgets loaded (200)",
+            "path": "::3. My page tab::all dashboard widgets loaded (200)",
+            "id": "134d3e0c9a2d71bb79eadd9b0818baa6",
+            "passes": 3
+          }
+        ],
+        "name": "3. My page tab",
+        "path": "::3. My page tab",
+        "id": "7a22fc33539680d850dcaeed4cb748fd",
+        "groups": []
+      },
+      {
+        "checks": [
+          {
+            "fails": 0,
+            "name": "Helpdesk headers loaded",
+            "path": "::4. Widget (snapshot 4270) -> Work order grid::Helpdesk headers loaded",
+            "id": "31f90b93b35eb3f4762833632f913b21",
+            "passes": 3
+          },
+          {
+            "name": "Helpdesk grid loaded",
+            "path": "::4. Widget (snapshot 4270) -> Work order grid::Helpdesk grid loaded",
+            "id": "66ec57122eeedc9686c934aa0762f4de",
+            "passes": 3,
+            "fails": 0
+          }
+        ],
+        "name": "4. Widget (snapshot 4270) -> Work order grid",
+        "path": "::4. Widget (snapshot 4270) -> Work order grid",
+        "id": "f65f29fa81180b14029b04f962b5beac",
+        "groups": []
+      },
+      {
+        "name": "5. Navigation -> My page module",
+        "path": "::5. Navigation -> My page module",
+        "id": "f2b155602ef4d1d8d148703c67b19a0a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "BuildMyPage 200",
+              "path": "::5. Navigation -> My page module::BuildMyPage 200",
+              "id": "ea18b375b941119bd296e6d5029eaa71",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "id": "319197efa20cc8ce5e05ca822463665f",
+              "passes": 3,
+              "fails": 0,
+              "name": "BuildMyPage no server error",
+              "path": "::5. Navigation -> My page module::BuildMyPage no server error"
+            },
+            {
+              "name": "dashboard has widgets",
+              "path": "::5. Navigation -> My page module::dashboard has widgets",
+              "id": "beb0d74f15e220307965427b8b7f2b64",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "name": "all dashboard widgets loaded (200)",
+              "path": "::5. Navigation -> My page module::all dashboard widgets loaded (200)",
+              "id": "e52f2cad408eac55a537b53bc622c224",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "fails": 0,
+        "name": "Work order grid returned rows",
+        "path": "::Work order grid returned rows",
+        "id": "ed62ab0e7e76d15c46dfd30cf3de18a3",
+        "passes": 3
+      }
+    ]
+  },
+  "options": {
+    "summaryTimeUnit": "",
+    "noColor": false,
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ]
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 155542.5571
+  },
+  "metrics": {
+    "step_filter_duration": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 594,
+        "med": 971,
+        "max": 1311,
+        "p(90)": 1243,
+        "p(95)": 1277,
+        "avg": 958.6666666666666
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "values": {
+        "min": 6240,
+        "med": 8941,
+        "max": 10934,
+        "p(90)": 10535.4,
+        "p(95)": 10734.7,
+        "avg": 8705
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2.2006628352490423,
+        "min": 0,
+        "med": 0,
+        "max": 574.373,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 3319606,
+        "rate": 21342.10766424387
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.019287325963602792,
+        "count": 3
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "max": 1,
+        "value": 1,
+        "min": 1
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 73939,
+        "rate": 475.3618648076089
+      }
+    },
+    "step_mypage_tab_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 4409.6,
+        "p(95)": 4568.3,
+        "avg": 3486.3333333333335,
+        "min": 2592,
+        "med": 3140,
+        "max": 4727
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 60107.3555,
+        "p(90)": 58191.97378,
+        "p(95)": 59149.664639999995,
+        "avg": 51848.0093,
+        "min": 44906.2255,
+        "med": 50530.4469
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 277.9369,
+        "med": 828.6541,
+        "max": 2893.7324,
+        "p(90)": 1583.0808,
+        "p(95)": 2083.2397,
+        "avg": 933.3132065134098
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "step_login_render_duration": {
+      "values": {
+        "p(95)": 2515.4,
+        "avg": 2151.3333333333335,
+        "min": 1652,
+        "med": 2258,
+        "max": 2544,
+        "p(90)": 2486.8
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 261,
+        "rate": 1.677997358833443
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 23.566,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.0902911877394636
+      }
+    },
+    "step_landing_duration": {
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 261,
+        "rate": 0,
+        "passes": 0
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 604.4571,
+        "p(90)": 3.9296,
+        "p(95)": 8.6825,
+        "avg": 10.503150191570882
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 1362.3333333333333,
+        "min": 1066,
+        "med": 1071,
+        "max": 1950,
+        "p(90)": 1774.2,
+        "p(95)": 1862.1
+      }
+    },
+    "step_tree_load_duration": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_login_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 5570,
+        "min": 3793,
+        "med": 5378,
+        "max": 7539,
+        "p(90)": 7106.8,
+        "p(95)": 7322.9
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 2.296170498084291,
+        "min": 0,
+        "med": 0,
+        "max": 598.7478,
+        "p(90)": 0
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "max": 1,
+        "value": 1,
+        "min": 1
+      }
+    },
+    "step_navigate_duration": {
+      "contains": "time",
+      "values": {
+        "p(90)": 9757,
+        "p(95)": 10519,
+        "avg": 7220.833333333333,
+        "min": 4344,
+        "med": 7067,
+        "max": 11281
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 268.9815,
+        "med": 808.8979,
+        "max": 2893.2131,
+        "p(90)": 1565.5521,
+        "p(95)": 2055.8617,
+        "avg": 922.5277141762458
+      }
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 18
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 277.9369,
+        "med": 828.6541,
+        "max": 2893.7324,
+        "p(90)": 1583.0808,
+        "p(95)": 2083.2397,
+        "avg": 933.3132065134098
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 57,
+        "fails": 0
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 5.6098,
+        "p(90)": 0.5865,
+        "p(95)": 0.7204,
+        "avg": 0.2823421455938695
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 10986.420505,
+        "avg": 5527.043483333332,
+        "min": 594.1378,
+        "med": 5355.5538,
+        "max": 11280.9716,
+        "p(90)": 9538.81177
+      }
+    }
+  }
+}

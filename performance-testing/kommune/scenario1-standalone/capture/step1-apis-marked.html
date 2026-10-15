@@ -1,0 +1,260 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #fff; color: #202124; width: 1840px;
+  }
+
+  .title {
+    padding: 22px 26px 16px;
+    border-bottom: 1px solid #dadce0;
+  }
+  .title h1 { font-size: 27px; font-weight: 600; letter-spacing: -0.2px; }
+  .title p { font-size: 16px; color: #5f6368; margin-top: 7px; }
+  .title .step { color: #d93025; font-weight: 700; }
+
+  /* ---- DevTools chrome ---- */
+  .tabs {
+    display: flex; align-items: center; gap: 26px;
+    padding: 9px 16px; border-bottom: 1px solid #dadce0;
+    font-size: 14.5px; color: #5f6368; background: #f1f3f4;
+  }
+  .tabs .on { color: #1a73e8; font-weight: 600; position: relative; }
+  .tabs .on::after {
+    content: ''; position: absolute; left: -4px; right: -4px; bottom: -10px;
+    height: 2px; background: #1a73e8;
+  }
+  .filters {
+    display: flex; align-items: center; gap: 9px;
+    padding: 9px 16px; border-bottom: 1px solid #dadce0; font-size: 13.5px;
+  }
+  .chip {
+    padding: 4px 13px; border-radius: 13px; color: #3c4043;
+    border: 1px solid transparent;
+  }
+  .chip.sel { background: #d2e3fc; color: #174ea6; font-weight: 600; }
+  .filters .sep { width: 1px; height: 20px; background: #dadce0; margin: 0 7px; }
+  .cb { display: flex; align-items: center; gap: 6px; color: #3c4043; }
+  .cb i {
+    width: 13px; height: 13px; border: 1.5px solid #80868b;
+    border-radius: 2px; display: inline-block;
+  }
+
+  /* ---- table ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  thead th {
+    text-align: left; font-weight: 500; color: #3c4043;
+    padding: 9px 14px; background: #f8f9fa;
+    border-bottom: 1px solid #dadce0; border-right: 1px solid #e8eaed;
+    font-size: 14px;
+  }
+  tbody td {
+    padding: 11px 14px; border-bottom: 1px solid #f1f3f4;
+    border-right: 1px solid #f1f3f4; white-space: nowrap;
+  }
+  tbody tr:nth-child(even) { background: #fafbfc; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ini { color: #1a73e8; text-decoration: underline; font-size: 13.5px; }
+  .muted { color: #5f6368; }
+
+  /* file-type glyph */
+  .ico {
+    display: inline-block; width: 15px; height: 17px; vertical-align: -3px;
+    margin-right: 9px; border: 1.5px solid #9aa0a6; border-radius: 2px;
+    position: relative;
+  }
+  .ico.x { border-color: #e8914a; }
+  .ico.x::after {
+    content: '{}'; position: absolute; inset: 0; font-size: 8px;
+    color: #e8914a; text-align: center; line-height: 15px; font-weight: 700;
+  }
+  .ico.d::after {
+    content: ''; position: absolute; left: 2px; right: 2px; top: 3px; height: 1.5px;
+    background: #9aa0a6; box-shadow: 0 3px 0 #9aa0a6, 0 6px 0 #9aa0a6;
+  }
+
+  /* ---- the mark ---- */
+  tr.use { background: #fdecea !important; }
+  tr.use td { border-bottom-color: #f6c7c1; }
+  tr.use td:first-child {
+    box-shadow: inset 5px 0 0 #d93025;
+    font-weight: 700; color: #b31412;
+  }
+  tr.use .ico { border-color: #d93025; }
+  tr.use .ico.x::after { color: #d93025; }
+  tr.use .ico.d::after { background: #d93025; box-shadow: 0 3px 0 #d93025, 0 6px 0 #d93025; }
+  .tag {
+    display: inline-block; margin-left: 13px; padding: 2px 9px;
+    background: #d93025; color: #fff; border-radius: 3px;
+    font-size: 11px; font-weight: 800; letter-spacing: .5px; vertical-align: 1px;
+  }
+  tr.skip td:nth-child(1), tr.skip td:nth-child(2),
+  tr.skip td:nth-child(3), tr.skip td:nth-child(5), tr.skip td:nth-child(6) { color: #9aa0a6; }
+
+  .why { font-size: 13px; color: #b31412; font-weight: 600; }
+  tr.skip .why { color: #9aa0a6; font-weight: 400; }
+
+
+  tr.later { background: #fff8e6 !important; }
+  tr.later td { border-bottom-color: #f0dca6; }
+  tr.later td:first-child { box-shadow: inset 5px 0 0 #f0a202; font-weight: 600; color: #8a5a00; }
+  tr.later .ico { border-color: #f0a202; }
+  tr.later .ico.x::after { color: #f0a202; }
+  .tag2 { display:inline-block; margin-left:13px; padding:2px 9px; background:#f0a202;
+          color:#fff; border-radius:3px; font-size:11px; font-weight:800;
+          letter-spacing:.5px; vertical-align:1px; }
+  .why2 { font-size:13px; color:#8a5a00; }
+
+  .statusbar {
+    display: flex; gap: 26px; padding: 11px 16px; font-size: 13.5px;
+    background: #f8f9fa; border-top: 1px solid #dadce0; color: #3c4043;
+  }
+
+  .legend {
+    display: flex; align-items: center; gap: 26px;
+    padding: 17px 26px; border-top: 2px solid #d93025; background: #fdecea;
+  }
+  .legend .big { font-size: 34px; font-weight: 800; color: #b31412; line-height: 1; }
+  .legend .lab { font-size: 15px; color: #b31412; font-weight: 600; }
+  .legend .note { font-size: 14px; color: #5f6368; margin-left: auto; text-align: right; line-height: 1.5; }
+  .legend .note b { color: #202124; }
+</style></head><body>
+
+<div class="title">
+  <h1><span class="step">STEP 1 &mdash; LOGIN</span> &nbsp;&middot;&nbsp; which requests go into the script</h1>
+  <p>Typed username + password, clicked <b>Login</b>. Chrome DevTools &rarr; Network, filters <b>Doc</b> + <b>Fetch/XHR</b>, <b>Preserve log</b> on. Captured live on kommune.mainmanager.is.</p>
+</div>
+
+<div class="tabs">
+  <span>Elements</span><span>Console</span><span>Sources</span>
+  <span class="on">Network</span><span>Performance</span><span>Memory</span>
+  <span>Application</span><span>Security</span><span>Lighthouse</span><span>Recorder</span>
+</div>
+
+<div class="filters">
+  <span class="cb"><i style="background:#1a73e8;border-color:#1a73e8"></i> <b>Preserve log</b></span>
+  <span class="cb"><i></i> Disable cache</span>
+  <span class="sep"></span>
+  <span class="chip">All</span>
+  <span class="chip sel">Fetch/XHR</span>
+  <span class="chip sel">Doc</span>
+  <span class="chip">CSS</span><span class="chip">JS</span><span class="chip">Font</span>
+  <span class="chip">Img</span><span class="chip">Media</span><span class="chip">Manifest</span>
+  <span class="chip">Socket</span><span class="chip">Wasm</span>
+</div>
+
+<table>
+  <thead><tr>
+    <th style="width:40%">Name</th>
+    <th style="width:7%">Status</th>
+    <th style="width:11%">Type</th>
+    <th style="width:7%" class="num">Size</th>
+    <th style="width:7%" class="num">Time</th>
+    <th style="width:28%">Why</th>
+  </tr></thead>
+  <tbody>
+
+  <tr class="use">
+    <td><span class="ico d"></span>MMV2Login.aspx<span class="tag">USE</span></td>
+    <td>200</td><td>document</td><td class="num">7.6 kB</td><td class="num">1.56 s</td>
+    <td class="why">Loads the form &mdash; we read the hidden <b>__VIEWSTATE</b> token out of it</td>
+  </tr>
+
+  <tr class="use">
+    <td><span class="ico d"></span>MMV2Login.aspx<span class="tag">USE</span></td>
+    <td>302</td><td>document</td><td class="num">0.4 kB</td><td class="num">1.03 s</td>
+    <td class="why">The login POST &mdash; credentials + that token sent back</td>
+  </tr>
+
+  <tr class="use">
+    <td><span class="ico d"></span>MMV2Content.aspx?st=40c06ae&hellip;<span class="tag">USE</span></td>
+    <td>302</td><td>document</td><td class="num">6.3 kB</td><td class="num">846 ms</td>
+    <td class="why">Redirect carrying the session token</td>
+  </tr>
+
+  <tr class="use">
+    <td><span class="ico d"></span>MMV2Content.aspx<span class="tag">USE</span></td>
+    <td>200</td><td>document</td><td class="num">10.2 kB</td><td class="num">665 ms</td>
+    <td class="why">The page we land on &mdash; proves login worked</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico x"></span>IsNewUser</td>
+    <td>200</td><td>xhr</td><td class="num">0.1 kB</td><td class="num">504 ms</td>
+    <td class="why">Welcome-tour flag. 11 bytes.</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico x"></span>GetHeaderLogo?ReportSettingsID=6</td>
+    <td>200</td><td>xhr</td><td class="num">0.1 kB</td><td class="num">395 ms</td>
+    <td class="why">Branding image. Cached, no database work.</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico x"></span>KeepAlive</td>
+    <td>200</td><td>xhr</td><td class="num">0.1 kB</td><td class="num">381 ms</td>
+    <td class="why">Session heartbeat on a timer, not a user action</td>
+  </tr>
+
+  <tr class="use">
+    <td><span class="ico x"></span>BuildMainMenu<span class="tag">USE</span></td>
+    <td>200</td><td>xhr</td><td class="num">1.8 kB</td><td class="num">446 ms</td>
+    <td class="why">Builds the whole nav menu from the user's permissions</td>
+  </tr>
+
+  <tr class="use">
+    <td><span class="ico x"></span>GetUnreadCount<span class="tag">USE</span></td>
+    <td>200</td><td>xhr</td><td class="num">0.2 kB</td><td class="num">364 ms</td>
+    <td class="why">Database count for the notification badge</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico x"></span>negotiate?clientProtocol=2.1&amp;user=suhsh&hellip;</td>
+    <td>200</td><td>xhr</td><td class="num">0.4 kB</td><td class="num">303 ms</td>
+    <td class="why">SignalR handshake for live notifications</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico d"></span>connect?transport=serverSentEvents&hellip;</td>
+    <td>200</td><td>eventsource</td><td class="num">0.7 kB</td><td class="num">2.7 min</td>
+    <td class="why"><b>Look at the time.</b> A channel held open, not a request.</td>
+  </tr>
+
+  <tr class="skip">
+    <td><span class="ico x"></span>start?transport=serverSentEvents&hellip;</td>
+    <td>200</td><td>xhr</td><td class="num">0.1 kB</td><td class="num">260 ms</td>
+    <td class="why">Same notification channel</td>
+  </tr>
+
+  <tr class="later">
+    <td><span class="ico x"></span>GetMenuItemSteps &nbsp;<span class="muted">+ saveToggleValue &times;3, InitMainLayout, BuildMyPage, InitPortalAggregate &times;18</span><span class="tag2">STEP 2</span></td>
+    <td>200</td><td>xhr</td><td class="num">&mdash;</td><td class="num">&mdash;</td>
+    <td class="why2">Not dropped &mdash; these belong to a <b>different step</b>. The app re-opens your last module by itself; nobody clicked it. The same calls <b>are</b> in the script, under step 2.</td>
+  </tr>
+
+  </tbody>
+</table>
+
+<div class="statusbar">
+  <span><b>56 requests</b></span>
+  <span>31.4 kB transferred</span>
+  <span>21.2 MB resources</span>
+  <span>DOMContentLoaded: 1.48 s</span>
+  <span style="color:#d93025">Load: 1.65 s</span>
+</div>
+
+<div class="legend">
+  <div class="big">6</div>
+  <div class="lab">requests go into<br>the k6 script</div>
+  <div class="big" style="color:#5f6368">50</div>
+  <div class="lab" style="color:#5f6368">not in this step &mdash; cached files, branding,<br>timers, channels, or used in a later step</div>
+  <div class="note">
+    Rule of thumb: <b>keep what makes the server work.</b><br>
+    Anything marked <b>(memory cache)</b> or <b>(disk cache)</b> never reached the server at all &mdash;<br>
+    21.2 MB of content, only <b>31.4 kB</b> actually over the wire.
+  </div>
+</div>
+
+</body></html>

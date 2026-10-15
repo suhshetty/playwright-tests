@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n fail">0/4</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">4</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n fail">100.00%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n fail">100.00%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">0</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="pass">PASS</td></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="pass">PASS</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="pass">PASS</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr></table>
+
+<h2>Server errors observed (excluded from the http-failed SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints that returned an error this run. These requests are held out of the <i>http failed</i> figure above so it
+ reflects the operations that work — they are listed here so nothing is hidden. Counts and status codes are measured
+ from this run. <b>Total: 0.</b>
+</p>
+<p class="pass" style="font-size:13px">No server errors recorded this run.</p>
+<p style="font-size:12px;color:#15803d;margin:8px 0 0">Zero failures recorded this run on: MMLayout.asmx/RefreshMainManFilter, MMLayout.asmx/RefreshDataFilter, MMLayout.asmx/EmptyDataFilter.</p>
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>iteration_duration</td><td>28.91 s</td><td>26.98 s</td><td>37.40 s</td><td>38.83 s</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_logout_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_navigate_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_blocked</td><td>131 ms</td><td>0 ms</td><td>446 ms</td><td>525 ms</td></tr><tr><td>group_duration</td><td>660 ms</td><td>761 ms</td><td>841 ms</td><td>843 ms</td></tr><tr><td>step_login_duration</td><td>661 ms</td><td>761 ms</td><td>841 ms</td><td>843 ms</td></tr><tr><td>http_req_connecting</td><td>5 ms</td><td>0 ms</td><td>17 ms</td><td>20 ms</td></tr><tr><td>http_req_waiting</td><td>527 ms</td><td>501 ms</td><td>809 ms</td><td>830 ms</td></tr><tr><td>http_req_sending</td><td>1 ms</td><td>1 ms</td><td>1 ms</td><td>1 ms</td></tr><tr><td>http_req_receiving</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>1 ms</td></tr><tr><td>http_req_duration</td><td>528 ms</td><td>502 ms</td><td>810 ms</td><td>831 ms</td></tr><tr><td>step_landing_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_open_record_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_tls_handshaking</td><td>126 ms</td><td>0 ms</td><td>428 ms</td><td>504 ms</td></tr><tr><td>step_filter_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+</body></html>

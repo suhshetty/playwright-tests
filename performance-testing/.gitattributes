@@ -1,0 +1,2 @@
+# Bash scripts must keep LF line endings, or Git Bash fails with "\r: command not found".
+*.sh text eol=lf

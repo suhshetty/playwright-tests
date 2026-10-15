@@ -1,0 +1,1080 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 710,
+              "fails": 213
+            },
+            {
+              "passes": 699,
+              "fails": 12,
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b"
+            },
+            {
+              "name": "login not bounced back",
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 699,
+              "fails": 12
+            }
+          ]
+      },
+      {
+        "name": "2. Helpdesk -> Incidents overview -> All incidents",
+        "path": "::2. Helpdesk -> Incidents overview -> All incidents",
+        "id": "cacdf179dcbec2b6620746d588238c84",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Helpdesk UniqueString issued",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk UniqueString issued",
+              "id": "a2f75e13a9c0332db7fa3a13e8b7f3e9",
+              "passes": 618,
+              "fails": 71
+            },
+            {
+              "fails": 108,
+              "name": "Helpdesk layout built",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk layout built",
+              "id": "a35c1f4fdeb82e77273be990389bd3ae",
+              "passes": 581
+            },
+            {
+              "name": "Helpdesk headers loaded",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk headers loaded",
+              "id": "23e117a670ce1ee8cc77ce446f7a32c9",
+              "passes": 571,
+              "fails": 118
+            },
+            {
+              "fails": 148,
+              "name": "Helpdesk grid loaded",
+              "path": "::2. Helpdesk -> Incidents overview -> All incidents::Helpdesk grid loaded",
+              "id": "1f4349ac651a8e8f8117d36b5fc92856",
+              "passes": 541
+            }
+          ]
+      },
+      {
+        "path": "::3. Clear filter (X)",
+        "id": "11e1d076edcc1dbede80e69c4abf0ec4",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::3. Clear filter (X)::Incident grid reloaded after filter clear",
+              "id": "93603d8f86a185f1cf769e543e35476e",
+              "passes": 494,
+              "fails": 25,
+              "name": "Incident grid reloaded after filter clear"
+            }
+          ],
+        "name": "3. Clear filter (X)"
+      },
+      {
+        "path": "::4. Open incident -> popup",
+        "id": "0c2deedef0a7e31d109e39b89f4b5d13",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::4. Open incident -> popup::modal loaded (200)",
+              "id": "6296d74646930fdb22a05a59b1dacf7b",
+              "passes": 263,
+              "fails": 52
+            },
+            {
+              "fails": 52,
+              "name": "modal no server error",
+              "path": "::4. Open incident -> popup::modal no server error",
+              "id": "f7a4e084cdc1c28bf2bb5ba149996314",
+              "passes": 263
+            }
+          ],
+        "name": "4. Open incident -> popup"
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 222,
+              "fails": 234
+            }
+          ],
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a"
+      }
+    ],
+    "checks": [
+      {
+        "fails": 0,
+        "name": "Incidents grid returned rows",
+        "path": "::Incidents grid returned rows",
+        "id": "0cc29733ed221f65a27dd09be2ef25fb",
+        "passes": 516
+      }
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 630266.2775
+  },
+  "metrics": {
+    "api_err_filterctrl": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 187,
+        "rate": 0.2966999928058185
+      }
+    },
+    "api_err_loginsubmit_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 12,
+        "rate": 0.019039571730854663
+      }
+    },
+    "step_landing_duration": {
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "api_err_initlayout_503": {
+      "values": {
+        "rate": 0.09043796572155964,
+        "count": 57
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_mainmenu_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 10,
+        "rate": 0.01586630977571222
+      }
+    },
+    "api_err_toggle": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 171,
+        "rate": 0.27131389716467896
+      }
+    },
+    "api_err_toggle_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 163,
+        "rate": 0.25862084934410917
+      }
+    },
+    "api_err_buildlayout_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 6,
+        "rate": 0.009519785865427332
+      }
+    },
+    "api_err_logout_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 4,
+        "rate": 0.006346523910284887
+      }
+    },
+    "api_err_keepalive_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.028559357596281993
+      }
+    },
+    "api_err_initlayout": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 70,
+        "rate": 0.11106416842998552
+      }
+    },
+    "api_err_toggle_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 5,
+        "rate": 0.00793315488785611
+      }
+    },
+    "api_err_list": {
+      "contains": "default",
+      "values": {
+        "count": 173,
+        "rate": 0.27448715911982136
+      },
+      "type": "counter"
+    },
+    "api_err_menuitems_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "api_err_menusteps": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 52,
+        "rate": 0.08250481083370353
+      }
+    },
+    "api_err_other_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "api_err_filterctrl_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 13,
+        "rate": 0.020626202708425884
+      }
+    },
+    "api_err_gismodal_other": {
+      "values": {
+        "count": 7,
+        "rate": 0.011106416842998554
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_unread_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 36,
+        "rate": 0.057118715192563986
+      }
+    },
+    "api_err_mainmenu_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "api_err_clearfilter_other": {
+      "contains": "default",
+      "values": {
+        "count": 6,
+        "rate": 0.009519785865427332
+      },
+      "type": "counter"
+    },
+    "api_err_logout": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 234,
+        "rate": 0.3712716487516659
+      }
+    },
+    "api_err_logout_503": {
+      "contains": "default",
+      "values": {
+        "rate": 0.364925124841381,
+        "count": 230
+      },
+      "type": "counter"
+    },
+    "api_err_other_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 17,
+        "rate": 0.026972726618710773
+      }
+    },
+    "api_err_list_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 134,
+        "rate": 0.21260855099454373
+      }
+    },
+    "api_err_childcount_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 52,
+        "rate": 0.08250481083370353
+      }
+    },
+    "api_err_gislayers_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 15,
+        "rate": 0.023799464663568328
+      }
+    },
+    "api_err_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.028559357596281993
+      }
+    },
+    "api_err_menuitems_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 49,
+        "rate": 0.07774491790098988
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 22.035828027508604,
+        "min": 0,
+        "med": 0,
+        "max": 36513.9447,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "api_err_unread_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 9,
+        "rate": 0.014279678798140997
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0.7454899999999998,
+        "avg": 3.070218724601441,
+        "min": 0,
+        "med": 0,
+        "max": 43612.5407,
+        "p(90)": 0.56932
+      }
+    },
+    "api_err_modal_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 10,
+        "rate": 0.01586630977571222
+      }
+    },
+    "api_err_loginpage_503": {
+      "values": {
+        "count": 205,
+        "rate": 0.32525935040210047
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 249,
+        "min": 1,
+        "max": 250
+      }
+    },
+    "api_err_loginpage": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.33795239822267026,
+        "count": 213
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 5516.6973684210525,
+        "min": 177,
+        "med": 707,
+        "max": 54495,
+        "p(90)": 16426.5,
+        "p(95)": 19455.75
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": false
+        }
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.8553032400996954,
+        "passes": 6177,
+        "fails": 1045
+      }
+    },
+    "api_err_gislayers": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 241,
+        "rate": 0.3823780655946645
+      }
+    },
+    "api_err_loginsubmit": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 12,
+        "rate": 0.019039571730854663
+      }
+    },
+    "api_err_menusteps_401": {
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_modal_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 16,
+        "rate": 0.02538609564113955
+      }
+    },
+    "api_err_initlayout_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 11,
+        "rate": 0.01745294075328344
+      }
+    },
+    "api_err_unread_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.0015866309775712218,
+        "count": 1
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 674,
+        "rate": 1.0693892788830035
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 20588094,
+        "rate": 32665.70770954821
+      }
+    },
+    "api_err_menuitems": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 53,
+        "rate": 0.08409144181127476
+      }
+    },
+    "step_filter_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 18873.489402697494,
+        "min": 670,
+        "med": 18215,
+        "max": 58189,
+        "p(90)": 34053.2,
+        "p(95)": 37151.5
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_gismodal_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 61,
+        "rate": 0.09678448963184454
+      }
+    },
+    "api_err_mainmenu_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 26,
+        "rate": 0.04125240541685177
+      }
+    },
+    "api_err_filterctrl_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 153,
+        "rate": 0.24275453956839696
+      }
+    },
+    "api_err_gislayers_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 226,
+        "rate": 0.35857860093109617
+      }
+    },
+    "http_reqs": {
+      "contains": "default",
+      "values": {
+        "count": 15995,
+        "rate": 25.378162486251693
+      },
+      "type": "counter"
+    },
+    "step_open_record_duration": {
+      "values": {
+        "med": 36885,
+        "max": 102743,
+        "p(90)": 71307.20000000001,
+        "p(95)": 76058.1,
+        "avg": 36337.89523809524,
+        "min": 1272
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "api_err_loginpage_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 6,
+        "rate": 0.009519785865427332
+      }
+    },
+    "api_err_keepalive_other": {
+      "contains": "default",
+      "values": {
+        "count": 8,
+        "rate": 0.012693047820569774
+      },
+      "type": "counter"
+    },
+    "api_err_loginpage_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031732619551424436
+      }
+    },
+    "api_err_list_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 18,
+        "rate": 0.028559357596281993
+      }
+    },
+    "api_err_mainmenu": {
+      "contains": "default",
+      "values": {
+        "count": 37,
+        "rate": 0.05870534617013521
+      },
+      "type": "counter"
+    },
+    "step_navigate_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 54869,
+        "max": 186717,
+        "p(90)": 105718,
+        "p(95)": 110506.6,
+        "avg": 55844.9564586357,
+        "min": 2473
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_toggle_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3,
+        "rate": 0.004759892932713666
+      }
+    },
+    "api_err_list_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 21,
+        "rate": 0.03331925052899566
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "contains": "time",
+      "values": {
+        "avg": 6864.361493983196,
+        "min": 201.8367,
+        "med": 5129.8679,
+        "max": 59805.1198,
+        "p(90)": 15447.343610000004,
+        "p(95)": 20485.284124999976
+      },
+      "type": "trend"
+    },
+    "api_err_menusteps_503": {
+      "values": {
+        "rate": 0.07457165594584743,
+        "count": 47
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_listheaders_503": {
+      "values": {
+        "count": 108,
+        "rate": 0.17135614557769197
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "iteration_duration": {
+      "values": {
+        "med": 80279.1245,
+        "max": 327876.3485,
+        "p(90)": 228802.69036000007,
+        "p(95)": 242323.38278500002,
+        "avg": 113053.2708538575,
+        "min": 20356.4301
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "api_err_clearfilter_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "api_err_childcount": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 61,
+        "rate": 0.09678448963184454
+      }
+    },
+    "http_req_blocked": {
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 40267.653,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 30.021748859018437
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 3674.8416,
+        "max": 60000.8351,
+        "p(90)": 12239.090540000001,
+        "p(95)": 15752.159099999995,
+        "avg": 5279.672007158451
+      }
+    },
+    "api_err_initlayout_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031732619551424436
+      }
+    },
+    "api_err_modal_503": {
+      "contains": "default",
+      "values": {
+        "count": 26,
+        "rate": 0.04125240541685177
+      },
+      "type": "counter"
+    },
+    "api_err_menusteps_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031732619551424436
+      }
+    },
+    "api_err_gismodal": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 68,
+        "rate": 0.10789090647484309
+      }
+    },
+    "api_err_keepalive": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 27,
+        "rate": 0.04283903639442299
+      }
+    },
+    "step_login_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 37476,
+        "max": 128824,
+        "p(90)": 76010.40000000001,
+        "p(95)": 81404.2,
+        "avg": 36756.271939328275,
+        "min": 210
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_keepalive_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 10527.962025316456,
+        "min": 922,
+        "med": 8974,
+        "max": 48843,
+        "p(90)": 24118,
+        "p(95)": 28597.5
+      }
+    },
+    "api_err_clearfilter_0": {
+      "values": {
+        "rate": 0.011106416842998554,
+        "count": 7
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "api_err_filterctrl_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 19,
+        "rate": 0.030145988573853217
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 6307.155838074391,
+        "min": 0,
+        "med": 4372.8241,
+        "max": 60001.0212,
+        "p(90)": 14904.14866,
+        "p(95)": 20177.51756
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": false
+        }
+      }
+    },
+    "api_err_filterctrl_401": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031732619551424436
+      }
+    },
+    "api_err_buildlayout": {
+      "contains": "default",
+      "values": {
+        "count": 105,
+        "rate": 0.1665962526449783
+      },
+      "type": "counter"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 17521.1479,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 8.792347721162864
+      }
+    },
+    "api_err_menusteps_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 2,
+        "rate": 0.0031732619551424436
+      }
+    },
+    "api_err_childcount_0": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1,
+        "rate": 0.0015866309775712218
+      }
+    },
+    "http_req_failed": {
+      "values": {
+        "rate": 0.12197561738043139,
+        "passes": 1951,
+        "fails": 14044
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 1314112418,
+        "rate": 2085011.4704098222
+      }
+    },
+    "api_err_listheaders_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 9,
+        "rate": 0.014279678798140997
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "max": 250,
+        "value": 250,
+        "min": 250
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 33135.912079876,
+        "min": 177.1201,
+        "med": 25450.85175,
+        "max": 186716.5393,
+        "p(90)": 76765.57178,
+        "p(95)": 92233.47353499998
+      }
+    },
+    "known_server_errors": {
+      "contains": "default",
+      "values": {
+        "count": 1951,
+        "rate": 3.095517037241454
+      },
+      "type": "counter"
+    },
+    "api_err_buildlayout_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 99,
+        "rate": 0.15707646677955098
+      }
+    },
+    "api_err_clearfilter": {
+      "contains": "default",
+      "values": {
+        "count": 14,
+        "rate": 0.022212833685997108
+      },
+      "type": "counter"
+    },
+    "api_err_modal": {
+      "values": {
+        "rate": 0.08250481083370353,
+        "count": 52
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_receiving": {
+      "contains": "time",
+      "values": {
+        "avg": 1024.4136121913082,
+        "min": 0,
+        "med": 2.0564,
+        "max": 57245.085,
+        "p(90)": 2641.8957800000017,
+        "p(95)": 7274.685319999996
+      },
+      "type": "trend"
+    },
+    "api_err_childcount_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 8,
+        "rate": 0.012693047820569774
+      }
+    },
+    "api_err_listheaders": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 117,
+        "rate": 0.18563582437583295
+      }
+    },
+    "api_err_unread": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 46,
+        "rate": 0.0729850249682762
+      }
+    },
+    "api_err_menuitems_other": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 3,
+        "rate": 0.004759892932713666
+      }
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.23638869745003446,
+        "passes": 686,
+        "fails": 2216
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      }
+    }
+  }
+}

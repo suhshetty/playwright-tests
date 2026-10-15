@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Day 4 - Checks vs Thresholds</title>
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-size: 24pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; }
+  h2 { font-size: 16pt; color: #0b3d6b; margin-top: 26px; border-bottom: 1px solid #c9d6e2; padding-bottom: 3px; }
+  h3 { font-size: 13pt; color: #1f5c99; margin-top: 18px; }
+  p, li { font-size: 11pt; }
+  li { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 6px 8px; text-align: left; font-size: 10.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 6px 8px; font-size: 10.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 10pt; background-color: #f4f6f8; border-left: 4px solid #1f5c99;
+        padding: 9px 12px; margin: 9px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 10pt; background-color: #eef2f6; padding: 1px 4px; }
+  .key { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 9px 12px; margin: 12px 0; }
+  .warn { background-color: #fdeeee; border-left: 4px solid #c62828; padding: 9px 12px; margin: 12px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 9px 12px; margin: 12px 0; }
+  .sub { color: #5a6b7a; font-size: 10pt; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Day 4 &ndash; Checks vs Thresholds</h1>
+<p class="sub">Learning notes &middot; Script: day4-checks.js</p>
+
+<h2>1. The gap this day closes</h2>
+<pre>http_req_failed: 0.00%     &lt;-- only means the status code was 2xx/3xx</pre>
+<div class="warn">
+The old hand-written <code>Scenario2.js</code> was fully green while doing <b>nothing</b>: a dead session cookie made every call redirect to the login page, the login page returned 200, so <code>http_req_failed</code> read 0%.
+<br><br>
+<b><code>http_req_failed</code> answers &ldquo;did HTTP work?&rdquo; &mdash; never &ldquo;did the business action work?&rdquo;</b>
+</div>
+
+<h2>2. Two tools, constantly confused</h2>
+<table>
+  <tr><th style="width:24%">&nbsp;</th><th style="width:38%"><code>check()</code></th><th><code>thresholds</code></th></tr>
+  <tr><td>Question</td><td>&ldquo;Was the response <b>correct</b>?&rdquo;</td><td>&ldquo;Does the <b>run</b> pass?&rdquo;</td></tr>
+  <tr><td>Looks at</td><td>one response, right now</td><td>the whole run's metrics</td></tr>
+  <tr><td>Where it goes</td><td>inside VU code</td><td>in <code>options</code></td></tr>
+  <tr><td>Fails the test?</td><td><b>NO</b> &mdash; records it and continues</td><td><b>YES</b> &mdash; sets exit code 99</td></tr>
+  <tr><td>Analogy</td><td>a thermometer</td><td>the fever limit that sends you home</td></tr>
+</table>
+<div class="key">
+<b>The critical surprise:</b> a failing <code>check()</code> does NOT fail your test. That is deliberate &mdash; under load you want the test to continue, not abort on one bad response.
+<br><br>
+<b>So checks alone are not a gate. You need both.</b>
+</div>
+
+<h2>3. Writing checks</h2>
+<pre>import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export default function () {
+  const res = http.get('https://quickpizza.grafana.com/');
+
+  check(res, {
+    'status is 200':        (r) =&gt; r.status === 200,
+    'body contains Pizza':  (r) =&gt; r.body.includes('Pizza'),
+    'faster than 500ms':    (r) =&gt; r.timings.duration &lt; 500,
+  });
+
+  sleep(1);
+}</pre>
+<ul>
+  <li>Capture the response into a variable (<code>const res = ...</code>) so you can interrogate it.</li>
+  <li>Each entry is a <b>name</b> and a <b>function returning true/false</b>.</li>
+  <li>Useful response properties: <code>r.status</code>, <code>r.body</code>, <code>r.timings.duration</code>, <code>r.json()</code>, <code>r.headers</code>.</li>
+</ul>
+
+<h2>4. The four-run demonstration &ndash; the heart of Day 4</h2>
+<table>
+  <tr><th style="width:8%">Run</th><th style="width:34%">Configuration</th><th style="width:26%">Result</th><th>Exit code / CI</th></tr>
+  <tr><td>1</td><td>3 passing checks, no thresholds</td><td><code>checks 100%</code></td><td>0 &mdash; green</td></tr>
+  <tr><td>2</td><td>+ a failing check ('Burger')</td><td><code>checks 75.00%</code>, <code>default &#10003;</code></td><td><b>0 &mdash; still green!</b></td></tr>
+  <tr><td>3</td><td>+ thresholds</td><td>&#10007; marker, <code>ERRO ... thresholds ... crossed</code></td><td><b>99 &mdash; red</b></td></tr>
+  <tr><td>4</td><td>+ <code>abortOnFail</code></td><td>died at <b>6.0s of 20s</b></td><td>99 &mdash; red</td></tr>
+</table>
+<div class="warn">
+<b>Runs 2 and 3 had the IDENTICAL failure and opposite outcomes.</b>
+<br>
+15 failed checks with no threshold = exit 0 = green build = broken code ships.
+<br>
+The only difference is whether a threshold exists.
+</div>
+<div class="good">
+<code>check()</code> detects the problem. <code>threshold</code> makes it matter.
+<br><br>
+A framework with checks but no thresholds reports failures nobody is forced to act on.
+<code>defaultThresholds()</code> in <code>lib/mainmanager.js</code> is exactly this mechanism &mdash; which is why a bad MainManager run genuinely fails.
+</div>
+
+<h2>5. The big trap: default &#10003; does NOT mean the test passed</h2>
+<pre>Run 3 (threshold breached, no abort):   default &#10003;   &lt;-- ran all 20s
+Run 4 (threshold breached, abort):      default &#10007;   &lt;-- stopped at 6s</pre>
+<div class="warn">
+The <b>&#10003;/&#10007; on the progress line means &ldquo;did the scenario COMPLETE?&rdquo;</b>, not &ldquo;did the test pass?&rdquo;
+<br><br>
+Run 3 proved it: <code>default &#10003;</code> while breaching a threshold.
+</div>
+<pre>The verdict lives in:      the ERRO line  +  the exit code
+The verdict does NOT live in:  the default &#10003;/&#10007;</pre>
+
+<h2>6. Exit codes &ndash; why any of this matters</h2>
+<pre>0   = success  -&gt;  pipeline goes green
+99  = failure  -&gt;  pipeline goes red</pre>
+<p><b>CI reads the exit code and nothing else.</b> Jenkins and GitHub Actions never read your summary. Check it on Windows with:</p>
+<pre>k6 run script.js
+echo $LASTEXITCODE</pre>
+
+<h2>7. Threshold syntax you will actually use</h2>
+<pre>thresholds: {
+  // multiple conditions on one metric
+  'http_req_duration': ['p(95)&lt;500', 'p(99)&lt;1000', 'max&lt;3000'],
+
+  // rates use 0-1, NOT percentages
+  'http_req_failed': ['rate&lt;0.01'],      // under 1%
+  'checks':          ['rate&gt;0.99'],      // over 99%
+
+  // count-based
+  'http_reqs': ['count&gt;100'],
+
+  // per-endpoint (requires tags)
+  'http_req_duration{name:login}':  ['p(95)&lt;2000'],
+  'http_req_duration{name:search}': ['p(95)&lt;800'],
+},</pre>
+<div class="key">
+<b>The per-tag form is the professional one.</b> Different operations deserve different SLAs &mdash; a login may take 2s, a search should not.
+This is what the SLA_WIDGET_P95 / SLA_FILTER_P95 / SLA_TREE_P95 constants do in the real framework.
+</div>
+
+<h3>Common gotcha</h3>
+<table>
+  <tr><th style="width:34%">Mistake</th><th>Correct</th></tr>
+  <tr><td>A second <code>export const options</code> inside the default function</td><td><code>options</code> is <b>top level and declared ONCE</b>. Add <code>thresholds</code> to the existing block. <code>export</code> inside a function is a syntax error.</td></tr>
+  <tr><td><code>'http_req_failed': ['rate&lt;1']</code> meaning 1%</td><td>Rates are 0&ndash;1. 1% is <code>rate&lt;0.01</code>. <code>rate&lt;1</code> means &ldquo;under 100%&rdquo; &mdash; almost always true, so a useless gate.</td></tr>
+</table>
+
+<h2>8. Where threshold values come from</h2>
+<table>
+  <tr><th style="width:44%">Source</th><th>Verdict</th></tr>
+  <tr><td>Agreed SLA with the customer</td><td>Best</td></tr>
+  <tr><td>Measured baseline + acceptable degradation</td><td>Good</td></tr>
+  <tr><td>Industry norm (e.g. 3s page load)</td><td>Starting point only</td></tr>
+  <tr><td>A number you invented</td><td>Guarantees an argument you will lose</td></tr>
+</table>
+<div class="warn">
+<b>Real example:</b> the shared dev box logs in at ~22s against a 10s SLA. That threshold was set for a healthy environment, so on that box it fires constantly and gets ignored.
+<br><br>
+<b>A threshold nobody trusts is worse than no threshold.</b> Re-baseline per environment.
+</div>
+
+<h2>9. abortOnFail &ndash; stopping a doomed run early</h2>
+<pre>thresholds: {
+  'http_req_duration': [
+    { threshold: 'p(95)&lt;100', abortOnFail: true, delayAbortEval: '5s' },
+  ],
+},</pre>
+<table>
+  <tr><th style="width:30%">Option</th><th>Effect</th></tr>
+  <tr><td><code>abortOnFail: true</code></td><td>Kill the run as soon as the threshold is breached.</td></tr>
+  <tr><td><code>delayAbortEval: '5s'</code></td><td>Wait 5s before evaluating, so start-up noise does not trigger it.</td></tr>
+</table>
+<p>Observed result: a <code>duration: '20s'</code> test ended at <b>6.0s</b> with &ldquo;3 complete and 1 interrupted iterations&rdquo;.</p>
+
+<h3>The trade-off</h3>
+<pre>Run 3:  16 requests, 64 checks
+Run 4:   4 requests, 16 checks    &lt;-- much smaller sample</pre>
+<table>
+  <tr><th style="width:50%">Good abort candidate</th><th>Bad abort candidate</th></tr>
+  <tr>
+    <td>
+      <ul>
+        <li><code>http_req_failed rate&gt;0.5</code> &mdash; half the requests failing</li>
+        <li>Login broken, so nothing else can be tested</li>
+        <li><code>checks rate&lt;0.5</code> &mdash; the script clearly is not working</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li><code>p(95)&lt;500</code> &mdash; might recover as caches warm</li>
+        <li>A single slow endpoint</li>
+        <li>Anything marginal</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+<div class="key"><b>Rule:</b> abort on &ldquo;this test is now worthless&rdquo;, never on &ldquo;this is a bit slow&rdquo;. Practical value: a 2-hour soak that is obviously broken at minute 3 should not burn the remaining 117 minutes of a shared environment.</div>
+
+<h2>10. checks vs http_req_failed &ndash; which one goes to the manager</h2>
+<p>The same 16 requests produced:</p>
+<pre>checks:           75%    &lt;-- 1 in 4 verifications failed
+http_req_failed:  0%     &lt;-- no request failed</pre>
+<table>
+  <tr><th style="width:30%">Metric</th><th>Answers</th></tr>
+  <tr><td><code>http_req_failed</code></td><td>&ldquo;Did HTTP work?&rdquo; &mdash; infrastructure. Table stakes.</td></tr>
+  <tr><td><code>checks</code></td><td><b>&ldquo;Did the application work?&rdquo;</b> &mdash; the business question.</td></tr>
+</table>
+<div class="warn">
+<b><code>http_req_failed</code> is the number that lies.</b> Showing <code>http_req_failed: 0%</code> for the old Scenario2.js would have certified a test that never touched the product.
+</div>
+<pre>Lead with:     checks              &lt;-- did the business action work?
+Support with:  http_req_failed + p95 latency
+Never show:    http_req_failed alone</pre>
+
+<h2>11. The mirror-image honesty rule</h2>
+<p>A failing check has <b>two</b> possible causes:</p>
+<table>
+  <tr><th style="width:26%">Cause</th><th style="width:38%">Example</th><th>Action</th></tr>
+  <tr><td>The <b>app</b> is broken</td><td>Search returns no results under load</td><td>Escalate to the dev team</td></tr>
+  <tr><td>The <b>test</b> is broken</td><td>Asserting <code>'Burger'</code> on a pizza site</td><td>Fix your own script</td></tr>
+</table>
+<div class="key">
+In the Day 4 runs it was the <b>second</b> one &mdash; the check itself was invalid. The honest report is not &ldquo;75% failure&rdquo;, it is &ldquo;my check was wrong&rdquo;.
+<br><br>
+<b>Prove it is the app before escalating.</b> Reporting a test bug as a product defect once will cost you credibility with the dev team for months.
+<br><br>
+Checks make you honest about the application. They demand you be equally honest about your script.
+</div>
+
+<h2>12. Day 4 cheat sheet</h2>
+<table>
+  <tr><th style="width:44%">Situation</th><th>What to do / remember</th></tr>
+  <tr><td>Verifying a response is correct</td><td><code>check()</code> on status, body content and timing.</td></tr>
+  <tr><td>Wanting the build to fail</td><td>You need a <b>threshold</b>. Checks alone never fail a run.</td></tr>
+  <tr><td>Reading the verdict</td><td>ERRO line + exit code. Never the <code>default &#10003;/&#10007;</code>.</td></tr>
+  <tr><td>Writing a rate threshold</td><td>Use 0&ndash;1: <code>rate&lt;0.01</code> = under 1%.</td></tr>
+  <tr><td>Different SLAs per operation</td><td>Tag the requests, then use <code>metric{tag:value}</code> thresholds.</td></tr>
+  <tr><td>Choosing a threshold value</td><td>Agreed SLA, or baseline + acceptable degradation. Never invent one.</td></tr>
+  <tr><td>Threshold fires constantly on one environment</td><td>Re-baseline per environment. An ignored threshold is worthless.</td></tr>
+  <tr><td>Long test that is obviously broken</td><td><code>abortOnFail</code> with <code>delayAbortEval</code>. Only for fatal conditions.</td></tr>
+  <tr><td>Reporting results</td><td>Lead with <code>checks</code>, support with http_req_failed and p95.</td></tr>
+  <tr><td>A check fails</td><td>Determine app-bug vs test-bug BEFORE escalating.</td></tr>
+</table>
+
+<h2>13. Next &ndash; Day 5</h2>
+<ul>
+  <li>Load shapes: <code>vus</code>/<code>duration</code> versus <code>stages</code> (ramping).</li>
+  <li>Closed model versus open model &mdash; fixing the trap proved on Day 2, where throughput FELL as the server slowed.</li>
+  <li>The executors tour: <code>constant-vus</code>, <code>ramping-vus</code>, <code>constant-arrival-rate</code>, <code>ramping-arrival-rate</code>.</li>
+</ul>
+
+</body>
+</html>

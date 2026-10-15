@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Day 1 - Performance Testing Foundations with k6</title>
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-family: Calibri, sans-serif; font-size: 24pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; }
+  h2 { font-family: Calibri, sans-serif; font-size: 16pt; color: #0b3d6b; margin-top: 26px; border-bottom: 1px solid #c9d6e2; padding-bottom: 3px; }
+  h3 { font-family: Calibri, sans-serif; font-size: 13pt; color: #1f5c99; margin-top: 18px; }
+  p, li { font-size: 11pt; }
+  ul, ol { margin-top: 4px; }
+  li { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px 0; }
+  th { background-color: #0b3d6b; color: #ffffff; border: 1px solid #0b3d6b; padding: 6px 8px; text-align: left; font-size: 10.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 6px 8px; font-size: 10.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 10pt; background-color: #f4f6f8; border-left: 4px solid #1f5c99;
+        padding: 9px 12px; margin: 9px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 10pt; background-color: #eef2f6; padding: 1px 4px; }
+  .key { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 9px 12px; margin: 12px 0; }
+  .warn { background-color: #fdeeee; border-left: 4px solid #c62828; padding: 9px 12px; margin: 12px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 9px 12px; margin: 12px 0; }
+  .sub { color: #5a6b7a; font-size: 10pt; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Day 1 &ndash; Performance Testing Foundations with k6</h1>
+<p class="sub">Learning notes &middot; k6 v0.55.2 &middot; Practice script: PerformanceTests\k6-learning\day1-smoke.js</p>
+
+<h2>1. What performance testing actually is</h2>
+<ul>
+  <li><b>Functional testing asks:</b> &ldquo;Does it work?&rdquo; &mdash; a yes/no answer about behaviour.</li>
+  <li><b>Performance testing asks:</b> &ldquo;Does it still work when reality shows up?&rdquo; &mdash; a question about <b>time</b> and <b>concurrency</b>.</li>
+  <li>The answer is never yes/no. It is always a <b>distribution</b> of response times.</li>
+  <li>A performance test is a <b>controlled experiment</b>: apply a known load to a known system and measure the time it takes.</li>
+</ul>
+
+<div class="key">
+<b>Core principle:</b> If you don't control the load, or don't know the state of the system, you didn't run a test &mdash; you just generated numbers. Numbers you cannot explain are worse than no numbers at all.
+</div>
+
+<h3>Real-world example</h3>
+<p>On the MainManager shared dev environment, login took about <b>22 seconds</b>. On the kommunerelease environment the same login took about <b>3.7 seconds</b>.</p>
+<ul>
+  <li>No functional test would ever flag this. The login <i>worked</i>. It returned HTTP 200. It was simply unusable.</li>
+  <li>That gap is exactly the kind of defect only performance testing finds.</li>
+</ul>
+
+<h2>2. The 4 questions every performance test answers</h2>
+<p>Before writing a single line of code, say out loud which question you are asking. Every performance test is one of these:</p>
+<table>
+  <tr><th style="width:5%">#</th><th style="width:35%">Question</th><th>What it means</th></tr>
+  <tr><td>1</td><td><b>Is it fast enough?</b></td><td>At the expected load, does response time meet the agreed SLA?</td></tr>
+  <tr><td>2</td><td><b>How much can it take?</b></td><td>At what load does the system degrade or break?</td></tr>
+  <tr><td>3</td><td><b>Does it stay healthy over time?</b></td><td>Do memory leaks, connection pools or caches rot after several hours?</td></tr>
+  <tr><td>4</td><td><b>Does it recover?</b></td><td>After a spike or a failure, does the system come back on its own?</td></tr>
+</table>
+<p>Most poor performance work skips this step and produces a test that answers nothing.</p>
+
+<h2>3. The 6 types of performance test</h2>
+<table>
+  <tr><th style="width:16%">Type</th><th style="width:30%">Load shape</th><th>Question it answers</th></tr>
+  <tr><td><b>Smoke</b></td><td>1&ndash;2 VUs, short duration</td><td>Does my <b>script</b> work? (Not the system.)</td></tr>
+  <tr><td><b>Load</b></td><td>Expected peak load, held steady</td><td>Q1 &mdash; is it fast enough at normal load?</td></tr>
+  <tr><td><b>Stress</b></td><td>Pushed beyond expected peak</td><td>Q2 &mdash; where does it start to hurt?</td></tr>
+  <tr><td><b>Spike</b></td><td>Sudden jump, then sudden drop</td><td>Q4 &mdash; can it survive a surge and recover?</td></tr>
+  <tr><td><b>Soak</b></td><td>Moderate load held for hours</td><td>Q3 &mdash; memory leaks and slow degradation</td></tr>
+  <tr><td><b>Breakpoint</b></td><td>Ramp up steadily until it fails</td><td>Q2 &mdash; the exact capacity limit (the &ldquo;knee&rdquo;)</td></tr>
+</table>
+
+<div class="key">
+<b>Golden rule: always smoke test first.</b> A 250-VU run against a broken script wastes an hour and produces confident garbage.
+</div>
+
+<h2>4. The first script</h2>
+<p>File: <code>PerformanceTests\k6-learning\day1-smoke.js</code></p>
+<pre>import http from 'k6/http';
+import { sleep } from 'k6';
+
+export const options = {
+  vus: 1,
+  duration: '30s',
+};
+
+export default function () {
+  http.get('https://quickpizza.grafana.com/');
+  sleep(1);
+}</pre>
+
+<table>
+  <tr><th style="width:30%">Line</th><th>What it does</th></tr>
+  <tr><td><code>import http from 'k6/http'</code></td><td>Loads k6's HTTP module so you can make requests.</td></tr>
+  <tr><td><code>import { sleep } from 'k6'</code></td><td>Loads the pause function, used for &ldquo;think time&rdquo;.</td></tr>
+  <tr><td><code>export const options</code></td><td>The test configuration &mdash; how much load and for how long.</td></tr>
+  <tr><td><code>vus: 1</code></td><td>Run 1 Virtual User (one simulated person).</td></tr>
+  <tr><td><code>duration: '30s'</code></td><td>Keep looping for 30 seconds.</td></tr>
+  <tr><td><code>export default function ()</code></td><td>The body each VU repeats over and over. One pass = one <b>iteration</b>.</td></tr>
+  <tr><td><code>sleep(1)</code></td><td>Pause 1 second, imitating a real user reading the page.</td></tr>
+</table>
+
+<p><b>Run it:</b></p>
+<pre>k6 run "PerformanceTests\k6-learning\day1-smoke.js"</pre>
+<p class="sub">Note: k6 resolves the script path relative to your current working directory, not the repository root.</p>
+
+<h2>5. Reading the k6 summary &ndash; every metric explained</h2>
+<p>This is the actual output from the Day 1 run:</p>
+<table>
+  <tr><th style="width:22%">Metric</th><th style="width:33%">What it measures</th><th style="width:20%">Day 1 value</th><th>Plain reading</th></tr>
+  <tr><td><code>data_received</code></td><td>Total bytes downloaded, plus rate</td><td>84 kB / 2.8 kB/s</td><td>About 3.5 kB per page. Very small.</td></tr>
+  <tr><td><code>data_sent</code></td><td>Total bytes uploaded</td><td>1.8 kB / 59 B/s</td><td>Just GET headers, no request body.</td></tr>
+  <tr><td><code>http_req_blocked</code></td><td>Time waiting <b>before</b> the request could start (DNS + connect + TLS + waiting for a free connection)</td><td>avg 24.88ms<br>med <b>0s</b><br>max 597ms</td><td>One cold start; the other 23 requests reused the open connection.</td></tr>
+  <tr><td><code>http_req_connecting</code></td><td>Opening the TCP connection only</td><td>max 2.42ms</td><td>Server is network-close.</td></tr>
+  <tr><td><code>http_req_tls_handshaking</code></td><td>Setting up HTTPS encryption</td><td>max 572ms</td><td>The bulk of the cold start. Paid once.</td></tr>
+  <tr><td><code>http_req_sending</code></td><td>Time pushing the request bytes out</td><td>avg 307&micro;s</td><td>Negligible for a GET.</td></tr>
+  <tr><td><code>http_req_waiting</code></td><td><b>Server thinking time</b> &mdash; request sent, waiting for the first byte back (TTFB)</td><td>avg <b>245.82ms</b></td><td>This is the server's real work.</td></tr>
+  <tr><td><code>http_req_receiving</code></td><td>Time downloading the response body</td><td>avg 245&micro;s</td><td>Negligible &mdash; 3.5 kB is nothing.</td></tr>
+  <tr><td><code>http_req_duration</code></td><td><code>sending + waiting + receiving</code></td><td>avg <b>246.37ms</b></td><td>Total request time, <b>excluding</b> connection setup.</td></tr>
+  <tr><td><code>{ expected_response:true }</code></td><td>The same duration metric, filtered to successful responses only</td><td>identical</td><td>Identical because nothing failed.</td></tr>
+  <tr><td><code>http_req_failed</code></td><td>Share of requests with a non-success status code</td><td><b>0.00%</b>, 0 of 24</td><td>Clean run.</td></tr>
+  <tr><td><code>http_reqs</code></td><td>Total requests plus rate per second (throughput)</td><td>24, 0.786/s</td><td>The load that was offered.</td></tr>
+  <tr><td><code>iteration_duration</code></td><td>One complete pass of the default function, <b>including your sleep</b></td><td>avg 1.27s</td><td>Request time plus think time.</td></tr>
+  <tr><td><code>iterations</code></td><td>Completed loops</td><td>24</td><td>Matches duration divided by iteration time.</td></tr>
+  <tr><td><code>vus</code> / <code>vus_max</code></td><td>Active / allocated virtual users</td><td>1 / 1</td><td>As configured.</td></tr>
+</table>
+
+<h2>6. The request lifecycle &ndash; the structure to memorise</h2>
+<p>Every HTTP request passes through these stages, in this order:</p>
+<pre>blocked  &rarr;  connecting  &rarr;  tls_handshaking  &rarr;  sending  &rarr;  waiting  &rarr;  receiving
+|________ connection setup _________|          |______ http_req_duration ______|</pre>
+
+<div class="warn">
+<b>Critical:</b> <code>http_req_duration</code> does <b>NOT</b> include <code>blocked</code>, <code>connecting</code> or <code>tls_handshaking</code>.
+That is why <code>iteration_duration</code> max (1.84s) was larger than anything <code>duration</code> reported &mdash; the cold-start handshake lives outside <code>duration</code>.
+</div>
+
+<h3>Connecting vs TLS handshaking, in plain words</h3>
+<table>
+  <tr><th style="width:24%">Metric</th><th style="width:38%">Simple explanation</th><th>Everyday comparison</th></tr>
+  <tr><td><code>http_req_connecting</code></td><td>Time to open the raw network connection (TCP) to the server. Costs one network round-trip, so it mostly measures how far away the server is.</td><td>Dialling a phone number and waiting for the other person to pick up. Nobody has spoken yet.</td></tr>
+  <tr><td><code>http_req_tls_handshaking</code></td><td>Time to set up the encryption for HTTPS. The server proves its certificate and both sides agree on encryption keys. Takes several round-trips plus real CPU work &mdash; which is why it is much slower.</td><td>After they pick up, both of you agree on a secret code language so nobody listening in can understand.</td></tr>
+</table>
+
+<h3>Example: why the Day 1 numbers looked the way they did</h3>
+<p><b>Iteration 1</b> &mdash; nothing exists yet, so everything must be built:</p>
+<pre>DNS lookup           ~22ms   |
+TCP connect          2.42ms  |--- all of this = http_req_blocked (597ms)
+TLS handshake         572ms  |
+send + wait + receive 247ms  ---- http_req_duration
+                     -------
+total                 ~1.84s  (with sleep(1))  &lt;-- the max iteration_duration</pre>
+
+<p><b>Iterations 2 to 24</b> &mdash; the connection is still open, so go straight to sending:</p>
+<pre>blocked                  0s   &lt;-- nothing to set up, reuse the open connection
+connecting               0s
+TLS handshake            0s
+send + wait + receive ~246ms
+                      ------
+total                 ~1.24s  &lt;-- the median iteration_duration</pre>
+
+<p>This is why the setup metrics show <code>med = 0s</code>: k6 keeps the connection open and reuses it (HTTP keep-alive), exactly like a real browser.</p>
+
+<h2>7. The three diagnostic metrics &ndash; who is to blame?</h2>
+<p>These three tell you <b>which team owns the problem</b>. This is the most valuable diagnostic skill from Day 1.</p>
+<table>
+  <tr><th style="width:26%">What you see</th><th style="width:44%">What it means</th><th>Whose problem</th></tr>
+  <tr><td><code>waiting</code> is high</td><td>The server itself is slow to produce an answer.</td><td><b>Application / backend team.</b> A genuine finding &mdash; escalate it.</td></tr>
+  <tr><td><code>receiving</code> is high</td><td>Bytes are moving slowly. Either huge payloads, or your load generator cannot download them fast enough.</td><td>Often <b>your own test machine</b>.</td></tr>
+  <tr><td><code>blocked</code> is high</td><td>Connection starvation or slow DNS. If it is non-zero on <i>most</i> requests, connections are not being reused.</td><td>Usually <b>your rig or an infrastructure limit</b>, not application code.</td></tr>
+</table>
+
+<div class="key">
+<b>Real case from the MainManager framework:</b> the 250-VU runs showed a frightening 44&ndash;60 second <code>http_req_duration</code> tail.
+Almost all of it was <code>http_req_receiving</code>, while <code>http_req_waiting</code> stayed at a healthy p95 of about 0.5s.
+The cause was a single Windows machine unable to download response bodies for 250 VUs &mdash; <b>not</b> a product defect.
+Reporting <code>duration</code> there would have blamed the wrong team.
+</div>
+
+<h3>Which metric answers &ldquo;how fast is the server?&rdquo;</h3>
+<ol>
+  <li><code>http_req_waiting</code> &mdash; the truest measure of server speed.</li>
+  <li><code>http_req_duration</code> &mdash; good, unless payloads are large or the generator is strained.</li>
+  <li><code>iteration_duration</code> &mdash; <b>never</b>. It contains your own think time.</li>
+</ol>
+
+<p><b>Proof, using the Day 1 numbers:</b></p>
+<pre>iteration_duration    1.27s
+http_req_duration   - 0.246s
+                    --------
+                     ~1.02s   &lt;-- this is just your own sleep(1)</pre>
+<p>About 80% of <code>iteration_duration</code> was a number you invented. Change <code>sleep(1)</code> to <code>sleep(5)</code> and it becomes ~5.25s while the server does exactly the same work at the same speed. <b>A metric you can move without touching the system cannot measure the system.</b></p>
+<p class="sub">However, do not discard iteration_duration &mdash; it is how you size a test later (Little's Law, Day 6).</p>
+
+<h2>8. Latency statistics &ndash; min, med, avg, p90, p95, max</h2>
+<p>The Day 1 latency line:</p>
+<pre>http_req_duration: avg=246.37ms  min=244.83ms  med=246.38ms
+                   max=247.47ms  p(90)=247.28ms  p(95)=247.44ms</pre>
+
+<table>
+  <tr><th style="width:18%">Statistic</th><th style="width:30%">Definition</th><th>Read it as a sentence</th></tr>
+  <tr><td><code>min</code></td><td>The fastest single request</td><td>&ldquo;The luckiest request took 244.83ms.&rdquo;</td></tr>
+  <tr><td><code>med</code> (median)</td><td>The <b>middle</b> value once all times are sorted</td><td>&ldquo;Half the requests were faster than 246.38ms, half were slower.&rdquo;</td></tr>
+  <tr><td><code>avg</code></td><td>Sum of all times divided by the number of requests</td><td>&ldquo;The arithmetic mean was 246.37ms.&rdquo;</td></tr>
+  <tr><td><code>p(90)</code></td><td>90th percentile</td><td>&ldquo;90% of requests finished within 247.28ms.&rdquo;</td></tr>
+  <tr><td><code>p(95)</code></td><td>95th percentile</td><td>&ldquo;95% of requests finished within 247.44ms.&rdquo;</td></tr>
+  <tr><td><code>max</code></td><td>The slowest single request</td><td>&ldquo;The unluckiest request took 247.47ms.&rdquo;</td></tr>
+</table>
+
+<h3>How a percentile is actually calculated</h3>
+<p>Sort every response time from fastest to slowest, then point at the value that sits at that position in the list.</p>
+<p>Example with 10 requests:</p>
+<pre>sorted:  100  110  120  130  140  150  160  170  180  900
+                                                  ^     ^
+                                                p(90)  max
+
+p(90) = 180ms  &rarr; 9 out of 10 requests finished in 180ms or less
+max   = 900ms  &rarr; one single unlucky request
+avg   = 216ms  &rarr; a number that no actual request took</pre>
+<p>Notice that <code>p(90)</code> ignores the single 900ms outlier, while <code>max</code> is defined entirely by it. That is the value of percentiles: <b>they show the bulk of the pain without being hijacked by one freak result.</b></p>
+
+<h3>Median vs average &ndash; why both exist</h3>
+<pre>5 requests:  100ms, 100ms, 100ms, 100ms, 10000ms
+
+avg = 10400 / 5 = 2,080ms   &lt;-- destroyed by the one bad request
+med =              100ms    &lt;-- unaffected by it</pre>
+<table>
+  <tr><th style="width:20%">Statistic</th><th>Reacts to extreme values?</th></tr>
+  <tr><td><code>avg</code></td><td><b>Yes</b> &mdash; a single 10-second request drags it up.</td></tr>
+  <tr><td><code>med</code></td><td><b>No</b> &mdash; it only cares which value sits in the middle.</td></tr>
+</table>
+
+<h2>9. Why averages lie &ndash; and what to report instead</h2>
+<p>This is the single most important idea in performance testing. Worked example, 100 requests:</p>
+<table>
+  <tr><th style="width:34%">&nbsp;</th><th style="width:33%">90 requests</th><th>10 requests</th></tr>
+  <tr><td>Response time</td><td>200ms</td><td><b>8,000ms</b></td></tr>
+</table>
+<pre>avg  =   980ms   &rarr; "about a second, acceptable I suppose"
+med  =   200ms   &rarr; "200ms, we are fast!"
+p95  = 8,000ms   &rarr; "1 in 10 users waits 8 SECONDS"   &lt;-- the truth
+max  = 8,000ms</pre>
+
+<p>Same data. Three completely different stories.</p>
+<ul>
+  <li><b>avg lies</b> because it blends the good and the terrible into a number that describes nobody's real experience. No user waited 980ms.</li>
+  <li><b>med lies by omission.</b> It says the typical user is fine and tells you nothing about the other half. The 10 furious users are invisible.</li>
+  <li><b>p95 tells the truth.</b> It is the worst experience your users routinely hit.</li>
+  <li><b>max</b> is one unlucky request &mdash; a garbage-collection pause or a network blip. Useful as context, too noisy to be the headline.</li>
+</ul>
+
+<div class="good">
+<b>The rule:</b> Averages hide pain; percentiles expose it. Your users never experience an average &mdash; each one experiences a single request. The slow ones are the people who raise tickets, abandon the page and tell your manager the system is slow.
+<br><br>
+<b>Report to a manager:</b> <b>p95 latency + throughput + error rate.</b> Mention max as context. Never lead with avg.
+</div>
+
+<p>Industry convention:</p>
+<ul>
+  <li><b>p50 (median)</b> &mdash; the typical experience</li>
+  <li><b>p95</b> &mdash; the standard SLA target</li>
+  <li><b>p99</b> &mdash; where the ugliest tail lives; used for critical systems</li>
+</ul>
+<p class="sub">This is why every SLA in lib\mainmanager.js is a p95 threshold (SLA_WIDGET_P95, SLA_FILTER_P95, SLA_TREE_P95).</p>
+
+<h3>Why the Day 1 statistics were all within 3ms of each other</h3>
+<p>Because there was <b>no variation to measure</b>:</p>
+<ul>
+  <li>1 VU &rarr; no competition for server resources</li>
+  <li>The same request 24 times &rarr; identical work every time</li>
+  <li>An idle server &rarr; no queueing, no contention</li>
+  <li>A warm cache after request 1 &rarr; no cold-path surprises</li>
+</ul>
+<p>When there is no spread, every statistic collapses to the same number &mdash; avg, med, p95 and max all agree because there is nothing to disagree about.</p>
+<p><b>What creates spread?</b> Load: many VUs queueing for the same CPU, database connection or thread pool; garbage-collection pauses; database lock contention; cache misses; retries and timeouts. None of these exist at 1 VU.</p>
+
+<div class="warn">
+<b>The sting:</b> a beautifully tight 246ms is <b>not</b> good news about the system. It is evidence that no real load was applied.
+</div>
+
+<h2>10. Throughput vs latency</h2>
+<p>Two different questions, and you always need both:</p>
+<table>
+  <tr><th style="width:20%">&nbsp;</th><th style="width:44%">Question it answers</th><th>Day 1 value</th></tr>
+  <tr><td><b>Latency</b></td><td>How long does <b>one</b> request take?</td><td>246ms</td></tr>
+  <tr><td><b>Throughput</b></td><td>How many requests are handled <b>per second</b>?</td><td>0.786 requests/sec</td></tr>
+</table>
+<p><b>Everyday comparison:</b> at a toll booth, throughput is how many cars pass per minute; latency is how long one driver takes to pay. A booth can be fast per car yet still have a long queue if only one booth is open.</p>
+
+<p><b>The catch on Day 1:</b> you set the throughput, not the server.</p>
+<pre>1 VU x (246ms request + 1000ms sleep)  =  ~0.8 requests/sec</pre>
+<ul>
+  <li>Remove <code>sleep(1)</code> and throughput jumps to roughly 4/s.</li>
+  <li>Add 10 VUs and it jumps to roughly 8/s.</li>
+  <li>The server was never the limit &mdash; it was idle throughout.</li>
+</ul>
+<p>The moment this flips is when the load exceeds what the server can handle. Throughput then stops rising no matter how many VUs you add &mdash; it flattens. <b>That ceiling is the system's real capacity</b>, and finding it is the point of a breakpoint test.</p>
+
+<h2>11. Understanding expected_response:true</h2>
+<p>It means one thing only: <b>the server replied with a success status code (200&ndash;399)</b>. It has nothing to do with your own checks or conditions.</p>
+<p>The indented line in the summary is the <b>same</b> duration metric, filtered to successful requests only.</p>
+
+<h3>Worked example &ndash; why k6 bothers to split them</h3>
+<table>
+  <tr><th style="width:20%">Request</th><th style="width:30%">Result</th><th>Time</th></tr>
+  <tr><td>1</td><td>200 OK</td><td>1000ms</td></tr>
+  <tr><td>2</td><td>200 OK</td><td>1000ms</td></tr>
+  <tr><td>3</td><td>500 Error</td><td>10ms</td></tr>
+  <tr><td>4</td><td>500 Error</td><td>10ms</td></tr>
+</table>
+<pre>http_req_duration ..............: avg=505ms    &lt;-- all 4 requests
+  { expected_response:true }....: avg=1000ms   &lt;-- only the 2 that worked</pre>
+<ul>
+  <li><b>505ms is a lie</b> &mdash; the errors returned in 10ms and dragged the average down.</li>
+  <li><b>1000ms is the truth</b> &mdash; when the server actually did its job, it took a full second.</li>
+</ul>
+<p>That second line exists so that <b>fast failures cannot make a system look fast</b>. If the two lines differ, trust the second one for latency and go find out why requests are failing.</p>
+
+<h2>12. Understanding http_req_failed &ndash; and the false-green trap</h2>
+<ul>
+  <li>It is a <b>rate</b>, not a count: <code>0.00%, 0 out of 24</code>.</li>
+  <li>&ldquo;Failed&rdquo; means the <b>status code was not 2xx/3xx</b>. It does not mean k6 could not run the request.</li>
+  <li>A 500 counts as failed. A timeout counts as failed.</li>
+</ul>
+
+<div class="warn">
+<b>The trap:</b> a request returning <code>200 OK</code> with an error message in the body counts as a <b>SUCCESS</b> here.
+<br><br>
+<code>http_req_failed: 0%</code> does <b>not</b> mean your test did the right thing.
+<br><br>
+<b>Real example:</b> the old hand-written Scenario2.js had a dead session cookie, so every call redirected to the login page, which returned 200. The report was fully green while the test did nothing at all.
+</div>
+<p><code>http_req_failed</code> answers &ldquo;did HTTP work?&rdquo; &mdash; <b>not</b> &ldquo;did the business action work?&rdquo;. Catching the second one is the job of <code>check()</code> (Day 4).</p>
+
+<h2>13. What a smoke test proves &ndash; and what it does not</h2>
+<table>
+  <tr><th style="width:50%">It PROVED</th><th>It did NOT prove</th></tr>
+  <tr>
+    <td>
+      <ul>
+        <li>The script runs and the endpoint is reachable.</li>
+        <li>TLS works and connection reuse works.</li>
+        <li>A single-user <b>baseline of ~246ms</b> &mdash; the best the system can possibly do with zero competition.</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>Anything about <b>concurrency</b>. One user never queues or contends for resources.</li>
+        <li>Anything about <b>stability over time</b>. 30 seconds cannot reveal a memory leak.</li>
+        <li>Anything about <b>recovery</b> after a spike or failure.</li>
+        <li>That the <b>response was correct</b> &mdash; there were no checks on the body.</li>
+        <li>Anything about the <b>real product</b> &mdash; this was a public demo site, not MainManager.</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+<p><b>Why the baseline matters:</b> when p95 later reads 3s at 100 VUs, the 246ms baseline tells you the system degraded 12 times over. Without a baseline, &ldquo;3 seconds&rdquo; is a number with no meaning.</p>
+
+<div class="key">
+<b>Summary of a smoke test:</b> it proves the <b>instrument</b> works, not that the <b>patient</b> is healthy. That is precisely why you run it first &mdash; every minute spent debugging a broken script during a 250-VU run is a wasted test window.
+</div>
+
+<h2>14. Day 1 cheat sheet</h2>
+<table>
+  <tr><th style="width:40%">Situation</th><th>What to do / remember</th></tr>
+  <tr><td>Starting any performance test</td><td>Say out loud which of the 4 questions you are answering.</td></tr>
+  <tr><td>Before any big run</td><td>Smoke test first, always.</td></tr>
+  <tr><td>Judging server speed</td><td>Use <code>http_req_waiting</code>. Never <code>iteration_duration</code>.</td></tr>
+  <tr><td>Reporting latency to a manager</td><td><b>p95</b>, plus throughput and error rate. Never lead with avg.</td></tr>
+  <tr><td>Response times look suspiciously uniform</td><td>You probably did not apply enough load to create any spread.</td></tr>
+  <tr><td>Huge <code>duration</code> but healthy <code>waiting</code></td><td>Look at <code>receiving</code> &mdash; your load generator is likely the bottleneck, not the product.</td></tr>
+  <tr><td>Setup metrics non-zero on most requests</td><td>Connections are not being reused. Investigate before trusting the numbers.</td></tr>
+  <tr><td><code>http_req_failed</code> is 0%</td><td>That only means the status codes were fine. It does not mean the business action worked.</td></tr>
+</table>
+
+<h2>15. Glossary</h2>
+<table>
+  <tr><th style="width:26%">Term</th><th>Meaning</th></tr>
+  <tr><td><b>VU (Virtual User)</b></td><td>One simulated user, running your script in a loop.</td></tr>
+  <tr><td><b>Iteration</b></td><td>One complete pass through the default function.</td></tr>
+  <tr><td><b>Latency</b></td><td>How long a single request takes.</td></tr>
+  <tr><td><b>Throughput</b></td><td>How many requests are completed per second.</td></tr>
+  <tr><td><b>TTFB</b></td><td>Time To First Byte &mdash; measured by <code>http_req_waiting</code>.</td></tr>
+  <tr><td><b>Percentile (p95)</b></td><td>The value below which that percentage of requests finished.</td></tr>
+  <tr><td><b>Baseline</b></td><td>A known-good measurement used to judge later results.</td></tr>
+  <tr><td><b>SLA</b></td><td>Service Level Agreement &mdash; the agreed performance target, usually expressed as a p95.</td></tr>
+  <tr><td><b>Keep-alive</b></td><td>Reusing an open connection for multiple requests, avoiding repeated setup cost.</td></tr>
+  <tr><td><b>Think time</b></td><td>A deliberate pause imitating a real user reading the screen (<code>sleep()</code>).</td></tr>
+  <tr><td><b>Cold start</b></td><td>The extra cost of the first request: DNS, TCP connect and TLS handshake.</td></tr>
+</table>
+
+<h2>16. Next &ndash; Day 2</h2>
+<ul>
+  <li>VUs vs iterations vs throughput &mdash; why &ldquo;we tested with 100 users&rdquo; is a nearly meaningless sentence.</li>
+  <li>Concurrency vs arrival rate &mdash; why 100 VUs is not the same as 100 real users.</li>
+  <li>A hands-on exercise: deliberately build a run where <code>avg</code> looks healthy while <code>p95</code> is a disaster.</li>
+</ul>
+
+</body>
+</html>

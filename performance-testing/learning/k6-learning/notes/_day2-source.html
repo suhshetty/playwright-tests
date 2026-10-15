@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Day 2 - VUs, Throughput, Percentiles and Honest Reporting</title>
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-family: Calibri, sans-serif; font-size: 24pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; }
+  h2 { font-family: Calibri, sans-serif; font-size: 16pt; color: #0b3d6b; margin-top: 26px; border-bottom: 1px solid #c9d6e2; padding-bottom: 3px; }
+  h3 { font-family: Calibri, sans-serif; font-size: 13pt; color: #1f5c99; margin-top: 18px; }
+  p, li { font-size: 11pt; }
+  ul, ol { margin-top: 4px; }
+  li { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px 0; }
+  th { background-color: #0b3d6b; color: #ffffff; border: 1px solid #0b3d6b; padding: 6px 8px; text-align: left; font-size: 10.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 6px 8px; font-size: 10.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 10pt; background-color: #f4f6f8; border-left: 4px solid #1f5c99;
+        padding: 9px 12px; margin: 9px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 10pt; background-color: #eef2f6; padding: 1px 4px; }
+  .key { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 9px 12px; margin: 12px 0; }
+  .warn { background-color: #fdeeee; border-left: 4px solid #c62828; padding: 9px 12px; margin: 12px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 9px 12px; margin: 12px 0; }
+  .sub { color: #5a6b7a; font-size: 10pt; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Day 2 &ndash; VUs, Throughput, Percentiles and Honest Reporting</h1>
+<p class="sub">Learning notes &middot; Scripts: day2-throughput.js, day2-avg-lies.js</p>
+
+<h2>1. The sentence that means almost nothing</h2>
+<p>You will hear this constantly: <b>&ldquo;We tested with 100 users.&rdquo;</b> It is nearly meaningless. Three tests, all with &ldquo;100 users&rdquo;:</p>
+<table>
+  <tr><th style="width:12%">Test</th><th style="width:16%">VUs</th><th style="width:26%">Think time</th><th>Throughput</th></tr>
+  <tr><td>A</td><td>100</td><td><code>sleep(30)</code></td><td>~3 requests/sec</td></tr>
+  <tr><td>B</td><td>100</td><td><code>sleep(1)</code></td><td>~80 requests/sec</td></tr>
+  <tr><td>C</td><td>100</td><td>none</td><td>~400 requests/sec</td></tr>
+</table>
+<p><b>Same 100 VUs. A 130-times difference in actual load.</b> Test A is a sleepy afternoon; Test C is close to a denial-of-service attack.</p>
+<div class="key">
+<b>What actually describes a load test:</b> throughput (requests/sec) plus the shape of the traffic. <b>VU count is an implementation detail</b>, not a description of load.
+</div>
+
+<h2>2. The formula that explains everything</h2>
+<pre>throughput  =  VUs  &divide;  iteration_duration</pre>
+<p>Checked against the real Day 1 run:</p>
+<pre>1 VU &divide; 1.246s  =  0.80 req/s        k6 reported 0.786/s   correct</pre>
+<p>Three variables. Change any one and throughput moves. This single formula lets you predict the load of a test <b>before running it</b>.</p>
+
+<h3>Related counting rules</h3>
+<table>
+  <tr><th style="width:42%">Rule</th><th>Detail</th></tr>
+  <tr><td><code>iterations</code> is the <b>TOTAL</b> across all VUs</td><td>Not per VU. 10 VUs doing 24 loops each = 240 reported iterations.</td></tr>
+  <tr><td><code>total http_reqs = iterations &times; requests per iteration</code></td><td>If one iteration makes 3 requests, 240 iterations = 720 requests.</td></tr>
+  <tr><td>Self-check your maths two ways</td><td><code>throughput &times; duration</code> should equal your iteration estimate. 8.025 &times; 30 = 240. If the two routes disagree, you have misunderstood the test.</td></tr>
+</table>
+<p class="sub">This matters in real work: one MainManager iteration fires dozens of HTTP calls, so a run shows a few thousand iterations but hundreds of thousands of http_reqs. When reporting, say which you mean &mdash; &ldquo;240 user journeys&rdquo; and &ldquo;720 requests&rdquo; are both true and sound very different.</p>
+
+<h2>3. Exercise 1 &ndash; predict, then measure</h2>
+<pre>import http from 'k6/http';
+import { sleep } from 'k6';
+
+export const options = {
+  vus: __ENV.MYVUS ? parseInt(__ENV.MYVUS) : 1,
+  duration: '30s',
+};
+
+export default function () {
+  http.get('https://quickpizza.grafana.com/');
+  if (__ENV.NOSLEEP !== 'true') {
+    sleep(1);
+  }
+}</pre>
+<p><code>__ENV.X</code> reads a value passed on the command line with <code>-e X=value</code>, so the same file can be run three different ways without editing it.</p>
+
+<h3>Results</h3>
+<table>
+  <tr><th style="width:28%">Run</th><th style="width:18%">Predicted</th><th style="width:18%">Actual</th><th>Verdict</th></tr>
+  <tr><td>A &mdash; 1 VU, sleep(1)</td><td>0.80/s, 24 iters</td><td>0.774/s, 24 iters</td><td>Correct</td></tr>
+  <tr><td>B &mdash; 1 VU, no sleep</td><td>4.07/s, 122 iters</td><td>3.63/s, 109 iters</td><td>11% low &mdash; see below</td></tr>
+  <tr><td>C &mdash; 10 VUs, sleep(1)</td><td>8.03/s, 240 iters</td><td>7.64/s, 239 iters</td><td>Correct to 0.4%</td></tr>
+</table>
+
+<h3>Why Run B missed &ndash; the model was right, the input was stale</h3>
+<pre>input used:            246ms  (yesterday's measurement)
+actual duration avg:   267.77ms
+actual iteration avg:  275.42ms
+
+recompute:  30s &divide; 0.275s = 109 iterations   &lt;-- exactly what was measured</pre>
+<div class="key">
+When a prediction misses, ask <b>which part was wrong &mdash; the formula or the assumption?</b> Here the formula was perfect and the assumed latency was out of date.
+</div>
+
+<h3>Baseline drift &ndash; a professional habit</h3>
+<ul>
+  <li>Day 1, Run A: <b>246ms</b>. Day 2, same script, same endpoint: <b>257ms</b>. A 4% difference for no reason at all.</li>
+  <li>Causes: network conditions, server load, time of day.</li>
+  <li><b>Always re-measure your baseline in the same session as the comparison.</b> Comparing today's 250-VU run against last week's baseline is how people invent regressions that do not exist.</li>
+</ul>
+
+<h2>4. VUs are not users</h2>
+<p>A VU is <b>a loop, not a person</b>. The difference is critical:</p>
+<table>
+  <tr><th style="width:34%">When the server slows down</th><th style="width:33%">A real user</th><th>A virtual user</th></tr>
+  <tr><td>What they do</td><td>Still arrives and joins the queue</td><td><b>Waits politely and slows down</b></td></tr>
+  <tr><td>Effect on load</td><td>Queue grows, arrival rate stays constant</td><td><b>Load automatically drops</b></td></tr>
+</table>
+<div class="warn">
+<b>The closed-model trap:</b> with fixed VUs, when the server gets slower your test applies <b>less</b> load. The system is drowning and your test responds by easing off &mdash; so it never reaches the real breaking point.
+</div>
+<pre>Server healthy:      1 VU &divide; 1.25s = 0.80 req/s
+Server struggling:   1 VU &divide; 6.00s = 0.17 req/s   &lt;-- load dropped 79%</pre>
+<p>This is <b>closed model</b> (fixed VUs) versus <b>open model</b> (fixed arrival rate). Day 5 covers the executors that fix it.</p>
+
+<h2>5. Adding load does not automatically add latency</h2>
+<p>Run C increased load ten-fold. The prediction was &ldquo;latency will get slower&rdquo;. What actually happened:</p>
+<pre>Run A (1 VU,   0.77 req/s):  http_req_duration avg = 257.41ms
+Run C (10 VUs, 7.64 req/s):  http_req_duration avg = 258.22ms
+                                                      ^
+                                    10x the load, 0.8ms difference</pre>
+<p><b>Latency was flat.</b> Because 8 requests/sec is nothing for that server &mdash; nobody queued, so nobody waited.</p>
+
+<div class="key">
+<b>Queueing only causes slowdown once a resource is saturated.</b> Ten people entering a supermarket with twenty open tills are all served instantly. The same ten entering a shop with one till start forming a line.
+</div>
+
+<h3>The most important shape in performance testing</h3>
+<pre>latency
+  ^
+  |                                       ___/   &lt;-- the "knee": capacity exceeded,
+  |                                    __/           queues form, latency explodes
+  |________________________________ __/
+  |   flat - server has spare capacity
+  +-------------------------------------------&gt; throughput
+      you are HERE (8 req/s)         ^
+                                  the knee</pre>
+<p>Finding where the knee sits is what a <b>breakpoint test</b> does, and it is the number that actually answers &ldquo;how many users can we support?&rdquo;</p>
+
+<h2>6. Exercise 2 &ndash; making avg lie to you</h2>
+<pre>import http from 'k6/http';
+import { sleep } from 'k6';
+
+export const options = {
+  vus: 1,
+  duration: '60s',
+  summaryTrendStats: ['min', 'med', 'avg', 'p(90)', 'p(95)', 'p(99)', 'max'],
+};
+
+export default function () {
+  if (__ITER % 10 === 0) {
+    http.get('https://quickpizza.grafana.com/api/delay/8');
+  } else {
+    http.get('https://quickpizza.grafana.com/');
+  }
+  sleep(1);
+}</pre>
+<table>
+  <tr><th style="width:34%">Element</th><th>What it does</th></tr>
+  <tr><td><code>__ITER</code></td><td>Built-in counter: which loop number am I on? Starts at 0.</td></tr>
+  <tr><td><code>__ITER % 10 === 0</code></td><td>True on iterations 0, 10, 20&hellip; so <b>1 in every 10</b> requests is slow.</td></tr>
+  <tr><td><code>/api/delay/8</code></td><td>Server deliberately waits 8 seconds before replying.</td></tr>
+  <tr><td><code>summaryTrendStats</code></td><td>Adds <code>p(99)</code> to the printed summary &mdash; k6's default list leaves it out.</td></tr>
+</table>
+
+<h3>Results &ndash; all four predictions correct</h3>
+<table>
+  <tr><th style="width:24%">Statistic</th><th style="width:24%">Predicted</th><th style="width:24%">Actual</th><th>Reads as</th></tr>
+  <tr><td><code>med</code></td><td>~257ms</td><td><b>256.34ms</b></td><td>&ldquo;a quarter of a second, excellent&rdquo;</td></tr>
+  <tr><td><code>avg</code></td><td>~1s</td><td><b>1.11s</b></td><td>&ldquo;about a second, acceptable&rdquo;</td></tr>
+  <tr><td><code>p(95)</code></td><td>~8s</td><td><b>8.25s</b></td><td>&ldquo;1 in 10 users waits over 8 SECONDS&rdquo;</td></tr>
+  <tr><td><code>max</code></td><td>~8s</td><td><b>8.25s</b></td><td>the worst single request</td></tr>
+</table>
+<p>The arithmetic worked out exactly:</p>
+<pre>25 fast x 0.256s =  6.40
+ 3 slow x 8.250s = 24.75
+                   -----
+                   31.15  &divide; 28 = 1.112s      k6 reported 1.11s</pre>
+
+<div class="warn">
+<b>Why avg is the worst possible number here:</b> it did not simply mislead &mdash; it <b>split the difference</b>. 1.1 seconds is slow enough to look mediocre but fast enough that nobody panics. A manager files it and moves on. That is exactly how a serious problem survives.
+</div>
+
+<h2>7. How percentiles are really calculated</h2>
+<pre>position = percentage x total number of requests</pre>
+<p>Example with 100 requests, 90 fast and 10 slow, sorted fastest to slowest:</p>
+<pre>position:  1 ........................... 90 | 91 ............ 100
+value:     257ms ..................... 257ms | 8000ms ..... 8000ms
+           |-------- the 90 fast ones ------| |-- the 10 slow --|</pre>
+<table>
+  <tr><th style="width:20%">Statistic</th><th style="width:26%">Position = % x 100</th><th style="width:24%">Value there</th><th>Verdict</th></tr>
+  <tr><td><code>med</code> (p50)</td><td>50</td><td>257ms</td><td>looks fine</td></tr>
+  <tr><td><code>p(90)</code></td><td>90</td><td>257ms</td><td>looks fine</td></tr>
+  <tr><td><code>p(95)</code></td><td>95</td><td><b>8000ms</b></td><td><b>finds the problem</b></td></tr>
+  <tr><td><code>max</code></td><td>100</td><td>8000ms</td><td>something is very slow</td></tr>
+</table>
+<p><b>A percentile is a single value at a position &mdash; not a group of requests.</b> It is a boundary line: <code>p(95) = 8000ms</code> means &ldquo;95% of requests were 8000ms or faster&rdquo;.</p>
+
+<h3>The consequence: a percentile can MISS a problem</h3>
+<p>Different example &mdash; 95 requests at 2s and 5 requests at 10s:</p>
+<table>
+  <tr><th style="width:20%">Statistic</th><th style="width:18%">Position</th><th style="width:18%">Value</th><th>What it tells you</th></tr>
+  <tr><td><code>med</code></td><td>50</td><td>2s</td><td>nothing wrong</td></tr>
+  <tr><td><code>p(90)</code></td><td>90</td><td>2s</td><td>nothing wrong</td></tr>
+  <tr><td><code>p(95)</code></td><td>95</td><td><b>2s</b></td><td>nothing wrong &mdash; the 10s requests are invisible</td></tr>
+  <tr><td><code>p(99)</code></td><td>99</td><td><b>10s</b></td><td><b>found it</b></td></tr>
+  <tr><td><code>max</code></td><td>100</td><td>10s</td><td>something is very slow</td></tr>
+</table>
+<div class="key">
+<b>The rule:</b> a percentile only sees a problem if the problem is <b>bigger</b> than the slice above that line.
+<br><br>
+p95 sees problems affecting more than 5% of requests. p99 sees problems affecting more than 1%.
+</div>
+<table>
+  <tr><th style="width:44%">If this share of requests is slow</th><th>Which percentile catches it</th></tr>
+  <tr><td>20%</td><td>p90, p95, p99 all catch it</td></tr>
+  <tr><td>10%</td><td>p95 and p99 catch it; p90 sits on the edge</td></tr>
+  <tr><td>2%</td><td>only p99 catches it</td></tr>
+  <tr><td>0.5%</td><td>you need p99.9</td></tr>
+</table>
+<p><b>Never report a single percentile. Report the shape:</b></p>
+<pre>p50 =  2s
+p95 =  2s
+p99 = 10s
+max = 10s
+
+Reads as: "most requests are 2s, but 1-5% of users hit 10 seconds."</pre>
+<p class="sub">This is why the MainManager reports showing p99 = NaN are a real gap &mdash; they are currently blind to any problem affecting less than 5% of requests.</p>
+
+<h2>8. Bimodal distributions break percentile intuition</h2>
+<p>The run reported <code>p(90) = 2.65s</code>. <b>No request in the entire run took 2.65 seconds.</b> Every one was either ~256ms or ~8250ms.</p>
+<pre>25 fast requests          3 slow requests
+[....................]    [...]
+                     ^
+                p(90) lands HERE, in the gap - so k6 interpolates
+                and invents a number nothing actually measured</pre>
+<ul>
+  <li>A system with two distinct behaviours (fast path / slow path) has a <b>bimodal</b> distribution.</li>
+  <li>Real causes: cache hit vs cache miss, in-memory vs database, small dataset vs large.</li>
+  <li>Percentiles that land in the gap produce <b>meaningless numbers</b>.</li>
+</ul>
+<p><b>How to handle it:</b> report the two populations separately (via tags), or report the proportion: <i>&ldquo;10% of requests take 8s, 90% take 0.25s.&rdquo;</i> That sentence beats any percentile.</p>
+
+<h2>9. How to catch a hidden tail &ndash; five tools</h2>
+
+<h3>Clue 1: avg bigger than med (free, always available)</h3>
+<pre>med = 256ms
+avg = 1.11s     &lt;-- 4.3x the median</pre>
+<table>
+  <tr><th style="width:30%">Comparison</th><th>Meaning</th></tr>
+  <tr><td><code>avg</code> approx equal to <code>med</code></td><td>Uniform, no tail. (Day 1: 246.37 vs 246.38.)</td></tr>
+  <tr><td><code>avg</code> &gt; <code>med</code></td><td><b>A tail exists &mdash; go hunting.</b></td></tr>
+  <tr><td><code>avg</code> much greater than <code>med</code></td><td>A serious tail. Some users are suffering badly.</td></tr>
+</table>
+<p>If <code>avg</code> exceeds <code>med</code>, something in the tail is dragging the average up. There is no other explanation.</p>
+
+<h3>Clue 2: max</h3>
+<p>Proves at least one request was that slow. It cannot tell you whether that is 1 request or 500, but you cannot unsee the ceiling.</p>
+
+<h3>Tool 1: add p(99) to the output</h3>
+<pre>summaryTrendStats: ['min', 'med', 'avg', 'p(90)', 'p(95)', 'p(99)', 'max'],</pre>
+
+<h3>Tool 2: thresholds &ndash; fail the test automatically</h3>
+<pre>thresholds: {
+  'http_req_duration': ['p(99)&lt;3000'],
+},</pre>
+<p>k6 now fails the run if p99 exceeds 3 seconds. You cannot miss it. (Day 4.)</p>
+
+<h3>Tool 3: tags &ndash; find WHICH request is slow</h3>
+<p>Percentiles say <i>that</i> something is slow, never <i>what</i>. Tagging measures each endpoint separately:</p>
+<pre>http_req_duration{endpoint:homepage} ..: p(95)=200ms   &lt;-- fine
+http_req_duration{endpoint:search} ....: p(95)=10s     &lt;-- the culprit</pre>
+<p>(Day 10.)</p>
+
+<h3>Tool 4: time-series graphs &ndash; why Grafana exists</h3>
+<p>Every statistic above is a <b>single number for the whole run</b>. It cannot distinguish these two situations:</p>
+<pre>Case A - random scatter:
+  10s   .      .        .       .        .      .
+   2s  ########################################
+      |------------------- time -----------------|
+      Occasional slow requests. Annoying, low priority.
+
+Case B - a cliff:
+  10s                          #################
+   2s  ######################
+      |------------------- time -----------------|
+      Something BROKE at that moment. Urgent.</pre>
+<p><b>Identical avg, p99 and max. Completely different problems.</b> Case A is a tuning task; Case B means a resource ran out mid-test &mdash; a connection pool filled, memory hit a limit, a cache expired. Only a time-series graph shows the difference.</p>
+
+<h2>10. The closed-model trap, proven with real data</h2>
+<p>Compare throughput between the two Day 2 exercises:</p>
+<pre>Run A  (fast server):        0.774 req/s
+avg-lies run (10% slow):     0.467 req/s     &lt;-- 40% LESS load</pre>
+<p>Verify where the time went:</p>
+<pre>25 fast iterations x 1.25s = 31.25s
+ 3 slow iterations x 9.25s = 27.75s
+                             ------
+                             59.0s  = the 60s duration</pre>
+<div class="warn">
+<b>The VU spent nearly half the test sitting still</b>, waiting for slow responses instead of generating traffic. The server got slower, so the test applied less load.
+<br><br>
+Real users do not behave this way &mdash; they keep arriving whether the server copes or not. <b>A struggling system needs MORE pressure to reveal its limits, and a closed-model test gives it less.</b> This is why capacity tests use arrival-rate executors instead of fixed VUs.
+</div>
+<p>One more confirmation from the same run:</p>
+<pre>http_req_duration: avg=1.11s
+http_req_waiting:  avg=1.11s     &lt;-- identical</pre>
+<p>The delay is entirely <b>server thinking time</b> &mdash; correct, because <code>/api/delay/8</code> is literally the server sleeping. Not the network, not the test machine. Day 1's diagnostic skill applied.</p>
+
+<h2>11. Requests are not users &ndash; the conversion that changes the story</h2>
+<p>The run had <b>10% of requests slow</b>. But a real user session makes many requests. Say 10.</p>
+<p><b>What is the chance a user completes a session without hitting a single slow request?</b></p>
+<pre>0.9 x 0.9 x 0.9 ... (10 times) = 0.9^10 = 0.35
+
+So only 35% escape.  =&gt;  65% of USERS hit at least one 8-second wait.</pre>
+<table>
+  <tr><th style="width:40%">Requests per session</th><th>Users who hit at least one slow request</th></tr>
+  <tr><td>1</td><td>10%</td></tr>
+  <tr><td>5</td><td>41%</td></tr>
+  <tr><td>10</td><td><b>65%</b></td></tr>
+  <tr><td>20</td><td><b>88%</b></td></tr>
+</table>
+<div class="good">
+<b>The rule:</b> &ldquo;x% of requests are slow&rdquo; is a technical fact. &ldquo;y% of users hit it&rdquo; is the business impact &mdash; and it is always the bigger, more persuasive number. <b>Convert before you report.</b>
+</div>
+<p class="sub">This matters enormously in real work: a MainManager session is login + module load + grid + filters + modal &mdash; dozens of requests. Even a 2% slow-request rate there means nearly every user hits a stall.</p>
+
+<h2>12. How to report to a manager</h2>
+<p><b>A weak sentence:</b> <i>&ldquo;95% of users are working fine during load.&rdquo;</i></p>
+<table>
+  <tr><th style="width:34%">Problem</th><th>Why it fails</th></tr>
+  <tr><td>Leads with the good news</td><td>The manager hears &ldquo;working fine&rdquo; and stops listening. You bury your own finding.</td></tr>
+  <tr><td>Omits the magnitude</td><td>&ldquo;Some are slow&rdquo; is unactionable. &ldquo;8 seconds&rdquo; is actionable.</td></tr>
+  <tr><td>Asks for nothing</td><td>A finding with no requested action is just trivia.</td></tr>
+</table>
+
+<h3>The 5-part structure of a proper performance statement</h3>
+<ol>
+  <li><b>Verdict against the target</b> &mdash; pass or fail, stated first</li>
+  <li><b>The number and the target</b> &mdash; p95, and what it should be</li>
+  <li><b>Who is affected, in human terms</b> &mdash; not &ldquo;5% of requests&rdquo; but &ldquo;1 in 20 users&rdquo;</li>
+  <li><b>Which feature</b> &mdash; where to look</li>
+  <li><b>What you want</b> &mdash; the ask</li>
+</ol>
+<div class="good">
+<b>Applied:</b> &ldquo;We're failing our 3-second target. p95 response time is 8.25 seconds &mdash; about 1 in 10 requests takes over 8 seconds while the rest come back in a quarter of a second. It's isolated to the [X] endpoint. I need a backend engineer to profile that call.&rdquo;
+<br><br>
+Same data. Impossible to file and forget.
+</div>
+
+<h2>13. Two small operational notes</h2>
+<table>
+  <tr><th style="width:30%">Observation</th><th>Explanation</th></tr>
+  <tr><td><code>vus: 3, min=3, max=10</code></td><td>k6 samples &ldquo;how many VUs are busy right now?&rdquo; once a second. Near the end most VUs had finished, so the last sample saw 3. <b>It does not mean only 3 VUs ran</b> &mdash; 239 iterations prove all 10 worked. Trust <code>vus_max</code>.</td></tr>
+  <tr><td>Hundreds of progress lines</td><td>Cosmetic only. k6 normally rewrites one line in place; sometimes it prints a new line each time. Silence it with <code>--quiet</code>.</td></tr>
+</table>
+
+<h2>14. Day 2 cheat sheet</h2>
+<table>
+  <tr><th style="width:42%">Situation</th><th>What to do / remember</th></tr>
+  <tr><td>Describing a load test</td><td>State throughput (req/s), not VU count. &ldquo;100 users&rdquo; means nothing.</td></tr>
+  <tr><td>Sizing a test before running it</td><td><code>throughput = VUs &divide; iteration_duration</code>. Verify two ways.</td></tr>
+  <tr><td>A prediction misses</td><td>Ask whether the formula or the assumption was wrong. Usually a stale latency figure.</td></tr>
+  <tr><td>Comparing runs</td><td>Re-measure the baseline in the same session. Baselines drift ~4% for no reason.</td></tr>
+  <tr><td>Latency stays flat as load rises</td><td>Normal. You are on the flat part of the curve, far from the knee.</td></tr>
+  <tr><td><code>avg</code> is bigger than <code>med</code></td><td>A tail exists. Look at p95, p99, max.</td></tr>
+  <tr><td>A percentile shows a number no request took</td><td>Bimodal distribution. Report the two groups separately.</td></tr>
+  <tr><td>Only ~5% of requests are slow</td><td>p95 may miss it entirely. Add <code>p(99)</code> to <code>summaryTrendStats</code>.</td></tr>
+  <tr><td>Throughput drops when the system slows</td><td>Closed-model artefact, not reduced demand. Use arrival-rate executors for capacity work.</td></tr>
+  <tr><td>Reporting a slow-request percentage</td><td>Convert to affected users: <code>1 - (1-p)^requests per session</code>.</td></tr>
+  <tr><td>Writing the finding</td><td>Verdict, number vs target, human impact, which feature, the ask.</td></tr>
+</table>
+
+<h2>15. Glossary additions</h2>
+<table>
+  <tr><th style="width:28%">Term</th><th>Meaning</th></tr>
+  <tr><td><b>Throughput</b></td><td>Requests completed per second. The real measure of applied load.</td></tr>
+  <tr><td><b>Closed model</b></td><td>Fixed number of VUs. Load falls automatically when the server slows.</td></tr>
+  <tr><td><b>Open model</b></td><td>Fixed arrival rate. New requests keep arriving regardless of server health &mdash; like real traffic.</td></tr>
+  <tr><td><b>The knee</b></td><td>The throughput at which latency stops being flat and starts climbing. The system's practical capacity.</td></tr>
+  <tr><td><b>Bimodal distribution</b></td><td>Two distinct groups of response times (e.g. cache hit vs miss). Breaks single-percentile reporting.</td></tr>
+  <tr><td><b>Tail</b></td><td>The slowest requests in a run. Where real user pain lives.</td></tr>
+  <tr><td><b><code>__ITER</code></b></td><td>Built-in k6 counter for the current iteration number, starting at 0.</td></tr>
+  <tr><td><b><code>__ENV</code></b></td><td>Values passed on the command line with <code>-e KEY=value</code>.</td></tr>
+  <tr><td><b><code>summaryTrendStats</code></b></td><td>Option controlling which statistics the summary prints.</td></tr>
+</table>
+
+<h2>16. Next &ndash; Day 3</h2>
+<ul>
+  <li>The k6 script lifecycle: init, <code>setup()</code>, VU code, <code>teardown()</code> &mdash; what runs once versus every iteration.</li>
+  <li>Building a first multi-step script (more than one request per iteration).</li>
+  <li>Why the difference between <code>iterations</code> and <code>http_reqs</code> starts to matter.</li>
+</ul>
+
+</body>
+</html>

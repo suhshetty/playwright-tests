@@ -1,0 +1,182 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+         background: #fff; color: #202124; width: 1840px; }
+
+  .title { padding: 22px 26px 16px; border-bottom: 1px solid #dadce0; }
+  .title h1 { font-size: 27px; font-weight: 600; letter-spacing: -0.2px; }
+  .title p { font-size: 16px; color: #5f6368; margin-top: 7px; }
+  .title .step { color: #d93025; font-weight: 700; }
+
+  .tabs { display: flex; align-items: center; gap: 26px; padding: 9px 16px;
+          border-bottom: 1px solid #dadce0; font-size: 14.5px; color: #5f6368; background: #f1f3f4; }
+  .tabs .on { color: #1a73e8; font-weight: 600; position: relative; }
+  .tabs .on::after { content: ''; position: absolute; left: -4px; right: -4px; bottom: -10px;
+                     height: 2px; background: #1a73e8; }
+  .filters { display: flex; align-items: center; gap: 9px; padding: 9px 16px;
+             border-bottom: 1px solid #dadce0; font-size: 13.5px; }
+  .chip { padding: 4px 13px; border-radius: 13px; color: #3c4043; border: 1px solid transparent; }
+  .chip.sel { background: #d2e3fc; color: #174ea6; font-weight: 600; }
+  .filters .sep { width: 1px; height: 20px; background: #dadce0; margin: 0 7px; }
+  .cb { display: flex; align-items: center; gap: 6px; color: #3c4043; }
+  .cb i { width: 13px; height: 13px; border: 1.5px solid #80868b; border-radius: 2px; display: inline-block; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+  thead th { text-align: left; font-weight: 500; color: #3c4043; padding: 9px 14px;
+             background: #f8f9fa; border-bottom: 1px solid #dadce0;
+             border-right: 1px solid #e8eaed; font-size: 14px; }
+  tbody td { padding: 10px 14px; border-bottom: 1px solid #f1f3f4;
+             border-right: 1px solid #f1f3f4; white-space: nowrap; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .ico { display: inline-block; width: 15px; height: 17px; vertical-align: -3px; margin-right: 9px;
+         border: 1.5px solid #d93025; border-radius: 2px; position: relative; }
+  .ico::after { content: '{}'; position: absolute; inset: 0; font-size: 8px; color: #d93025;
+                text-align: center; line-height: 15px; font-weight: 700; }
+
+  tr.use { background: #fdecea; }
+  tr.use td { border-bottom-color: #f6c7c1; }
+  tr.use td:first-child { box-shadow: inset 5px 0 0 #d93025; font-weight: 700; color: #b31412; }
+  .tag { display: inline-block; margin-left: 13px; padding: 2px 9px; background: #d93025;
+         color: #fff; border-radius: 3px; font-size: 11px; font-weight: 800;
+         letter-spacing: .5px; vertical-align: 1px; }
+  .why { font-size: 13px; color: #b31412; font-weight: 600; white-space: normal; }
+  .body { font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: #a3160f;
+          white-space: normal; line-height: 1.45; }
+
+  tr.zero { background: #f1f3f4; }
+  tr.zero td { color: #5f6368; border-bottom: 1px solid #dadce0; }
+  tr.zero td:first-child { box-shadow: inset 5px 0 0 #9aa0a6; font-weight: 600; }
+  .tag0 { display: inline-block; margin-left: 13px; padding: 2px 9px; background: #5f6368;
+          color: #fff; border-radius: 3px; font-size: 11px; font-weight: 800;
+          letter-spacing: .5px; vertical-align: 1px; }
+
+  .grp { background: #fff5f4 !important; }
+  .grp td { padding: 6px 14px; font-size: 13px; color: #b31412; font-weight: 700;
+            border-bottom: 1px solid #f6c7c1; letter-spacing: .3px; }
+
+  .statusbar { display: flex; gap: 26px; padding: 11px 16px; font-size: 13.5px;
+               background: #f8f9fa; border-top: 1px solid #dadce0; color: #3c4043; }
+  .legend { display: flex; align-items: center; gap: 26px; padding: 17px 26px;
+            border-top: 2px solid #d93025; background: #fdecea; }
+  .legend .big { font-size: 34px; font-weight: 800; color: #b31412; line-height: 1; }
+  .legend .lab { font-size: 15px; color: #b31412; font-weight: 600; }
+  .legend .note { font-size: 14px; color: #5f6368; margin-left: auto; text-align: right; line-height: 1.55; }
+  .legend .note b { color: #202124; }
+</style></head><body>
+
+<div class="title">
+  <h1><span class="step">STEP 2 &mdash; SELECT MODULE &ldquo;MY PAGE&rdquo;</span> &nbsp;&middot;&nbsp; which requests go into the script</h1>
+  <p>Clicked the module button, then clicked <b>My page</b>. Captured live on kommune.mainmanager.is, 13 Oct 2026.</p>
+</div>
+
+<div class="tabs">
+  <span>Elements</span><span>Console</span><span>Sources</span>
+  <span class="on">Network</span><span>Performance</span><span>Memory</span>
+  <span>Application</span><span>Security</span><span>Lighthouse</span><span>Recorder</span>
+</div>
+
+<div class="filters">
+  <span class="cb"><i style="background:#1a73e8;border-color:#1a73e8"></i> <b>Preserve log</b></span>
+  <span class="cb"><i></i> Disable cache</span>
+  <span class="sep"></span>
+  <span class="chip">All</span>
+  <span class="chip sel">Fetch/XHR</span>
+  <span class="chip sel">Doc</span>
+  <span class="chip">CSS</span><span class="chip">JS</span><span class="chip">Font</span>
+  <span class="chip">Img</span><span class="chip">Media</span><span class="chip">Manifest</span>
+  <span class="chip">Socket</span><span class="chip">Wasm</span>
+</div>
+
+<table>
+  <thead><tr>
+    <th style="width:5%">#</th>
+    <th style="width:23%">Name</th>
+    <th style="width:30%">Request body</th>
+    <th style="width:6%">Status</th>
+    <th style="width:6%" class="num">Size</th>
+    <th style="width:6%" class="num">Time</th>
+    <th style="width:24%">Why it is in the script</th>
+  </tr></thead>
+  <tbody>
+
+  <tr class="zero">
+    <td>&mdash;</td>
+    <td>Clicking the module button (menu opens)<span class="tag0">0 REQUESTS</span></td>
+    <td class="body">&mdash;</td><td>&mdash;</td><td class="num">&mdash;</td><td class="num">&mdash;</td>
+    <td class="why" style="color:#5f6368;font-weight:400">All 23 modules were already downloaded at login by <b>BuildMainMenu</b>. Opening the menu just un-hides them &mdash; pure browser, no server.</td>
+  </tr>
+
+  <tr class="grp"><td colspan="7">&#9660;&nbsp; THEN CLICKING &ldquo;MY PAGE&rdquo; &mdash; 25 REQUESTS, EVERY ONE AN API CALL</td></tr>
+
+  <tr class="use"><td>1</td>
+    <td><span class="ico"></span>saveToggleValue<span class="tag">USE</span></td>
+    <td class="body">{"MyKey":"ActiveNavigationItem","Value":"MyPage"}</td>
+    <td>200</td><td class="num">8 B</td><td class="num">268 ms</td>
+    <td class="why">Tells the server which module is now active</td></tr>
+
+  <tr class="use"><td>2</td>
+    <td><span class="ico"></span>GetMenuItemSteps<span class="tag">USE</span></td>
+    <td class="body">{"Tag":"MyPage"}</td>
+    <td>200</td><td class="num">8.2 kB</td><td class="num">284 ms</td>
+    <td class="why">Asks what tabs this module has for this user</td></tr>
+
+  <tr class="use"><td>3</td>
+    <td><span class="ico"></span>saveToggleValue<span class="tag">USE</span></td>
+    <td class="body">{"MyKey":"ActiveNavigationItem","Value":"MyPage"}</td>
+    <td>200</td><td class="num">8 B</td><td class="num">226 ms</td>
+    <td class="why">Active module</td></tr>
+
+  <tr class="use"><td>4</td>
+    <td><span class="ico"></span>saveToggleValue<span class="tag">USE</span></td>
+    <td class="body">{"MyKey":"ActiveNavigationStepMyPage","Value":"MainSummary-2147483643"}</td>
+    <td>200</td><td class="num">8 B</td><td class="num">226 ms</td>
+    <td class="why">Active tab</td></tr>
+
+  <tr class="use"><td>5</td>
+    <td><span class="ico"></span>saveToggleValue<span class="tag">USE</span></td>
+    <td class="body">{"MyKey":"ActiveNavigationStepItemMyPage.MainSummary-2147483643","Value":"MainSummary-2147483643"}</td>
+    <td>200</td><td class="num">8 B</td><td class="num">301 ms</td>
+    <td class="why">Active sub-tab. <b>These four look like noise &mdash; without them the dashboard comes back EMPTY.</b></td></tr>
+
+  <tr class="use"><td>6</td>
+    <td><span class="ico"></span>InitMainLayout<span class="tag">USE</span></td>
+    <td class="body">{"UniqueString":"","MenuItemKey":"MainSummary-2147483643","SummaryID":2147483643,"MenuItemTypeID":2,"ProcessTag":"MyPage"}</td>
+    <td>200</td><td class="num">2.7 kB</td><td class="num">499 ms</td>
+    <td class="why">Builds the page layout. The server issues a <b>UniqueString</b> here.</td></tr>
+
+  <tr class="use"><td>7</td>
+    <td><span class="ico"></span>BuildMyPage<span class="tag">USE</span></td>
+    <td class="body">{"MainSummaryID":2147483643,"FilterValues":""}</td>
+    <td>200</td><td class="num"><b>35.7 kB</b></td><td class="num">282 ms</td>
+    <td class="why"><b>The dashboard itself.</b> Returns the 18 tiles &mdash; and a server-issued <b>Checksum</b> for each one.</td></tr>
+
+  <tr class="use"><td>8&ndash;25</td>
+    <td><span class="ico"></span>InitPortalAggregate &times;18<span class="tag">USE</span></td>
+    <td class="body">{"PortalKey":"Snapshot-4390","MainModuleID":883,"ExcludeLocation":false,"Checksum":"lf6VxRunmSpf8IiIv+A8wdj9VcrPNTtX…"}<br>&hellip; and 17 more, one per tile, each with its own key + checksum</td>
+    <td>200</td><td class="num">~250 B<br>each</td><td class="num">347 ms<br>&ndash; 2.10 s</td>
+    <td class="why"><b>One database query per dashboard tile, fired all at once.</b> Tiny responses, heavy work. This is the real cost of My page.</td></tr>
+
+  </tbody>
+</table>
+
+<div class="statusbar">
+  <span><b>25 requests</b></span>
+  <span>all xhr &mdash; <b>0 images, 0 CSS, 0 JavaScript</b></span>
+  <span>Nothing came from cache</span>
+</div>
+
+<div class="legend">
+  <div class="big">25</div>
+  <div class="lab">requests go into<br>the k6 script</div>
+  <div class="big" style="color:#5f6368">0</div>
+  <div class="lab" style="color:#5f6368">dropped</div>
+  <div class="note">
+    Compare with login: <b>44 observed, 6 kept.</b><br>
+    Login looks busy but is mostly cached files and framework noise.<br>
+    My page is one click &mdash; and <b>every single request is the server doing work.</b>
+  </div>
+</div>
+
+</body></html>

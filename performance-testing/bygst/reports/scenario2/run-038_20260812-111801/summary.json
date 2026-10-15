@@ -1,0 +1,773 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 418,
+              "fails": 10,
+              "name": "login page 200"
+            },
+            {
+              "path": "::1. Login::logged in (on Content page)",
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 416,
+              "fails": 2,
+              "name": "logged in (on Content page)"
+            },
+            {
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 416,
+              "fails": 2,
+              "name": "login not bounced back"
+            }
+          ],
+        "name": "1. Login"
+      },
+      {
+        "name": "Landing (post-login module)",
+        "path": "::Landing (post-login module)",
+        "id": "1b79536bd4ea91dd062d96c9df7dc070",
+        "groups": [],
+        "checks": [
+            {
+              "id": "0704c4e1422715c868cf54ab24efec9b",
+              "passes": 410,
+              "fails": 6,
+              "name": "MyPage headers loaded",
+              "path": "::Landing (post-login module)::MyPage headers loaded"
+            },
+            {
+              "name": "MyPage grid loaded",
+              "path": "::Landing (post-login module)::MyPage grid loaded",
+              "id": "31717e1232e841a8d8b350a3e7af0850",
+              "passes": 409,
+              "fails": 7
+            }
+          ]
+      },
+      {
+        "path": "::2. Building archive -> Site register -> Sites",
+        "id": "30e772f3786422294fc74106f0f2ac0c",
+        "groups": [],
+        "checks": [
+            {
+              "id": "7470e80234338b18a6fa8965ff56e297",
+              "passes": 412,
+              "fails": 4,
+              "name": "BuildingArchive headers loaded",
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive headers loaded"
+            },
+            {
+              "name": "BuildingArchive grid loaded",
+              "path": "::2. Building archive -> Site register -> Sites::BuildingArchive grid loaded",
+              "id": "cea162ba4a797a952275e3e928d3e5f3",
+              "passes": 412,
+              "fails": 4
+            }
+          ],
+        "name": "2. Building archive -> Site register -> Sites"
+      },
+      {
+        "id": "d193054ad2c4ddd8a538c8621d081f8e",
+        "groups": [],
+        "checks": [
+            {
+              "name": "resolved GroundID 'Adelgade 11'",
+              "path": "::Resolve site 'Adelgade 11'::resolved GroundID 'Adelgade 11'",
+              "id": "3413c5df696bd646055110732afd998b",
+              "passes": 50,
+              "fails": 0
+            }
+          ],
+        "name": "Resolve site 'Adelgade 11'",
+        "path": "::Resolve site 'Adelgade 11'"
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "passes": 396,
+              "fails": 11,
+              "name": "modal loaded (200)",
+              "path": "::5. Open site -> popup::modal loaded (200)",
+              "id": "5c6cd19881b02ca2beab1e088ed47a5e"
+            },
+            {
+              "name": "modal no server error",
+              "path": "::5. Open site -> popup::modal no server error",
+              "id": "c3c3620bd364b0cc63f1f114c4c5cdce",
+              "passes": 407,
+              "fails": 0
+            }
+          ],
+        "name": "5. Open site -> popup",
+        "path": "::5. Open site -> popup",
+        "id": "7df95975e8cbb530f01487e8939e9de7"
+      },
+      {
+        "checks": [
+          {
+            "id": "394a21715f96d6481e6589625b1d92a4",
+            "passes": 397,
+            "fails": 16,
+            "name": "BuildingArchive headers loaded",
+            "path": "::6. Locations overview -> Buildings::BuildingArchive headers loaded"
+          },
+          {
+            "name": "BuildingArchive grid loaded",
+            "path": "::6. Locations overview -> Buildings::BuildingArchive grid loaded",
+            "id": "ac45f5a2fbf4b6af76b80973ea2f39ae",
+            "passes": 397,
+            "fails": 16
+          }
+        ],
+        "name": "6. Locations overview -> Buildings",
+        "path": "::6. Locations overview -> Buildings",
+        "id": "4ea5289e3fff7aae924ea85d7fd2866c",
+        "groups": []
+      },
+      {
+        "name": "Resolve MunicipalityID 'København'",
+        "path": "::Resolve MunicipalityID 'København'",
+        "id": "3e5429501bdddec6162e2707c0e60c93",
+        "groups": [],
+        "checks": [
+            {
+              "name": "resolved MunicipalityID 'København'",
+              "path": "::Resolve MunicipalityID 'København'::resolved MunicipalityID 'København'",
+              "id": "221ddf87af0faae90db5d51d5ea16b15",
+              "passes": 50,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "id": "c7550ac207613491a6fa1f6f1d9bbc0d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::8. Open building -> popup::modal loaded (200)",
+              "id": "a275cd321bb19eaad45c699650728e65",
+              "passes": 370,
+              "fails": 5
+            },
+            {
+              "path": "::8. Open building -> popup::modal no server error",
+              "id": "d347095c7f24a5b1fc995cb4236c7526",
+              "passes": 375,
+              "fails": 0,
+              "name": "modal no server error"
+            }
+          ],
+        "name": "8. Open building -> popup",
+        "path": "::8. Open building -> popup"
+      },
+      {
+        "name": "9. Site filter -> Adelgade 11",
+        "path": "::9. Site filter -> Adelgade 11",
+        "id": "1d9263174bea930609875b2a7ca88d29",
+        "groups": [],
+        "checks": [
+            {
+              "id": "39b180a6826539a93a2f4174e3eca379",
+              "passes": 383,
+              "fails": 7,
+              "name": "Building grid reloaded after location filter",
+              "path": "::9. Site filter -> Adelgade 11::Building grid reloaded after location filter"
+            }
+          ]
+      },
+      {
+        "name": "10. Site filter -> Show all sites",
+        "path": "::10. Site filter -> Show all sites",
+        "id": "878dac10b7e97173a4c7e917a80cc321",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after location filter",
+              "path": "::10. Site filter -> Show all sites::Building grid reloaded after location filter",
+              "id": "16eb90039c601ffe3a0db180d1208486",
+              "passes": 383,
+              "fails": 7
+            }
+          ]
+      },
+      {
+        "id": "cd3890379d01a07b2810191dc7b7e9e9",
+        "groups": [],
+        "checks": [
+            {
+              "name": "Building grid reloaded after data filter",
+              "path": "::11. Data filter -> Municipality København::Building grid reloaded after data filter",
+              "id": "811c6e6cbff989154267e8a99550dc2b",
+              "passes": 373,
+              "fails": 6
+            }
+          ],
+        "name": "11. Data filter -> Municipality København",
+        "path": "::11. Data filter -> Municipality København"
+      },
+      {
+        "checks": [
+          {
+            "path": "::14. Clear data filter::Building grid reloaded after filter clear",
+            "id": "e0b80615a9bf318300076198c868a6f8",
+            "passes": 361,
+            "fails": 5,
+            "name": "Building grid reloaded after filter clear"
+          }
+        ],
+        "name": "14. Clear data filter",
+        "path": "::14. Clear data filter",
+        "id": "01441ec90355ecafcc9154600be4bd47",
+        "groups": []
+      },
+      {
+        "groups": [],
+        "checks": [
+            {
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 362,
+              "fails": 11,
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)"
+            }
+          ],
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a"
+      }
+    ],
+    "checks": [
+      {
+        "passes": 407,
+        "fails": 9,
+        "name": "Sites grid returned rows",
+        "path": "::Sites grid returned rows",
+        "id": "5247ff2fda40c084b433d48710bd8284"
+      },
+      {
+        "name": "Buildings grid returned rows",
+        "path": "::Buildings grid returned rows",
+        "id": "7506e0a21878deecd8ff0a211e0537d4",
+        "passes": 376,
+        "fails": 15
+      }
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 630011.1741
+  },
+  "metrics": {
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 1246539469,
+        "rate": 1978598.9840271312
+      }
+    },
+    "http_req_failed": {
+      "values": {
+        "fails": 24132,
+        "rate": 0.01862545750305002,
+        "passes": 458
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      },
+      "type": "rate",
+      "contains": "default"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 1.2272427531516878,
+        "min": 0,
+        "med": 0,
+        "max": 1587.8657,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.004639947132980887,
+        "min": 0,
+        "med": 0,
+        "max": 5.5829,
+        "p(90)": 0,
+        "p(95)": 0
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 3254.378396541658,
+        "min": 199.7171,
+        "med": 2866.2977,
+        "max": 59962.3853,
+        "p(90)": 5543.3622399999995,
+        "p(95)": 6380.380279999995
+      }
+    },
+    "http_req_duration": {
+      "values": {
+        "avg": 588.2225593289917,
+        "min": 199.206,
+        "med": 384.23884999999996,
+        "max": 43632.519,
+        "p(90)": 918.0906600000001,
+        "p(95)": 1202.0953099999986
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 197.9454,
+        "med": 332.68635,
+        "max": 43632.519,
+        "p(90)": 800.8182800000005,
+        "p(95)": 1073.509545,
+        "avg": 530.8012690321257
+      }
+    },
+    "known_issue_refreshmainmanfilter_400": {
+      "values": {
+        "count": 36,
+        "rate": 0.05714184363702384
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 200.4881,
+        "med": 391.46475,
+        "max": 43632.519,
+        "p(90)": 925.58271,
+        "p(95)": 1208.3317100000002,
+        "avg": 594.3247813442697
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.9823956666256309,
+        "passes": 7980,
+        "fails": 143
+      }
+    },
+    "known_issue_isshortcut_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.03809456242468256,
+        "count": 24
+      }
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 90372.33163499998,
+        "avg": 55472.251941145885,
+        "min": 22312.1035,
+        "med": 53609.59955,
+        "max": 107425.5247,
+        "p(90)": 66612.34628
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 43798,
+        "p(90)": 1073.4,
+        "p(95)": 1411.199999999998,
+        "avg": 1926.201072386059,
+        "min": 200,
+        "med": 643
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "step_filter_duration": {
+      "contains": "time",
+      "values": {
+        "min": 412,
+        "med": 991,
+        "max": 44966,
+        "p(90)": 1444.8000000000004,
+        "p(95)": 1630,
+        "avg": 1321.8537704918033
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "step_login_render_duration": {
+      "values": {
+        "avg": 1500.0745192307693,
+        "min": 929,
+        "med": 1247.5,
+        "max": 5779,
+        "p(90)": 1746.5,
+        "p(95)": 4299.75
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "known_issue_refreshdatafilter_400": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.03650728899032078,
+        "count": 23
+      }
+    },
+    "step_mypage_tab_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 1.2138391419276127,
+        "min": 0,
+        "med": 0,
+        "max": 1582.6671
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 14168615,
+        "rate": 22489.466191199735
+      }
+    },
+    "step_navigate_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 6466,
+        "p(95)": 7189.199999999999,
+        "avg": 5482.926803013994,
+        "min": 457,
+        "med": 4981,
+        "max": 59963
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "known_issue_emptydatafilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 29,
+        "rate": 0.046030929596491424
+      }
+    },
+    "step_login_duration": {
+      "values": {
+        "avg": 4582.238317757009,
+        "min": 200,
+        "med": 3657.5,
+        "max": 50749,
+        "p(90)": 4994.7,
+        "p(95)": 7853.099999999999
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "known_issue_emptydatafilter_400": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 24,
+        "rate": 0.03809456242468256
+      }
+    },
+    "known_issue_refreshdatafilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 29,
+        "rate": 0.046030929596491424
+      }
+    },
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 4758.447115384615,
+        "min": 2774,
+        "med": 4369,
+        "max": 11832,
+        "p(90)": 6550.5,
+        "p(95)": 8805
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 50,
+        "min": 50,
+        "max": 50
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "known_issue_refreshdatafilter_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 6,
+        "rate": 0.00952364060617064
+      }
+    },
+    "known_issue_emptydatafilter_503": {
+      "values": {
+        "count": 5,
+        "rate": 0.007936367171808867
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 1278.6722488038276,
+        "min": 252,
+        "med": 1155,
+        "max": 5652,
+        "p(90)": 1626.3,
+        "p(95)": 1975
+      }
+    },
+    "known_issue_refreshmainmanfilter_503": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 14,
+        "rate": 0.022221828081064827
+      }
+    },
+    "vus": {
+      "values": {
+        "value": 44,
+        "min": 1,
+        "max": 50
+      },
+      "type": "gauge",
+      "contains": "default"
+    },
+    "business_errors": {
+      "contains": "default",
+      "values": {
+        "fails": 4362,
+        "rate": 0.0204356613518976,
+        "passes": 91
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": false
+        }
+      },
+      "type": "rate"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 57.328347454249645,
+        "min": 0,
+        "med": 3.6283000000000003,
+        "max": 37919.8737,
+        "p(90)": 157.30865000000037,
+        "p(95)": 298.61182999999994
+      }
+    },
+    "step_tree_load_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "known_server_errors": {
+      "contains": "default",
+      "values": {
+        "count": 132,
+        "rate": 0.20952009333575408
+      },
+      "type": "counter"
+    },
+    "known_issue_refreshmainmanfilter": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 50,
+        "rate": 0.07936367171808867
+      }
+    },
+    "iterations": {
+      "contains": "default",
+      "values": {
+        "count": 384,
+        "rate": 0.6095129987949209
+      },
+      "type": "counter"
+    },
+    "step_open_record_duration": {
+      "values": {
+        "avg": 3482.5946291560103,
+        "min": 859,
+        "med": 3236.5,
+        "max": 9254,
+        "p(90)": 5055.7,
+        "p(95)": 5705.0999999999985
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": false
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "known_issue_isshortcut": {
+      "values": {
+        "count": 24,
+        "rate": 0.03809456242468256
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.092942842618951,
+        "min": 0,
+        "med": 0,
+        "max": 9.5358,
+        "p(90)": 0.5072,
+        "p(95)": 0.5337
+      }
+    },
+    "http_reqs": {
+      "contains": "default",
+      "values": {
+        "rate": 39.031053750956005,
+        "count": 24590
+      },
+      "type": "counter"
+    }
+  }
+}

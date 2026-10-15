@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Day 6 - Think Time, Pacing and Little's Law</title>
+<style>
+  body { font-family: Calibri, sans-serif; font-size: 11pt; line-height: 1.45; color: #1a1a1a; }
+  h1 { font-size: 24pt; color: #0b3d6b; border-bottom: 3px solid #0b3d6b; padding-bottom: 6px; }
+  h2 { font-size: 16pt; color: #0b3d6b; margin-top: 26px; border-bottom: 1px solid #c9d6e2; padding-bottom: 3px; }
+  h3 { font-size: 13pt; color: #1f5c99; margin-top: 18px; }
+  p, li { font-size: 11pt; }
+  li { margin-bottom: 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0 14px 0; }
+  th { background-color: #0b3d6b; color: #fff; border: 1px solid #0b3d6b; padding: 6px 8px; text-align: left; font-size: 10.5pt; }
+  td { border: 1px solid #b8c6d4; padding: 6px 8px; font-size: 10.5pt; vertical-align: top; }
+  tr:nth-child(even) td { background-color: #f2f6fa; }
+  pre { font-family: Consolas, monospace; font-size: 10pt; background-color: #f4f6f8; border-left: 4px solid #1f5c99;
+        padding: 9px 12px; margin: 9px 0; white-space: pre; }
+  code { font-family: Consolas, monospace; font-size: 10pt; background-color: #eef2f6; padding: 1px 4px; }
+  .key { background-color: #fff8e1; border-left: 4px solid #f0ad00; padding: 9px 12px; margin: 12px 0; }
+  .warn { background-color: #fdeeee; border-left: 4px solid #c62828; padding: 9px 12px; margin: 12px 0; }
+  .good { background-color: #eef7ee; border-left: 4px solid #2e7d32; padding: 9px 12px; margin: 12px 0; }
+  .sub { color: #5a6b7a; font-size: 10pt; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>Day 6 &ndash; Think Time, Pacing and Little's Law</h1>
+<p class="sub">Learning notes &middot; Script: day6-littles-law.js</p>
+
+<h2>1. Little's Law &mdash; the formula, named</h2>
+<pre>L  =  lambda  x  W          (queueing theory, 1961)
+
+VUs  =  throughput  x  iteration_duration</pre>
+<table>
+  <tr><th style="width:16%">Symbol</th><th style="width:42%">Means</th><th>In k6</th></tr>
+  <tr><td><b>L</b></td><td>how many things are in the system at once</td><td><b>VUs</b></td></tr>
+  <tr><td><b>lambda</b></td><td>arrival rate</td><td><b>throughput</b></td></tr>
+  <tr><td><b>W</b></td><td>time each thing spends inside</td><td><b>iteration_duration</b></td></tr>
+</table>
+
+<h3>Solve for whichever you do not know</h3>
+<pre>VUs        = throughput x iteration_duration      &lt;-- sizing a test (PLANNING)
+throughput = VUs / iteration_duration             &lt;-- reading a run
+duration   = VUs / throughput                     &lt;-- "how long is a journey?"</pre>
+
+<h2>2. Think time and pacing are different things</h2>
+<table>
+  <tr><th style="width:22%">&nbsp;</th><th style="width:39%">Think time</th><th>Pacing</th></tr>
+  <tr><td>What it is</td><td>a pause <b>between actions</b></td><td>a fixed <b>cadence between iterations</b></td></tr>
+  <tr><td>Controls</td><td>how long a journey <b>takes</b></td><td>how often a journey <b>starts</b></td></tr>
+  <tr><td>In k6</td><td><code>sleep()</code></td><td><b>the arrival-rate executor</b></td></tr>
+</table>
+<div class="key">
+<code>constant-arrival-rate</code> <b>IS</b> pacing &mdash; it starts an iteration every 200ms (at 5/s) whether the previous one has finished or not. That is exactly why it does not sag when the server slows down.
+</div>
+
+<h2>3. The coffee shop &mdash; the whole concept in one analogy</h2>
+<p>The barista makes <b>5 coffees a minute</b>.</p>
+<table>
+  <tr><th style="width:38%">If each customer&hellip;</th><th style="width:26%">People in the shop</th><th>Barista's work</th></tr>
+  <tr><td>leaves immediately</td><td>~2</td><td><b>5 coffees/min</b></td></tr>
+  <tr><td>sits for 1 minute</td><td>~7</td><td><b>5 coffees/min</b></td></tr>
+  <tr><td>sits for 5 minutes</td><td>~28</td><td><b>5 coffees/min</b></td></tr>
+</table>
+<p><b>The shop looks empty or packed. The barista does exactly the same work.</b></p>
+<pre>"we support 28 concurrent users"  -&gt;  tells you nothing
+"we support 5 requests/sec"       -&gt;  tells you everything</pre>
+<div class="key">
+When someone says <i>&ldquo;it must handle 500 users&rdquo;</i>, your first question is: <b>&ldquo;Doing what, how often?&rdquo;</b>
+<br><br>
+500 users clicking once an hour is almost nothing. 500 users clicking every 2 seconds is ~250 req/s.
+</div>
+
+<h2>4. The experiment</h2>
+<pre>import http from 'k6/http';
+import { sleep } from 'k6';
+
+const THINK = __ENV.THINK ? parseFloat(__ENV.THINK) : 1;
+
+export const options = {
+  scenarios: {
+    fixed_rate: {
+      executor: 'constant-arrival-rate',
+      rate: 5, timeUnit: '1s', duration: '30s',
+      preAllocatedVUs: 5,
+      maxVUs: 100,
+    },
+  },
+};
+
+export default function () {
+  http.get('https://quickpizza.grafana.com/');
+  sleep(THINK);
+}</pre>
+<p>Run three times with the same rate and only the think time changed:</p>
+<pre>k6 run -e THINK=0 ...    k6 run -e THINK=1 ...    k6 run -e THINK=5 ...</pre>
+<p class="sub">Note: the file never changes. `-e THINK=5` sets __ENV.THINK, which the script reads.</p>
+
+<h3>Predicting it without running</h3>
+<pre>iteration_duration = request time + sleep = 0.25s + THINK
+VUs                = rate x iteration_duration = 5 x (0.25 + THINK)</pre>
+<table>
+  <tr><th style="width:18%">Run</th><th style="width:26%">iteration_duration</th><th style="width:20%">5 x that</th><th>VUs expected</th></tr>
+  <tr><td>THINK=0</td><td>0.25s</td><td>1.25</td><td>~2, but the floor is 5 (<code>preAllocatedVUs</code>)</td></tr>
+  <tr><td>THINK=1</td><td>1.25s</td><td>6.25</td><td>~7</td></tr>
+  <tr><td>THINK=5</td><td>5.25s</td><td>26.25</td><td>~27</td></tr>
+</table>
+<p><code>vus_max</code> can never be below <code>preAllocatedVUs</code>. And the 0.25s is <b>measured</b> &mdash; it is the QuickPizza homepage request time from the Day 1 smoke test, re-confirmed on every day since (246 / 257 / 249 / 245 / 254 ms).</p>
+<p class="sub">Unit reminder: 254ms / 1000 = 0.254s. Little's Law needs seconds, because the rate is per second.</p>
+
+<h2>5. Results</h2>
+<table>
+  <tr><th style="width:16%">Run</th><th style="width:20%">vus_max predicted</th><th style="width:16%">actual</th><th style="width:20%">http_reqs/s</th><th>dropped</th></tr>
+  <tr><td>THINK=0</td><td>5&ndash;7</td><td><b>7</b> correct</td><td>4.92</td><td>2</td></tr>
+  <tr><td>THINK=1</td><td>~7</td><td><b>16</b> wrong</td><td>4.48</td><td>11</td></tr>
+  <tr><td>THINK=5</td><td>~27</td><td><b>28</b> correct</td><td>3.63</td><td>23</td></tr>
+</table>
+
+<h3>THE PROOF &mdash; the headline result</h3>
+<pre>THINK=0   http_req_duration  med = 253.64ms      (7 VUs)
+THINK=1   http_req_duration  med = 252.72ms     (16 VUs)
+THINK=5   http_req_duration  med = 252.62ms     (28 VUs)</pre>
+<div class="good">
+<b>Within 1 millisecond of each other, across runs with 4x different VU counts.</b>
+<br><br>
+The VU count changed 4x. <b>The server did not notice.</b> Because the RATE of requests never changed &mdash; only how long each user rested in between.
+<br><br>
+<b>VU count is not load. Throughput is load.</b>
+</div>
+
+<h2>6. Why THINK=1 overshot to 16 VUs</h2>
+<pre>http_req_blocked         max = 4.00s
+http_req_tls_handshaking max = 3.77s
+iteration_duration       max = 5.25s   (vs med 1.25s)</pre>
+<p>A few TLS handshakes took about 4 seconds. During that stall k6 hired extra VUs to defend the rate &mdash; and <b><code>vus_max</code> is a high-water mark, so it never comes back down.</b></p>
+<div class="key">
+<b>Little's Law predicts the STEADY-STATE need. <code>vus_max</code> reports the WORST MOMENT.</b>
+<br><br>
+They agree on a clean run (THINK=5: predicted 27, actual 28). They diverge when something transient stalls the test.
+</div>
+
+<h2>7. The bonus lesson &mdash; the throughput sag was YOUR rig, not the server</h2>
+<pre>target 5/s     THINK=0: 4.92     THINK=1: 4.48     THINK=5: 3.63
+dropped:                    2                11                23</pre>
+<p><b>Cause: <code>preAllocatedVUs: 5</code> was under-provisioned.</b></p>
+<pre>THINK=0  needs ~2 VUs   -&gt;  5 ready  -&gt;  plenty        -&gt;   2 drops
+THINK=1  needs ~7 VUs   -&gt;  5 ready  -&gt;  short         -&gt;  11 drops
+THINK=5  needs ~27 VUs  -&gt;  5 ready  -&gt;  VERY short    -&gt;  23 drops</pre>
+<p>k6 <i>can</i> recruit up to <code>maxVUs: 100</code>, but not instantly. While it was hiring, scheduled iterations missed their slots.</p>
+<div class="warn">
+<b><code>dropped_iterations</code> does NOT automatically mean the server could not cope.</b> Check your own provisioning first.
+<br><br>
+Reporting &ldquo;the system only sustained 3.63 of 5 req/s&rdquo; here would have blamed the server for a test-configuration mistake &mdash; exactly the artefact-vs-defect distinction from Day 4, met again in the wild.
+</div>
+<div class="good">
+<b>The rule:</b>
+<pre>preAllocatedVUs = your Little's Law calculation     (not a guess)
+maxVUs          = 3-5x that                        (headroom)</pre>
+</div>
+
+<h2>8. Day 6 cheat sheet</h2>
+<table>
+  <tr><th style="width:44%">Situation</th><th>What to do / remember</th></tr>
+  <tr><td>Someone says &ldquo;support 500 users&rdquo;</td><td>Ask &ldquo;doing what, how often?&rdquo; Convert to req/s.</td></tr>
+  <tr><td>Sizing a test</td><td><code>VUs = req/s &divide; requests-per-iteration &times; iteration_duration</code></td></tr>
+  <tr><td>Setting <code>preAllocatedVUs</code></td><td>Use the Little's Law figure, not a guess.</td></tr>
+  <tr><td>Setting <code>maxVUs</code></td><td>3&ndash;5&times; <code>preAllocatedVUs</code>.</td></tr>
+  <tr><td><code>vus_max</code> far above your calculation</td><td>Look for a transient stall (TLS, cold start). It is a high-water mark.</td></tr>
+  <tr><td><code>dropped_iterations</code> present</td><td>Check <code>preAllocatedVUs</code> BEFORE blaming the server.</td></tr>
+  <tr><td>Comparing runs with different think times</td><td>Compare <code>http_req_duration</code>, not VU count.</td></tr>
+  <tr><td>Reporting concurrency</td><td>State req/s. VU count alone is meaningless.</td></tr>
+</table>
+
+<h2>9. Day 6 in three lines</h2>
+<pre>1.  Think time changes how many VUs you need - not how hard the server works.
+2.  VUs = req/s x journey length.   (Little's Law)
+3.  "N users" is meaningless. Always state requests/sec.</pre>
+
+<h2>10. Next &ndash; Day 7 (Week 1 review)</h2>
+<ul>
+  <li>Self-test on everything from Days 1&ndash;6, without notes.</li>
+  <li>Write the 1-pager: &ldquo;what a performance test is, and how to size one&rdquo;.</li>
+</ul>
+
+</body>
+</html>

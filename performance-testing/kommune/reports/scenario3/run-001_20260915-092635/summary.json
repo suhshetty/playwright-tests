@@ -1,0 +1,587 @@
+{
+  "root_group": {
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+      {
+        "name": "1. Login",
+        "path": "::1. Login",
+        "id": "16f81909982164bd629bc7458d18f35d",
+        "groups": [],
+        "checks": [
+            {
+              "name": "login page 200",
+              "path": "::1. Login::login page 200",
+              "id": "bdb402f87ce2f415dfa84dd5a9360ecb",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "id": "c857394326cefff9c7dfe9ebd0f2828b",
+              "passes": 3,
+              "fails": 0,
+              "name": "logged in (on Content page)",
+              "path": "::1. Login::logged in (on Content page)"
+            },
+            {
+              "path": "::1. Login::login not bounced back",
+              "id": "04315cda8c906e87cc7f8d77a4325605",
+              "passes": 3,
+              "fails": 0,
+              "name": "login not bounced back"
+            }
+          ]
+      },
+      {
+        "name": "2. HR -> Organisation overview -> Build organisation trees",
+        "path": "::2. HR -> Organisation overview -> Build organisation trees",
+        "id": "98163d305822b46d542637d3a61268c4",
+        "groups": [],
+        "checks": [
+            {
+              "name": "OrganisationTree left tree loaded",
+              "path": "::2. HR -> Organisation overview -> Build organisation trees::OrganisationTree left tree loaded",
+              "id": "b52ad8c585da9871257b1fc7eb8219b8",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "name": "OrganisationTree right tree loaded",
+              "path": "::2. HR -> Organisation overview -> Build organisation trees::OrganisationTree right tree loaded",
+              "id": "f3509a80e3d0085e222e905de4f8b01e",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "4. Right-click 'MM GROUP ApS' -> action menu",
+        "path": "::4. Right-click 'MM GROUP ApS' -> action menu",
+        "id": "9500c64b43a8feb5b345a9e6f6982f78",
+        "groups": [],
+        "checks": [
+            {
+              "name": "action menu returned a UniqueString (Organisation)",
+              "path": "::4. Right-click 'MM GROUP ApS' -> action menu::action menu returned a UniqueString (Organisation)",
+              "id": "b0d48a1113515898108f1f4f32c55c16",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "id": "4368c5cf293d9165bf4c5c78e49a50e6",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::5. Open company -> popup::modal loaded (200)",
+              "id": "b4f8ebfe6679bb7b81dd241942cc91ea",
+              "passes": 3,
+              "fails": 0,
+              "name": "modal loaded (200)"
+            },
+            {
+              "name": "modal no server error",
+              "path": "::5. Open company -> popup::modal no server error",
+              "id": "85a0b0912ff79d3b0290be06e4562511",
+              "passes": 3,
+              "fails": 0
+            }
+          ],
+        "name": "5. Open company -> popup",
+        "path": "::5. Open company -> popup"
+      },
+      {
+        "name": "8. Right-click 'Gro Ustad' -> action menu",
+        "path": "::8. Right-click 'Gro Ustad' -> action menu",
+        "id": "751e4b822df725858497913e90c74426",
+        "groups": [],
+        "checks": [
+            {
+              "name": "action menu returned a UniqueString (Person)",
+              "path": "::8. Right-click 'Gro Ustad' -> action menu::action menu returned a UniqueString (Person)",
+              "id": "9b3fd328f2508face52a2738c6d9c3b5",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "9. Open person -> popup",
+        "path": "::9. Open person -> popup",
+        "id": "5bd0f758ee4e9b522f0d81d8f9b56700",
+        "groups": [],
+        "checks": [
+            {
+              "name": "modal loaded (200)",
+              "path": "::9. Open person -> popup::modal loaded (200)",
+              "id": "7c1ed1d278034df813de4cb23aae2680",
+              "passes": 3,
+              "fails": 0
+            },
+            {
+              "path": "::9. Open person -> popup::modal no server error",
+              "id": "59d23dfc4eab9eb8dc50358a915340ac",
+              "passes": 3,
+              "fails": 0,
+              "name": "modal no server error"
+            }
+          ]
+      },
+      {
+        "name": "Logout",
+        "path": "::Logout",
+        "id": "2958cd095d596e760ce0636ac19c8a6a",
+        "groups": [],
+        "checks": [
+            {
+              "name": "logged out (back on login)",
+              "path": "::Logout::logged out (back on login)",
+              "id": "3362e4d294d80b7bb3f4df0455bc47ca",
+              "passes": 3,
+              "fails": 0
+            }
+          ]
+      }
+    ],
+    "checks": [
+      {
+        "name": "left tree returned nodes",
+        "path": "::left tree returned nodes",
+        "id": "8bc7d45772250ccddd2063cac7710665",
+        "passes": 3,
+        "fails": 0
+      },
+      {
+        "fails": 0,
+        "name": "right tree returned nodes",
+        "path": "::right tree returned nodes",
+        "id": "62ae4d03382eaf7cc7d1347eb4b4dd88",
+        "passes": 3
+      },
+      {
+        "fails": 0,
+        "name": "found company 'MM GROUP ApS' in left tree",
+        "path": "::found company 'MM GROUP ApS' in left tree",
+        "id": "3cfe752ed574721c82372b65a13b1fd0",
+        "passes": 3
+      },
+      {
+        "name": "found person 'Gro Ustad' in right tree",
+        "path": "::found person 'Gro Ustad' in right tree",
+        "id": "11fa70628a5ffd581f63919a0430dc74",
+        "passes": 3,
+        "fails": 0
+      }
+    ],
+    "name": "",
+    "path": ""
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 128808.0155
+  },
+  "metrics": {
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 66,
+        "rate": 0.5123904730913271
+      }
+    },
+    "step_filter_duration": {
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 305.3154,
+        "med": 498.43240000000003,
+        "max": 1264.6151,
+        "p(90)": 872.8814,
+        "p(95)": 1005.984475,
+        "avg": 552.4759681818181
+      },
+      "thresholds": {
+        "p(95)<3000": {
+          "ok": true
+        }
+      }
+    },
+    "step_login_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 4113.333333333333,
+        "min": 3607,
+        "med": 3947,
+        "max": 4786,
+        "p(90)": 4618.2,
+        "p(95)": 4702.1
+      },
+      "thresholds": {
+        "p(95)<10000": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "data_sent": {
+      "values": {
+        "count": 40317,
+        "rate": 313.000707630652
+      },
+      "type": "counter",
+      "contains": "data"
+    },
+    "iteration_duration": {
+      "values": {
+        "avg": 42934.23453333333,
+        "min": 39157.5785,
+        "med": 42788.8734,
+        "max": 46856.2517,
+        "p(90)": 46042.77604,
+        "p(95)": 46449.51387
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 339.2941,
+        "med": 1582.7817,
+        "max": 4786.4305,
+        "p(90)": 3607.1828,
+        "p(95)": 3947.1697,
+        "avg": 1764.6394142857137
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 554.9137,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 8.409624242424242
+      }
+    },
+    "http_req_connecting": {
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0.24148181818181816,
+        "min": 0,
+        "med": 0,
+        "max": 15.9378
+      },
+      "type": "trend"
+    },
+    "step_mypage_tab_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 48,
+        "fails": 0
+      }
+    },
+    "step_navigate_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 480.5,
+        "min": 339,
+        "med": 456.5,
+        "max": 673,
+        "p(90)": 641,
+        "p(95)": 657
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "rate": 0.02329047604960578,
+        "count": 3
+      }
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 66
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "step_open_record_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 2047.75,
+        "avg": 1700,
+        "min": 1207,
+        "med": 1701.5,
+        "max": 2092,
+        "p(90)": 2003.5
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0,
+        "med": 0,
+        "max": 7.0915,
+        "p(90)": 0.5796,
+        "p(95)": 1.0317999999999998,
+        "avg": 0.324680303030303
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 27.59398333333333,
+        "min": 0,
+        "med": 1.47195,
+        "max": 526.4957,
+        "p(90)": 36.135,
+        "p(95)": 128.412
+      }
+    },
+    "step_login_render_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1855,
+        "p(90)": 1782.2,
+        "p(95)": 1818.6,
+        "avg": 1586.6666666666667,
+        "min": 1414,
+        "med": 1491
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1264.6151,
+        "p(90)": 872.8814,
+        "p(95)": 1005.984475,
+        "avg": 552.4759681818181,
+        "min": 305.3154,
+        "med": 498.43240000000003
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 6352743,
+        "rate": 49319.46956360025
+      }
+    },
+    "business_errors": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0,
+        "passes": 0,
+        "fails": 21
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "step_widget_drilldown_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 0,
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_waiting": {
+      "values": {
+        "avg": 524.5573045454544,
+        "min": 304.7888,
+        "med": 446.94764999999995,
+        "max": 1246.7093,
+        "p(90)": 807.39805,
+        "p(95)": 1001.54015
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "step_tree_load_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 3178.4,
+        "avg": 2897.3333333333335,
+        "min": 2444,
+        "med": 3056,
+        "max": 3192,
+        "p(90)": 3164.8
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 1
+      }
+    },
+    "step_login_auth_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 1027,
+        "p(90)": 1023,
+        "p(95)": 1025,
+        "avg": 1012.3333333333334,
+        "min": 1003,
+        "med": 1007
+      }
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "avg": 8.158234848484849,
+        "min": 0,
+        "med": 0,
+        "max": 538.4435
+      }
+    },
+    "step_logout_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 982,
+        "min": 627,
+        "med": 991,
+        "max": 1328,
+        "p(90)": 1260.6,
+        "p(95)": 1294.3
+      },
+      "thresholds": {
+        "p(95)<2000": {
+          "ok": true
+        }
+      }
+    },
+    "step_landing_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "med": 0,
+        "max": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "thresholds": {
+        "p(95)<5000": {
+          "ok": true
+        }
+      }
+    }
+  }
+}

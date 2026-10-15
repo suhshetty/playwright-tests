@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><title>K6 Performance Report</title>
+<style>
+ body{font-family:Segoe UI,Arial,sans-serif;margin:24px;color:#222;background:#f7f8fb}
+ h1{font-size:20px} h2{font-size:15px;margin-top:28px;color:#515b72}
+ .cards{display:flex;gap:14px;flex-wrap:wrap;margin:14px 0}
+ .card{background:#fff;border-radius:10px;padding:14px 18px;box-shadow:0 1px 4px rgba(0,0,0,.08);min-width:130px}
+ .card .n{font-size:22px;font-weight:700} .card .l{color:#888;font-size:12px}
+ table{border-collapse:collapse;width:100%;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+ th,td{padding:8px 12px;text-align:left;border-bottom:1px solid #eee;font-size:13px}
+ th{background:#515b72;color:#fff}
+ .pass{color:#15803d;font-weight:700} .fail{color:#b91c1c;font-weight:700}
+</style></head><body>
+<h1>K6 Performance Report</h1>
+<div class="cards">
+ <div class="card"><div class="n fail">7083/11949</div><div class="l">checks passed</div></div>
+ <div class="card"><div class="n">13488</div><div class="l">total requests</div></div>
+ <div class="card"><div class="n fail">12.70%</div><div class="l">http failed</div></div>
+ <div class="card"><div class="n fail">52.75%</div><div class="l">business errors</div></div>
+ <div class="card"><div class="n">0</div><div class="l">known server issues</div></div>
+</div>
+<h2>SLA thresholds</h2>
+<table><tr><th>Metric</th><th>Condition</th><th>Result</th></tr><tr><td>http_req_duration</td><td>p(95)<3000</td><td class="pass">PASS</td></tr><tr><td>step_mypage_tab_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_filter_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_landing_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>http_req_failed</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_open_record_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>business_errors</td><td>rate<0.01</td><td class="fail">FAIL</td></tr><tr><td>step_logout_duration</td><td>p(95)<2000</td><td class="fail">FAIL</td></tr><tr><td>step_widget_drilldown_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_navigate_duration</td><td>p(95)<5000</td><td class="fail">FAIL</td></tr><tr><td>step_tree_load_duration</td><td>p(95)<5000</td><td class="pass">PASS</td></tr><tr><td>step_login_duration</td><td>p(95)<10000</td><td class="pass">PASS</td></tr></table>
+
+<h2>Server errors observed (excluded from the http-failed SLA)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ Endpoints that returned an error this run. These requests are held out of the <i>http failed</i> figure above so it
+ reflects the operations that work — they are listed here so nothing is hidden. Counts and status codes are measured
+ from this run. <b>Total: 0.</b>
+</p>
+<p class="pass" style="font-size:13px">No server errors recorded this run.</p>
+<p style="font-size:12px;color:#15803d;margin:8px 0 0">Zero failures recorded this run on: MMLayout.asmx/RefreshMainManFilter, MMLayout.asmx/RefreshDataFilter, MMLayout.asmx/EmptyDataFilter.</p>
+<h2>Latency by step</h2>
+<table><tr><th>Step / metric</th><th>avg</th><th>median</th><th>p95</th><th>max</th></tr><tr><td>http_req_receiving</td><td>11 ms</td><td>0 ms</td><td>17 ms</td><td>8.08 s</td></tr><tr><td>step_landing_duration</td><td>6.36 s</td><td>5.71 s</td><td>12.17 s</td><td>23.35 s</td></tr><tr><td>step_logout_duration</td><td>854 ms</td><td>703 ms</td><td>2.01 s</td><td>6.04 s</td></tr><tr><td>step_open_record_duration</td><td>3.98 s</td><td>3.68 s</td><td>7.31 s</td><td>19.39 s</td></tr><tr><td>step_navigate_duration</td><td>4.58 s</td><td>3.73 s</td><td>11.29 s</td><td>23.69 s</td></tr><tr><td>step_tree_load_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>step_widget_drilldown_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr><tr><td>http_req_tls_handshaking</td><td>4 ms</td><td>0 ms</td><td>0 ms</td><td>981 ms</td></tr><tr><td>http_req_waiting</td><td>822 ms</td><td>564 ms</td><td>2.41 s</td><td>9.45 s</td></tr><tr><td>http_req_sending</td><td>0 ms</td><td>0 ms</td><td>1 ms</td><td>11 ms</td></tr><tr><td>step_login_render_duration</td><td>1.79 s</td><td>1.63 s</td><td>3.35 s</td><td>4.79 s</td></tr><tr><td>step_login_duration</td><td>2.89 s</td><td>2.11 s</td><td>9.66 s</td><td>19.63 s</td></tr><tr><td>step_login_auth_duration</td><td>2.79 s</td><td>2.11 s</td><td>9.56 s</td><td>19.63 s</td></tr><tr><td>group_duration</td><td>3.05 s</td><td>2.04 s</td><td>9.51 s</td><td>23.69 s</td></tr><tr><td>iteration_duration</td><td>35.59 s</td><td>33.26 s</td><td>66.18 s</td><td>109.84 s</td></tr><tr><td>http_req_duration</td><td>833 ms</td><td>571 ms</td><td>2.42 s</td><td>11.90 s</td></tr><tr><td>http_req_duration{expected_response:true}</td><td>924 ms</td><td>664 ms</td><td>2.56 s</td><td>11.90 s</td></tr><tr><td>http_req_connecting</td><td>2 ms</td><td>0 ms</td><td>0 ms</td><td>312 ms</td></tr><tr><td>http_req_blocked</td><td>6 ms</td><td>0 ms</td><td>0 ms</td><td>1.18 s</td></tr><tr><td>step_filter_duration</td><td>1.34 s</td><td>1.26 s</td><td>2.61 s</td><td>6.92 s</td></tr><tr><td>step_mypage_tab_duration</td><td>0 ms</td><td>0 ms</td><td>0 ms</td><td>0 ms</td></tr></table>
+<p style="color:#999;font-size:11px;margin-top:24px">Generated by lib/mainmanager.js handleSummary(). Thresholds are the agreed SLA, not a description of the test environment.</p>
+
+<h2>Login path — HTTP status breakdown (Odense)</h2>
+<p style="font-size:12px;color:#515b72;margin:6px 0 10px">
+ The "Server errors observed" table above only covers three catalogued filter endpoints and
+ says nothing about the login path. These are the real per-status counts for the two login
+ calls. <b>Anything other than 200 here means the request never reached the application.</b>
+</p>
+<table><tr><th>HTTP status</th><th>MMV2Login.aspx (page)</th><th>/api/v1/GetTempCode</th></tr><tr><td style="color:#b91c1c;font-weight:600">0 — no response (connection refused / reset / timeout)</td><td>0 (0.0%)</td><td>9 (0.9%)</td></tr><tr><td>200 — OK</td><td>1030 (52.6%)</td><td>1011 (98.2%)</td></tr><tr><td style="color:#b91c1c;font-weight:600">503 — Service Unavailable (server shedding load)</td><td>929 (47.4%)</td><td>10 (1.0%)</td></tr></table>
+<p style="font-size:12px;color:#515b72;margin:10px 0 0">
+ <b>OTP code collisions: 835.</b> These are NOT a server fault. Odense stores the
+ one-time login code per USER ACCOUNT and each request replaces the previous one, so virtual
+ users sharing a single test account overwrite each other. Measured on one account:
+ 100% of logins succeed at 1 VU, 72% at 10, 44% at 50. A valid login measurement needs one
+ account per VU.
+</p>
+<p style="font-size:12px;color:#b91c1c;margin:8px 0 0">
+ Caution when reading the latency figures above: requests that were refused return almost
+ instantly, which pulls the percentiles DOWN. A low p95 alongside a high failure rate means
+ most requests were rejected quickly, not served quickly.
+</p></body></html>
